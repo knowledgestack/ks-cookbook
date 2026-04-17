@@ -12,12 +12,46 @@ This repo is **32 production-style flagship agents + lightweight recipes** showi
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![Flagships](https://img.shields.io/badge/flagships-32-green)](https://github.com/knowledgestack/ks-cookbook/tree/main/flagships)
 [![MCP compatible](https://img.shields.io/badge/MCP-compatible-purple)](https://modelcontextprotocol.io/)
+[![Discord](https://img.shields.io/badge/Discord-join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/McHmxUeS)
+[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-181717?logo=github)](https://github.com/knowledgestack/ks-cookbook/discussions)
 [![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](https://www.langchain.com/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](https://langchain-ai.github.io/langgraph/)
 [![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](https://www.crewai.com/)
 [![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](https://temporal.io/)
 
 ⭐ **[Star this repo](https://github.com/knowledgestack/ks-cookbook)** if you're building enterprise AI — it signals which flagships and frameworks to expand next.
+
+## 👋 Welcome
+
+This repo is for developers building **enterprise RAG pipelines, agent workflows, and document intelligence systems** on top of Knowledge Stack. The Cookbook shows how to move from **raw documents → structured knowledge → production-ready agent workflows** without writing custom ingestion infrastructure.
+
+### What you can build
+
+Example workflows you can implement quickly on top of this cookbook:
+
+- 🔎 Enterprise document search with sentence-level citations
+- 🤖 Internal copilots grounded in company knowledge
+- 📚 Multi-document agent pipelines over PDFs, Excel, contracts, reports, technical manuals
+- 🕑 Version-aware knowledge retrieval systems
+- 🔐 Permission-aware agents with RBAC, per-tenant isolation, and audit-ready citations
+- 🏢 Secure private or on-prem deployments
+
+**You focus on agent logic. Knowledge Stack manages the knowledge layer.**
+
+### Join the developer community
+
+- 💬 **[Discord](https://discord.gg/McHmxUeS)** — fastest place to get implementation and architecture help. Many questions get answered there first.
+- 🗣️ **[GitHub Discussions](https://github.com/knowledgestack/ks-cookbook/discussions)** — share what you're building, propose flagships, ask long-form questions.
+- 🐛 **[Issues](https://github.com/knowledgestack/ks-cookbook/issues/new/choose)** — bugs, feature requests, docs fixes.
+
+### When asking a question (Discord, Discussions, or issues)
+
+Sharing these upfront makes it much faster to help:
+
+- what you're trying to build
+- which flagship or recipe you're following
+- which framework you're using (LangChain / LangGraph / CrewAI / Temporal / n8n / custom)
+- where you're stuck (ingestion, retrieval, citations, permissions, scaling, deployment, …)
 
 ## Why this repo exists
 
@@ -437,8 +471,9 @@ cp -r recipes/_template  recipes/<your-name>
 
 If you're building an internal agent, ingestion pipeline, or enterprise RAG system on top of Knowledge Stack, **we'd love to hear from you** — whether you want to collaborate on a flagship, need help with a production deployment, or have feedback on the MCP surface.
 
+- 🎮 **[Join our Discord](https://discord.gg/McHmxUeS)** — fastest channel for live architecture and implementation questions
 - 🌐 Website: [knowledgestack.ai](https://knowledgestack.ai)
-- 💬 Open a [GitHub issue](https://github.com/knowledgestack/ks-cookbook/issues) or [discussion](https://github.com/knowledgestack/ks-cookbook/discussions)
+- 💬 Open a [GitHub issue](https://github.com/knowledgestack/ks-cookbook/issues/new/choose) or [discussion](https://github.com/knowledgestack/ks-cookbook/discussions)
 - 📧 Email the team — details on [knowledgestack.ai](https://knowledgestack.ai)
 - ⭐ [Star the repo](https://github.com/knowledgestack/ks-cookbook) — it signals which flagships and frameworks to prioritize next
 
