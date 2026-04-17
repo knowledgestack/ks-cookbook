@@ -1,0 +1,92 @@
+name: 🐛 Bug report
+description: Something broke while running a flagship, recipe, or the MCP server.
+title: "[bug] "
+labels: ["bug", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. A good report makes it much faster to fix — please fill in as much as you can.
+
+  - type: input
+    id: component
+    attributes:
+      label: Affected component
+      description: Flagship name, recipe name, or `knowledgestack-mcp`.
+      placeholder: "flagships/credit_memo_drafter  —  or  —  knowledgestack-mcp"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you run, what did you see, what did you expect instead?
+      placeholder: |
+        I ran `make demo-credit-memo` and expected a credit memo. Instead I got a 404 from the MCP server.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Minimum commands to reproduce, including env vars.
+      render: bash
+      placeholder: |
+        cp .env.example .env  # filled in with real keys
+        make setup
+        make demo-credit-memo
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Redact any API keys or tenant-specific data before pasting.
+      render: text
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Commit SHA or tag
+      description: Output of `git rev-parse HEAD` or the tagged release you're on.
+      placeholder: "e.g. 36b80c3 or v0.1.1"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: python-version
+    attributes:
+      label: Python version
+      options:
+        - "3.11"
+        - "3.12"
+        - "3.13"
+        - other (note in reproduction)
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: "macOS 15.5 / Ubuntu 24.04 / Windows 11 WSL2"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I've searched existing issues and this isn't a duplicate.
+          required: true
+        - label: I've verified my tenant has the expected seed data (`docs/wiki/seed-data.md`).
+          required: true
+        - label: I've redacted API keys and PII from any logs / snippets.
+          required: true

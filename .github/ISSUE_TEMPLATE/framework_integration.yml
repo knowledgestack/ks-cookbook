@@ -1,0 +1,75 @@
+name: 🔌 Agent framework integration
+description: Request or report issues with LangChain, LangGraph, CrewAI, Temporal, OpenAI Agents SDK, pydantic-ai, LlamaIndex, Claude Desktop, Cursor, etc.
+title: "[framework] "
+labels: ["framework-integration", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this if you're trying to plug `knowledgestack-mcp` into a specific agent framework and hitting friction — or want us to add a flagship / recipe for a framework we don't yet showcase.
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      options:
+        - LangChain
+        - LangGraph
+        - CrewAI
+        - Temporal
+        - OpenAI Agents SDK
+        - pydantic-ai
+        - LlamaIndex
+        - Claude Desktop
+        - Cursor
+        - AutoGen / AG2
+        - Haystack
+        - DSPy
+        - other (note below)
+    validations:
+      required: true
+
+  - type: input
+    id: framework-version
+    attributes:
+      label: Framework version
+      placeholder: "e.g. langchain==0.3.12  /  langgraph==0.2.55"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: Type of request
+      options:
+        - Add a flagship / recipe using this framework
+        - Report a bug integrating this framework with knowledgestack-mcp
+        - Document an integration pattern
+        - Something else (describe below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What are you trying to build, what's not working, or what pattern would you like documented?
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code snippet (if applicable)
+      render: python
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: willingness
+    attributes:
+      label: Are you willing to contribute?
+      options:
+        - label: I'll submit a PR — please assign it to me.
+        - label: I need help; I'm not submitting a PR myself.

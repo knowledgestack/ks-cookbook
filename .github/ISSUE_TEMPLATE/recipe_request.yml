@@ -1,0 +1,80 @@
+name: 🧑‍🍳 New recipe request
+description: Propose a short (≤100 LOC) single-file pattern demonstrating one idea.
+title: "[recipe] "
+labels: ["recipe-request", "good-first-issue"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Recipes are small, focused patterns across a variety of agent frameworks. See [`recipes/INDEX.md`](https://github.com/knowledgestack/ks-cookbook/blob/main/recipes/INDEX.md) for what's already shipped and [`.cursor/rules/recipe_author.mdc`](https://github.com/knowledgestack/ks-cookbook/blob/main/.cursor/rules/recipe_author.mdc) for the rules.
+
+  - type: input
+    id: title
+    attributes:
+      label: Recipe title
+      placeholder: "e.g. Multi-folder federated search with LangGraph"
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea in one sentence
+      placeholder: "Route a question to the right tenant folder by embedding folder descriptions and picking the closest match before calling search_knowledge."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Framework
+      description: We aim for variety — pick one we don't already have covered if possible.
+      options:
+        - pydantic-ai
+        - LangChain
+        - LangGraph
+        - CrewAI
+        - LlamaIndex
+        - OpenAI Agents SDK
+        - raw OpenAI function-calling
+        - raw Anthropic tool-use
+        - mcp-only
+        - Temporal activity
+        - other (note below)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: tools
+    attributes:
+      label: Which MCP tools will the recipe use?
+      description: At least one is required (grounding is mandatory).
+      options:
+        - label: list_contents
+        - label: find
+        - label: get_info
+        - label: read
+        - label: read_around
+        - label: search_knowledge
+        - label: search_keyword
+        - label: view_chunk_image
+        - label: get_organization_info
+        - label: get_current_datetime
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Output shape
+      description: stdout, a file, or a structured pydantic model? Include an example.
+      placeholder: "Print ranked folder-id + score + top matching chunk to stdout."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: willingness
+    attributes:
+      label: Are you willing to contribute?
+      options:
+        - label: I'll send a PR — please assign it to me.
+        - label: I'm noting the need; happy for someone else to pick it up.

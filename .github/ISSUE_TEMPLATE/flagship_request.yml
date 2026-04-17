@@ -1,0 +1,96 @@
+name: 🚀 New flagship request
+description: Propose a new end-to-end agent demo for a vertical we don't cover.
+title: "[flagship] "
+labels: ["flagship-request", "needs-triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Flagships are full agents that produce a reviewable artifact (`.md` / `.docx` / `.xlsx`) grounded in chunk-level citations. Before filing, check [`INDUSTRIES.md`](https://github.com/knowledgestack/ks-cookbook/blob/main/INDUSTRIES.md) — your idea may already be on the roadmap.
+
+  - type: input
+    id: vertical
+    attributes:
+      label: Vertical
+      placeholder: "banking / legal / healthcare / insurance / real-estate / sales / hr / engineering / government / pharma / energy / other"
+    validations:
+      required: true
+
+  - type: input
+    id: title
+    attributes:
+      label: Proposed flagship title
+      placeholder: "e.g. Banking: Loan Servicing Transfer Memo"
+    validations:
+      required: true
+
+  - type: textarea
+    id: pain-point
+    attributes:
+      label: Pain point
+      description: Who feels this and why? What would they be doing by hand today?
+      placeholder: "Commercial loan servicing teams draft transfer memos every time a loan moves between servicers..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: business-input
+    attributes:
+      label: Business input
+      description: What does the user pass in? (A borrower profile, a contract, a patient scenario, etc.)
+      placeholder: "Borrower name + loan ID + new servicer name."
+    validations:
+      required: true
+
+  - type: textarea
+    id: corpus
+    attributes:
+      label: Expected corpus
+      description: What documents should live in the KS tenant for this to work? Prefer public-domain or clearly-licensed material.
+      placeholder: "Original credit agreement, servicing transfer regulations (CFPB RESPA), investor reporting template."
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Expected output artifact
+      description: `.md`, `.docx`, `.xlsx`, `.csv`? What sections / fields?
+      placeholder: "A `.docx` transfer memo with: parties, effective date, loan schedule, notices required, escrow handover checklist, regulatory citations."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: framework
+    attributes:
+      label: Suggested framework
+      options:
+        - pydantic-ai (default)
+        - LangChain / LangGraph
+        - CrewAI
+        - OpenAI Agents SDK
+        - raw OpenAI function-calling
+        - raw Anthropic tool-use
+        - Temporal activity
+        - no preference
+    validations:
+      required: true
+
+  - type: textarea
+    id: citations
+    attributes:
+      label: Citation requirements
+      description: What claims in the output must be chunk-cited? (Reviewer lens — what would a legal/finance/compliance reader demand?)
+      placeholder: "Every regulatory requirement must cite the originating CFPB rule chunk. Dollar amounts must cite the credit agreement."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: willingness
+    attributes:
+      label: Are you willing to contribute?
+      options:
+        - label: I'd like to write this flagship myself — please assign it to me.
+        - label: I can help assemble or validate the sample corpus.
+        - label: I'm a user, not a contributor — noting the need.

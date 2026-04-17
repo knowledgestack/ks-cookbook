@@ -1,0 +1,37 @@
+name: 📖 Docs improvement
+description: Something in the README, wiki, or flagship README is wrong, missing, or confusing.
+title: "[docs] "
+labels: ["docs", "good-first-issue"]
+assignees: []
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Which page / file?
+      placeholder: "docs/wiki/seed-data.md  —  or  —  flagships/kyc_onboarding_review/README.md"
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What's wrong or missing
+      placeholder: "Seed data page says folder ID X but the demo Makefile uses folder ID Y."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: Suggested fix
+      description: Optional — if you have a proposed rewrite, paste it here.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: willingness
+    attributes:
+      label: Are you willing to contribute?
+      options:
+        - label: I'll send a PR with the fix — please assign it to me.
+        - label: I'm just flagging the issue.
