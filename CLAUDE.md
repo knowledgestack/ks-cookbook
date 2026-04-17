@@ -50,7 +50,7 @@ uv run --package ks-cookbook-<slug> ks-cookbook-<slug> --help
 - `pyproject.toml` at the root defines the uv workspace. Every flagship is a member; each has its own `pyproject.toml`, `src/<module>/`, and `[project.scripts]` entrypoint (`ks-cookbook-<slug>`).
 - `flagships/<name>/src/<module>/` — each flagship follows the same four-file shape: `__main__.py` (CLI), `agent.py` (prompt + MCP wiring), `schema.py` (pydantic output contract), `sample_inputs/`.
 - `recipes/` — short (<100 LOC) single-file patterns. `recipes/_shared/mcp_client.py` exposes `ks_mcp_session()`; recipes use it rather than constructing `MCPServerStdio` by hand.
-- The MCP server itself (`knowledgestack-mcp`) lives in [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp); the Python SDK (`ksapi`) lives in [knowledgestack/ks-sdk](https://github.com/knowledgestack/ks-sdk). The cookbook consumes both from PyPI.
+- The MCP server (`knowledgestack-mcp`) lives in [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp). The Python SDK (`ksapi`) lives in [knowledgestack/ks-sdk-python](https://github.com/knowledgestack/ks-sdk-python); the TypeScript SDK (`@knowledge-stack/ksapi`) lives in [knowledgestack/ks-sdk-ts](https://github.com/knowledgestack/ks-sdk-ts). Central docs are in [knowledgestack/ks-docs](https://github.com/knowledgestack/ks-docs) (Mintlify → docs.knowledgestack.ai). The cookbook consumes the MCP server via `uvx` and the Python SDK from PyPI.
 
 ### Flagship runtime flow
 
