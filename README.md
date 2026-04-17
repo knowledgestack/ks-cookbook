@@ -450,6 +450,20 @@ If this repo helped you ship or prototype something, [star the repository](https
 
 _enterprise RAG, AI agents, agent framework, MCP, Model Context Protocol, LangChain, LangGraph, CrewAI, Temporal workflows, OpenAI Agents SDK, pydantic-ai, Claude Desktop, Cursor, permission-aware retrieval, document intelligence, citation grounding, structured output, tool use, knowledge base, vector search, semantic search, BM25, chunk retrieval, version-aware retrieval, tenant isolation, banking AI, legal AI, healthcare AI, insurance AI, accounting AI, compliance automation, KYC, AML, ASC 606, FOIA, NERC CIP, PCAOB, GDPR, prior authorization, CIOMS, clinical trial eligibility, credit memo, covenant monitoring, MSA redline, rev-rec, audit workpaper, tax research, RFP, sales battlecard, SRE runbooks, API documentation, release notes, PIA, SOW, grant compliance._
 
+## Filing issues & PRs
+
+We've made both as low-friction as possible:
+
+- **New flagship idea?** → [Open a flagship request](https://github.com/knowledgestack/ks-cookbook/issues/new?template=flagship_request.yml)
+- **Short recipe pattern?** → [Open a recipe request](https://github.com/knowledgestack/ks-cookbook/issues/new?template=recipe_request.yml)
+- **Framework integration (LangChain, CrewAI, Temporal, …)?** → [Open a framework integration issue](https://github.com/knowledgestack/ks-cookbook/issues/new?template=framework_integration.yml)
+- **Found a bug?** → [File a bug report](https://github.com/knowledgestack/ks-cookbook/issues/new?template=bug_report.yml)
+- **Docs wrong or confusing?** → [Open a docs issue](https://github.com/knowledgestack/ks-cookbook/issues/new?template=docs_improvement.yml)
+- **Question or "is anyone else doing this?"** → [Start a discussion](https://github.com/knowledgestack/ks-cookbook/discussions)
+- **Security vulnerability?** → [Report privately](https://github.com/knowledgestack/ks-cookbook/security/advisories/new) — do not open a public issue. See [SECURITY.md](SECURITY.md).
+
+Pull requests use a [template](.github/pull_request_template.md) that walks you through summary, test plan, and checklist — nothing fancy, just so reviewers can move fast.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
