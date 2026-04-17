@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 💬 Discussions
+  - name: 🎮 Discord — fastest help
+    url: https://discord.gg/McHmxUeS
+    about: Live architecture + implementation questions, show what you're building, chat with other KS devs.
+  - name: 💬 GitHub Discussions
     url: https://github.com/knowledgestack/ks-cookbook/discussions
-    about: Ask a question, share what you're building, or propose an idea before filing a formal issue.
+    about: Long-form questions, ideas, and showcase posts.
   - name: 🔒 Report a security vulnerability
     url: https://github.com/knowledgestack/ks-cookbook/security/advisories/new
     about: Found a security issue? Please report it privately instead of opening a public issue.
