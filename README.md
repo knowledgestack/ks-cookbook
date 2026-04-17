@@ -253,7 +253,9 @@ recipes/
 The MCP server (`knowledgestack-mcp`) and the Python SDK (`ksapi`) now live in their own repos:
 
 - **[knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp)** — MCP server package; consumed here via `uvx knowledgestack-mcp`.
-- **[knowledgestack/ks-sdk](https://github.com/knowledgestack/ks-sdk)** — Python SDK (`ksapi`); consumed here from PyPI.
+- **[knowledgestack/ks-sdk-python](https://github.com/knowledgestack/ks-sdk-python)** — Python SDK (`ksapi` on PyPI); consumed here from PyPI.
+- **[knowledgestack/ks-sdk-ts](https://github.com/knowledgestack/ks-sdk-ts)** — TypeScript SDK (`@knowledge-stack/ksapi` on npm).
+- **[knowledgestack/ks-docs](https://github.com/knowledgestack/ks-docs)** — central docs site (Mintlify, deployed to `docs.knowledgestack.ai`).
 
 There are currently 32 flagship packages in the workspace and each one is independently runnable.
 
@@ -414,7 +416,9 @@ Useful docs:
 - [INDUSTRIES.md](INDUSTRIES.md)
 - [recipes/INDEX.md](recipes/INDEX.md)
 - [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp) — MCP server repo
-- [knowledgestack/ks-sdk](https://github.com/knowledgestack/ks-sdk) — Python SDK (`ksapi`) repo
+- [knowledgestack/ks-sdk-python](https://github.com/knowledgestack/ks-sdk-python) — Python SDK (`ksapi`) repo
+- [knowledgestack/ks-sdk-ts](https://github.com/knowledgestack/ks-sdk-ts) — TypeScript SDK (`@knowledge-stack/ksapi`) repo
+- [knowledgestack/ks-docs](https://github.com/knowledgestack/ks-docs) — central docs site
 
 ## Developer docs
 
