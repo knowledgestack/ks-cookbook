@@ -1,0 +1,16 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lint_fix
+        name: ruff check --fix
+        entry: make fix
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: lint_check
+        name: ruff check (final)
+        entry: make lint
+        language: system
+        pass_filenames: false
+        always_run: true

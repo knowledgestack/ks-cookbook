@@ -18,7 +18,7 @@ TOPIC ?= KYC requirements for Verdant Sourcing Group LLC onboarding
 IN    ?= flagships/csv_enrichment/sample_inputs/customers.csv
 OUT   ?= flagships/csv_enrichment/sample_output.csv
 
-.PHONY: help setup check-env install lint test demo demo-csv demo-research clean
+.PHONY: help setup check-env install install-dev lint fix format test demo demo-csv demo-research clean
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage: make \033[36m<target>\033[0m\n\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -46,11 +46,21 @@ check-env: ## Fail fast if required env vars are missing
 	echo "KS_BASE_URL = $$KS_BASE_URL"; \
 	echo "LLM         = $$CSV_ENRICH_PROVIDER ($$CSV_ENRICH_MODEL)"
 
-lint: ## Lint all packages
+lint: ## Lint all packages (no auto-fix)
 	@uv run ruff check .
+
+fix: ## Auto-fix lint issues across the workspace
+	@uv run ruff check . --fix
+
+format: ## Format code with ruff
+	@uv run ruff format .
 
 test: ## Run unit tests (no live KS needed)
 	@uv run --package knowledgestack-mcp --extra dev pytest mcp-python/tests/ -v
+
+install-dev: install ## Install dev tooling + pre-commit hooks
+	@uv run pre-commit install 2>/dev/null || echo "(pre-commit not installed; skipping hook setup)"
+	@echo "Dev setup complete."
 
 demo: demo-csv demo-research demo-compliance ## Run every flagship
 

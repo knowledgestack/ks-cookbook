@@ -1,0 +1,61 @@
+---
+description: How to author a recipe in ks-cookbook
+alwaysApply: false
+---
+
+# Recipe author rule
+
+Applies when you're adding or editing anything under `recipes/<name>/`.
+
+## Hard constraints (CI-enforced)
+
+1. **≤100 LOC** in `recipe.py` (docstrings + comments don't count). Bigger → flagship.
+2. **Mandatory grounding.** Every recipe calls at least one MCP tool via `recipes/_shared/mcp_client.ks_mcp_session()`.
+3. **KS-only MCP contract.** Connect only to `knowledgestack-mcp`. Don't add a second MCP server.
+4. **Visible citations.** Inline `[chunk:<uuid>]` tags from `read` output, or an explicit `citations` field in structured output.
+5. **Defaults must just work.** `uv run python recipes/<name>/recipe.py` (no flags) runs against the seeded sample policies folder (`ab926019-ac7a-579f-bfda-6c52a13c5f41`) and completes.
+6. **No secrets in source.** Keys come from `.env` only.
+
+## Frontmatter
+
+First docstring of `recipe.py`:
+
+```python
+"""<Title>.
+
+Pain point: <who feels this and why in one sentence>
+Framework: <pydantic-ai | LangGraph | raw-openai | raw-anthropic | mcp-only | LlamaIndex | CrewAI>
+Tools used: list_contents, read, search_knowledge, ...
+Output: <stdout | file | workbook>
+"""
+```
+
+## Connecting to MCP
+
+Use the shared wrapper, not hand-rolled `MCPServerStdio`:
+
+```python
+from recipes._shared.mcp_client import ks_mcp_session
+
+async with ks_mcp_session() as session:
+    listing = await session.call_tool("list_contents", {"folder_id": folder_id})
+    passage = await session.call_tool("read", {"path_part_id": path_part_id})
+```
+
+## Framework variety
+
+Recipes ship across different frameworks on purpose. If we already have two pydantic-ai recipes, your next contribution should probably be in LangGraph, CrewAI, raw OpenAI function-calling, raw Anthropic tool-use, or MCP-only — whichever reduces duplication.
+
+## Smoke test
+
+No unit tests required. The bar is:
+
+```bash
+uv run python recipes/<name>/recipe.py --help   # must exit 0
+```
+
+If the recipe is complex enough to warrant more, add `recipes/<name>/test_smoke.py` that mocks `ks_mcp_session` with canned responses and asserts the output shape. See `flagships/compliance_questionnaire/` for the pattern.
+
+## INDEX.md
+
+Add your recipe as a one-line row in [`recipes/INDEX.md`](../../recipes/INDEX.md). Keep it terse — title, framework, one-line description, link.

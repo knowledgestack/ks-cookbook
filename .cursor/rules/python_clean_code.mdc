@@ -1,0 +1,68 @@
+---
+description: Python clean code for cookbook flagships and recipes
+alwaysApply: false
+---
+
+# Clean-code rules for ks-cookbook
+
+Applies to every Python file under `flagships/`, `recipes/`, and `mcp-python/`.
+
+## Hard constraints
+
+### SRP
+- Each function does one thing. If its name or its docstring needs "and", split it.
+- Each module has one concern. `agent.py` wires the agent; `schema.py` holds the output model; `__main__.py` is CLI-only.
+
+### Small units
+- Functions ≤ 30 lines.
+- Modules ≤ 200 lines unless there is a clear reason.
+- Recipes ≤ 100 LOC total (docstrings + comments don't count). Larger → promote to `flagships/`.
+
+### Naming
+- Intent-revealing. No `data`, `info`, `handler`, `manager` unless domain-meaningful.
+- Boolean predicates: `is_*`, `has_*`, `should_*`.
+
+### DRY & composition
+- No copy-pasted agent wiring across flagships. Use the same `MCPServerStdio` boilerplate; if you find yourself duplicating more than a few lines across files, factor into `_shared/`.
+
+### KISS
+- No speculative abstractions. Three similar lines beats a premature helper.
+
+## Forbidden
+
+### Magic values
+- No magic UUIDs or strings in code. Folder IDs belong in the Makefile as per-demo env defaults, not hardcoded in `agent.py`.
+
+### Deep nesting
+- Guard clauses and early returns. Max nesting depth 3.
+
+### "What" comments
+- Only write comments that explain **why** (a hidden constraint, a workaround, a non-obvious tradeoff). Never comments that describe what a line does.
+
+### Error codes / sentinel returns
+- Raise an exception or return a typed result. No `return None` to signal "failure" alongside valid `None`.
+
+### God functions
+- No function that orchestrates, does I/O, and transforms data. Split into pure helpers + a thin orchestrator.
+
+## Error handling
+
+- Errors surface as exceptions, typed when possible.
+- Never swallow an exception silently. If retrieval fails, say so in the output — don't emit made-up content.
+- For MCP tool calls, let `MCPServerStdio` errors propagate. The CLI (`__main__.py`) catches and prints a useful message before exiting non-zero.
+
+## Style
+
+- PEP 8 via `ruff`. Line-length 100. Import order enforced (`ruff check`).
+- Prefer explicit types on public functions (`-> Memo`, `-> list[Hit]`). Private helpers can infer.
+- Use `pathlib.Path`, never `os.path`.
+- Use `pydantic` for every structured output. Never return a raw `dict` from an agent.
+
+## The four prompt invariants
+
+These are in every flagship system prompt and must stay there:
+
+1. Enumerate with `list_contents(folder_id=__CORPUS_FOLDER_ID__)` first.
+2. Pass UUID `path_part_id` values to `read` — not document names.
+3. Citations (`Citation.chunk_id`, or inline `[chunk:<uuid>]` tags) must be copied verbatim from `read` output. Never synthesize.
+4. If a fact isn't in the retrieved material, say so and lower confidence. Do not fabricate numbers.
