@@ -1,0 +1,21 @@
+[project]
+name = "ks-cookbook-earnings-risk"
+version = "0.1.0"
+description = "Finance flagship — 10-K risk-flag analyst memo from real SEC EDGAR filings."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai[mcp]>=0.0.14",
+    "pydantic>=2.6",
+]
+
+[project.scripts]
+ks-cookbook-earnings-risk = "earnings_risk_analyzer.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/earnings_risk_analyzer"]

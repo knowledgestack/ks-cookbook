@@ -1,0 +1,26 @@
+[project]
+name = "ks-cookbook-msa-redline"
+version = "0.1.0"
+description = "Legal flagship — compare an inbound MSA clause-by-clause against a company playbook and produce a cited redline memo."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0",
+    "openai>=1.50",
+    "pydantic>=2.6",
+]
+
+[project.scripts]
+ks-cookbook-msa-redline = "msa_redline_vs_playbook.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/msa_redline_vs_playbook"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"

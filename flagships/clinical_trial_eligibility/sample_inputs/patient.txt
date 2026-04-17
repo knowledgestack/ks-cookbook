@@ -1,0 +1,42 @@
+Patient Profile for Trial Screening
+
+Name: Maria Gonzalez (fictional)
+Age: 42
+Sex: Female
+BMI: 28.3 kg/m2
+
+Diagnosis: Chronic migraine with aura, diagnosed 2018 (ICHD-3 criteria met).
+Migraine onset age: 29 years.
+
+Current Headache Frequency:
+- 18 headache days per month (average over last 6 months)
+- 12 of those meet ICHD-3 migraine criteria
+- Average duration 6-8 hours per headache day
+
+Prior Preventive Therapies (all failed or intolerable):
+1. Topiramate 100 mg daily x 4 months — discontinued due to cognitive side
+   effects ("word-finding difficulty"), partial response (30% reduction in
+   migraine days).
+2. Propranolol 80 mg BID x 3 months — discontinued due to fatigue and
+   exercise intolerance. Minimal efficacy.
+3. Amitriptyline 50 mg QHS x 3 months — discontinued due to weight gain
+   (8 lbs) and morning sedation. Modest benefit (~25% reduction).
+
+Current Acute Treatment:
+- Sumatriptan 100 mg PRN, uses approximately 6 days/month
+- Ibuprofen 400 mg PRN, uses approximately 4 days/month
+- No opioid or barbiturate use
+
+Medical History:
+- Hypertension, well-controlled on lisinopril 10 mg daily (BP 128/78 at
+  last visit)
+- No history of MI, stroke, or TIA
+- No hepatic or renal impairment
+- Not pregnant, using oral contraceptive pill
+
+Other:
+- No prior use of CGRP-targeted therapy
+- No known drug allergies
+- MIDAS score: 42 (Grade IV — severe disability)
+- HIT-6 score: 68 (severe impact)
+- Compliant with headache diary for past 6 weeks

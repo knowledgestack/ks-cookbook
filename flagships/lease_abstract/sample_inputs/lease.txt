@@ -1,0 +1,5 @@
+retail_lease_pinetree_crossing
+# The first line above is the name of the document inside the corpus folder
+# to abstract. Change it to ``office_lease_evergreen_tower`` to abstract the
+# shorter office lease instead. Everything after this line is ignored by the
+# CLI — the agent reads the lease text straight from the KS tenant.

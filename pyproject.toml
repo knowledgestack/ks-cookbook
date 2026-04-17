@@ -1,0 +1,56 @@
+[project]
+name = "knowledgestack-cookbook"
+version = "0.1.0"
+description = "Reference agent implementations on top of Knowledge Stack."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+
+[tool.uv.workspace]
+members = [
+    "mcp-python",
+    "flagships/research_brief",
+    "flagships/csv_enrichment",
+    "flagships/compliance_questionnaire",
+    "flagships/credit_memo_drafter",
+    "flagships/contract_obligation_extractor",
+    "flagships/rev_rec_memo",
+    "flagships/prior_auth_letter",
+    "flagships/claim_adjudication_memo",
+    "flagships/lease_abstract",
+    "flagships/earnings_risk_analyzer",
+    "flagships/msa_redline_vs_playbook",
+    "flagships/audit_workpaper_drafter",
+    "flagships/loan_covenant_monitor",
+    "flagships/kyc_onboarding_review",
+    "flagships/clinical_trial_eligibility",
+    "flagships/subrogation_opportunity_review",
+    "flagships/zoning_compliance_check",
+    "flagships/rfp_first_draft",
+    "flagships/adverse_event_narrative",
+    "flagships/nerc_compliance_evidence",
+    "flagships/foia_response_drafter",
+    "flagships/tax_position_memo",
+    "flagships/employee_handbook_qa",
+    "flagships/sales_battlecard",
+    "flagships/incident_runbook_lookup",
+    "flagships/job_description_generator",
+    "flagships/api_doc_generator",
+    "flagships/insurance_policy_comparison",
+    "flagships/grant_compliance_checker",
+    "flagships/privacy_impact_assessment",
+    "flagships/sow_scope_validator",
+    "flagships/release_notes_generator",
+]
+
+[tool.uv.sources]
+# Pin ksapi to the local generated SDK for dev. When knowledgestack-mcp is
+# published to PyPI, ksapi will need to be published (or vendored) as well.
+ksapi = { path = "../ks-backend/codegen/ks-backend-python", editable = true }
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]

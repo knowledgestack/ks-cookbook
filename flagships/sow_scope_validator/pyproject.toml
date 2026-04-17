@@ -1,0 +1,21 @@
+[project]
+name = "ks-cookbook-sow-validator"
+version = "0.1.0"
+description = "Proposed SOW → completeness check against template + methodology."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai[mcp]>=0.0.14",
+    "pydantic>=2.6",
+]
+
+[project.scripts]
+ks-cookbook-sow-validator = "sow_scope_validator.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sow_scope_validator"]

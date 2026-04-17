@@ -1,0 +1,61 @@
+"""pydantic-ai agent that drafts a structured credit memo grounded in KS corpus."""
+
+
+import os
+
+from pydantic_ai import Agent
+from pydantic_ai.mcp import MCPServerStdio
+
+from credit_memo_drafter.schema import CreditMemo
+
+SYSTEM_TEMPLATE = """\
+You are a commercial credit analyst at Riverway Bank. Draft a credit memo for the
+loan request below, grounded strictly in the documents available under the
+CORPUS folder via MCP tools.
+
+MANDATORY workflow:
+1. Call ``list_contents`` with ``folder_id=__CORPUS_FOLDER_ID__`` to enumerate
+   the available documents (credit policy, borrower financials, borrower
+   business plan, industry benchmarks).
+2. Call ``read`` on EACH relevant document, using the UUID ``path_part_id``
+   value from the list_contents response. Do NOT use document names as UUIDs.
+3. The ``read`` output contains ``[chunk:<uuid>]`` markers after each passage.
+   Every ``Citation.chunk_id`` you emit MUST be copied verbatim from one of
+   those markers.
+4. Produce the structured ``CreditMemo``:
+   - ``risk_rating`` on the 1-9 scale defined in the credit policy.
+   - ``risks`` must identify both quantitative (leverage, DSCR, concentration)
+     and qualitative (management, market, regulatory) factors.
+   - ``covenants`` must be specific and reference the bank's policy.
+   - Flag any underwriting standards the deal DOES NOT meet under
+     ``policy_exceptions``.
+
+Do not fabricate numbers. If a figure is not in the financials, say so and
+lower the confidence of that risk factor.
+"""
+
+
+async def draft_memo(
+    *, borrower: str, loan_amount: int, corpus_folder_id: str, model: str,
+) -> CreditMemo:
+    server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
+    server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
+    mcp = MCPServerStdio(
+        command=server_cmd, args=server_args,
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
+    )
+    agent = Agent(
+        model=f"openai:{model}", mcp_servers=[mcp],
+        system_prompt=SYSTEM_TEMPLATE.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
+        output_type=CreditMemo,
+    )
+    prompt = (
+        f"Loan request: ${loan_amount:,} senior secured term facility for "
+        f"{borrower}. Draft the credit memo."
+    )
+    async with agent.run_mcp_servers():
+        result = await agent.run(prompt)
+    return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

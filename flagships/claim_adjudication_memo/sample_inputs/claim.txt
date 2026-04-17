@@ -1,0 +1,40 @@
+Claim Number: ACME-HO-2026-0459
+Date of Loss: 2026-03-14 (approximately 7:40 PM)
+Insured: Robert Nguyen and Linh Nguyen
+Policy: Acme Insurance Homeowners HO-3, active at date of loss, $500,000
+  Coverage A limit, $2,500 all-perils deductible.
+Property: 2215 Alderwood Lane, Redmond, WA 98052.
+
+Loss narrative (from FNOL taken 2026-03-14 at 8:30 PM):
+
+The insureds were preparing dinner when a pan of oil on the gas range ignited.
+Mr. Nguyen attempted to smother the fire with a lid; he was unsuccessful and
+the flames spread to the adjacent cabinetry and rangehood. Mrs. Nguyen called
+911 at 7:44 PM. Redmond Fire Department arrived at 7:51 PM and extinguished
+the fire by 8:06 PM using foam and water. No injuries.
+
+Damage observed by first-response adjuster (photos on file):
+  - Significant fire and soot damage to the kitchen cabinetry, range hood,
+    and approximately 90 square feet of ceiling drywall.
+  - Water damage from fire-suppression efforts to the kitchen floor
+    (hardwood), extending approximately 8 feet into the adjacent dining room.
+  - Smoke damage throughout the main floor of the residence; HVAC system
+    was running at time of fire.
+  - No damage to the exterior of the structure or to detached garage.
+
+Contractor estimate: $45,000 total.
+  - $22,000 cabinetry + range + installation.
+  - $9,500 drywall, paint, and ceiling repair.
+  - $8,000 floor replacement.
+  - $5,500 professional smoke / soot remediation (duct cleaning, whole-home
+    ozone treatment).
+
+Insured duties so far:
+  - Prompt notice given.
+  - 911 / fire department notified at time of loss.
+  - Insureds have covered the damaged area with a tarp and turned off the
+    gas to the range to prevent further loss.
+  - Proof of loss has not yet been submitted.
+
+Task: Draft a coverage-analysis memorandum consistent with SOP CLM-2026-R2
+for this first-party property claim.

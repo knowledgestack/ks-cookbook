@@ -1,0 +1,4 @@
+company,query
+Acme,Use the find tool to locate a document named 'complex'. Then summarize what you found (name and location).
+Globex,Use the find tool to locate any document whose name contains 'document_0'. Return the first match.
+Initech,List the folders at the root of the knowledge base. Return the first three folder names.

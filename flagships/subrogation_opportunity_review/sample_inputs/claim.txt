@@ -1,0 +1,65 @@
+FIRST NOTICE OF LOSS — Claim #HO-2026-04281
+
+Date of Loss: March 15, 2026
+Date Reported: March 16, 2026
+Insured: Robert & Catherine Pemberton
+Policy: Acme Insurance HO-3, Policy #HO3-2025-88421
+Property: 1847 Magnolia Drive, Baton Rouge, LA 70808
+Coverage A Limit: $425,000 (replacement cost)
+Deductible: $2,500
+
+LOSS NARRATIVE:
+
+On March 15, 2026 at approximately 2:15 PM, the insured's dwelling sustained
+significant water damage when a pressurized hot water supply line burst in the
+upstairs bathroom. The supply line was part of a tankless water heater system
+manufactured by AquaFlow Systems Inc. (Model TH-200X, installed September 2024
+by licensed plumber Jim's Plumbing & Heating LLC).
+
+The burst line released water for approximately 45 minutes before the insured
+arrived home and shut off the main water valve. Water penetrated the second-floor
+bathroom, hallway, and guest bedroom, and caused extensive damage to the
+first-floor kitchen ceiling, cabinetry, and hardwood flooring directly below.
+
+Preliminary damage assessment:
+- Second floor: bathroom subfloor replacement, drywall replacement in hallway
+  and guest bedroom, carpet replacement in guest bedroom. Estimated $38,000.
+- First floor: kitchen ceiling replacement, cabinet refinishing/replacement,
+  hardwood floor replacement in kitchen and dining area. Estimated $52,000.
+- Personal property (Coverage C): damaged electronics, furniture, clothing.
+  Estimated $12,000.
+- Additional living expenses (Coverage D): family of 4 displaced for estimated
+  3-4 weeks during repairs. Estimated $6,000.
+
+Total estimated loss: $108,000.
+
+THIRD-PARTY INFORMATION:
+
+The insured reports that Jim's Plumbing & Heating LLC installed the AquaFlow
+TH-200X unit and all supply lines in September 2024. The insured states the
+plumber used flexible braided stainless steel supply lines rated for the
+system's operating pressure.
+
+An independent plumbing inspector (retained by the insured's own contractor)
+examined the failed supply line on March 17, 2026 and noted that the crimp
+fitting on the burst line showed signs of improper installation — the fitting
+was not fully seated and showed tool marks inconsistent with the manufacturer's
+installation specifications. The inspector's preliminary opinion is that the
+failure was caused by improper crimping during installation, not a product
+defect.
+
+The AquaFlow TH-200X unit itself appears to be functioning normally and is not
+believed to be the cause of the failure.
+
+Jim's Plumbing & Heating LLC is a licensed contractor (LA License #PLB-44891)
+and is believed to carry commercial general liability insurance.
+
+ADJUSTER NOTES:
+
+Coverage appears straightforward under HO-3 Coverage A (open-peril, water
+damage from plumbing system is covered). No exclusions appear to apply — this
+is not a flood, not gradual seepage, and not wear-and-tear. Claim assigned
+to adjuster L. Martinez for field inspection scheduled March 20, 2026.
+
+Reserve recommendation: $110,000 (moderate-to-severe tier per SOP CLM-2026-R2,
+supervisor review required).

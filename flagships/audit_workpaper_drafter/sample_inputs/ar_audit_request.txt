@@ -1,0 +1,4 @@
+Draft an audit workpaper for Accounts Receivable.
+The trial balance shows AR at $1,240,000 as of December 31, 2025.
+Perform confirmation, analytical procedures, and aging analysis.
+The client is Acme SaaS, Inc. Period: FY2025.

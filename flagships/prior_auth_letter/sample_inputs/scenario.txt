@@ -1,0 +1,30 @@
+Member: Jane Doe
+DOB: 1983-07-22
+Member ID: ACME-HP-449201
+
+Ordering Provider: Dr. Priya Patel, MD (Neurology), NPI 1234567893
+
+Requested service/drug:
+  - Erenumab 70 mg subcutaneous injection, monthly (CGRP monoclonal antibody)
+
+Clinical scenario:
+  42-year-old woman with an 8-year history of chronic migraine, currently
+  experiencing 18 migraine headache days per month averaged over the past
+  three months. Migraines are severe, often with nausea, photophobia, and
+  phonophobia, and typically last 12-24 hours. Headaches have significantly
+  impaired her ability to work; she has missed 11 work days in the past 90
+  days. Neurologic exam is otherwise non-focal.
+
+Prior preventive therapies tried:
+  - Topiramate 100 mg/day for 12 weeks — discontinued due to cognitive
+    side effects (word-finding difficulty) at week 10.
+  - Propranolol 80 mg/day for 10 weeks — stopped due to symptomatic
+    hypotension and exercise intolerance.
+  - Amitriptyline 50 mg nightly for 9 weeks — inadequate efficacy
+    (no reduction in migraine days) and significant daytime sedation.
+
+Prior imaging: Brain MRI (2025-11-02) — normal.
+
+Ask: Please draft a prior-authorization / appeal letter grounded in the
+Acme Health Plan medical-policy bulletin for specialty-drug UM, and
+following the structure required by the Provider Appeal Style Guide.
