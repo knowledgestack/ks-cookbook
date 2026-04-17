@@ -1454,7 +1454,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.27" },
-    { name = "ksapi", editable = "../ks-backend/codegen/ks-backend-python" },
+    { name = "ksapi", specifier = ">=0.1.0" },
     { name = "mcp", specifier = ">=1.2" },
     { name = "pydantic", specifier = ">=2.6" },
     { name = "pyright", marker = "extra == 'dev'", specifier = ">=1.1" },
@@ -1770,7 +1770,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ksapi", editable = "../ks-backend/codegen/ks-backend-python" },
+    { name = "ksapi", specifier = ">=0.1.0" },
     { name = "openai", specifier = ">=1.40" },
     { name = "pydantic", specifier = ">=2.6" },
 ]
@@ -1969,7 +1969,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ksapi", editable = "../ks-backend/codegen/ks-backend-python" },
+    { name = "ksapi", specifier = ">=0.1.0" },
     { name = "openai", specifier = ">=1.40" },
     { name = "pydantic", specifier = ">=2.6" },
 ]
@@ -2034,20 +2034,16 @@ requires-dist = [
 [[package]]
 name = "ksapi"
 version = "1.67.0"
-source = { editable = "../ks-backend/codegen/ks-backend-python" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "python-dateutil" },
     { name = "typing-extensions" },
     { name = "urllib3" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "pydantic", specifier = ">=2.11" },
-    { name = "python-dateutil", specifier = ">=2.8.2" },
-    { name = "typing-extensions", specifier = ">=4.7.1" },
-    { name = "urllib3", specifier = ">=2.1.0,<3.0.0" },
+sdist = { url = "https://files.pythonhosted.org/packages/1c/f7/ec0918d8c18a3c1230f489590826b7fe42bd76302b5e790dea68c22f852a/ksapi-1.67.0.tar.gz", hash = "sha256:bd81eea33a9db8f2fc05bc799bdd9bbc7a3d950357a89133f27f5771695c77cf", size = 180212, upload-time = "2026-03-31T05:33:41.255Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/7e/c877fc12f6e7f00e14b2bec79f6cafb2afc8cd5bbd13bc9ab7e41b1b760d/ksapi-1.67.0-py3-none-any.whl", hash = "sha256:62065b089d46b0fecc6dbc8c204384967b58ab6b78b2290bc3159a1cb8a7bac1", size = 363720, upload-time = "2026-03-31T05:33:39.7Z" },
 ]
 
 [[package]]

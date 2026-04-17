@@ -43,11 +43,6 @@ members = [
     "flagships/release_notes_generator",
 ]
 
-[tool.uv.sources]
-# Pin ksapi to the local generated SDK for dev. When knowledgestack-mcp is
-# published to PyPI, ksapi will need to be published (or vendored) as well.
-ksapi = { path = "../ks-backend/codegen/ks-backend-python", editable = true }
-
 [tool.ruff]
 line-length = 88
 target-version = "py311"

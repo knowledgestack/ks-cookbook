@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `ks-cookbook` is a **uv workspace** of 32 flagship agent demos plus a set of lightweight recipes that sit on top of Knowledge Stack. Every flagship uses the same pattern: connect to `knowledgestack-mcp` (stdio), enumerate a corpus folder, read chunks, produce structured output with real `[chunk:<uuid>]` citations, and write a file artifact (`.md` / `.docx` / `.xlsx`).
 
-The `ksapi` dependency is pinned to the **local generated SDK** at `../ks-backend/codegen/ks-backend-python` (see `[tool.uv.sources]` in `pyproject.toml`); the sibling `ks-backend` checkout must exist for `uv sync` to resolve.
+The `ksapi` dependency resolves from **PyPI** (`ksapi>=0.1.0`). No sibling checkout of `ks-backend` is required. If you want to develop against the local generated SDK instead, add a `[tool.uv.sources]` override pointing at `../ks-backend/codegen/ks-backend-python` in your own working copy — don't commit it.
 
 ## Commands
 
@@ -70,7 +70,7 @@ From `CONTRIBUTING.md`, enforced by CI:
 
 ## Gotchas
 
-- `ksapi` resolves via a local path. If `uv sync` fails, check that `../ks-backend/codegen/ks-backend-python` exists.
+- `ksapi` resolves from PyPI. If you need to test against an unreleased SDK, temporarily add a `[tool.uv.sources]` override in a local-only edit to `pyproject.toml` — do not commit it.
 - `chunk_id` UUIDs **must** come from `read` output markers, not be synthesized — multiple system prompts repeat this and CI-style reviewers will reject fabricated citations.
 - `make test` only runs the MCP package tests; flagships are not unit-tested (non-deterministic LLM output). Use `--help` as a smoke test.
 - Generated artifacts (`credit-memo.md`, `filled.xlsx`, `brief.docx`, etc.) are intentionally checked into the repo root as reference outputs. `make clean` removes them.
