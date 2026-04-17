@@ -26,18 +26,14 @@ make install-dev          # setup + install pre-commit hooks
 make lint                 # ruff check . (line-length 100, ignores E501/UP042)
 make fix                  # ruff check . --fix (imports, unused, etc.)
 make format               # ruff format .
-make test                 # pytest mcp-python/tests/ only
+make test                 # reminder — MCP server tests live in the ks-mcp repo
 make help                 # list every demo target
 make demo-<name>          # run a single flagship (e.g. demo-credit-memo)
 make recipe NAME=<dir> ARGS='...'   # run a recipe from recipes/<dir>/recipe.py
 make clean                # delete generated sample outputs from every flagship
 ```
 
-Run a single MCP test:
-
-```bash
-uv run --package knowledgestack-mcp --extra dev pytest mcp-python/tests/<file>::<test> -v
-```
+MCP server tests live in https://github.com/knowledgestack/ks-mcp — `ks-cookbook` no longer ships the server source.
 
 Run a flagship directly (bypasses Makefile defaults):
 
@@ -51,10 +47,10 @@ uv run --package ks-cookbook-<slug> ks-cookbook-<slug> --help
 
 ### Workspace layout
 
-- `pyproject.toml` at the root defines the uv workspace. Every flagship and `mcp-python` is a member; each has its own `pyproject.toml`, `src/<module>/`, and `[project.scripts]` entrypoint (`ks-cookbook-<slug>`).
+- `pyproject.toml` at the root defines the uv workspace. Every flagship is a member; each has its own `pyproject.toml`, `src/<module>/`, and `[project.scripts]` entrypoint (`ks-cookbook-<slug>`).
 - `flagships/<name>/src/<module>/` — each flagship follows the same four-file shape: `__main__.py` (CLI), `agent.py` (prompt + MCP wiring), `schema.py` (pydantic output contract), `sample_inputs/`.
 - `recipes/` — short (<100 LOC) single-file patterns. `recipes/_shared/mcp_client.py` exposes `ks_mcp_session()`; recipes use it rather than constructing `MCPServerStdio` by hand.
-- `mcp-python/` — the `knowledgestack-mcp` server package. The only MCP server flagships and recipes connect to.
+- The MCP server itself (`knowledgestack-mcp`) lives in [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp); the Python SDK (`ksapi`) lives in [knowledgestack/ks-sdk](https://github.com/knowledgestack/ks-sdk). The cookbook consumes both from PyPI.
 
 ### Flagship runtime flow
 

@@ -29,5 +29,5 @@ jobs:
       - name: Lint
         run: uv run ruff check .
 
-      - name: Test MCP server (mocked)
-        run: uv run --package knowledgestack-mcp --extra dev pytest mcp-python/tests/ -v
+      - name: MCP server tests (run in ks-mcp repo)
+        run: echo "MCP server moved to https://github.com/knowledgestack/ks-mcp — tests run there."
