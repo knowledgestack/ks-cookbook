@@ -8,7 +8,6 @@ requires-python = ">=3.11"
 
 [tool.uv.workspace]
 members = [
-    "mcp-python",
     "flagships/research_brief",
     "flagships/csv_enrichment",
     "flagships/compliance_questionnaire",

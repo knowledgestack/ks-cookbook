@@ -54,7 +54,7 @@ We don't unit-test every recipe (they're short, LLMs are non-deterministic). Ins
 
 ## Non-recipe contributions
 
-- **New MCP tools** → PR against `mcp-python/src/ks_mcp/tools/`. Must include a respx-mocked test.
+- **New MCP tools** → PR against [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp). Must include a respx-mocked test.
 - **New flagship demos** (longer end-to-end apps) → `flagships/<name>/` with its own `pyproject.toml`, README, and `Makefile` target.
 - **Bug fixes**: always welcome.
 

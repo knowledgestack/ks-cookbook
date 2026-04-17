@@ -55,8 +55,10 @@ fix: ## Auto-fix lint issues across the workspace
 format: ## Format code with ruff
 	@uv run ruff format .
 
-test: ## Run unit tests (no live KS needed)
-	@uv run --package knowledgestack-mcp --extra dev pytest mcp-python/tests/ -v
+test: ## MCP server tests live in the ks-mcp repo — this target is a reminder.
+	@echo "This repo no longer ships the MCP server."
+	@echo "MCP tests: https://github.com/knowledgestack/ks-mcp"
+	@echo "Flagship smoke tests: \`uv run --package ks-cookbook-<slug> ks-cookbook-<slug> --help\`"
 
 install-dev: install ## Install dev tooling + pre-commit hooks
 	@uv run pre-commit install 2>/dev/null || echo "(pre-commit not installed; skipping hook setup)"

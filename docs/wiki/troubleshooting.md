@@ -57,7 +57,7 @@ The agent ran out of token budget before emitting the structured output. Either 
 Run `make lint` locally; our CI is ruff with `E,F,I,W,UP,B` at line-length 88. Use `uv run ruff check --fix .` to auto-fix most issues.
 
 **`make test` fails without touching MCP code**
-`make test` only runs `mcp-python/tests/`. If it fails on a fresh checkout, it's probably a test environment issue — try `uv sync --all-packages` and re-run.
+`make test` is now a reminder pointing at [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp) — MCP server tests live there. Flagships aren't unit-tested (non-deterministic LLM output); use `uv run --package ks-cookbook-<slug> ks-cookbook-<slug> --help` as a smoke test.
 
 ## Cost and quota
 

@@ -248,10 +248,12 @@ flagships/<name>/
 
 recipes/
   INDEX.md               # lightweight patterns and starter recipes
-
-mcp-python/
-  README.md              # Python MCP server package details
 ```
+
+The MCP server (`knowledgestack-mcp`) and the Python SDK (`ksapi`) now live in their own repos:
+
+- **[knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp)** — MCP server package; consumed here via `uvx knowledgestack-mcp`.
+- **[knowledgestack/ks-sdk](https://github.com/knowledgestack/ks-sdk)** — Python SDK (`ksapi`); consumed here from PyPI.
 
 There are currently 32 flagship packages in the workspace and each one is independently runnable.
 
@@ -411,7 +413,8 @@ Useful docs:
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [INDUSTRIES.md](INDUSTRIES.md)
 - [recipes/INDEX.md](recipes/INDEX.md)
-- [mcp-python/README.md](mcp-python/README.md)
+- [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp) — MCP server repo
+- [knowledgestack/ks-sdk](https://github.com/knowledgestack/ks-sdk) — Python SDK (`ksapi`) repo
 
 ## Developer docs
 
