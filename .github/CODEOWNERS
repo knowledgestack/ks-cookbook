@@ -1,4 +1,10 @@
 # Knowledge Stack Cookbook — Code Owners
-# PRs to main require approval from a KS team member.
+#
+# Every PR automatically requests review from @knowledgestack/ks-admins.
+# Branch protection on `main` requires at least one approving review from
+# a code owner before merge.
+#
+# Add more granular entries below this line if a subtree needs a different
+# reviewer set; later entries override earlier ones (standard GitHub rules).
 
-* @arnavgoel
+*       @knowledgestack/ks-admins
