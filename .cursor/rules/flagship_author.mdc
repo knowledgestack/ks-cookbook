@@ -1,0 +1,118 @@
+---
+description: How to author a flagship in ks-cookbook
+alwaysApply: false
+---
+
+# Flagship author rule
+
+Applies when you're adding or editing anything under `flagships/<name>/`.
+
+## File layout (enforced)
+
+```
+flagships/<name>/
+├── pyproject.toml            # [project.scripts] entrypoint ks-cookbook-<slug>
+├── README.md                 # title, tags, seed-data block, walkthrough
+├── src/<module>/
+│   ├── __main__.py           # argparse → agent.draft_*()
+│   ├── agent.py              # pydantic-ai Agent + system prompt + MCP wiring
+│   └── schema.py             # pydantic output model with Citation field(s)
+└── sample_inputs/            # at least one concrete example input
+```
+
+Don't create additional top-level files inside the flagship unless there's a specific reason.
+
+## README template (required sections, in this order)
+
+```markdown
+# <Vertical>: <Flagship Name>
+
+**Tags:** `vertical` `subdomain` `framework`
+
+<one-paragraph what-and-why>
+
+## Seed data required
+
+This demo reads from a folder in your Knowledge Stack tenant. You need to create
+that folder and upload the expected documents **before** running.
+
+**Expected corpus:** <one-line description>
+
+Set-up steps:
+1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
+2. Create a folder in the dashboard and copy its folder ID.
+3. Upload the documents described above.
+4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
+5. Run: `<CORPUS_FOLDER_ID=<id> make demo-<slug>>`
+
+Full corpus matrix: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+
+## Run
+<make command + override examples>
+
+## Framework
+<pydantic-ai | LangGraph | raw-OpenAI | raw-Anthropic | CrewAI | …>
+
+## Bring your own data
+<short note on pointing the demo at a different folder>
+```
+
+## Agent wiring (copy this shape)
+
+```python
+from pydantic_ai import Agent
+from pydantic_ai.mcp import MCPServerStdio
+from .schema import Memo
+
+SYSTEM_TEMPLATE = """..."""  # include the four prompt invariants
+
+async def draft(*, corpus_folder_id: str, model: str, ...) -> Memo:
+    mcp = MCPServerStdio(
+        command=os.environ.get("KS_MCP_COMMAND", "uvx"),
+        args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
+        env={"KS_API_KEY": os.environ["KS_API_KEY"],
+             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+    )
+    agent = Agent(
+        model=f"openai:{model}",
+        mcp_servers=[mcp],
+        system_prompt=SYSTEM_TEMPLATE.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
+        output_type=Memo,
+    )
+    async with agent.run_mcp_servers():
+        result = await agent.run(user_prompt)
+    return result.output
+```
+
+## Schema shape (every flagship)
+
+- A top-level pydantic model as `output_type`.
+- Every non-trivial claim has a `Citation` field or a `list[Citation]`.
+- `Citation.chunk_id: UUID`, `Citation.quote: str` (max_length ≤ 400).
+- Reviewers reject output models that let the agent emit claims without citations.
+
+## Sample outputs
+
+Outputs land in `flagships/<name>/sample_output.<ext>` (md/docx/xlsx/csv). The Makefile already wires this — don't redirect output elsewhere.
+
+## Makefile entry (required)
+
+```makefile
+demo-<slug>: check-env ## <One-line description>
+	@uv run --package ks-cookbook-<slug> ks-cookbook-<slug> \
+		--corpus-folder $${CORPUS_FOLDER_ID:-<seeded-sample-uuid>} \
+		--out flagships/<name>/sample_output.md
+	@echo "Output written to: $(abspath flagships/<name>/sample_output.md)"
+```
+
+## Checklist before opening a PR
+
+- [ ] `make lint` passes (ruff, 100-char line length).
+- [ ] Runs end-to-end with `make demo-<slug>` against the seeded sample corpus.
+- [ ] README has: title, tags, seed-data block, run command.
+- [ ] `sample_inputs/` has at least one concrete example.
+- [ ] Output is a file artifact at `flagships/<name>/sample_output.<ext>`, not stdout.
+- [ ] System prompt includes the four invariants (see `python_clean_code.mdc`).
+- [ ] Added the package to `[tool.uv.workspace].members` in the root `pyproject.toml`.
+- [ ] Added the flagship to the root README's "Flagships by vertical" catalog with tags.
+- [ ] Added the flagship to `docs/wiki/seed-data.md` matrix.

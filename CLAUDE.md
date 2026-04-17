@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Style rules (load these first)
+
+Before editing anything, read the cursor rules that mirror ks-backend's clean-code convention:
+
+- [`.cursor/rules/python_clean_code.mdc`](.cursor/rules/python_clean_code.mdc) — SRP, function-size limits, forbidden smells, the four prompt invariants.
+- [`.cursor/rules/flagship_author.mdc`](.cursor/rules/flagship_author.mdc) — file layout, README template, agent wiring, schema shape, Makefile entry, PR checklist for flagships.
+- [`.cursor/rules/recipe_author.mdc`](.cursor/rules/recipe_author.mdc) — ≤100-LOC cap, frontmatter, shared session helper, smoke-test bar.
+
 ## What this repo is
 
 `ks-cookbook` is a **uv workspace** of 32 flagship agent demos plus a set of lightweight recipes that sit on top of Knowledge Stack. Every flagship uses the same pattern: connect to `knowledgestack-mcp` (stdio), enumerate a corpus folder, read chunks, produce structured output with real `[chunk:<uuid>]` citations, and write a file artifact (`.md` / `.docx` / `.xlsx`).
@@ -14,12 +22,15 @@ All targets assume `.env` with `KS_API_KEY` + (`OPENAI_API_KEY` or `ANTHROPIC_AP
 
 ```bash
 make setup                # uv sync --all-packages + check-env
-make lint                 # ruff check . (rules: E,F,I,W,UP,B; line-length 88)
+make install-dev          # setup + install pre-commit hooks
+make lint                 # ruff check . (line-length 100, ignores E501/UP042)
+make fix                  # ruff check . --fix (imports, unused, etc.)
+make format               # ruff format .
 make test                 # pytest mcp-python/tests/ only
 make help                 # list every demo target
 make demo-<name>          # run a single flagship (e.g. demo-credit-memo)
 make recipe NAME=<dir> ARGS='...'   # run a recipe from recipes/<dir>/recipe.py
-make clean                # delete generated artifacts in repo root
+make clean                # delete generated sample outputs from every flagship
 ```
 
 Run a single MCP test:
