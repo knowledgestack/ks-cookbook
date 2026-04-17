@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from employee_handbook_qa.agent import run_agent
-from employee_handbook_qa.schema import HandbookAnswer
 
 
 def main() -> None:

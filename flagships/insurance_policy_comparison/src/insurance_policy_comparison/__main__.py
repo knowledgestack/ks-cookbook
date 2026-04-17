@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from insurance_policy_comparison.agent import run_agent
-from insurance_policy_comparison.schema import PolicyComparison
 
 
 def main() -> None:

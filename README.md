@@ -1,52 +1,125 @@
 # Knowledge Stack Cookbook
 
-Build production-style, citation-backed enterprise agents on top of Knowledge Stack.
+> **Focus on agents. We handle document intelligence.**
+>
+> A developer acceleration layer for enterprise RAG + agent pipelines.
 
-This repo contains 32 runnable flagship demos and a growing set of lightweight recipes across banking, legal, accounting, healthcare, insurance, real estate, sales, HR, engineering, government, pharma, and energy. Each flagship is designed to show the same core pattern:
+Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, and citation tracking — exposed through a stable **MCP** surface that plugs into [LangChain](https://www.langchain.com/), [LangGraph](https://langchain-ai.github.io/langgraph/), [CrewAI](https://www.crewai.com/), [Temporal](https://temporal.io/), [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), [pydantic-ai](https://ai.pydantic.dev/), [Claude Desktop](https://claude.ai/download), [Cursor](https://cursor.com/), and anything else that speaks [Model Context Protocol](https://modelcontextprotocol.io/).
 
-- retrieve permission-filtered source material from Knowledge Stack
-- force structured output through a schema
-- attach real chunk citations to non-trivial claims
-- write a usable artifact such as `.md`, `.docx`, or `.xlsx`
-
-[Give the repo a star](https://github.com/knowledgestack/ks-cookbook) if this is useful. Starring helps more builders find the project and signals which flagships and recipes we should expand next.
+This repo is **32 production-style flagship agents + lightweight recipes** showing how to build enterprise RAG pipelines in minutes instead of weeks. Verticals covered: banking, finance, legal, accounting, tax, healthcare, insurance, real estate, sales, HR, engineering, government, pharma, energy.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![Flagships](https://img.shields.io/badge/flagships-32-green)](https://github.com/knowledgestack/ks-cookbook/tree/main/flagships)
+[![MCP compatible](https://img.shields.io/badge/MCP-compatible-purple)](https://modelcontextprotocol.io/)
+[![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](https://www.langchain.com/)
+[![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](https://langchain-ai.github.io/langgraph/)
+[![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](https://www.crewai.com/)
+[![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](https://temporal.io/)
+
+⭐ **[Star this repo](https://github.com/knowledgestack/ks-cookbook)** if you're building enterprise AI — it signals which flagships and frameworks to expand next.
 
 ## Why this repo exists
 
-Most AI demos stop at "here is a chat response." Enterprise teams need something stricter:
+If you're already using LangChain, LangGraph, CrewAI, or Temporal, you've noticed the same thing: the orchestration tooling is mature, but **enterprise document infrastructure is still something every team rebuilds from scratch**.
 
-- outputs that can be reviewed by legal, finance, compliance, operations, or engineering
-- citations that point back to the underlying source material
-- permission-aware retrieval so the same agent behaves differently for different users
+Most AI demos stop at "here is a chat response." Enterprise teams need stricter:
+
+- outputs reviewable by legal, finance, compliance, operations, or engineering
+- citations that point back to source material (chunk-level, verifiable)
+- permission-aware retrieval — the same agent behaves differently for different users
+- version-aware reads so audits reference the document as of a specific date
 - patterns that are easy to copy into real internal tooling
 
-Knowledge Stack handles the data layer. This cookbook shows how to build the agent layer on top.
+Knowledge Stack provides the enterprise document intelligence layer. This cookbook shows how to plug that layer directly into your agent workflows.
 
-## What Knowledge Stack does
+## What Knowledge Stack manages for your agent
 
-Knowledge Stack is a permission-aware retrieval layer for enterprise agents. You upload your documents, organize them into folders, assign access controls, and then let your agent read only what the current user is allowed to see.
+Instead of building this yourself:
 
-The demos in this repo use the `knowledgestack-mcp` server to expose a stable read-side tool surface to agent frameworks.
+- document ingestion pipelines (PDF, DOCX, HTML, Markdown, …)
+- chunk storage and structured navigation
+- permission filtering and ACLs
+- version-aware retrieval
+- citation grounding (chunk-level UUIDs)
+- folder-level access control per user
+- structured document read surface (folders → documents → sections → chunks)
 
-```text
-Your agent
-  -> knowledgestack-mcp
-  -> Knowledge Stack API
-  -> permission-filtered documents and chunks
-  -> structured output with citations
+Knowledge Stack exposes these as APIs and **MCP tools**. So your team focuses on:
+
+- agent workflows
+- orchestration logic (LangGraph nodes, CrewAI crews, Temporal activities)
+- output schemas
+- automation pipelines
+- business logic
+
+## Pipeline mental model
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│  Agent logic      (LangChain / LangGraph / CrewAI / Temporal │
+│                    / OpenAI Agents SDK / pydantic-ai)        │
+└────────────────────────────┬─────────────────────────────────┘
+                             ↓
+┌──────────────────────────────────────────────────────────────┐
+│  Knowledge Stack MCP tools  (read, search, list_contents, …) │
+└────────────────────────────┬─────────────────────────────────┘
+                             ↓
+┌──────────────────────────────────────────────────────────────┐
+│  Permission-aware retrieval   +   version-aware reads        │
+└────────────────────────────┬─────────────────────────────────┘
+                             ↓
+┌──────────────────────────────────────────────────────────────┐
+│  Chunk citations  →  schema-enforced output  →  .md/.docx    │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-This means you can keep your preferred orchestration layer and still get:
+Knowledge Stack sits between your agent runtime and your document corpus. Your orchestration layer doesn't change.
 
-- tenant isolation
-- per-user and per-folder visibility rules
-- version-aware retrieval
-- document, section, and chunk-level reads
-- grounded outputs that cite real chunk IDs
+## Build enterprise RAG faster
+
+Typical enterprise RAG requires building:
+
+| You would normally build | With Knowledge Stack you skip to |
+|---|---|
+| ingestion pipelines + chunking + metadata | ✅ done — upload and go |
+| ACL filtering per user / group / folder | ✅ enforced on every read |
+| version pinning + historical retrieval | ✅ version-aware by default |
+| citation-grounded output tracking | ✅ every chunk has a UUID |
+| schema-enforced agent outputs | ✅ patterns shown in this cookbook |
+
+You start directly at the agent layer.
+
+## Keep your existing agent framework
+
+Knowledge Stack does not replace your agent runtime. Use it with whatever you already run:
+
+- **[LangChain](https://www.langchain.com/)** / **[langchain-mcp-adapters](https://github.com/langchain-ai/langchain-mcp-adapters)** — see [`flagships/csv_enrichment`](flagships/csv_enrichment/) for a LangGraph example.
+- **[LangGraph](https://langchain-ai.github.io/langgraph/)** — used by the adverse-event narrative, audit workpaper, and tax memo flagships.
+- **[CrewAI](https://www.crewai.com/)** — plug `knowledgestack-mcp` in as a shared tool across a crew.
+- **[Temporal](https://temporal.io/)** — call MCP tools from activities for durable, retriable enterprise workflows.
+- **[OpenAI Agents SDK](https://github.com/openai/openai-agents-python)** — native MCP support.
+- **[pydantic-ai](https://ai.pydantic.dev/)** — used by most flagships in this repo.
+- **[Claude Desktop](https://claude.ai/download)** / **[Cursor](https://cursor.com/)** — add KS as an MCP server in config; your assistant gets tenant-scoped retrieval.
+- **Custom Python agents** — speak [MCP](https://modelcontextprotocol.io/) directly.
+
+It replaces the hardest part of enterprise RAG: **document infrastructure**.
+
+## What this repo teaches
+
+Each flagship shows how to:
+
+1. connect an agent to Knowledge Stack via MCP
+2. retrieve permission-filtered documents
+3. enforce schema-constrained output
+4. attach chunk-level citations
+5. generate a real artifact (`.md` / `.docx` / `.xlsx` / `.csv`)
+
+These are production agent patterns — not chat toys. Recipes (under [`recipes/`](recipes/)) are ≤100 LOC single-file versions of the same ideas across LangGraph, raw OpenAI, raw Anthropic, and MCP-only.
+
+## Who this is for
+
+Teams building internal AI agents on top of large document collections where **permissions**, **citations**, and **structured outputs** matter. If you're shipping agents into regulated verticals — banking, insurance, healthcare, legal, pharma, energy, government — this repo is aimed directly at you.
 
 ## Quickstart
 
@@ -342,9 +415,40 @@ If you want your assistant to talk directly to Knowledge Stack, add the MCP serv
 }
 ```
 
+## Contributing
+
+We're **actively looking for contributions**. Good first PRs:
+
+- **New flagship** for a vertical we haven't covered (proposals in [INDUSTRIES.md](INDUSTRIES.md))
+- **New recipe** (≤100 LOC single file) — patterns across LangChain, LangGraph, CrewAI, Temporal, raw OpenAI / Anthropic are all welcome
+- **Expand an existing flagship** to a second framework (e.g. port a pydantic-ai flagship to LangGraph)
+- **Improve a sample corpus** or assemble a cleaner public-domain dataset
+- **Docs fixes** and clearer developer docs in [`docs/wiki/`](docs/wiki/README.md)
+
+Start here: [CONTRIBUTING.md](CONTRIBUTING.md). Scaffold a new flagship or recipe:
+
+```bash
+cp -r flagships/_template flagships/<your-name>
+# or
+cp -r recipes/_template  recipes/<your-name>
+```
+
+## Building something with Knowledge Stack? Reach out.
+
+If you're building an internal agent, ingestion pipeline, or enterprise RAG system on top of Knowledge Stack, **we'd love to hear from you** — whether you want to collaborate on a flagship, need help with a production deployment, or have feedback on the MCP surface.
+
+- 🌐 Website: [knowledgestack.ai](https://knowledgestack.ai)
+- 💬 Open a [GitHub issue](https://github.com/knowledgestack/ks-cookbook/issues) or [discussion](https://github.com/knowledgestack/ks-cookbook/discussions)
+- 📧 Email the team — details on [knowledgestack.ai](https://knowledgestack.ai)
+- ⭐ [Star the repo](https://github.com/knowledgestack/ks-cookbook) — it signals which flagships and frameworks to prioritize next
+
 ## Community ask
 
-If this repo helped you ship or prototype something useful, [star the repository](https://github.com/knowledgestack/ks-cookbook). It materially helps the project: stars improve discoverability, make it easier to prioritize which examples to deepen, and help validate that open-source, enterprise-grade agent patterns are worth maintaining in the open.
+If this repo helped you ship or prototype something, [star the repository](https://github.com/knowledgestack/ks-cookbook). Stars improve discoverability, help us prioritize which examples to deepen, and validate that open-source, enterprise-grade agent patterns are worth maintaining in the open.
+
+## Keywords
+
+_enterprise RAG, AI agents, agent framework, MCP, Model Context Protocol, LangChain, LangGraph, CrewAI, Temporal workflows, OpenAI Agents SDK, pydantic-ai, Claude Desktop, Cursor, permission-aware retrieval, document intelligence, citation grounding, structured output, tool use, knowledge base, vector search, semantic search, BM25, chunk retrieval, version-aware retrieval, tenant isolation, banking AI, legal AI, healthcare AI, insurance AI, accounting AI, compliance automation, KYC, AML, ASC 606, FOIA, NERC CIP, PCAOB, GDPR, prior authorization, CIOMS, clinical trial eligibility, credit memo, covenant monitoring, MSA redline, rev-rec, audit workpaper, tax research, RFP, sales battlecard, SRE runbooks, API documentation, release notes, PIA, SOW, grant compliance._
 
 ## License
 

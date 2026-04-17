@@ -6,10 +6,9 @@ import csv
 from pathlib import Path
 from typing import Any
 
+from csv_enrichment.schema import EnrichmentState, Row
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langgraph.graph import END, START, StateGraph
-
-from csv_enrichment.schema import EnrichmentState, Row
 
 SYSTEM_PROMPT = """\
 You are a data analyst enriching one row of a customer CSV.

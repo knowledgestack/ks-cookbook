@@ -10,7 +10,6 @@ Framework: raw Anthropic Messages API + MCP stdio (no agent framework).
 
 import argparse
 import asyncio
-import json
 import os
 import sys
 from pathlib import Path

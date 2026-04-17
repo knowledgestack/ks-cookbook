@@ -67,7 +67,7 @@ async def run(incident: str) -> None:
         f"## Timeline\n" + "\n".join(f"- {t}" for t in pm.timeline) + "\n\n"
         f"## Root cause\n{pm.root_cause}\n\n"
         f"## Remediation\n" + "\n".join(f"- {r}" for r in pm.remediation) + "\n\n"
-        f"## Policy references\n"
+        "## Policy references\n"
         + "\n".join(
             f"- **{c.document_name}** (chunk:{c.chunk_id}): \u201c{c.snippet}\u201d"
             for c in pm.policy_references

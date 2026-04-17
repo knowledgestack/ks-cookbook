@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from release_notes_generator.agent import run_agent
-from release_notes_generator.schema import ReleaseNotes
 
 
 def main() -> None:

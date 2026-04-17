@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from api_doc_generator.agent import run_agent
-from api_doc_generator.schema import APIDoc
 
 
 def main() -> None:

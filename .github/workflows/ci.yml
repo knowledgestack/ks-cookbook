@@ -30,4 +30,4 @@ jobs:
         run: uv run ruff check .
 
       - name: Test MCP server (mocked)
-        run: uv run --package knowledgestack-mcp pytest mcp-python/tests/ -v --no-cov
+        run: uv run --package knowledgestack-mcp --extra dev pytest mcp-python/tests/ -v

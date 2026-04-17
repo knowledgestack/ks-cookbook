@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from job_description_generator.agent import run_agent
-from job_description_generator.schema import JobDescription
 
 
 def main() -> None:

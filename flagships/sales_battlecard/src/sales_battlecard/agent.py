@@ -3,8 +3,8 @@
 import os
 
 from pydantic_ai import Agent
-from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
+from pydantic_ai.usage import UsageLimits
 
 from sales_battlecard.schema import Battlecard
 

@@ -10,7 +10,6 @@ Workflow:
 
 import json
 import os
-import re
 from contextlib import asynccontextmanager
 from typing import Any
 
@@ -18,7 +17,6 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from openai import AsyncOpenAI
 
-from foia_response_drafter.schema import RESPONSE_TEMPLATE
 
 
 @asynccontextmanager

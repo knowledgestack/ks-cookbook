@@ -3,7 +3,7 @@
 
 import ksapi
 from mcp import McpError
-from mcp.types import ErrorData, INTERNAL_ERROR, INVALID_PARAMS
+from mcp.types import INTERNAL_ERROR, INVALID_PARAMS, ErrorData
 
 
 def rest_to_mcp(exc: ksapi.ApiException) -> McpError:

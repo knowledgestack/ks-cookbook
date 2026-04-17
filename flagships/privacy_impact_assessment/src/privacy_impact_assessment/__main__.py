@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from privacy_impact_assessment.agent import run_agent
-from privacy_impact_assessment.schema import PIAMemo
 
 
 def main() -> None:

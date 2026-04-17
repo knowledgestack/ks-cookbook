@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from incident_runbook_lookup.agent import run_agent
-from incident_runbook_lookup.schema import RunbookMatch
 
 
 def main() -> None:

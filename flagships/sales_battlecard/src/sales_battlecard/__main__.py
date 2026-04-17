@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from sales_battlecard.agent import run_agent
-from sales_battlecard.schema import Battlecard
 
 
 def main() -> None:

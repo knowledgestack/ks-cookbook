@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from sow_scope_validator.agent import run_agent
-from sow_scope_validator.schema import SOWReview
 
 
 def main() -> None:

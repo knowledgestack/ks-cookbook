@@ -43,9 +43,13 @@ members = [
     "flagships/release_notes_generator",
 ]
 
+[dependency-groups]
+dev = ["ruff>=0.5"]
+
 [tool.ruff]
-line-length = 88
+line-length = 100
 target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E501", "UP042"]

@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 from grant_compliance_checker.agent import run_agent
-from grant_compliance_checker.schema import ComplianceCheck
 
 
 def main() -> None:
