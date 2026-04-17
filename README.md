@@ -1,124 +1,240 @@
 # Knowledge Stack Cookbook
 
-Build agents on top of [Knowledge Stack](https://knowledgestack.ai) from any framework — **pydantic-ai**, **LangGraph**, **OpenAI Agents SDK**, **Claude Desktop**, **Cursor** — via one MCP server and one API key.
+**Build enterprise agents in minutes, not months.** 32 industry demos across banking, legal, accounting, healthcare, insurance, real estate, sales, pharma, energy, and government — each grounded in real data with verifiable citations.
 
-This repo exists to help humans and coding agents understand **KS as a service**
-quickly, then ship production-grade, grounded agents fast.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
+[![Flagships](https://img.shields.io/badge/flagships-32-green)]()
 
-> Not affiliated with your production KS deployment. Reference implementations; review before shipping.
+---
 
-## Quickstart (60 seconds)
+## Get started in 60 seconds
+
+### Step 1: Get your Knowledge Stack API key
+
+1. Sign in to your KS tenant at **https://app.knowledgestack.ai**
+2. Go to **Settings → API Keys**
+3. Click **Create API Key** → copy the `sk-user-...` key (shown once)
+
+> **Don't have a KS account?** [Sign up for a free trial](https://knowledgestack.ai) or [contact us](mailto:hello@knowledgestack.ai) for a demo tenant pre-loaded with sample data.
+
+### Step 2: Clone and configure
 
 ```bash
-git clone https://github.com/knowledgestack/cookbook knowledgestack-cookbook
-cd knowledgestack-cookbook
+git clone https://github.com/knowledgestack/ks-cookbook.git
+cd ks-cookbook
 
 cp .env.example .env
-# edit .env — fill in KS_API_KEY and OPENAI_API_KEY (or ANTHROPIC_API_KEY)
-
-make setup      # one-time: installs deps + verifies .env
-make demo-csv   # runs CSV enrichment end-to-end
-make demo-research TOPIC="CRISPR off-target effects"
 ```
 
-That's it. No other exports, no shell gymnastics.
+Edit `.env` — fill in two values:
 
-## Purpose (for agents)
-
-Use this repo as a KS onboarding system:
-
-- Learn the KS MCP surface once (10 read-side tools).
-- Reuse the same retrieval/grounding contract across any framework.
-- Copy working agent patterns from recipes and flagships.
-- Scale to 100+ agents without changing the enterprise data-access boundary.
-
-The invariant is simple: **MCP access is KS-only (`knowledgestack-mcp`)**.
-
-## What you get
-
-- `enriched.csv` — the input CSV (`flagships/csv_enrichment/sample_inputs/customers.csv` by default) with a new `research_summary` column filled in by a LangGraph agent grounded in your KS tenant.
-- `brief.docx` — a cited research brief from your KS tenant using a pydantic-ai agent.
-- `filled.xlsx` — the Texas DPS public CAIQ v4.0.2 XLSX with 5 (configurable) rows answered with real `[chunk:<uuid>]` citations into your policy corpus.
-- 8 one-file recipes under [`recipes/`](recipes/) covering real B2B pain (policy Q&A, vendor security review, incident post-mortem, SDLC checklist, onboarding checklist, permission-aware retrieval, LlamaIndex RAG, compliance questionnaire). Each ≤100 LOC, each uses a different framework. See [`recipes/INDEX.md`](recipes/INDEX.md).
-
-## The design principle
-
-**Flexibility, maintainability, quick time-to-market — with enterprise-grade trust.**
-
-Agent frameworks move fast; enterprise data controls don't. KS splits the two:
-
-```
-              Identity (upstream)          Permissions (KS)
-              ┌──────────────────┐        ┌──────────────────┐
- end-user ────▶ Okta / Azure AD  │──key──▶│ Knowledge Stack  │──filtered docs──▶ agent
-              └──────────────────┘        └──────────────────┘
-                     who                    what they can read
+```env
+KS_API_KEY=sk-user-paste-your-key-here
+OPENAI_API_KEY=sk-proj-paste-your-openai-key-here
 ```
 
-| Layer | Handled by | Not handled by |
-|---|---|---|
-| Login / SSO / MFA | Your IdP (Auth0, Azure AD, Google) | ❌ not KS |
-| Per-user, per-folder, per-version permission enforcement | **✅ KS** | framework retrievers |
-| Agent loop / tool-calling / framework glue | Your choice (multiple frameworks shown) | not locked |
-
-Your agent code stays framework-flexible (pydantic-ai today, LangGraph tomorrow, LlamaIndex next quarter) but the data-access story stays identical and enterprise-safe because it's enforced in KS, not in whatever retriever your agent framework ships this week.
-
-See [`recipes/permission_aware_retrieval/`](recipes/permission_aware_retrieval/) for the demo that makes it concrete — two end-users, same agent code, different documents returned, zero lines of permission logic in the developer's code.
-
-## Commands
-
-```
-make setup          First-time setup (installs deps, validates .env)
-make demo-csv       Run the CSV enrichment demo
-make demo-research  Run the research-brief demo
-make demo           Run both demos
-make test           Unit tests (no live KS needed)
-make lint           Ruff across the workspace
-make clean          Remove generated artifacts
-```
-
-## Override inputs
+### Step 3: Run your first demo
 
 ```bash
-make demo-csv IN=./my-leads.csv OUT=./my-leads-enriched.csv
-make demo-research TOPIC="the state of post-quantum crypto"
+make setup          # one-time: installs dependencies, validates .env
+make demo-credit-memo   # banking: draft a credit memo with 9 cited risk factors
 ```
 
-## What's in the box
+That's it. Open `credit-memo.md` — every claim cites a real document chunk you can trace back to your KS tenant.
+
+### Step 4: Try more demos
+
+```bash
+make demo-compliance          # auto-fill a CAIQ security questionnaire
+make demo-contract-obligations  # extract 18 obligations from an MSA
+make demo-rev-rec-memo        # ASC 606 5-step revenue recognition analysis
+make demo-prior-auth          # draft a clinical prior-auth letter
+make demo-earnings-risk       # 10-K risk-flag analyst memo (real SEC filing)
+```
+
+Run `make help` to see all 32 available demos.
+
+---
+
+## What is Knowledge Stack?
+
+**Knowledge Stack is a permission-aware data layer for AI agents.** You upload your company's documents (policies, contracts, financials, specs), and KS handles:
+
+- **Chunking & embedding** — your docs are parsed, split, and vectorized automatically
+- **Tenant isolation** — each organization's data is completely separated
+- **Per-user permissions** — Alice sees security policies, Bob sees engineering docs, same API
+- **Version-aware retrieval** — agents always read the latest approved version
+- **Cited responses** — every answer traces back to a specific chunk with a UUID
+
+Your agents talk to KS through an **MCP server** (Model Context Protocol) that exposes 10 read-side tools. Any agent framework works — pydantic-ai, LangGraph, LlamaIndex, raw OpenAI, Anthropic, CrewAI.
 
 ```
-mcp-python/                 # `knowledgestack-mcp` — FastMCP server, 10 read-side tools
-flagships/
-  research_brief/           # pydantic-ai: topic → cited .docx
-  csv_enrichment/           # LangGraph: CSV rows → enriched CSV
+Your Agent (any framework)
+    │
+    ▼
+knowledgestack-mcp (MCP server, 10 tools)
+    │
+    ▼
+Knowledge Stack API (permission-filtered)
+    │
+    ▼
+Your company's documents (chunked, embedded, version-controlled)
 ```
 
-## Tools exposed (via `knowledgestack-mcp`)
+---
 
-These are the only MCP tools used in this repository:
+## How it works
 
-| Tool | Purpose |
+Every demo in this cookbook follows the same pattern:
+
+1. **Connect** — your agent spawns the `knowledgestack-mcp` server over stdio
+2. **Discover** — agent calls `list_contents` to see available documents
+3. **Read** — agent calls `read` to get document text with inline `[chunk:<uuid>]` markers
+4. **Cite** — agent produces structured output where every claim carries a chunk citation
+5. **Output** — a file artifact (`.md`, `.docx`, `.xlsx`) that's auditable and shareable
+
+The permission filtering happens at step 2-3: KS only returns documents the API key's user is allowed to see. Your agent code doesn't change per user — KS handles the access control.
+
+---
+
+## 32 industry flagships
+
+Each flagship is a complete, runnable demo with seeded sample data, structured output, and real citations.
+
+### 🏦 Banking & Financial Services
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Credit memo drafter** | `make demo-credit-memo` | Borrower financials + credit policy → auditable credit memo with risk factors |
+| **Loan covenant monitor** | `make demo-covenant-monitor` | Quarterly report + loan agreement → covenant compliance report with breach flags |
+| **KYC onboarding review** | `make demo-kyc-review` | Customer application + CDD policy → KYC checklist with risk tier |
+| **10-K risk analyzer** | `make demo-earnings-risk` | Real SEC 10-K filing → analyst risk-flag memo (Cloudflare FY2025) |
+
+### ⚖️ Legal
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Contract obligation extractor** | `make demo-contract-obligations` | MSA → categorized shall/must/will clauses with citations |
+| **MSA redline vs playbook** | `make demo-msa-redline` | Inbound contract vs your standard terms → deviation memo |
+
+### 📊 Accounting & Tax
+
+| Demo | Command | What it does |
+|---|---|---|
+| **ASC 606 rev-rec memo** | `make demo-rev-rec-memo` | Customer contract → 5-step ASC 606 analysis with citations |
+| **Audit workpaper drafter** | `make demo-audit-workpaper` | Account name → audit workpaper citing PCAOB standards |
+| **Tax position memo** | `make demo-tax-memo` | Tax question → research memo citing IRC + Treasury Regs |
+
+### 🩺 Healthcare
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Prior auth letter** | `make demo-prior-auth` | Patient scenario → prior-authorization letter citing medical-necessity criteria |
+| **Clinical trial eligibility** | `make demo-trial-eligibility` | Patient profile → trial eligibility assessment (real ClinicalTrials.gov data) |
+
+### 🛡️ Insurance
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Claim adjudication memo** | `make demo-claim-memo` | P&C claim → coverage analysis citing policy wording |
+| **Subrogation review** | `make demo-subro-review` | Claim file → subrogation recovery opportunity citing NAIC Model 902 |
+| **Policy comparison** | `make demo-policy-compare` | Current vs renewal → side-by-side coverage gap analysis |
+
+### 🏠 Real Estate
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Lease abstract** | `make demo-lease-abstract` | Commercial lease → one-page abstract (term, rent, covenants) |
+| **Zoning compliance check** | `make demo-zoning-check` | Address + proposed use → permitted-use analysis (Austin TX LDC) |
+
+### 💼 Sales & Revenue
+
+| Demo | Command | What it does |
+|---|---|---|
+| **CSV enrichment** | `make demo-csv` | CSV rows → enriched with KB research per row |
+| **Research brief** | `make demo-research` | Topic → cited .docx brief |
+| **RFP first draft** | `make demo-rfp-draft` | RFP question → grounded response from past proposals |
+| **Sales battlecard** | `make demo-battlecard` | Competitor → differentiators + objection handlers |
+| **CAIQ compliance fill** | `make demo-compliance` | Security questionnaire → auto-filled with evidence citations |
+
+### 💊 Pharma · ⚡ Energy · 🏛️ Government
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Adverse event narrative** | `make demo-ae-narrative` | AE data → CIOMS narrative citing drug label |
+| **NERC compliance evidence** | `make demo-nerc-evidence` | CIP standard → evidence pack memo |
+| **FOIA response drafter** | `make demo-foia-response` | FOIA request → response letter with exemption analysis |
+
+### 👥 HR · ⚙️ Engineering · 🔐 Security
+
+| Demo | Command | What it does |
+|---|---|---|
+| **Employee handbook Q&A** | `make demo-handbook-qa` | Question → cited answer from company handbook |
+| **Job description generator** | `make demo-jd-generator` | Role → JD grounded in leveling guide |
+| **Incident runbook lookup** | `make demo-runbook` | Alert → matched runbook steps |
+| **API doc generator** | `make demo-api-doc` | Endpoint → developer docs from spec |
+| **Release notes** | `make demo-release-notes` | Version → customer-facing notes from specs |
+| **Privacy impact assessment** | `make demo-pia` | Feature → PIA memo citing GDPR + template |
+| **SOW scope validator** | `make demo-sow-validator` | Proposed SOW → completeness check vs template |
+| **Grant compliance checker** | `make demo-grant-compliance` | Sub-awardee activity → compliance memo citing federal regs |
+
+---
+
+## The auth model — identity upstream, permissions in KS
+
+```
+              Identity (your IdP)           Permissions (Knowledge Stack)
+              ┌──────────────────┐         ┌──────────────────┐
+ end-user ────▶ Okta / Azure AD  │──key──▶ │ Knowledge Stack  │──filtered docs──▶ agent
+              └──────────────────┘         └──────────────────┘
+                     who                      what they can read
+```
+
+KS does **not** replace your identity provider. Auth0 / Azure AD / Okta handle login. KS handles **what each user's agent can access** — per-folder, per-document, per-version.
+
+See [`recipes/permission_aware_retrieval/`](recipes/permission_aware_retrieval/) for a live demo: two users, same agent code, different documents returned.
+
+---
+
+## MCP tools (the API surface)
+
+All 32 flagships use these 10 tools from the `knowledgestack-mcp` server:
+
+| Tool | What it does |
 |---|---|
-| `search_knowledge` | Semantic chunk search. |
-| `search_keyword` | BM25 chunk search. |
-| `read` / `read_around` | Fetch document / section / chunk text (+ neighbours). |
-| `list_contents` / `find` / `get_info` | Navigate the folder tree. |
-| `view_chunk_image` | Pull image bytes for IMAGE-type chunks. |
-| `get_organization_info` / `get_current_datetime` | Tenant metadata + local time. |
+| `list_contents` | List children of a folder (or root folders) |
+| `find` | Fuzzy-search documents/folders by name |
+| `read` | Read a document/section/chunk — returns text with `[chunk:<uuid>]` markers |
+| `read_around` | Get surrounding chunks for context |
+| `search_knowledge` | Semantic (dense vector) search |
+| `search_keyword` | BM25 keyword search |
+| `get_info` | Path-part metadata + ancestry breadcrumb |
+| `view_chunk_image` | Fetch image content from IMAGE-type chunks |
+| `get_organization_info` | Tenant name, language, timezone |
+| `get_current_datetime` | Current time in tenant's timezone |
 
-Writes are intentionally not in v1 — the product is *grounded retrieval*, not "we let agents mutate your KB remotely."
+---
 
-## KS-only contract
+## Bring your own data
 
-- Use only the `knowledgestack` MCP server in recipes/flagships.
-- Do not add secondary MCP servers to recipes/flagships.
-- Ground every output in KS retrieval with chunk citations.
+Every demo works against sample data. To use your own:
 
-Agent context for this contract lives under [`.serena/`](.serena/README.md).
+1. **Upload documents** to your KS tenant via the web UI or ingestion API
+2. **Find your folder's ID** in the KS dashboard (or via `list_contents`)
+3. **Run any demo** with your folder:
 
-## Claude Desktop
+```bash
+CORPUS_FOLDER_ID=your-folder-id make demo-credit-memo
+```
 
-`~/Library/Application Support/Claude/claude_desktop_config.json`:
+The agent code doesn't change — only the data source does.
+
+---
+
+## Using with Claude Desktop / Cursor
+
+Add to your MCP config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
@@ -132,12 +248,41 @@ Agent context for this contract lives under [`.serena/`](.serena/README.md).
 }
 ```
 
-## Security
+Now Claude Desktop / Cursor can search and read your KS tenant directly.
 
-- `.env` is gitignored. Never commit keys.
-- Trial keys issued from the public demo tenant are read-only (enforced by `PathPermission` + `TENANT_READONLY_IDS`).
-- A 402 from any tool means daily quota is exhausted — stop the loop.
+---
+
+## For AI coding agents
+
+This repo is designed to be read by coding agents (Claude Code, Cursor, Copilot). The structure is:
+
+```
+flagships/<name>/
+  pyproject.toml          # dependencies + CLI entry point
+  README.md               # what it does, how to run, sample output
+  src/<module>/
+    __init__.py
+    __main__.py           # CLI: parse args, call agent, write output
+    agent.py              # MCP connection + LLM prompt + structured output
+    schema.py             # Pydantic output model the LLM must conform to
+  sample_inputs/          # default input for the demo
+```
+
+To build a new agent: copy any flagship, change the schema + prompt, point at your data. The MCP plumbing stays identical.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Key rules:
+- Every output must cite real chunks (`[chunk:<uuid>]`)
+- Flagships produce file artifacts, not just stdout
+- Use `MODEL` env var so users can swap between gpt-4o / claude / etc.
+
+See [INDUSTRIES.md](INDUSTRIES.md) for 100+ proposed use cases ready for community PRs.
+
+---
 
 ## License
 
-MIT.
+MIT — see [LICENSE](LICENSE).
