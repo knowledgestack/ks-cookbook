@@ -9,6 +9,22 @@ actual SEC filing, with every claim citing a real chunk from the document.
 Not a fake corpus. Not lorem ipsum. The actual filing the company submitted to
 the SEC.
 
+## Seed data required
+
+This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+
+**Expected corpus:** A 10-K filing (e.g. downloaded from EDGAR), uploaded as PDF or HTML.
+
+Set-up steps:
+
+1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
+2. Create a folder in the dashboard and copy its folder ID.
+3. Upload the documents described above into that folder.
+4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
+5. Run: pass your folder ID via `CORPUS_FOLDER_ID` when running.
+
+Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+
 ## Run
 
 ```bash

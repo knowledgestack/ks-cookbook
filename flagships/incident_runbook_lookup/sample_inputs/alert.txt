@@ -1,0 +1,1 @@
+High CPU on prod-api-3, 95% for 10 minutes. p99 latency elevated on /v1/checkout. No recent deploys in the last 2h.

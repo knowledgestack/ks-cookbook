@@ -1,0 +1,1 @@
+12-week implementation of Acme Platform for 500 users. Includes: discovery (2w), config (6w), UAT (2w), go-live + hypercare (2w). Out of scope: custom integrations, data migration from legacy ERP.

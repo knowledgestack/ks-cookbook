@@ -1,0 +1,1 @@
+User analytics dashboard collecting page views and session duration for signed-in users. Data stored for 24 months in a US-region data warehouse. No third-party processors.

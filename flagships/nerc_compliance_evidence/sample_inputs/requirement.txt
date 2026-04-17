@@ -1,0 +1,5 @@
+STANDARD=CIP-007-6
+REQUIREMENT=R2
+# Systems Security Management — Security Patch Management.
+# Evidence must demonstrate a documented patch management process and
+# tracking for BES Cyber Systems covered by CIP-007-6 R2.1 through R2.4.

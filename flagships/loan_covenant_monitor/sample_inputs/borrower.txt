@@ -1,0 +1,5 @@
+BORROWER=Nimbus Networks, Inc.
+PERIOD=Q4 2025 / FY 2025
+# The seeded corpus contains Nimbus's credit agreement and quarterly financial
+# statements. The flagship compares the period's financials against the
+# covenant schedule.
