@@ -1,5 +1,8 @@
 # Professional Services: SOW Scope Validator
 
+
+**Tags:** `proserv` `sow` `scope-management`
+
 Proposed SOW → completeness check against template + methodology.
 
 ## Seed data required

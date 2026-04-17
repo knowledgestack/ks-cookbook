@@ -1,5 +1,8 @@
 # Pharma: Adverse Event Narrative
 
+
+**Tags:** `pharma` `pharmacovigilance` `cioms` `safety`
+
 Generates a CIOMS-style adverse event narrative grounded in drug labels and
 pharmacovigilance SOPs. Uses **LangGraph** ReAct agent.
 

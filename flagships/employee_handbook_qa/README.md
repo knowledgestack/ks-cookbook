@@ -1,5 +1,8 @@
 # HR: Employee Handbook Q&A
 
+
+**Tags:** `hr` `handbook` `q-and-a`
+
 Employee question → cited answer from the company handbook.
 
 ## Seed data required

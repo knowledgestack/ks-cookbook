@@ -1,5 +1,8 @@
 # Engineering: API Documentation Generator
 
+
+**Tags:** `engineering` `api` `documentation` `devex`
+
 Endpoint name → developer docs grounded in API spec + style guide.
 
 ## Seed data required

@@ -1,5 +1,8 @@
 # Banking: Loan Covenant Monitor
 
+
+**Tags:** `banking` `covenant-monitoring` `credit-risk`
+
 Reads a borrower's quarterly financial report, compares against loan covenants
 in the credit agreement, and flags breaches or near-breaches with citations.
 

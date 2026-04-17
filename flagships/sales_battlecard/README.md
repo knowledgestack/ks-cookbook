@@ -1,5 +1,8 @@
 # Sales: Sales Battlecard Generator
 
+
+**Tags:** `sales` `competitive` `enablement`
+
 Competitor name → battlecard with differentiators, objection handlers, win themes.
 
 ## Seed data required

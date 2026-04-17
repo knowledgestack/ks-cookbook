@@ -1,5 +1,8 @@
 # Finance: 10-K Risk-Flag Analyst Memo
 
+
+**Tags:** `finance` `sec-filings` `10-k` `investment-research`
+
 Every buy-side analyst reads 200+ 10-K filings per quarter. This flagship
 produces a **Hebbia-quality risk-flag memo** — automatically, grounded in the
 actual SEC filing, with every claim citing a real chunk from the document.

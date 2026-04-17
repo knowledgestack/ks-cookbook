@@ -1,5 +1,8 @@
 # Banking: Credit Memo Drafter
 
+
+**Tags:** `banking` `credit-risk` `underwriting` `commercial-lending`
+
 Every commercial loan officer writes a credit memo for every facility. Same
 structure, different borrower. This flagship drafts one automatically, grounded
 in the bank's credit policy + the borrower's financials + industry benchmarks,

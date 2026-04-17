@@ -1,5 +1,8 @@
 # Prior-authorization letter drafter
 
+
+**Tags:** `healthcare` `prior-auth` `payer` `clinical`
+
 Turn a patient's clinical scenario + requested service into a **cited prior-auth
 or appeal letter** grounded in the health plan's medical-policy bulletins and
 the provider-appeal style guide.

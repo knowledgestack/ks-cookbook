@@ -1,5 +1,8 @@
 # Government: Grant Compliance Checker
 
+
+**Tags:** `government` `grants` `compliance` `cfr`
+
 Sub-awardee activity → compliance check citing the NOFO + federal regs.
 
 ## Seed data required

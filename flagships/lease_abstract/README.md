@@ -1,5 +1,8 @@
 # Lease abstract generator
 
+
+**Tags:** `real-estate` `leases` `commercial`
+
 Read a commercial lease out of your KS tenant and emit a **one-page lease
 abstract** (tenant, term, rent schedule, renewals, CAM, exclusives, radius
 restriction) with citations to the clauses that ground each field.

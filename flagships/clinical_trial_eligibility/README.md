@@ -1,5 +1,8 @@
 # Clinical Trial Eligibility (Healthcare)
 
+
+**Tags:** `healthcare` `clinical-trials` `eligibility` `ctms`
+
 Patient profile matched against real clinical trial inclusion/exclusion criteria
 from ClinicalTrials.gov (NCT03855137 PROGRESS trial, atogepant for chronic migraine),
 AHS CGRP clinical guidance, and CMS NCD coverage criteria.

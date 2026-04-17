@@ -1,5 +1,8 @@
 # Energy: NERC CIP Compliance Evidence Pack
 
+
+**Tags:** `energy` `nerc-cip` `compliance` `utilities`
+
 Generates a compliance evidence memorandum for a NERC CIP standard
 requirement, citing procedures and controls. Uses **pydantic-ai** with
 structured output.

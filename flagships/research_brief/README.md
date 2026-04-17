@@ -1,5 +1,8 @@
 # Research-brief demo
 
+
+**Tags:** `research` `reports` `analyst`
+
 Generates a **cited `.docx` research brief** from your Knowledge Stack tenant, using [pydantic-ai](https://ai.pydantic.dev) + the `knowledgestack-mcp` server.
 
 ## Seed data required

@@ -1,5 +1,8 @@
 # Government: FOIA Response Drafter
 
+
+**Tags:** `government` `foia` `public-records`
+
 Drafts a FOIA response letter with exemption analysis citing the DOJ guide
 and agency SOP. Uses **raw OpenAI** with inline MCP helpers.
 

@@ -1,5 +1,8 @@
 # Legal/Security: Privacy Impact Assessment
 
+
+**Tags:** `legal` `privacy` `gdpr` `security`
+
 New feature description → PIA memo citing GDPR + company template.
 
 ## Seed data required

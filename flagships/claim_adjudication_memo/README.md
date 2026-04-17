@@ -1,5 +1,8 @@
 # Claim adjudication memo
 
+
+**Tags:** `insurance` `claims` `coverage-analysis` `p-and-c`
+
 Given a P&C claim narrative (e.g. a kitchen-fire homeowners loss), produce a
 **coverage-analysis memorandum** grounded in the applicable policy wording
 and the claims-department SOP.

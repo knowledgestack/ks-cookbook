@@ -1,5 +1,8 @@
 # Engineering: Incident Runbook Lookup
 
+
+**Tags:** `engineering` `sre` `runbooks` `incident-response`
+
 PagerDuty alert → matched runbook section with cited remediation steps.
 
 ## Seed data required

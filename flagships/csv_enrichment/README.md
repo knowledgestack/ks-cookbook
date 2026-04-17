@@ -1,5 +1,8 @@
 # CSV enrichment demo
 
+
+**Tags:** `sales` `data-enrichment` `batch` `operations`
+
 Takes a CSV, enriches each row with a short summary pulled from your Knowledge Stack tenant, writes a new CSV. Built on **LangGraph** + `langchain-mcp-adapters`.
 
 ## Seed data required

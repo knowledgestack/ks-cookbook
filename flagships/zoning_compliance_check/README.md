@@ -1,5 +1,8 @@
 # Zoning Compliance Check (Real Estate)
 
+
+**Tags:** `real-estate` `zoning` `compliance` `municipal`
+
 Proposed use at a commercial address checked against the City of Austin Land
 Development Code (Chapter 25-2) zoning ordinance.
 

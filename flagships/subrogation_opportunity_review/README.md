@@ -1,5 +1,8 @@
 # Subrogation Opportunity Review (Insurance)
 
+
+**Tags:** `insurance` `subrogation` `claims`
+
 P&C claim file assessed for subrogation recovery potential, citing NAIC Model
 902 standards, Acme Insurance subrogation SOP, and policy endorsement language.
 

@@ -1,5 +1,8 @@
 # HR: Job Description Generator
 
+
+**Tags:** `hr` `recruiting` `job-descriptions`
+
 Role title → full JD grounded in leveling criteria + comp bands.
 
 ## Seed data required

@@ -1,5 +1,8 @@
 # MSA Redline vs Playbook
 
+
+**Tags:** `legal` `contracts` `redline` `negotiations`
+
 Compare an inbound MSA clause-by-clause against your company's standard playbook. Produces a redline memo with deviation severity and recommended changes, citing both documents.
 
 Uses raw OpenAI function-calling with inline MCP client.

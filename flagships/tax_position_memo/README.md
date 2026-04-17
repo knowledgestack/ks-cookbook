@@ -1,5 +1,8 @@
 # Tax: Tax Position Research Memo
 
+
+**Tags:** `tax` `irc` `research` `memos`
+
 Generates a tax research memorandum citing IRC sections and Treasury
 Regulations. Uses **LangGraph** ReAct agent.
 

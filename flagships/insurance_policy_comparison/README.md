@@ -1,5 +1,8 @@
 # Insurance: Insurance Policy Comparison
 
+
+**Tags:** `insurance` `policy-comparison` `coverage`
+
 Current vs proposed policy → side-by-side analysis with coverage gaps.
 
 ## Seed data required

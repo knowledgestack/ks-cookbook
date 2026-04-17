@@ -1,5 +1,8 @@
 # Contract obligation extractor (Legal flagship)
 
+
+**Tags:** `legal` `contracts` `msa` `obligations`
+
 Reads a contract already seeded into your Knowledge Stack tenant and extracts
 **every `shall` / `must` / `will` obligation**, categorized by obligation-holder
 (Provider, Customer, Mutual), with inline `[chunk:<uuid>]` citations an auditor

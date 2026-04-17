@@ -1,5 +1,8 @@
 # Sales: RFP First Draft
 
+
+**Tags:** `sales` `rfp` `proposals` `go-to-market`
+
 Drafts RFP responses grounded in your company's past proposals and
 capability documents stored in Knowledge Stack. Uses **pydantic-ai** with
 structured output.

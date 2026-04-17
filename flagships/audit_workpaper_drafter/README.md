@@ -1,5 +1,8 @@
 # Audit Workpaper Drafter
 
+
+**Tags:** `accounting` `audit` `pcaob` `workpapers`
+
 Given an account name and trial balance amount, drafts an audit workpaper tying the balance to source documents with citations to audit standards and company accounting policy.
 
 Uses LangGraph ReAct agent with MCP tools.

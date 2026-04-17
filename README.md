@@ -162,66 +162,73 @@ The important part is that the retrieval layer and citation discipline are reusa
 
 ## Flagships by vertical
 
-The repo currently includes 32 flagship demos:
+32 flagship demos. Each links to its own README with the expected corpus, a sample input, and a sample output — open one to see exactly what it does before running anything.
 
-### Banking and financial services
+### Banking & financial services
 
-- `make demo-credit-memo`
-- `make demo-covenant-monitor`
-- `make demo-kyc-review`
-- `make demo-earnings-risk`
+- **[Credit memo drafter](flagships/credit_memo_drafter/)** — Draft a cited credit memo from your bank's credit policy plus a borrower's financials.<br/>Tags: `banking` `credit-risk` `underwriting` `commercial-lending`
+- **[Loan covenant monitor](flagships/loan_covenant_monitor/)** — Flag covenant breaches or near-breaches from a borrower's quarterly financials.<br/>Tags: `banking` `covenant-monitoring` `credit-risk`
+- **[KYC onboarding review](flagships/kyc_onboarding_review/)** — CDD checklist and risk tier for a new customer against the bank's KYC policy.<br/>Tags: `banking` `kyc` `aml` `compliance`
+- **[Earnings risk analyzer](flagships/earnings_risk_analyzer/)** — Hebbia-style 10-K risk-flag memo with chunk-level citations.<br/>Tags: `finance` `sec-filings` `10-k` `investment-research`
 
 ### Legal
 
-- `make demo-contract-obligations`
-- `make demo-msa-redline`
+- **[Contract obligation extractor](flagships/contract_obligation_extractor/)** — Every `shall` / `must` / `will` obligation extracted from a contract, categorized and cited.<br/>Tags: `legal` `contracts` `msa` `obligations`
+- **[MSA redline vs. playbook](flagships/msa_redline_vs_playbook/)** — Compare an inbound MSA clause-by-clause against your company's standard playbook.<br/>Tags: `legal` `contracts` `redline` `negotiations`
+- **[Privacy impact assessment](flagships/privacy_impact_assessment/)** — PIA memo from a feature description, citing GDPR Article 35 and company template.<br/>Tags: `legal` `privacy` `gdpr` `security`
 
-### Accounting and tax
+### Accounting & tax
 
-- `make demo-rev-rec-memo`
-- `make demo-audit-workpaper`
-- `make demo-tax-memo`
+- **[Rev-rec memo (ASC 606)](flagships/rev_rec_memo/)** — Five-step revenue-recognition memo grounded in your company's rev-rec policy.<br/>Tags: `accounting` `asc-606` `revenue-recognition` `memos`
+- **[Audit workpaper drafter](flagships/audit_workpaper_drafter/)** — Tie a GL balance to source documents with citations to PCAOB AS 1215.<br/>Tags: `accounting` `audit` `pcaob` `workpapers`
+- **[Tax position memo](flagships/tax_position_memo/)** — Tax research memo citing IRC sections and Treasury Regs.<br/>Tags: `tax` `irc` `research` `memos`
 
 ### Healthcare
 
-- `make demo-prior-auth`
-- `make demo-trial-eligibility`
+- **[Prior-authorization letter](flagships/prior_auth_letter/)** — Cited prior-auth or appeal letter grounded in the payer's medical policy.<br/>Tags: `healthcare` `prior-auth` `payer` `clinical`
+- **[Clinical trial eligibility](flagships/clinical_trial_eligibility/)** — Match a patient against inclusion/exclusion criteria from a real trial protocol.<br/>Tags: `healthcare` `clinical-trials` `eligibility` `ctms`
 
 ### Insurance
 
-- `make demo-claim-memo`
-- `make demo-subro-review`
-- `make demo-policy-compare`
+- **[Claim adjudication memo](flagships/claim_adjudication_memo/)** — Coverage-analysis memo for a P&C claim, grounded in the applicable policy wording.<br/>Tags: `insurance` `claims` `coverage-analysis` `p-and-c`
+- **[Subrogation opportunity review](flagships/subrogation_opportunity_review/)** — Assess recovery potential on a claim, citing NAIC Model 902 and internal SOP.<br/>Tags: `insurance` `subrogation` `claims`
+- **[Insurance policy comparison](flagships/insurance_policy_comparison/)** — Side-by-side analysis with explicit coverage gaps.<br/>Tags: `insurance` `policy-comparison` `coverage`
 
 ### Real estate
 
-- `make demo-lease-abstract`
-- `make demo-zoning-check`
+- **[Lease abstract](flagships/lease_abstract/)** — One-page cited abstract (tenant, term, rent, renewals, CAM, exclusives).<br/>Tags: `real-estate` `leases` `commercial`
+- **[Zoning compliance check](flagships/zoning_compliance_check/)** — Check a proposed use against local Land Development Code.<br/>Tags: `real-estate` `zoning` `compliance` `municipal`
 
-### Sales and revenue
+### Sales & revenue
 
-- `make demo-csv`
-- `make demo-research`
-- `make demo-rfp-draft`
-- `make demo-battlecard`
-- `make demo-compliance`
+- **[CSV enrichment](flagships/csv_enrichment/)** — Enrich every row of a CSV with a short summary from your knowledge base.<br/>Tags: `sales` `data-enrichment` `batch` `operations`
+- **[Research brief](flagships/research_brief/)** — Generate a cited `.docx` research brief from your tenant.<br/>Tags: `research` `reports` `analyst`
+- **[RFP first draft](flagships/rfp_first_draft/)** — Draft RFP responses grounded in past proposals and capability docs.<br/>Tags: `sales` `rfp` `proposals` `go-to-market`
+- **[Sales battlecard](flagships/sales_battlecard/)** — Battlecard with differentiators, objection handlers, and win themes.<br/>Tags: `sales` `competitive` `enablement`
+- **[Compliance questionnaire filler](flagships/compliance_questionnaire/)** — Auto-complete a CAIQ / SIG questionnaire from your policy docs.<br/>Tags: `security` `compliance` `caiq` `sig` `questionnaires`
 
-### HR, engineering, security, and grants
+### HR
 
-- `make demo-handbook-qa`
-- `make demo-runbook`
-- `make demo-jd-generator`
-- `make demo-api-doc`
-- `make demo-release-notes`
-- `make demo-pia`
-- `make demo-sow-validator`
-- `make demo-grant-compliance`
+- **[Employee handbook Q&A](flagships/employee_handbook_qa/)** — Cited answers from the company handbook.<br/>Tags: `hr` `handbook` `q-and-a`
+- **[Job description generator](flagships/job_description_generator/)** — Full JD grounded in leveling criteria and comp bands.<br/>Tags: `hr` `recruiting` `job-descriptions`
 
-### Government, pharma, and energy
+### Engineering, product & SRE
 
-- `make demo-foia-response`
-- `make demo-ae-narrative`
-- `make demo-nerc-evidence`
+- **[Incident runbook lookup](flagships/incident_runbook_lookup/)** — Match a PagerDuty alert to a runbook with cited remediation steps.<br/>Tags: `engineering` `sre` `runbooks` `incident-response`
+- **[API doc generator](flagships/api_doc_generator/)** — Endpoint → developer docs grounded in OpenAPI spec + style guide.<br/>Tags: `engineering` `api` `documentation` `devex`
+- **[Release notes generator](flagships/release_notes_generator/)** — Customer-facing notes from specs and migration guide.<br/>Tags: `product` `engineering` `release-notes`
+- **[SOW scope validator](flagships/sow_scope_validator/)** — Completeness check of a proposed SOW against template + methodology.<br/>Tags: `proserv` `sow` `scope-management`
+
+### Government, pharma & energy
+
+- **[Grant compliance checker](flagships/grant_compliance_checker/)** — Sub-awardee activity checked against NOFO and 2 CFR 200.<br/>Tags: `government` `grants` `compliance` `cfr`
+- **[FOIA response drafter](flagships/foia_response_drafter/)** — FOIA response letter with exemption analysis.<br/>Tags: `government` `foia` `public-records`
+- **[Adverse event narrative](flagships/adverse_event_narrative/)** — CIOMS-style AE narrative from drug label + PV SOP.<br/>Tags: `pharma` `pharmacovigilance` `cioms` `safety`
+- **[NERC CIP evidence pack](flagships/nerc_compliance_evidence/)** — Compliance evidence memo for a NERC CIP requirement.<br/>Tags: `energy` `nerc-cip` `compliance` `utilities`
+
+### Browse by tag
+
+`accounting` · `aml` · `api` · `asc-606` · `audit` · `banking` · `batch` · `caiq` · `cfr` · `cioms` · `claims` · `clinical` · `clinical-trials` · `commercial` · `commercial-lending` · `compliance` · `contracts` · `coverage` · `coverage-analysis` · `credit-risk` · `ctms` · `data-enrichment` · `devex` · `documentation` · `eligibility` · `enablement` · `energy` · `engineering` · `finance` · `foia` · `gdpr` · `government` · `go-to-market` · `grants` · `handbook` · `healthcare` · `hr` · `incident-response` · `insurance` · `investment-research` · `irc` · `job-descriptions` · `kyc` · `leases` · `legal` · `memos` · `msa` · `municipal` · `negotiations` · `nerc-cip` · `obligations` · `operations` · `payer` · `pcaob` · `pharma` · `pharmacovigilance` · `policy-comparison` · `prior-auth` · `privacy` · `product` · `proposals` · `proserv` · `public-records` · `q-and-a` · `questionnaires` · `real-estate` · `recruiting` · `redline` · `release-notes` · `reports` · `research` · `revenue-recognition` · `rfp` · `runbooks` · `safety` · `sales` · `scope-management` · `sec-filings` · `security` · `sig` · `sow` · `sre` · `subrogation` · `tax` · `underwriting` · `utilities` · `workpapers` · `zoning` · `10-k`
 
 See [INDUSTRIES.md](INDUSTRIES.md) for the broader roadmap and proposed next flagships.
 

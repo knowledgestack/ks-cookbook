@@ -1,5 +1,8 @@
 # Engineering/Product: Release Notes Generator
 
+
+**Tags:** `product` `engineering` `release-notes`
+
 Release tag → customer-facing notes grounded in specs + migration guide.
 
 ## Seed data required

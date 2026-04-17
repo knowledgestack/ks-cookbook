@@ -1,5 +1,8 @@
 # Banking: KYC Onboarding Review
 
+
+**Tags:** `banking` `kyc` `aml` `compliance`
+
 Given a new customer's submitted documents, checks them against the bank's
 KYC/CDD policy and federal regulations, produces a checklist of what's present
 vs missing, with risk tier assignment and citations.

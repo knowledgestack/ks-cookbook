@@ -1,5 +1,8 @@
 # Rev-rec memo (Accounting flagship)
 
+
+**Tags:** `accounting` `asc-606` `revenue-recognition` `memos`
+
 Given a customer contract summary, drafts a **five-step ASC 606 revenue
 recognition memo** grounded in your company's own revenue-recognition policy
 and historical judgments (seeded into your Knowledge Stack tenant).

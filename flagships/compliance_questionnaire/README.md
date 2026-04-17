@@ -1,5 +1,8 @@
 # Compliance questionnaire demo
 
+
+**Tags:** `security` `compliance` `caiq` `sig` `questionnaires`
+
 Fill a [CAIQ v4](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4) / SIG-style security questionnaire directly from your KS tenant's policy docs, with citations every auditor can verify.
 
 This is the **HyperComply / SafeBase / Conveyor** use case — an auditor sends an XLSX with 260 control questions, you return the same XLSX filled in with evidence.
