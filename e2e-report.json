@@ -1,0 +1,15 @@
+[
+  {
+    "kind": "recipe",
+    "name": "policy_qa",
+    "verdict": "SCHEMA_ERROR",
+    "seconds": 1.9199331249983516,
+    "stdout_tail": "",
+    "stderr_tail": "'localhost', port=28000): Max retries exceeded with url: /v1/path-parts/ab926019-ac7a-579f-bfda-6c52a13c5f41 (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=28000): Failed to establish a new connection: [Errno 61] Connection refused\"))\n      +------------------------------------",
+    "artifact": null,
+    "citations_found": 0,
+    "chunks_resolved": 0,
+    "chunks_fabricated": [],
+    "snippet_mismatches": []
+  }
+]

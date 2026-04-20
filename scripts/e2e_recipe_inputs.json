@@ -1,0 +1,131 @@
+{
+  "_comment": "Default CLI args the e2e verifier passes to each recipe. Add your recipe here to bring it into the e2e run. Args are a flat list passed verbatim after `recipe.py`.",
+
+  "policy_qa":                         ["--question", "What is our PTO policy?"],
+  "onboarding_checklist":              ["--role", "Backend Engineer"],
+  "onboarding_day_one_plan":           ["--role", "Backend Engineer"],
+  "icp_matcher":                       ["--prospect", "Paloma Networks"],
+  "account_research_brief":            ["--account", "Paloma Networks"],
+  "competitive_positioning":           ["--competitor", "Competitor A"],
+  "prospecting_email_personalizer":    ["--prospect", "Paloma Networks"],
+  "outbound_call_prep":                ["--prospect", "Paloma Networks", "--goal", "discovery"],
+  "stakeholder_map_drafter":           ["--account", "Paloma Networks"],
+  "deal_loss_retro":                   ["--deal", "Paloma-Q1-2026"],
+  "churn_risk_flags":                  ["--account", "Paloma Networks"],
+  "renewal_risk_evidence":             ["--account", "Paloma Networks"],
+  "qbr_deck_outline":                  ["--account", "Paloma Networks"],
+  "rfp_question_router":               ["--question", "Describe your data-encryption approach."],
+
+  "nda_review":                        ["--contract-name", "sample_nda"],
+  "clause_extractor":                  ["--contract-name", "sample_msa"],
+  "obligation_tracker":                ["--contract-name", "sample_msa"],
+  "contract_renewal_checker":          ["--contract-name", "sample_msa"],
+  "dpa_gap_check":                     ["--contract-name", "sample_dpa"],
+  "force_majeure_impact":              ["--event", "Hurricane closes Miami office"],
+  "gdpr_ropa_entry":                   ["--activity", "User analytics via page views"],
+  "hipaa_baa_gap":                     ["--vendor", "Acme Analytics"],
+
+  "soc2_evidence":                     ["--control", "CC6.1"],
+  "iso27001_soa":                      ["--control", "A.8.2"],
+  "access_review":                     ["--user", "jdoe", "--role", "admin"],
+  "password_policy_audit":             [],
+  "security_finding_triage":           ["--finding", "CVE-2024-12345 on prod-api-3"],
+  "security_awareness_quiz":           ["--audience", "engineering"],
+  "pci_scope_review":                  ["--system", "payment-gateway"],
+
+  "adr_drafter":                       ["--topic", "Switch session store to Redis"],
+  "incident_postmortem":               ["--incident", "INC-2026-04-17-api-latency"],
+  "sdlc_checklist":                    ["--pr", "feat/refund-api"],
+  "change_management_review":          ["--change", "Cut prod DB over to Aurora"],
+  "changelog_from_commits":            ["--from", "v2.3.0", "--to", "v2.4.0"],
+  "migration_guide_drafter":           ["--from", "v1.x", "--to", "v2.0"],
+  "api_deprecation_notice":            ["--endpoint", "POST /v1/payments"],
+  "tech_debt_ledger":                  [],
+  "oncall_shadow_plan":                ["--role", "backend"],
+  "post_deploy_verify":                ["--service", "api"],
+  "sre_runbook_gap_check":             ["--service", "api"],
+
+  "interview_bank_generator":          ["--role", "Backend Engineer", "--level", "Senior"],
+  "perf_review_drafter":               ["--employee", "Alex Doe"],
+  "offer_letter_drafter":              ["--candidate", "Alex Doe", "--role", "Senior Backend Engineer"],
+  "pip_drafter":                       ["--employee", "Alex Doe"],
+  "compensation_band_check":           ["--role", "Staff SWE", "--level", "Staff", "--location", "NYC", "--proposed", "240000"],
+
+  "expense_policy_violation":          ["--description", "Client dinner at Per Se", "--amount", "450", "--category", "meals"],
+  "invoice_reconciliation":            ["--invoice", "INV-2026-0417"],
+  "vendor_consolidation":              ["--category", "observability"],
+  "runway_scenario":                   ["--scenario", "baseline"],
+  "board_update_drafter":              ["--period", "Q1 2026"],
+  "procurement_intake_triage":         ["--request", "Need Datadog for 50 users"],
+
+  "support_macro_drafter":             ["--ticket-type", "login-failure"],
+  "escalation_decision":               ["--summary", "Customer data missing", "--severity", "P1", "--sla", "4h"],
+  "kb_article_drafter":                ["--topic", "SSO setup for Okta"],
+  "csat_theme_mining":                 ["--period", "2026-Q1"],
+
+  "content_brief_drafter":             ["--topic", "RAG for auditors"],
+  "seo_outline_drafter":               ["--keyword", "ediscovery software"],
+  "case_study_drafter":                ["--customer", "Paloma Networks"],
+  "launch_email_variants":             ["--feature", "Audit log export"],
+  "analyst_inquiry_responder":         ["--question", "How does your ICP overlap with Glean?"],
+
+  "well_log_summarizer":               ["--well-id", "42-255-31234"],
+  "aml_sar_narrative":                 ["--case-id", "SAR-2026-0417"],
+  "kyc_adverse_media_screener":        ["--entity", "Paloma Holdings LLC"],
+  "loan_application_classifier":       ["--doc", "sample_paystub"],
+  "basel_iii_risk_weight":             ["--exposure", "corporate-loan-1m"],
+  "vc_due_diligence_memo":             ["--company", "Paloma Networks", "--round", "Series A"],
+
+  "construction_rfi_agent":            ["--rfi-number", "RFI-0147", "--text", "Confirm VAV box substitution acceptance."],
+
+  "icd10_coder":                       ["--note-file", "sample-note.txt"],
+  "symptom_triage":                    ["--symptoms", "fever, cough, fatigue, 3 days"],
+  "drug_interaction_checker":          ["--meds", "warfarin,amiodarone"],
+  "discharge_summary_rewrite":         ["--note-file", "sample-note.txt"],
+  "medicare_plan_compare":             ["--zip", "94105", "--age", "68"],
+
+  "fnol_structurer":                   ["--narrative", "Rear-ended on I-95, no injuries, airbag deployed"],
+  "insurance_fraud_pattern":           ["--claim", "CLM-2026-09123"],
+
+  "resume_jd_scorer":                  ["--resume-file", "sample-resume.txt", "--jd-file", "sample-jd.txt"],
+  "interview_competency_grader":       ["--transcript-file", "sample-interview.txt"],
+  "nine_box_synthesizer":              ["--team", "platform"],
+  "benefits_enrollment_qa":            ["--question", "Does our HDHP cover preventive dental?"],
+
+  "inbound_lead_router":               ["--payload", "VP Eng, 400 FTEs, inbound from webinar"],
+  "meddic_call_coach":                 ["--transcript-file", "sample-call.txt"],
+
+  "mls_valuation":                     ["--address", "2100 S Congress Ave, Austin, TX"],
+  "title_defect_spotter":              ["--address", "2100 S Congress Ave, Austin, TX"],
+  "hoa_compliance_check":              ["--change", "Install 6-foot privacy fence"],
+
+  "samgov_rfp_match":                  ["--capabilities", "AI, cybersecurity, FedRAMP"],
+  "regulations_comment_summarizer":    ["--docket", "EPA-HQ-OAR-2026-0123"],
+  "citizen_intent_311":                ["--message", "Pothole on Elm at 14th"],
+  "permit_completeness_check":         ["--application", "sample-permit.json"],
+
+  "court_docket_monitor":              ["--party", "Acme Co", "--period", "2026-Q1"],
+  "patent_prior_art_search":           ["--claim", "A graph-based retrieval cache for LLMs"],
+
+  "cashflow_anomaly_detector":         ["--csv", "sample-ledger.csv"],
+  "coa_mapper":                        ["--source", "QuickBooks", "--target", "NetSuite"],
+  "month_end_close_narrative":         ["--period", "2026-03"],
+  "cloud_cost_anomaly":                ["--service", "AWS/EC2"],
+
+  "data_subject_request_responder":    ["--subject", "alex@example.com"],
+  "sla_breach_report":                 ["--customer", "Paloma Networks", "--period", "2026-Q1"],
+
+  "meeting_notes_action_items":        ["--meeting-id", "2026-04-17-platform-sync"],
+  "sprint_planner":                    ["--team", "platform", "--sprint", "2026-S08", "--capacity-days", "28"],
+
+  "bcp_drill_plan":                    ["--scope", "tier-1 services"],
+  "vendor_security_review":            ["--vendor", "Acme Analytics"],
+
+  "docx_form_fill":                    ["--template", "sample-template.docx", "--record", "sample-record.json"],
+  "document_versions":                 ["--doc", "sample_policy"],
+
+  "llama_index_rag":                   ["--question", "What is our PTO policy?"],
+  "permission_aware_retrieval":        ["--question", "What is our PTO policy?"],
+
+  "version_drift_review":              ["--doc-id", "sample_policy"]
+}

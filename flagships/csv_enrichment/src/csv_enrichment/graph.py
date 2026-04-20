@@ -18,7 +18,9 @@ Given the row's query string:
 1. Call ``search_knowledge`` with top_k=3.
 2. Call ``read`` on the most relevant hit.
 3. Produce ONE short paragraph (<=150 words) summarizing what the knowledge
-   base knows, citing document names inline.
+   base knows. Every factual claim MUST end with a ``[chunk:<uuid>]`` tag
+   copied verbatim from the ``read`` tool's output — never synthesize
+   chunk UUIDs.
 
 Return only the paragraph — no preamble, no structured JSON.
 """

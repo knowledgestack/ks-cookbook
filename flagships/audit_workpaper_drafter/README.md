@@ -23,6 +23,18 @@ Set-up steps:
 
 Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
 
+## Run
+
+```bash
+make demo-audit-workpaper
+# override inputs:
+AUDIT_CORPUS_FOLDER_ID=<your-folder-id> make demo-audit-workpaper
+```
+
+Output: `flagships/audit_workpaper_drafter/sample_output.md` — a tie-out
+workpaper with each substantive procedure citing either the company's
+accounting policy or the applicable audit standard.
+
 ## Data Sources
 
 - **PCAOB AS 1215:** Audit Documentation standard (pcaobus.org, public)

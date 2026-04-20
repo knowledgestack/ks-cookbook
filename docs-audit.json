@@ -1,0 +1,858 @@
+[
+  {
+    "kind": "flagship",
+    "name": "adverse_event_narrative",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "aml_sar_narrative",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "api_doc_generator",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "audit_workpaper_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "claim_adjudication_memo",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "clinical_trial_eligibility",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "compliance_questionnaire",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "construction_rfi_agent",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "contract_obligation_extractor",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "conversational_sdr_bot",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "credit_memo_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "csv_enrichment",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "earnings_risk_analyzer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "employee_handbook_qa",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "foia_response_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "grant_compliance_checker",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "incident_runbook_lookup",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "insurance_policy_comparison",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "job_description_generator",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "kyc_onboarding_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "lease_abstract",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "loan_covenant_monitor",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "msa_redline_vs_playbook",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "nerc_compliance_evidence",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "prior_auth_letter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "privacy_impact_assessment",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "realtime_voice_sdr",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "release_notes_generator",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "research_brief",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "rev_rec_memo",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "rfp_first_draft",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "sales_battlecard",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "sow_scope_validator",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "subrogation_opportunity_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "tax_position_memo",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "well_log_summarizer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "flagship",
+    "name": "zoning_compliance_check",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "access_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "account_research_brief",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "adr_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "aml_sar_narrative",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "analyst_inquiry_responder",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "api_deprecation_notice",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "basel_iii_risk_weight",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "bcp_drill_plan",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "benefits_enrollment_qa",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "board_update_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "case_study_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "cashflow_anomaly_detector",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "change_management_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "changelog_from_commits",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "churn_risk_flags",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "citizen_intent_311",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "clause_extractor",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "cloud_cost_anomaly",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "coa_mapper",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "compensation_band_check",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "competitive_positioning",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "construction_rfi_agent",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "content_brief_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "contract_renewal_checker",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "court_docket_monitor",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "csat_theme_mining",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "data_subject_request_responder",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "deal_loss_retro",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "discharge_summary_rewrite",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "document_versions",
+    "passed": true,
+    "issues": [
+      {
+        "check": "skipped",
+        "detail": "known non-standard"
+      }
+    ]
+  },
+  {
+    "kind": "recipe",
+    "name": "docx_form_fill",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "dpa_gap_check",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "drug_interaction_checker",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "escalation_decision",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "expense_policy_violation",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "fnol_structurer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "force_majeure_impact",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "gdpr_ropa_entry",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "hipaa_baa_gap",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "hoa_compliance_check",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "icd10_coder",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "icp_matcher",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "inbound_lead_router",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "incident_postmortem",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "insurance_fraud_pattern",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "interview_bank_generator",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "interview_competency_grader",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "invoice_reconciliation",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "iso27001_soa",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "kb_article_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "kyc_adverse_media_screener",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "launch_email_variants",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "llama_index_rag",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "loan_application_classifier",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "meddic_call_coach",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "medicare_plan_compare",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "meeting_notes_action_items",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "migration_guide_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "mls_valuation",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "month_end_close_narrative",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "nda_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "nine_box_synthesizer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "obligation_tracker",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "offer_letter_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "onboarding_checklist",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "onboarding_day_one_plan",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "oncall_shadow_plan",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "outbound_call_prep",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "password_policy_audit",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "patent_prior_art_search",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "pci_scope_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "perf_review_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "permission_aware_retrieval",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "permit_completeness_check",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "pip_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "policy_qa",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "post_deploy_verify",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "procurement_intake_triage",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "prospecting_email_personalizer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "qbr_deck_outline",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "regulations_comment_summarizer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "renewal_risk_evidence",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "resume_jd_scorer",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "rfp_question_router",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "runway_scenario",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "samgov_rfp_match",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "sdlc_checklist",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "security_awareness_quiz",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "security_finding_triage",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "seo_outline_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "sla_breach_report",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "soc2_evidence",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "sprint_planner",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "sre_runbook_gap_check",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "stakeholder_map_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "support_macro_drafter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "symptom_triage",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "tech_debt_ledger",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "title_defect_spotter",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "vc_due_diligence_memo",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "vendor_consolidation",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "vendor_security_review",
+    "passed": true,
+    "issues": []
+  },
+  {
+    "kind": "recipe",
+    "name": "version_drift_review",
+    "passed": true,
+    "issues": [
+      {
+        "check": "skipped",
+        "detail": "known non-standard"
+      }
+    ]
+  },
+  {
+    "kind": "recipe",
+    "name": "well_log_summarizer",
+    "passed": true,
+    "issues": []
+  }
+]

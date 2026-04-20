@@ -29,5 +29,10 @@ jobs:
       - name: Lint
         run: uv run ruff check .
 
+      - name: Smoke-test every recipe + flagship CLI
+        # Runs `--help` on 100 recipes + 32 flagships. Catches imports, argparse,
+        # pydantic schemas, shared-module breakage. No tenant required.
+        run: uv run python scripts/smoke_recipes.py
+
       - name: MCP server tests (run in ks-mcp repo)
         run: echo "MCP server moved to https://github.com/knowledgestack/ks-mcp — tests run there."

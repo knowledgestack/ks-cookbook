@@ -1,0 +1,21 @@
+[project]
+name = "ks-cookbook-sdr-bot"
+version = "0.1.0"
+description = "Sales flagship — live multi-turn SDR discovery bot grounded in KS corpus, with MEDDIC scoring."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai[mcp]>=0.0.14",
+    "pydantic>=2.6",
+]
+
+[project.scripts]
+ks-cookbook-sdr-bot = "conversational_sdr_bot.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/conversational_sdr_bot"]

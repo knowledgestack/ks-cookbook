@@ -1,0 +1,162 @@
+name: Nightly canary
+
+# Runs a small set of representative recipes against a dedicated staging
+# tenant. Tests the runtime layers that `make smoke` cannot: MCP reachability,
+# corpus retrieval, citation grounding, LLM output parsing.
+#
+# The staging tenant is provisioned ONCE by a human (see docs/END_TO_END.md
+# and docs/CANARY_SETUP.md). This workflow never creates or deletes tenants.
+#
+# Required repo secrets:
+#   KS_STAGING_API_KEY    Long-lived API key for the staging tenant.
+#   KS_STAGING_BASE_URL   Usually https://api.knowledgestack.ai (or a dedicated staging host).
+#   CANARY_FOLDER_ID      path_part_id of a FOLDER inside the staging tenant.
+#   OPENAI_API_KEY_CI     OpenAI key scoped to CI (low spend cap recommended).
+#
+# If any secret is missing, the job skips gracefully rather than failing loud.
+
+on:
+  schedule:
+    # 07:00 UTC daily (~midnight PT). Moves fast enough to catch same-day regressions.
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+    inputs:
+      verbose:
+        description: "Verbose smoke output"
+        type: boolean
+        default: false
+
+concurrency:
+  group: canary
+  cancel-in-progress: false
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      KS_API_KEY: ${{ secrets.KS_STAGING_API_KEY }}
+      KS_BASE_URL: ${{ secrets.KS_STAGING_BASE_URL }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_CI }}
+      CANARY_FOLDER_ID: ${{ secrets.CANARY_FOLDER_ID }}
+      # Point every vertical env var at the canary folder — recipes pick it up without code changes.
+      POLICIES_FOLDER_ID: ${{ secrets.CANARY_FOLDER_ID }}
+      CLINICAL_FOLDER_ID: ${{ secrets.CANARY_FOLDER_ID }}
+      LEGAL_CORPUS_FOLDER_ID: ${{ secrets.CANARY_FOLDER_ID }}
+
+    steps:
+      - name: Fail-fast if secrets missing
+        run: |
+          missing=0
+          for v in KS_API_KEY KS_BASE_URL OPENAI_API_KEY CANARY_FOLDER_ID; do
+            if [ -z "${!v}" ]; then
+              echo "::warning::secret $v not set — canary cannot run"
+              missing=1
+            fi
+          done
+          if [ "$missing" = "1" ]; then
+            echo "Skipping canary (provision staging tenant first — see docs/CANARY_SETUP.md)."
+            exit 0
+          fi
+
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install workspace
+        run: uv sync --all-packages
+
+      - name: Smoke-test catalog (no tenant calls)
+        # Keep the no-tenant smoke in the canary too, so a canary failure
+        # localizes: "smoke ok + canary fail" means runtime regression, not a
+        # catalog regression.
+        run: uv run python scripts/smoke_recipes.py
+
+      - name: Reseed canary fixtures
+        # Idempotent from the user's perspective — creates a fresh dated
+        # sub-folder so today's canary never races yesterday's artifacts.
+        run: |
+          uv run python scripts/seed_public_corpus.py \
+            --folder-id "$CANARY_FOLDER_ID" \
+            --vertical policies
+
+      # --- Canary recipes: one per retrieval / schema / framework pattern ---
+
+      - name: canary/policy_qa — simplest MCP-only recipe
+        run: |
+          uv run python recipes/policy_qa/recipe.py \
+            --question "What is our password policy?" \
+            | tee /tmp/policy_qa.json
+          python - <<'PY'
+          import json, sys, pathlib
+          out = json.loads(pathlib.Path("/tmp/policy_qa.json").read_text())
+          assert out.get("citations"), "policy_qa returned no citations"
+          for c in out["citations"]:
+              assert c.get("chunk_id"), f"missing chunk_id: {c}"
+          print(f"policy_qa OK — {len(out['citations'])} citations")
+          PY
+
+      - name: canary/soc2_evidence — MCP-only, deterministic
+        run: |
+          uv run python recipes/soc2_evidence/recipe.py --control CC6.1 --out /tmp/soc2.md
+          grep -q "chunk:" /tmp/soc2.md || (echo "no [chunk:...] tags in output" && exit 1)
+          echo "soc2_evidence OK"
+
+      - name: canary/version_drift_review — SDK version CRUD + citation parse
+        # Uses the seed.py fixture to prove document-versioning writes work,
+        # then confirms the review recipe reads them and produces cited output.
+        run: |
+          DOC_ID=$(uv run python recipes/version_drift_review/seed.py \
+            --folder-id "$CANARY_FOLDER_ID")
+          echo "seeded doc_id=$DOC_ID"
+          uv run python recipes/version_drift_review/recipe.py \
+            --doc-id "$DOC_ID" --out /tmp/version-drift.md
+          grep -q "chunk:" /tmp/version-drift.md \
+            || (echo "no [chunk:...] in version-drift output" && exit 1)
+          echo "version_drift_review OK"
+
+      - name: canary/icd10_coder — pydantic-ai schema w/ regex code validation
+        run: |
+          cat > /tmp/note.txt <<'NOTE'
+          48 yo male with sudden chest pain radiating to left arm, diaphoresis.
+          Serial troponins elevated. EKG shows ST depression in lateral leads.
+          Diagnosis: non-ST elevation myocardial infarction (NSTEMI).
+          NOTE
+          uv run python recipes/icd10_coder/recipe.py --note-file /tmp/note.txt \
+            | tee /tmp/icd10.json
+          python - <<'PY'
+          import json, pathlib, re
+          out = json.loads(pathlib.Path("/tmp/icd10.json").read_text())
+          primary = out["primary"]
+          assert re.match(r"^[A-Z][0-9][0-9A-Z]", primary["code"]), f"bad code: {primary}"
+          assert primary.get("citation", {}).get("chunk_id"), "no chunk_id on primary"
+          print(f"icd10_coder OK — primary={primary['code']}")
+          PY
+
+      - name: Upload canary artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: canary-outputs-${{ github.run_id }}
+          path: |
+            /tmp/policy_qa.json
+            /tmp/soc2.md
+            /tmp/version-drift.md
+            /tmp/icd10.json
+          retention-days: 14
+
+  notify-on-failure:
+    runs-on: ubuntu-latest
+    needs: canary
+    if: failure()
+    steps:
+      - name: Post failure summary
+        run: |
+          echo "Canary failed. Check the failing step and /tmp artifacts."
+          echo "Likely causes: staging tenant key expired, LLM rate limit, MCP server outage."

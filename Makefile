@@ -58,7 +58,33 @@ format: ## Format code with ruff
 test: ## MCP server tests live in the ks-mcp repo — this target is a reminder.
 	@echo "This repo no longer ships the MCP server."
 	@echo "MCP tests: https://github.com/knowledgestack/ks-mcp"
-	@echo "Flagship smoke tests: \`uv run --package ks-cookbook-<slug> ks-cookbook-<slug> --help\`"
+	@echo "Cookbook smoke tests: \`make smoke\`"
+
+smoke: ## Smoke-test every recipe + flagship CLI (catches broken imports/schemas/args).
+	@uv run python scripts/smoke_recipes.py
+
+smoke-recipes: ## Smoke-test recipes only
+	@uv run python scripts/smoke_recipes.py --recipes-only
+
+smoke-flagships: ## Smoke-test flagships only
+	@uv run python scripts/smoke_recipes.py --flagships-only
+
+e2e: check-env ## End-to-end: run every recipe + flagship, verify citations vs tenant. Needs KS_API_KEY + LLM key.
+	@uv run python scripts/e2e_verify.py $(E2E_ARGS)
+
+e2e-flagships: check-env ## E2E flagships only
+	@uv run python scripts/e2e_verify.py --flagships-only $(E2E_ARGS)
+
+e2e-recipes: check-env ## E2E recipes only
+	@uv run python scripts/e2e_verify.py --recipes-only $(E2E_ARGS)
+
+e2e-one: check-env ## E2E a single use case: make e2e-one NAME=icd10_coder
+	@test -n "$(NAME)" || (echo 'Usage: make e2e-one NAME=<recipe-or-flagship>'; exit 1)
+	@uv run python scripts/e2e_verify.py --only $(NAME) $(E2E_ARGS)
+
+seed-public-corpus: check-env ## Seed a KS tenant with one document per vertical. Set FOLDER_ID.
+	@test -n "$(FOLDER_ID)" || (echo 'Usage: make seed-public-corpus FOLDER_ID=<uuid> [VERTICAL=healthcare|banking|all]'; exit 1)
+	@uv run python scripts/seed_public_corpus.py --folder-id $(FOLDER_ID) --vertical $${VERTICAL:-all}
 
 install-dev: install ## Install dev tooling + pre-commit hooks
 	@uv run pre-commit install 2>/dev/null || echo "(pre-commit not installed; skipping hook setup)"
@@ -297,6 +323,56 @@ demo-release-notes: check-env ## Product: release notes generator
 		--input "$${VERSION:-v2.4.0}" \
 		--corpus-folder $${CORPUS_FOLDER_ID:-a196ef1e-ed0a-5948-ba3e-e607d5356036} --out flagships/release_notes_generator/sample_output.md
 	@echo "Output: $(abspath flagships/release_notes_generator/sample_output.md)"
+
+demo-well-log: check-env ## Energy flagship: well-log / drilling summary with HSE + formation events
+	@folder_args=""; \
+	if [ -n "$${ENERGY_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$ENERGY_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-well-log ks-cookbook-well-log \
+		--well-id "$${WELL_ID:-42-255-31234}" \
+		$$folder_args \
+		--out flagships/well_log_summarizer/sample_output.md
+	@echo "Output written to: $(abspath flagships/well_log_summarizer/sample_output.md)"
+
+demo-sar-narrative: check-env ## Banking flagship: FinCEN SAR narrative from case evidence
+	@folder_args=""; \
+	if [ -n "$${AML_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$AML_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-sar-narrative ks-cookbook-sar-narrative \
+		--case-id "$${CASE_ID:-SAR-2026-0417}" \
+		--subject "$${SUBJECT:-Paloma Holdings LLC}" \
+		$$folder_args \
+		--out flagships/aml_sar_narrative/sample_output.md
+	@echo "Output written to: $(abspath flagships/aml_sar_narrative/sample_output.md)"
+
+demo-sdr-bot: check-env ## Sales flagship: live multi-turn SDR bot with MEDDIC scoring (text REPL)
+	@folder_args=""; \
+	if [ -n "$${SALES_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$SALES_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-sdr-bot ks-cookbook-sdr-bot \
+		--prospect "$${PROSPECT:-Paloma Networks}" \
+		--prospect-context "$${PROSPECT_CONTEXT:-VP Eng at a 400-person SaaS; inbound from a webinar.}" \
+		$$folder_args \
+		--out flagships/conversational_sdr_bot/sample_output.md
+	@echo "Output written to: $(abspath flagships/conversational_sdr_bot/sample_output.md)"
+
+demo-voice-sdr: check-env ## Sales flagship: Realtime-API SDR w/ KS MCP tool proxy (text default; --voice for audio)
+	@folder_args=""; \
+	if [ -n "$${SALES_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$SALES_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-voice-sdr ks-cookbook-voice-sdr \
+		--prospect "$${PROSPECT:-Paloma Networks}" \
+		--prospect-context "$${PROSPECT_CONTEXT:-VP Eng at a 400-person SaaS; inbound from a webinar.}" \
+		$${VOICE:+--voice} \
+		$$folder_args \
+		--out flagships/realtime_voice_sdr/sample_output.md
+	@echo "Output written to: $(abspath flagships/realtime_voice_sdr/sample_output.md)"
+
+demo-rfi-agent: check-env ## Construction flagship: RFI / submittal draft response against specs + drawings
+	@folder_args=""; \
+	if [ -n "$${CONSTRUCTION_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$CONSTRUCTION_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-rfi-agent ks-cookbook-rfi-agent \
+		--rfi-number "$${RFI_NUMBER:-RFI-0147}" \
+		--question "$${QUESTION:-Mechanical sheet M-402 calls for Greenheck SQ-120-B at grid line C.4 but spec 23 36 00 lists Price SDV-120 as basis of design. Confirm acceptable substitution or provide direction.}" \
+		$$folder_args \
+		--out flagships/construction_rfi_agent/sample_output.md
+	@echo "Output written to: $(abspath flagships/construction_rfi_agent/sample_output.md)"
 
 recipe: check-env ## Run a recipe: make recipe NAME=policy_qa ARGS='--question "..."'
 	@if [ -z "$(NAME)" ]; then echo 'Usage: make recipe NAME=<folder> ARGS="..."'; exit 1; fi

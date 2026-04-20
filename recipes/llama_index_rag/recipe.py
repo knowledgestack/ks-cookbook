@@ -7,6 +7,10 @@ scope), so the LlamaIndex side is pure plumbing.
 
 Proves the "use any agentic framework and use us" claim — identical grounding
 behaviour as the pydantic-ai / LangGraph / Anthropic / OpenAI recipes.
+
+Framework: LlamaIndex (over KS MCP stdio via the shared helper).
+Tools: list_contents, read, search_knowledge.
+Output: stdout (one cited paragraph).
 """
 
 

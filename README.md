@@ -157,6 +157,11 @@ Teams building internal AI agents on top of large document collections where **p
 
 ## Quickstart
 
+> **Full end-to-end walkthrough** (install → seed → run → verify) lives in
+> [docs/END_TO_END.md](docs/END_TO_END.md). Run `make smoke` after install to
+> verify all 131 cataloged use-case CLIs import, parse args, and build
+> schemas cleanly.
+
 ### 1. Prerequisites
 
 - Python `3.11+`

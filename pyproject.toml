@@ -40,6 +40,11 @@ members = [
     "flagships/privacy_impact_assessment",
     "flagships/sow_scope_validator",
     "flagships/release_notes_generator",
+    "flagships/well_log_summarizer",
+    "flagships/aml_sar_narrative",
+    "flagships/construction_rfi_agent",
+    "flagships/conversational_sdr_bot",
+    "flagships/realtime_voice_sdr",
 ]
 
 [dependency-groups]

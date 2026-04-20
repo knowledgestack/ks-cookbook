@@ -23,6 +23,19 @@ Set-up steps:
 
 Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
 
+## Run
+
+```bash
+make demo-msa-redline
+# override:
+PLAYBOOK_NAME=bonterms_playbook INBOUND_NAME=commonpaper_inbound \
+LEGAL_REDLINE_FOLDER_ID=<your-folder-id> make demo-msa-redline
+```
+
+Output: `flagships/msa_redline_vs_playbook/sample_output.md` — per-clause
+diff vs the playbook with severity, a proposed redline, and the chunk
+citations on both sides.
+
 ## Data Sources
 
 - **Playbook:** Bonterms Cloud Terms v1.0 (CC BY 4.0) - https://github.com/Bonterms/Cloud-Terms
