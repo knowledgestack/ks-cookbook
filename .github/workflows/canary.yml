@@ -16,9 +16,14 @@ name: Nightly canary
 # If any secret is missing, the job skips gracefully rather than failing loud.
 
 on:
-  schedule:
-    # 07:00 UTC daily (~midnight PT). Moves fast enough to catch same-day regressions.
-    - cron: "0 7 * * *"
+  # Scheduled runs are disabled until the staging tenant is provisioned.
+  # See docs/CANARY_SETUP.md. Re-enable by uncommenting the schedule block
+  # below once KS_STAGING_API_KEY / KS_STAGING_BASE_URL / CANARY_FOLDER_ID /
+  # OPENAI_API_KEY_CI are set as repo secrets.
+  #
+  # schedule:
+  #   # 07:00 UTC daily (~midnight PT). Moves fast enough to catch same-day regressions.
+  #   - cron: "0 7 * * *"
   workflow_dispatch:
     inputs:
       verbose:
