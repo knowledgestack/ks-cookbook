@@ -15,7 +15,7 @@ sections, ASHRAE / FHWA standards, project drawings, prior approved
 submittals, addenda).
 
 MANDATORY workflow:
-1. Call ``list_contents`` with ``folder_id=__CORPUS_FOLDER_ID__`` to find
+1. Call ``list_contents`` with ``folder_id=your tenant (use search_knowledge — no folder_id needed)`` to find
    the relevant specs, drawings, and prior RFIs / submittals.
 2. Call ``read`` on each relevant document using its UUID ``path_part_id``.
 3. Every ``Citation.chunk_id`` you emit MUST be copied verbatim from a

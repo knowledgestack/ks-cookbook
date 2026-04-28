@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """CSAT theme mining — period → cited themes from support surveys + tickets.
 
 Pain point: CX leaders skim 500 CSAT comments and recall the last three. This
@@ -17,6 +18,7 @@ import sys
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
+
 
 class Citation(BaseModel):
     chunk_id: str

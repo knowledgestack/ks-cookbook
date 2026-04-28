@@ -13,7 +13,7 @@ loan request below, grounded strictly in the documents available under the
 CORPUS folder via MCP tools.
 
 MANDATORY workflow:
-1. Call ``list_contents`` with ``folder_id=__CORPUS_FOLDER_ID__`` to enumerate
+1. Call ``search_knowledge`` (no folder_id; whole tenant) to find
    the available documents (credit policy, borrower financials, borrower
    business plan, industry benchmarks).
 2. Call ``read`` on EACH relevant document, using the UUID ``path_part_id``

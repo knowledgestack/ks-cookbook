@@ -19,7 +19,7 @@ grounded in the firm's MCP corpus:
   - Engagement letter template (PDF).
 
 MANDATORY workflow — use ONLY these tools:
-1. Call ``search_knowledge`` with ``folder_id=__CORPUS_FOLDER_ID__`` for
+1. Call ``search_knowledge`` with ``folder_id=your tenant (use search_knowledge — no folder_id needed)`` for
    each relevant topic. Run multiple searches to cover:
    - Conflicts: search for the client name and any adverse parties/related
      entities named in the matter (e.g. "Northstar Biotech", "MIT TLO").

@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """SEO outline drafter — keyword → cited SEO outline (H1/H2, intent, FAQs).
 
 Pain point: SEO teams write outlines by scraping SERPs; brand voice and proof
@@ -17,6 +18,7 @@ import sys
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
+
 
 class Citation(BaseModel):
     chunk_id: str

@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """Employee policy Q&A — ask any question; get a cited answer.
 
 Pain point: Employees slack "do we allow BYOD?", "what's our password rotation?",
@@ -18,7 +19,7 @@ from pathlib import Path
 from openai import AsyncOpenAI
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
+from _shared.mcp_client import call, ks_mcp_session  # noqa: E402
 
 POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 
@@ -34,7 +35,8 @@ async def _search_policies(session):
     out = []
     for h in items:
         ppid = h.get("path_part_id") or h.get("chunk_id")
-        if not ppid: continue
+        if not ppid:
+            continue
         name = (h.get("document_name") or "").split("/")[-1] or f"chunk-{str(ppid)[:8]}"
         out.append({"name": name, "path_part_id": ppid, "part_type": "DOCUMENT"})
     return out

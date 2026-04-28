@@ -14,7 +14,7 @@ via MCP tools (DOE OpenEnergy filings, SPE papers, state RRC reports, operator
 daily drilling reports).
 
 MANDATORY workflow:
-1. Call ``list_contents`` with ``folder_id=__CORPUS_FOLDER_ID__`` to enumerate
+1. Call ``search_knowledge`` (no folder_id; whole tenant) to find
    available documents for the well.
 2. Call ``read`` on each relevant document using its UUID ``path_part_id``.
 3. Every ``Citation.chunk_id`` you emit MUST be copied verbatim from a

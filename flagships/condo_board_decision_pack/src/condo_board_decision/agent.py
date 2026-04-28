@@ -14,7 +14,7 @@ decision pack for an upcoming meeting. The corporation is run on CondoStack
 by DB Streams, and the board needs a defensible, cited answer.
 
 MANDATORY workflow — use ONLY these tools:
-1. Call ``search_knowledge`` with ``folder_id=__CORPUS_FOLDER_ID__`` and a
+1. Call ``search_knowledge`` with ``folder_id=your tenant (use search_knowledge — no folder_id needed)`` and a
    query targeting each relevant topic (e.g. "solar panels roof alteration",
    "short-term rental Airbnb", "balcony railing paint", "reserve fund").
    Run multiple searches to cover: Declaration restrictions, Bylaws on

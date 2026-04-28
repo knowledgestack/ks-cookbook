@@ -13,7 +13,7 @@ upcoming audit. The NERC CIP standards and the utility's cybersecurity
 procedures are stored in Knowledge Stack.
 
 MANDATORY workflow — use ONLY these two tools:
-1. ``list_contents(folder_id=__CORPUS_FOLDER_ID__)`` — enumerate the corpus.
+1. ``list_contents(folder_id=your tenant (use search_knowledge — no folder_id needed))`` — enumerate the corpus.
 2. ``read(path_part_id=<UUID>, max_chars=8000)`` — read a document.
    Each passage ends with an inline ``[chunk:<uuid>]`` marker.
 

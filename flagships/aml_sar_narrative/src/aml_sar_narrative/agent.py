@@ -15,7 +15,7 @@ CORPUS folder via MCP tools (transaction ledger exports, alert rationale
 memo, KYC file, prior SAR history, relevant FFIEC / FinCEN guidance).
 
 MANDATORY workflow:
-1. Call ``list_contents`` with ``folder_id=__CORPUS_FOLDER_ID__`` to enumerate
+1. Call ``search_knowledge`` (no folder_id; whole tenant) to find
    the case file.
 2. Call ``read`` on EACH relevant document using the UUID ``path_part_id``.
 3. Every ``Citation.chunk_id`` you emit MUST be copied verbatim from a

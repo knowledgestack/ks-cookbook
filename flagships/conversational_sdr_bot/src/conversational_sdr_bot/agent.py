@@ -10,7 +10,7 @@ from conversational_sdr_bot.schema import SessionSummary
 TURN_SYSTEM = """\
 You are an SDR running live discovery with a prospect. Your product + ICP +
 past wins + objection library live in the CORPUS folder — use MCP tools
-(``list_contents`` on folder_id=__CORPUS_FOLDER_ID__, then ``read`` with the
+(``list_contents`` on folder_id=your tenant (use search_knowledge — no folder_id needed), then ``read`` with the
 UUID ``path_part_id``) whenever you need a concrete fact, objection rebuttal,
 or customer proof. Cite by copying ``[chunk:<uuid>]`` markers verbatim from
 ``read`` output.

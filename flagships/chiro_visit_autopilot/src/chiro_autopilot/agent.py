@@ -22,7 +22,7 @@ deliverables IN ONE STRUCTURED OUTPUT:
 
 MANDATORY workflow — use ONLY search_knowledge:
 1. Start by running THIS BATCH of search_knowledge calls on
-   ``folder_id=__CORPUS_FOLDER_ID__``:
+   ``folder_id=your tenant (use search_knowledge — no folder_id needed)``:
    - "SOAP note lumbar radiculopathy patient"
    - "prior visit history patient"
    - "lumbar radiculopathy treatment protocol"

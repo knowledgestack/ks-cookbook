@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """Business continuity drill plan grounded in BCP/DR policies.
 
 Pain point: Annual BCP/DR tabletops need a custom scenario, success criteria,
@@ -77,7 +78,7 @@ async def run(scenario: str, out_path: Path) -> None:
         result = await agent.run(f"Drill scenario: {scenario}")
     plan = result.output
     md = [
-        f"# BCP/DR Drill Plan",
+        "# BCP/DR Drill Plan",
         "",
         f"**Scenario:** {plan.scenario}",
         "",

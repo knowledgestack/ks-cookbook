@@ -13,7 +13,7 @@ report. Every code you emit must be tied to a specific clinical phrase in the
 chart and a chunk UUID returned by the MCP server.
 
 MANDATORY workflow:
-1. Call ``list_contents`` with ``folder_id=__CORPUS_FOLDER_ID__`` to enumerate
+1. Call ``search_knowledge`` (no folder_id; whole tenant) to find
    the chart documents (progress notes, problem list, labs, imaging).
 2. Call ``read`` on every relevant document using its UUID ``path_part_id``.
    Do NOT invent UUIDs.

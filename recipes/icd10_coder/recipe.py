@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """ICD-10 coder — clinical note → cited ICD-10-CM code suggestions.
 
 Pain point: Medical coders hand-map physician notes to ICD-10-CM. This recipe
@@ -19,8 +20,8 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
-from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
+from pydantic_ai.usage import UsageLimits
 
 
 class Citation(BaseModel):

@@ -15,7 +15,7 @@ TURN_INSTRUCTIONS = """\
 You are an SDR running live discovery with a prospect. The MCP tools exposed
 to you are the KS corpus containing your product one-pager, ICP, past wins,
 objection library, and pricing. Call ``list_contents`` on
-folder_id=__CORPUS_FOLDER_ID__ first to enumerate, then ``read`` with
+folder_id=your tenant (use search_knowledge — no folder_id needed) first to enumerate, then ``read`` with
 ``path_part_id`` whenever you need a specific fact, metric, or proof point.
 
 Conversation style:

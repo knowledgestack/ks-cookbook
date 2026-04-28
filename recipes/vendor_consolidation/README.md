@@ -1,254 +1,109 @@
-# `Vendor Consolidation`
+# Vendor Consolidation
 
-**Generate a cited vendor-by-vendor consolidation strategy from enterprise contracts, renewal notes, and usage reports stored in Knowledge Stack.**
+> **Vendor consolidation planning agent using Knowledge Stack MCP.**
 
-```bash
-uv run python recipes/vendor_consolidation/recipe.py --category observability
-```
+## Table of contents
 
----
+1. [What this recipe does](#what-this-recipe-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Live verified output](#live-verified-output)
+9. [Troubleshooting](#troubleshooting)
+10. [Files](#files)
 
 ## What this recipe does
 
-`vendor_consolidation` analyzes procurement documents inside Knowledge Stack and produces a **structured consolidation plan** for a specific software category such as:
+Purpose
+-------
+Generate a procurement vendor consolidation plan for a category
+(e.g. observability, CRM, contact-center) using grounded citations
+from contracts, renewal notes, and vendor evaluation material.
 
-* observability
-* CRM
-* contact-center platforms
-* identity providers
-* analytics tooling
-* security vendors
+Example usage
+-------------
+python consolidate.py   --category observability   --save
 
-The output is a **vendor-level action plan** recommending whether each vendor should be:
+## How it works
 
-* `keep`
-* `migrate`
-* `terminate`
-* `renegotiate`
+1. The recipe spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` is built with a strict pydantic output schema and `gpt-4o`/`gpt-4o-mini`.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge`. **It never passes folder UUIDs** — KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to retrieve the full chunk text. The trailing `[chunk:<uuid>]` marker is the citation.
+5. The validated pydantic object is printed as JSON to stdout. Every `chunk_id` is a verbatim UUID from a real chunk in your tenant.
 
-Each recommendation includes:
+## Sign in to Knowledge Stack
 
-* grounded citations to source documents
-* rationale tied to contract or usage evidence
-* estimated savings
-* risk signals
-* overlap detection across tools
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
 
-The result is a **defensible procurement strategy artifact**, not a generic AI summary.
+Sign in at <https://app.knowledgestack.ai>, request a read-only "Cookbook demo" key, then:
 
----
-
-## The problem this solves
-
-Most enterprises accumulate overlapping vendors over time because:
-
-| Cause                         | Example                                                             |
-| ----------------------------- | ------------------------------------------------------------------- |
-| Teams purchase independently  | Engineering adopts Datadog while platform team already uses Grafana |
-| Contracts renew automatically | Legacy SaaS renews yearly without review                            |
-| Ownership changes             | Vendor survives org restructuring without re-evaluation             |
-| Usage declines silently       | Licenses paid but unused                                            |
-| Migration plans stall         | Replacement tool exists but switch never completed                  |
-
-Procurement and CIO teams often ask:
-
-> “Why are we paying for six tools that do the same thing?”
-
-Answering this normally requires manual review across:
-
-* contracts
-* renewal notices
-* license counts
-* architecture decisions
-* evaluation memos
-* usage exports
-
-This recipe automates that analysis using **grounded document evidence**.
-
----
-
-## What makes this different from a normal LLM summary
-
-The agent:
-
-✔ reads actual contract chunks
-✔ prefers latest document versions
-✔ extracts pricing only when explicitly present
-✔ detects overlapping functionality
-✔ evaluates switching risk
-✔ estimates savings using documented signals
-✔ cites the exact chunk used for each decision
-
-It does **not fabricate procurement data**.
-
----
-
-## Example output structure
-
-The recipe returns structured JSON like:
-
-```json
-{
-  "category": "observability",
-  "vendors": [
-    {
-      "vendor": "Datadog",
-      "action": "renegotiate",
-      "rationale": "renewal upcoming within 90 days; duplicate log ingestion already available in OpenSearch",
-      "annual_spend": "$420,000",
-      "estimated_savings": "$90,000",
-      "citation": {
-        "chunk_id": "...",
-        "document_name": "Datadog Renewal Memo",
-        "snippet": "Contract renewal scheduled for Q3..."
-      }
-    }
-  ],
-  "overall_savings_estimate": "$180,000",
-  "risks": [
-    "migration dependency on logging pipeline stabilization"
-  ]
-}
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
 ```
 
-This makes the result directly usable in:
+Skip to step 5 (Run).
 
-* procurement review decks
-* CIO vendor rationalization initiatives
-* transformation programs
-* cost-reduction planning cycles
+**Path B — `ingestion: false` (clone repo, ingest into your own tenant)**
 
----
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
 
-## Typical users
+## Ingest the unified corpus
 
-This recipe is designed for:
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents (CMS ICD-10, NIST 800-53, IRS Pubs, OCC Handbook, KO 10-K, AAPL 2024 proxy, FAR, NERC CIP, FDA Orange Book, BLS XLSX, CDC PPTX, …). Create a parent folder in your tenant via the UI, then:
 
-### Procurement operations teams
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
 
-Identify redundant SaaS vendors and reduce spend.
+## Inputs
 
-### Finance transformation teams
+| Flag | Type | Required | Default | Help |
+|---|---|---|---|---|
 
-Support annual cost-optimization initiatives.
+| `--category` | str | yes | — | example: observability, CRM, contact-center |
 
-### CIO / CTO offices
+| `--save` | str | no | — | persist output JSON locally |
 
-Drive platform standardization.
+## Output schema
 
-### Platform engineering leadership
+`ConsolidationPlan` — pydantic model emitted as JSON to stdout.
 
-Align tooling decisions across teams.
+| Field | Type |
+|---|---|
 
----
+| `category` | `str` |
 
-## How Knowledge Stack enables this workflow
+| `vendors` | `list[VendorAction]` |
 
-The recipe works because Knowledge Stack provides:
+| `overall_savings_estimate` | `str` |
 
-* version-aware contract storage
-* chunk-level citations
-* structured document traversal
-* renewal-note retrieval
-* usage-report grounding
-* safe agent execution boundaries
+| `risks` | `list[str]` |
 
-Instead of asking:
-
-> “What tools do we use?”
-
-the agent answers:
-
-> “Which vendors should we consolidate, why, and how much will we save — with evidence.”
-
----
-
-## When to run this recipe
-
-Run it whenever you want to evaluate consolidation within a category:
+## Run
 
 ```bash
 uv run python recipes/vendor_consolidation/recipe.py \
-  --category observability
+    --category entertainment
 ```
 
-Typical cadence:
+## Live verified output
 
-* before renewal season
-* during platform standardization
-* ahead of budgeting cycles
-* during post-merger integration
-* during enterprise cost-reduction initiatives
-
----
-
-## Why this matters strategically
-
-Vendor sprawl is one of the largest silent cost centers inside modern enterprises.
-
-Most organizations:
-
-* don’t track overlap well
-* don’t link contracts to usage
-* don’t connect renewal timing to architecture decisions
-* don’t maintain defensible consolidation plans
-
-This recipe turns Knowledge Stack into a **procurement intelligence layer**, not just a document store.
-
----
-
-## Developer setup
-
-### 1) Get your Knowledge Stack API key
-
-1. Sign in to [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Open your workspace/account API keys page.
-3. Create or copy an API key for your tenant.
-4. Export it in your shell:
-
-```bash
-export KS_API_KEY="your_ks_api_key"
-export KS_BASE_URL="https://api.knowledgestack.ai"
-```
-
-### 2) Get your OpenAI API key
-
-1. Sign in to [platform.openai.com](https://platform.openai.com/).
-2. Go to **API keys** and create a new secret key.
-3. Copy the key once (full key is shown only at creation).
-4. Export it in your shell:
-
-```bash
-export OPENAI_API_KEY="your_openai_api_key"
-export MODEL="gpt-4o"
-```
-
-### 3) Run this recipe
-
-```bash
-uv run python recipes/vendor_consolidation/recipe.py --help
-```
-
-## Common automation pitfalls
-
-- Missing or stale source documents in the target corpus
-- No citation enforcement in output schema
-- Prompt too generic for domain-specific constraints
-- Inconsistent output shape for downstream systems
-- Environment drift across local/CI (`KS_API_KEY`, `OPENAI_API_KEY`, `MODEL`)
-
-<!-- ks-cookbook auto-generated section: live verification -->
-## Live verified — vendor_consolidation
-
-Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~52.9s).
-
-### Run
-
-```bash
-
-```
-
-### Output (head)
+Verified end-to-end against `api.knowledgestack.ai` on **2026-04-28** with `MODEL=gpt-4o-mini` (~52.9s):
 
 ```json
 {
@@ -260,5 +115,23 @@ Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt
       "rationale": "Strategically relevant vendor with effective solutions for managing risks related to foreign currency contracts and
 ```
 
-All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
-<!-- end ks-cookbook auto-generated section -->
+Every `chunk_id` is a verbatim UUID from a `[chunk:<uuid>]` marker; snippets and document names are real chunk content from the ingested corpus.
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `Set KS_API_KEY and OPENAI_API_KEY.` | Export both env vars before running. |
+| `Tool 'read' exceeded max retries` | gpt-4o-mini occasionally calls `read(<chunk_id>)` instead of `read(<path_part_id>)`. Re-run; the prompt self-corrects within `retries=4`. Switching to `MODEL=gpt-4o` removes the flake. |
+| Empty / non-grounded output | The corpus isn't ingested into your tenant. Run `make seed-unified-corpus PARENT_FOLDER_ID=<uuid>`. |
+| `Connection error` from OpenAI | Transient; retry. |
+| `request_limit of 50` exceeded | The agent looped too many tools. Re-run; this is rare. |
+
+## Files
+
+```text
+recipes/vendor_consolidation/
+├── README.md            ← you are here
+├── recipe.py            ← agent + schema (no FOLDER_ID env vars)
+
+```

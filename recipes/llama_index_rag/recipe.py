@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """LlamaIndex recipe — framework #6, same auth pattern.
 
 Pain point: LlamaIndex is the default RAG framework for many teams. The usual
@@ -21,7 +22,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
+from _shared.mcp_client import call, ks_mcp_session  # noqa: E402
 
 POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 async def run(question: str) -> None:

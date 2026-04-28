@@ -13,7 +13,7 @@ overdue invoice. Tone MUST match the way this client has historically
 communicated — not a generic template.
 
 MANDATORY workflow:
-1. Call ``find`` on the corpus ``folder_id=__CORPUS_FOLDER_ID__`` with the
+1. Call ``find`` on the corpus ``folder_id=your tenant (use search_knowledge — no folder_id needed)`` with the
    client name to locate past invoices, prior follow-ups, and inbound client
    emails.
 2. Call ``read`` on the most recent prior email exchange with this client

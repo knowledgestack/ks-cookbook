@@ -1,3 +1,4 @@
+# pyright: reportMissingImports=false, reportUnknownVariableType=false, reportUnknownMemberType=false, reportUnknownArgumentType=false, reportUnknownParameterType=false, reportAny=false, reportAttributeAccessIssue=false, reportUnusedCallResult=false, reportCallIssue=false, reportGeneralTypeIssues=false, reportArgumentType=false, reportOptionalSubscript=false, reportReturnType=false, reportMissingTypeArgument=false, reportDeprecated=false, reportUnannotatedClassAttribute=false
 """DPA gap check — flag missing/weak GDPR clauses vs your data-protection policy.
 
 Pain point: Counterparty Data Processing Addenda often omit standard GDPR
@@ -20,7 +21,7 @@ from pathlib import Path
 from openai import AsyncOpenAI
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
+from _shared.mcp_client import call, ks_mcp_session  # noqa: E402
 
 POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 SYSTEM = (

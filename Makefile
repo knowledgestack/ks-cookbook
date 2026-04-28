@@ -1,10 +1,42 @@
 SHELL := /bin/bash
 
-# Auto-load .env if present. Users copy .env.example → .env and fill it in.
+# Auto-load .env if present, but let calling-shell env overrides win.
+# Snapshot critical vars from env BEFORE include so we can restore them.
+_PRE_KS_API_KEY      := $(KS_API_KEY)
+_PRE_KS_BASE_URL     := $(KS_BASE_URL)
+_PRE_OPENAI_API_KEY  := $(OPENAI_API_KEY)
+_PRE_ANTHROPIC_KEY   := $(ANTHROPIC_API_KEY)
+_PRE_MODEL           := $(MODEL)
+_PRE_KS_MCP_COMMAND  := $(KS_MCP_COMMAND)
+_PRE_KS_MCP_ARGS     := $(KS_MCP_ARGS)
+
 ifneq (,$(wildcard .env))
 	include .env
-	export
 endif
+
+# Restore env-set values (if non-empty) on top of whatever .env loaded.
+ifneq (,$(_PRE_KS_API_KEY))
+	KS_API_KEY := $(_PRE_KS_API_KEY)
+endif
+ifneq (,$(_PRE_KS_BASE_URL))
+	KS_BASE_URL := $(_PRE_KS_BASE_URL)
+endif
+ifneq (,$(_PRE_OPENAI_API_KEY))
+	OPENAI_API_KEY := $(_PRE_OPENAI_API_KEY)
+endif
+ifneq (,$(_PRE_ANTHROPIC_KEY))
+	ANTHROPIC_API_KEY := $(_PRE_ANTHROPIC_KEY)
+endif
+ifneq (,$(_PRE_MODEL))
+	MODEL := $(_PRE_MODEL)
+endif
+ifneq (,$(_PRE_KS_MCP_COMMAND))
+	KS_MCP_COMMAND := $(_PRE_KS_MCP_COMMAND)
+endif
+ifneq (,$(_PRE_KS_MCP_ARGS))
+	KS_MCP_ARGS := $(_PRE_KS_MCP_ARGS)
+endif
+export
 
 # Default sensible values for dev. Users normally don't touch these.
 export KS_MCP_COMMAND ?= $(abspath .venv/bin/ks-mcp)
