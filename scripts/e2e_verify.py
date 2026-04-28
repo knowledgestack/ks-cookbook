@@ -111,7 +111,9 @@ def _run(cmd: list[str], timeout: int, cwd: Path = ROOT) -> tuple[int, str, str,
             cmd, capture_output=True, text=True, timeout=timeout, cwd=cwd, env=os.environ.copy()
         )
     except subprocess.TimeoutExpired as e:
-        return 124, (e.stdout or ""), (e.stderr or ""), time.monotonic() - start
+        out = e.stdout if isinstance(e.stdout, str) else (e.stdout.decode() if e.stdout else "")
+        err = e.stderr if isinstance(e.stderr, str) else (e.stderr.decode() if e.stderr else "")
+        return 124, out, err, time.monotonic() - start
     return r.returncode, r.stdout or "", r.stderr or "", time.monotonic() - start
 
 

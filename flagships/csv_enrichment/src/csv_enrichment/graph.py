@@ -97,7 +97,8 @@ async def _enrich_node(state: EnrichmentState) -> dict[str, Any]:
         async with sem:
             return await _enrich_one(row, agent)
 
-    coros = [_bounded(r) for r in state["rows"]]
+    rows = state.get("rows") or []
+    coros = [_bounded(r) for r in rows]
     pairs: list[tuple[int, str]] = []
     for coro in asyncio.as_completed(coros):
         idx, text = await coro

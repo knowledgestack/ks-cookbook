@@ -82,7 +82,8 @@ def _pdf(title: str, blocks: list[str | list[list[str]]]) -> bytes:
 
 def _xlsx(sheets: dict[str, list[list]]) -> bytes:
     wb = Workbook()
-    wb.remove(wb.active)
+    if wb.active is not None:
+        wb.remove(wb.active)
     for name, rows in sheets.items():
         ws = wb.create_sheet(name)
         for row in rows:

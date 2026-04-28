@@ -150,8 +150,8 @@ def draft_review(
     for _ in range(max_steps):
         resp = openai.chat.completions.create(
             model=model,
-            messages=messages,
-            tools=TOOLS,
+            messages=messages,  # pyright: ignore[reportArgumentType]
+            tools=TOOLS,  # pyright: ignore[reportArgumentType]
             tool_choice="auto",
         )
         msg = resp.choices[0].message

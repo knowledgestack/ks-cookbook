@@ -239,7 +239,7 @@ async def _run(
                 )
             else:
                 session_config["modalities"] = ["text"]
-            await conn.session.update(session=session_config)
+            await conn.session.update(session=session_config)  # pyright: ignore[reportArgumentType]
 
             runner = _run_voice if voice else _run_text
             turns = await runner(conn, mcp, transcript, tool_calls)
