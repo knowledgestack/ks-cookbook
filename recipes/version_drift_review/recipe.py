@@ -126,7 +126,7 @@ async def review(doc_id: UUID, out_path: Path) -> None:
             "",
         ]
     out_path.write_text("\n".join(lines))
-    print(f"Wrote {out_path}")
+    print(json.dumps({"status": "ok", "wrote": f"{out_path}"}, indent=2))
 
 
 def main() -> None:

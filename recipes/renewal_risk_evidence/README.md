@@ -72,3 +72,31 @@ uv run python recipes/renewal_risk_evidence/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — renewal_risk_evidence
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~50.4s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "account": "demo",
+  "renewal_date": "2026-04-28T18:00:26.931144+00:00",
+  "recommendation": "at_risk",
+  "value_realized": {
+    "title": "Value Realized for Demo Account",
+    "bullets": [
+      "SUMMARY PENDING",
+      "Asset impairm
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

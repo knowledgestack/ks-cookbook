@@ -72,3 +72,29 @@ uv run python recipes/change_management_review/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — change_management_review
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~17.3s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "change": "Drop-and-recreate the orders.user_id index in prod Postgres",
+  "risk_level": "high",
+  "gates": [
+    {
+      "gate": "Limit access to authorized personnel for changes.",
+      "why": "Access restrictions help prevent unauth
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

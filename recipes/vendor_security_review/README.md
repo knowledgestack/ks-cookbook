@@ -72,3 +72,30 @@ uv run python recipes/vendor_security_review/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — vendor_security_review
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~25.0s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "vendor": "Acme Vendor LLC",
+  "category": "data processor",
+  "risks": [
+    {
+      "risk": "Inadequate vendor management policies may lead to security lapses during data processing.",
+      "severity": "high",
+      "mitigation": "Es
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

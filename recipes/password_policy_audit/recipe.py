@@ -67,7 +67,7 @@ async def run(config: dict, out_path: Path) -> None:
         "field where the observed value is weaker than the policy minimum.\n"
     )
     out_path.write_text("\n".join(lines))
-    print(f"Wrote {out_path} ({len(seen)} excerpts)")
+    print(json.dumps({"status": "ok", "wrote": f"{out_path} ({len(seen)} excerpts)"}, indent=2))
 
 
 def main() -> None:

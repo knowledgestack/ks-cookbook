@@ -9,6 +9,7 @@ Framework: LangGraph + MCP adapters (showcases yet another framework).
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 
@@ -27,8 +28,8 @@ SYSTEM = (
 
 
 async def run(pr: str) -> None:
-    cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
-    args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
+    cmd = os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp")
+    args = (os.environ.get("KS_MCP_ARGS", "") or "").split()
     client = MultiServerMCPClient(
         {
             "knowledgestack": {
@@ -55,7 +56,7 @@ async def run(pr: str) -> None:
     text = messages[-1].content if messages else ""
     if isinstance(text, list):
         text = " ".join(p.get("text", "") for p in text if isinstance(p, dict))
-    print(text)
+    print(json.dumps({"checklist_markdown": text}, indent=2))
 
 
 def main() -> None:

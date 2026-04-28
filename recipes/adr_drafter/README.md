@@ -72,3 +72,26 @@ uv run python recipes/adr_drafter/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — adr_drafter
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~106.2s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "title": "Adopt Managed Postgres for Analytics Service",
+  "status": "Proposed",
+  "context": "The current self-hosted Postgres has frequent on-call pages, indicating a need for more reliable database management. Adopting a managed Post
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

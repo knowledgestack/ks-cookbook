@@ -72,3 +72,31 @@ uv run python recipes/resume_jd_scorer/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — resume_jd_scorer
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~22.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "role": "demo",
+  "fit_score": 80,
+  "criteria": [
+    {
+      "criterion": "Experience with backend development in Python and event-driven architectures",
+      "type": "must_have",
+      "verdict": "hit",
+      "evidence_in_resume": "
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

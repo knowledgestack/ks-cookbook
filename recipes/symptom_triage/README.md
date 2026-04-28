@@ -72,3 +72,31 @@ uv run python recipes/symptom_triage/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — symptom_triage
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~4.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "presenting_symptoms": "demo",
+  "red_flags": [],
+  "disposition": "self_care",
+  "time_to_care": "N/A",
+  "rationale": "Insufficient specific symptoms provided for evaluation.",
+  "citations": [
+    {
+      "chunk_id": "not in corpus \
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

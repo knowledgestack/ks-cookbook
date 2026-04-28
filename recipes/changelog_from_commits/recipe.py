@@ -73,8 +73,8 @@ PROMPT = (
 async def run(version: str, date: str, commits_file: Path) -> None:
     commits_text = commits_file.read_text()
     mcp = MCPServerStdio(
-        command=os.environ.get("KS_MCP_COMMAND", "uvx"),
-        args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
+        command=os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp"),
+        args=(os.environ.get("KS_MCP_ARGS", "") or "").split(),
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),

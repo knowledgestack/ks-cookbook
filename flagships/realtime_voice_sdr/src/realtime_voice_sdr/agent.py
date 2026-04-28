@@ -94,6 +94,6 @@ def build_summary_agent(*, model: str) -> Agent:
 
 
 def instructions_for(corpus_folder_id: str, prospect_context: str) -> str:
-    return TURN_INSTRUCTIONS.replace("__CORPUS_FOLDER_ID__", corpus_folder_id).replace(
+    return TURN_INSTRUCTIONS.replace(
         "__PROSPECT_CONTEXT__", prospect_context or "(none provided)"
     )

@@ -72,3 +72,31 @@ uv run python recipes/change_monitor_to_pr/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — change_monitor_to_pr
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~2.0s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "topic": "Q4 board update",
+  "tracked_chunks": 5,
+  "changes": [
+    {
+      "type": "added",
+      "chunk_id": "019cffb7-228b-7ee0-ba96-1a8abf91c0b6",
+      "document": "Knowledge Stack - Company Overview.pptx",
+      "snippet": "Apri
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

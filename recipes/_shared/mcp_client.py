@@ -16,8 +16,8 @@ async def ks_mcp_session():
     Reads ``KS_API_KEY`` / ``KS_BASE_URL`` from the environment. For local dev,
     set ``KS_MCP_COMMAND`` to ``.venv/bin/ks-mcp`` to skip ``uvx``.
     """
-    command = os.environ.get("KS_MCP_COMMAND", "uvx")
-    args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
+    command = os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp")
+    args_raw = os.environ.get("KS_MCP_ARGS", "")
     args = args_raw.split() if args_raw else []
     params = StdioServerParameters(
         command=command,

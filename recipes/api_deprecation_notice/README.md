@@ -72,3 +72,26 @@ uv run python recipes/api_deprecation_notice/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — api_deprecation_notice
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~27.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "endpoint": "POST /v1/ingest",
+  "deprecation_reason": "The /v1/ingest API endpoint will be deprecated in favor of the new /v2/ingest endpoint, which includes improved functionality and performance enhancements.",
+  "replacement": "POST
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

@@ -72,3 +72,25 @@ uv run python recipes/board_update_drafter/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — board_update_drafter
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~44.2s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "period": "March 2026",
+  "tl_dr": "March 2026 highlights include significant investments in innovative technology and community partnerships, with solid financial KPIs reported for major companies. Risks involve geopolitical tensions a
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

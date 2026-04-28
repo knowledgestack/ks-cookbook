@@ -72,3 +72,29 @@ uv run python recipes/hoa_compliance_check/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — hoa_compliance_check
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~5.5s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "requested_change": "demo",
+  "verdict": "needs_variance",
+  "conditions": [],
+  "rationale": "The requested change of 'demo' does not fall within the permitted guidelines and requires a variance to proceed.",
+  "citations": [
+    {
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

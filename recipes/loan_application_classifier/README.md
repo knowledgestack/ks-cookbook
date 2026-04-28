@@ -72,3 +72,32 @@ uv run python recipes/loan_application_classifier/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — loan_application_classifier
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~3.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "document_name": "demo",
+  "doc_type": "other",
+  "confidence": "low",
+  "key_fields": {},
+  "completeness": "missing_fields",
+  "citation": {
+    "chunk_id": "c25f597c-cf3d-4cc0-a662-0b20eed5db92",
+    "document_name": "demo",
+    "sni
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

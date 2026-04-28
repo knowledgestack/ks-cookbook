@@ -53,8 +53,8 @@ KS workflow (do NOT skip):
 Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {"<ClassName>": ...} or {"result": ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 
 async def run(counterparty: str, nda_text: str) -> None:
-    server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
-    server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
+    server_cmd = os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp")
+    server_args = (os.environ.get("KS_MCP_ARGS", "") or "").split()
     mcp = MCPServerStdio(
         command=server_cmd,
         args=server_args,

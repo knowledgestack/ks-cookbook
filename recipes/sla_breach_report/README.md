@@ -72,3 +72,31 @@ uv run python recipes/sla_breach_report/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — sla_breach_report
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~31.2s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "customer": "demo",
+  "period": "Q1 2026",
+  "breaches": [
+    {
+      "incident_ref": "SLA Credit Limit",
+      "metric": "Credit",
+      "target": "Maximum allowance when the credit rate is over 20%",
+      "observed": "$2,000",
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

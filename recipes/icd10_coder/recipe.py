@@ -19,6 +19,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 
@@ -80,8 +81,8 @@ PROMPT = (
 )
 async def run(note: str) -> None:
     mcp = MCPServerStdio(
-        command=os.environ.get("KS_MCP_COMMAND", "uvx"),
-        args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
+        command=os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp"),
+        args=(os.environ.get("KS_MCP_ARGS", "") or "").split(),
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
@@ -96,7 +97,7 @@ async def run(note: str) -> None:
         output_retries=4,
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(f"Clinical note:\n{note[:6000]}")
+        result = await agent.run(usage_limits=UsageLimits(request_limit=200), user_prompt=f"Clinical note:\n{note[:6000]}")
     print(json.dumps(result.output.model_dump(), indent=2))
 
 

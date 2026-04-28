@@ -72,3 +72,24 @@ uv run python recipes/sdlc_checklist/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — sdlc_checklist
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~12.0s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "checklist_markdown": "Based on the company\u2019s SDLC and data protection policies, here is a checklist of pre-merge actions required for the PR-1234:\n\n### Pre-Merge Checklist for PR-1234\n\n1. **Review Security and Privacy Requirem
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

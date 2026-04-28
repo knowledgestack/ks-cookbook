@@ -5,6 +5,12 @@ description = "Reference agent implementations on top of Knowledge Stack."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
+dependencies = [
+    "knowledgestack-mcp",
+    "llama-index>=0.14.21",
+    "llama-index-embeddings-openai>=0.6.0",
+    "llama-index-llms-openai>=0.7.6",
+]
 
 [tool.uv.workspace]
 members = [
@@ -53,6 +59,9 @@ members = [
     "flagships/legal_matter_intake",
     "flagships/chiro_visit_autopilot",
 ]
+
+[tool.uv.sources]
+knowledgestack-mcp = { git = "https://github.com/knowledgestack/ks-mcp" }
 
 [dependency-groups]
 dev = [

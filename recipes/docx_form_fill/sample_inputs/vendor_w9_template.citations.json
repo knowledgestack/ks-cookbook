@@ -1,0 +1,232 @@
+{
+  "COMPANY_NAME": {
+    "value": "The company name is not explicitly stated in the security & privacy policies retrieved; however, references to regulatory filings indicate that it could either be linked to a registrant mentioned or a charter specification.",
+    "citations": [
+      {
+        "chunk_id": "019dd20b-0a92-7b58-bea8-797632abb71e",
+        "document_name": "ko_10k.pdf",
+        "snippet": "(Exact name of Registrant as specified in its charter) "
+      },
+      {
+        "chunk_id": "019d4627-96ae-7842-badd-986d63460bbb",
+        "document_name": "google-10k.pdf",
+        "snippet": "(Exact name of registrant as specified in its charter) \n\nDelaware \n\n(State or other jurisdiction of incorporation or organization) \n\n61-1767919 \n\n(I.R.S. Employer Identification No.) \n\n1600 Amphitheatre Parkway \n\nMountain View, CA 94043... "
+      },
+      {
+        "chunk_id": "019dd20b-0b38-7e11-93d6-d37cf62bae73",
+        "document_name": "ko_10k.pdf",
+        "snippet": "(State or other jurisdiction of incorporation) \n\nOne Coca-Cola Plaza \n\nAtlanta, Georgia \n\n(Address of principal executive offices)"
+      }
+    ]
+  },
+  "EIN": {
+    "value": "The Employer Identification Number (EIN) is a nine-digit number assigned by the IRS for reporting employment taxes and managing tax accounts. It is crucial to use the correct EIN on all tax forms and notifications. If you do not have an EIN, you can apply for one online or through other IRS methods. Always ensure consistency with the EIN used for various forms to avoid potential penalties.",
+    "citations": [
+      {
+        "chunk_id": "019dd1fc-3837-79af-85dc-3e5e29c4754b",
+        "document_name": "irs_pub15.pdf",
+        "snippet": "The EIN is a nine-digit number the IRS issues. The digits are arranged as follows: 00-0000000. It is used to identify the tax accounts of employers and certain others who have no employees."
+      },
+      {
+        "chunk_id": "019dd1fc-38b5-71b5-b6df-b8bae0e927a9",
+        "document_name": "irs_pub15.pdf",
+        "snippet": "Always be sure the EIN on the form you file exactly matches the EIN the IRS assigned to your business."
+      },
+      {
+        "chunk_id": "019dd1fc-2e21-77ce-943d-31bc44555dd2",
+        "document_name": "irs_pub15.pdf",
+        "snippet": "Notify the IRS immediately if you change your business name. Write to the IRS office where you file your returns."
+      },
+      {
+        "chunk_id": "019dd1fc-37d6-7f16-bcc2-e07dc266872b",
+        "document_name": "irs_pub15.pdf",
+        "snippet": "Employer Identification Number: 1635 Understanding Your EIN."
+      }
+    ]
+  },
+  "ADDRESS": {
+    "value": "A property address is required for every policy, usually in the form of a street address or a descriptive address. The best approach is to use the street address, which includes the street number, street name, unit or apartment number, city or county name, state, and zip code. If a street address is unavailable, a descriptive address such as a rural route or a legal description may be used.",
+    "citations": [
+      {
+        "chunk_id": "019dd270-01dd-75e9-b327-44ccfdecd29a",
+        "document_name": "fema_nfip_manual.pdf",
+        "snippet": "A property address is required for every policy, which is usually a street address but may be a descriptive address: \n\n\u2022 Street Address is the best and preferred method; it includes the street number and street name (Address Line 1), unit\u2026"
+      },
+      {
+        "chunk_id": "019dd272-8974-76bf-9517-9777fde6afc2",
+        "document_name": "fema_nfip_manual.pdf",
+        "snippet": "\u2022 Property Address of Policyholder(s): 1234 Main Street Any Town, TX 90210"
+      },
+      {
+        "chunk_id": "019dd272-7409-755c-8faf-621090d78433",
+        "document_name": "fema_nfip_manual.pdf",
+        "snippet": "\u2022 Property Address of Policyholder(s): 1234 Main Street Unit 502 Any Town, TX 90210"
+      },
+      {
+        "chunk_id": "019dd272-7ad5-7cb8-9994-95401957e341",
+        "document_name": "fema_nfip_manual.pdf",
+        "snippet": "\u2022 Property Address of Policyholder(s): 1234 Main Street Any Town, TX 90210"
+      }
+    ]
+  },
+  "CONTACT_NAME": {
+    "value": "The field for CONTACT NAME in our security and privacy policies relates to protecting individual privacy as a fundamental human right. Organizations are expected to provide just-in-time notices regarding the processing of personally identifiable information, with directors overseeing efforts in information security and privacy.",
+    "citations": [
+      {
+        "chunk_id": "019dd25b-3560-737d-99bb-c4cc87f60b73",
+        "document_name": "aapl_def14a_2024_proxy.pdf",
+        "snippet": "Privacy is a fundamental human right overseen by directors with expertise in information security."
+      },
+      {
+        "chunk_id": "019dd207-1056-7801-9bfe-ec36287c754f",
+        "document_name": "nist_800_53r5.pdf",
+        "snippet": "Just-in-time notices inform individuals how organizations process their personally identifiable information."
+      },
+      {
+        "chunk_id": "019dd25b-7a68-7ae4-86c6-382264f06beb",
+        "document_name": "aapl_def14a_2024_proxy.pdf",
+        "snippet": "Protecting privacy and security of information through data minimization and transparency."
+      },
+      {
+        "chunk_id": "019d4627-9c53-7524-8bd0-3db9b48c6b5c",
+        "document_name": "google-10k.pdf",
+        "snippet": "We prioritize protecting the privacy and security of our products, users, and customers."
+      }
+    ]
+  },
+  "CONTACT_EMAIL": {
+    "value": "The contact email address provided in our security and privacy policies is: info@propertymanagementto.com and arnavgoel2@gmail.com.",
+    "citations": [
+      {
+        "chunk_id": "019d5657-dfe2-76c2-abde-442587a2a9c1",
+        "document_name": "20241113_2814-18YongeSt_ATL.pdf",
+        "snippet": "If yes, provide email addresses: \ninfo@propertymanagementto.com \nArnav Goel: arnavgoel2@gmail.com"
+      },
+      {
+        "chunk_id": "019d5657-e0da-72b0-9704-82da739d6378",
+        "document_name": "20241113_2814-18YongeSt_ATL.pdf",
+        "snippet": "provide information: \n416-451-9499 \nArnav Goel: (647) 721-1822"
+      }
+    ]
+  },
+  "CONTACT_PHONE": {
+    "value": "The CONTACT PHONE according to our security and privacy policies includes the following numbers: +1 2066691322, 416-451-9499, and (647) 721-1822.",
+    "citations": [
+      {
+        "chunk_id": "019d4625-4dfa-7251-a457-a33fabf16a15",
+        "document_name": "itinerary.pdf",
+        "snippet": "Your contact number has already been provided to the tour company, with the following number: +1 2066691322."
+      },
+      {
+        "chunk_id": "019d5657-e0da-72b0-9704-82da739d6378",
+        "document_name": "20241113_2814-18YongeSt_ATL.pdf",
+        "snippet": "If yes, provide information: \n\n416-451-9499 \n\nArnav Goel: (647) 721-1822"
+      }
+    ]
+  },
+  "TAX_CLASS": {
+    "value": "The context regarding \"TAX CLASS\" is summarized from various documents related to tax guides and regulations. The relevant summaries include employer's tax guides, classifications for small business taxes, and information on taxable vs. nontaxable income. Specific pages reference employer guides, excise taxes, and tax help resources. However, detailed policy content on \"TAX CLASS\" specifically was not available in the retrieved documents, indicating that more specific definitions or guidance on tax classifications may not be present in this corpus.",
+    "citations": [
+      {
+        "chunk_id": "019dd207-cba7-7a3c-83b1-67dba1a16996",
+        "document_name": "irs_pub535.pdf",
+        "snippet": "15 (Circular E), Employer's Tax Guide 15 \n334 Tax Guide for Small Business 334 \n510 Excise Taxes 510 \n538 Accounting Periods and Methods 538 \nBasis of Assets 551"
+      },
+      {
+        "chunk_id": "019dd1fc-793b-74d6-93c5-9a6bc6f7be7f",
+        "document_name": "irs_pub15.pdf",
+        "snippet": "Tax help 56 \n\nTelephone help 10 \n\nThird-party payer arrangements 53"
+      },
+      {
+        "chunk_id": "019dd208-146d-7a27-9146-412b6b8a28eb",
+        "document_name": "irs_pub535.pdf",
+        "snippet": "525 Taxable and Nontaxable Income 525 \n536 Net Operating Losses (NOLs) for 536 Individuals"
+      }
+    ]
+  },
+  "ACCOUNT": {
+    "value": "Our policies prioritize the protection of privacy and security for our products, users, and customers through investments in default security, responsible data practices, and user-controlled settings. Security programs, in collaboration with privacy officials, establish conditions for account access and management, ensuring proper authorization while considering factors like expiration and disabling of accounts. Access to assets is limited to authorized users and managed per assessed risks, with provisions for training on cybersecurity measures. Our account management includes defining types of accounts allowed, monitoring usage, and ensuring compliance with policies, with a focus on protecting against risks associated with certain account types.",
+    "citations": [
+      {
+        "chunk_id": "019d4627-9c53-7524-8bd0-3db9b48c6b5c",
+        "document_name": "google-10k.pdf",
+        "snippet": "We make it a priority to protect the privacy and security of our products, users, and customers, even if there are near-term financial consequences."
+      },
+      {
+        "chunk_id": "019dd206-3b35-7bb5-8112-9f1b26bbe489",
+        "document_name": "nist_800_53r5.pdf",
+        "snippet": "Where access involves personally identifiable information, security programs collaborate with the senior agency official for privacy to establish the specific conditions...for each account."
+      },
+      {
+        "chunk_id": "019dd266-84de-77b9-ad84-12e130a0249d",
+        "document_name": "nist_csf_2.pdf",
+        "snippet": "Access to physical and logical assets is limited to authorized users, services, and hardware and managed commensurate with the assessed risk of unauthorized access."
+      },
+      {
+        "chunk_id": "019dd206-3ae9-7ef0-890d-be2e936dfd78",
+        "document_name": "nist_800_53r5.pdf",
+        "snippet": "Define and document the types of accounts allowed and specifically prohibited for use within the system; Assign account managers."
+      }
+    ]
+  },
+  "ROUTING": {
+    "value": "The routing policies prioritize protecting privacy and security of information through several key strategies: 1) **Data Minimization**: Limiting data collection to what is necessary for functional purposes. 2) **On-Device Processing**: Employing processing directly on user devices to enhance privacy and reduce the risk of data exposure. 3) **Transparency and User Choice**: Users are informed about data usage and can make choices regarding their information. 4) **Secure Practices**: Implementation of encryption for data in transit, secure key management, and authentication for network communications using standards like TLS and IPsec. This multi-layered approach ensures that security and privacy practices are integrated into organizational processes and are continuously monitored for effectiveness. Furthermore, organizations assess risks associated with operational activities to strengthen overall security and privacy frameworks.",
+    "citations": [
+      {
+        "chunk_id": "019dd25b-7a68-7ae4-86c6-382264f06beb",
+        "document_name": "aapl_def14a_2024_proxy.pdf",
+        "snippet": "Focus: Protecting privacy and security of information through data minimization, on-device processing, transparency and user choice, and security "
+      },
+      {
+        "chunk_id": "019d4627-9c53-7524-8bd0-3db9b48c6b5c",
+        "document_name": "google-10k.pdf",
+        "snippet": "We make it a priority to protect the privacy and security of our products, users, and customers, even if there are near-term financial consequences..."
+      },
+      {
+        "chunk_id": "019dd258-0672-7f33-9b19-e5e6d05296ec",
+        "document_name": "aws_well_architected.pdf",
+        "snippet": "\u2022 Implement secure key and certificate management: Store encryption keys and certificates securely and rotate them at appropriate time intervals..."
+      },
+      {
+        "chunk_id": "019dd206-e86e-76b1-84bf-bbb36f32acc9",
+        "document_name": "nist_800_53r5.pdf",
+        "snippet": "Discussion: Organizations strategically allocate security and privacy controls in the security and privacy architectures so that adversaries must overcome multiple controls..."
+      }
+    ]
+  },
+  "SIGNER": {
+    "value": "The term \"signer\" in the context of security and privacy policies refers to individuals whose signatures are used to authenticate documents and agreements. For instance, an insurer may accept electronic submissions contingent on signature authentication processes. This ensures the integrity and verification of the signer's identity, as highlighted in several documents discussing electronic signature verification measures. Moreover, secure practices are emphasized in the policies that protect user data, suggesting a robust framework around the management and authentication of signers.",
+    "citations": [
+      {
+        "chunk_id": "019d4627-9c53-7524-8bd0-3db9b48c6b5c",
+        "document_name": "google-10k.pdf",
+        "snippet": "We make it a priority to protect the privacy and security of our products, users, and customers, even if there are near-term financial consequences."
+      },
+      {
+        "chunk_id": "019dd270-c100-7f9b-9e58-b0faea1b7d7f",
+        "document_name": "fema_nfip_manual.pdf",
+        "snippet": "The insurer may accept electronic submissions if their business process includes signature authentication and records receipt dates."
+      },
+      {
+        "chunk_id": "019cffb4-1171-7ce3-8643-fea1099b6864",
+        "document_name": "20250905_KommonAI_Design_Partnership_Agreement_SIGNED (1).pdf",
+        "snippet": "This image displays a signature block from a formal document, labeled with \"[Customer]\"... the title \"COO\" confirm the signer's identity."
+      },
+      {
+        "chunk_id": "019d5657-daf8-753f-8a48-155dbd33adcf",
+        "document_name": "20241113_2814-18YongeSt_ATL.pdf",
+        "snippet": "This image shows a section of a document featuring a handwritten signature enclosed in a black oval."
+      }
+    ]
+  },
+  "DATE": {
+    "value": "The security and privacy policies emphasize a commitment to protecting user data through various measures such as data minimization, transparency, and on-device processing. Agencies are required to maintain comprehensive privacy programs and comply with federal laws regarding personal information. This involves collaboration between security and privacy programs to implement appropriate controls and ensure risks are managed effectively.",
+    "citations": [
+      {
+        "chunk_id": "019d4627-9c53-7524-8bd0-3db9b48c6b5c",
+        "document_name": "google-10k.pdf",
+        "snippet": "We make it a priority to protect the privacy and security of our products, users, and customers..."
+      }
+    ]
+  }
+}

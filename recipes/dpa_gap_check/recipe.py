@@ -12,6 +12,7 @@ Output: stdout (markdown).
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 from pathlib import Path
@@ -38,10 +39,22 @@ SAMPLE_DPA = (
 
 
 async def pick_policy(session, hint: str) -> dict:
-    listing = await call_list(session, "list_contents", {"folder_id": POLICIES_FOLDER})
-    docs = [p for p in listing if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"]
+    """Search the whole tenant for a relevant DPA / data-processing policy."""
+    raw = await call(session, "search_knowledge", {"query": f"data processing addendum {hint}", "limit": 6})
+    try:
+        hits = json.loads(raw) if isinstance(raw, str) else raw
+    except json.JSONDecodeError:
+        hits = []
+    items = hits if isinstance(hits, list) else (hits.get("hits") or hits.get("results") or [])
+    docs = []
+    for h in items:
+        ppid = h.get("path_part_id") or h.get("chunk_id")
+        if not ppid:
+            continue
+        name = (h.get("document_name") or "").split("/")[-1] or f"chunk-{str(ppid)[:8]}"
+        docs.append({"name": name, "path_part_id": ppid, "part_type": "DOCUMENT"})
     if not docs:
-        sys.exit("Policies folder is empty.")
+        sys.exit("No policies found in the tenant.")
     match = next((d for d in docs if hint in d.get("name", "").lower()), None)
     return match or docs[0]
 
@@ -68,7 +81,7 @@ async def run(dpa_text: str) -> None:
                 },
             ],
         )
-        print(resp.choices[0].message.content)
+        print(json.dumps({"gap_analysis_markdown": resp.choices[0].message.content}, indent=2))
 
 
 def main() -> None:

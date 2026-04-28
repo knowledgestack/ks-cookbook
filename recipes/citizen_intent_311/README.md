@@ -72,3 +72,24 @@ uv run python recipes/citizen_intent_311/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — citizen_intent_311
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~11.7s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "message": "The search returned various items related to the term \"demo.\" These include images and text from documents related to user interfaces, examples used in publications, and icons typically utilized in software applications. S
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

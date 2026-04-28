@@ -72,3 +72,24 @@ uv run python recipes/policy_qa/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — policy_qa
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~4.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "answer_markdown": "The provided policy text does not include information on ERISA disclosures that an employer must provide to participants in the Summary Plan Description (SPD). \n\nSource: [chunk:019dd206-dc0d-7831-a7ae-5613118af66f]
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

@@ -72,3 +72,24 @@ uv run python recipes/llama_index_rag/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — llama_index_rag
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~15.9s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "answer": "Employers must provide several key disclosures to participants in the Summary Plan Description (SPD). These include:\n\n1. **Summary Plan Description (SPD)**: This document informs participants and beneficiaries about the pla
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

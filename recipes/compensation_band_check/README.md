@@ -72,3 +72,29 @@ uv run python recipes/compensation_band_check/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — compensation_band_check
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~13.4s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "role": "demo",
+  "level": "demo",
+  "location": "demo",
+  "band_min": "not in corpus \u2014 upload data to proceed",
+  "band_mid": "not in corpus \u2014 upload data to proceed",
+  "band_max": "not in corpus \u2014 upload data to procee
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

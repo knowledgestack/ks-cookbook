@@ -1,0 +1,69 @@
+INTERVIEW TRANSCRIPT — Software Engineer (Backend)
+====================================================
+Candidate: [Candidate]
+Interviewer: [Engineer]
+Duration: 45 minutes
+Format: System design + coding
+
+[00:00] Interviewer: Today we'll start with a system design question. Imagine
+you need to design a URL shortener that handles 10K writes/sec and 100K
+reads/sec. Walk me through how you'd approach it.
+
+[00:30] Candidate: Okay, let me start with the API. We'd have POST /shorten
+that takes a long URL and returns a short code, and GET /{code} that redirects.
+For the short code, I'd use a base62 encoding of an auto-incrementing counter,
+or alternatively a hash of the URL truncated. The base62 counter is more
+efficient and avoids collisions.
+
+[02:15] Interviewer: How would you handle the ID generation at scale?
+
+[02:30] Candidate: Several approaches. Snowflake-style distributed IDs work
+well — each server gets a worker ID and generates IDs locally without
+coordination. Or we could pre-allocate ID ranges per server from a central
+counter service. I prefer Snowflake because it scales horizontally with no
+single point of contention.
+
+[05:00] Interviewer: What about the storage layer?
+
+[05:10] Candidate: Reads dominate — 10:1 ratio. I'd use Redis as a primary
+read cache with the URL mappings, backed by a sharded Postgres or Cassandra
+for durability. Cache hit rate should be very high since URLs are read-heavy
+and follow a power-law distribution. For the cache, I'd use LRU eviction
+and a 30-day TTL.
+
+[08:30] Interviewer: How do you handle cache misses?
+
+[08:45] Candidate: Cache miss → query Postgres → populate cache before
+returning. We'd want to be careful about cache stampede on hot keys; we
+could use a probabilistic early-expiration approach or a single-flight
+pattern where only one request fetches from DB at a time.
+
+[12:00] Interviewer: Let's pivot to coding. Implement a function that takes
+a list of URLs and returns the unique domains, sorted by frequency.
+
+[12:15] Candidate: [writes] Use a Counter from collections, parse domains
+with urllib.parse, sort by count descending. Handles edge cases like
+trailing slashes and case sensitivity.
+
+[16:00] Interviewer: What if the list is too big to fit in memory?
+
+[16:20] Candidate: Stream through it line by line, maintain a counter dict,
+or for true scale use map-reduce: shard URLs by hash(domain) across workers,
+each worker counts its shard, then reduce. Could use Apache Beam or just
+Python multiprocessing with shared memory.
+
+[22:00] Interviewer: What about debugging — tell me about a recent
+production issue you owned end to end.
+
+[22:30] Candidate: Last quarter we had a memory leak in our payment service.
+P99 latency drifted up 40% over a week. I bisected by deploying canary
+versions until I found the bad commit — a new logger middleware was
+retaining request bodies in a global cache. Fixed by switching to a TTL'd
+LRU and adding a benchmark to CI to catch regressions.
+
+[40:00] Interviewer: Last question — culture fit. Why our company?
+
+[40:15] Candidate: I'm drawn to the technical challenges in your platform
+team and the public engineering culture. I read your recent blog post on
+zero-downtime database migrations and was impressed by the rigor. I'd like
+to contribute to that level of operational excellence.

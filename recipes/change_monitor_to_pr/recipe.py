@@ -26,7 +26,10 @@ from _shared.mcp_client import call, ks_mcp_session  # noqa: E402
 def _load_snapshot(path: Path) -> dict[str, str]:
     if not path.exists():
         return {}
-    return json.loads(path.read_text())
+    try:
+        return json.loads(path.read_text())
+    except json.JSONDecodeError:
+        return {}
 
 
 def _save_snapshot(path: Path, snapshot: dict[str, str]) -> None:
@@ -39,17 +42,23 @@ async def run(folder_id: str, topic: str, snapshot_path: Path, out: Path) -> Non
     changed: list[dict[str, str]] = []
 
     async with ks_mcp_session() as session:
+        # No folder_id — search the whole tenant, KS finds the right doc.
         hits_json = await call(
             session,
             "search_knowledge",
             {
-                "folder_id": folder_id,
                 "query": topic,
                 "limit": 20,
             },
         )
-        hits = json.loads(hits_json) if isinstance(hits_json, str) else hits_json
-        results = hits.get("results", hits if isinstance(hits, list) else [])
+        try:
+            hits = json.loads(hits_json) if isinstance(hits_json, str) else hits_json
+        except json.JSONDecodeError:
+            hits = []
+        if isinstance(hits, list):
+            results = hits
+        else:
+            results = hits.get("results") or hits.get("hits") or []
         for hit in results:
             chunk_id = hit.get("chunk_id") or hit.get("id")
             document_name = hit.get("document_name") or hit.get("path", "")

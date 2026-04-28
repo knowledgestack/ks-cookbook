@@ -57,7 +57,7 @@ async def draft_rfp(
     agent = Agent(
         model=f"openai:{model}",
         mcp_servers=[mcp],
-        system_prompt=SYSTEM.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
+        system_prompt=SYSTEM,
         output_type=RFPDraft,
     )
     draft: RFPDraft | None = None

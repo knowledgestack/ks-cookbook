@@ -72,3 +72,28 @@ uv run python recipes/insurance_fraud_pattern/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — insurance_fraud_pattern
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~22.5s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "claim_id": "CL-2025-0142",
+  "flags": [
+    {
+      "pattern_name": "Suspicious Activities Identification",
+      "evidence": "Exchanges small bills for large bills, suspicious designation of beneficiaries, multiple individuals with th
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

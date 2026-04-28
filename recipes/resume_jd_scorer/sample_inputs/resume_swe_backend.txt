@@ -1,0 +1,51 @@
+JANE DOE
+jane.doe@example.com — github.com/janedoe — San Francisco, CA
+
+SUMMARY
+Senior backend engineer with 8 years building distributed systems at scale.
+Led the migration of a payments service from monolithic Rails to event-driven
+microservices, cutting p99 latency from 1200ms to 180ms. Strong in Go,
+Python, Postgres, Kafka.
+
+EXPERIENCE
+
+Stripe — Senior Backend Engineer
+2022 — present (3 years)
+- Owned the Connect platform's payout-orchestration service: 50K txns/sec,
+  multi-region active/active. Designed the idempotency layer using
+  exactly-once semantics over Kafka + Postgres.
+- Drove an internal RFC for migrating from Postgres logical replication
+  to native streaming replication. Saved $400K/year in Aurora costs.
+- Mentored 3 junior engineers; on-call shift lead for the platform team.
+
+DoorDash — Backend Engineer (L4 → L5)
+2018 — 2022 (4 years)
+- Built the ETA prediction service in Go: handled 1M req/min with 50ms
+  p99. Reduced ETA error by 22% by switching from heuristics to a
+  gradient-boosted model served via TensorFlow Serving.
+- On-call rotation for the order-routing platform. Wrote runbooks and
+  postmortems for two SEV-1 incidents.
+
+Facebook — Software Engineer
+2017 — 2018 (1 year, intern + new grad)
+- Built profile caching layer in C++. Standard fare.
+
+EDUCATION
+University of Illinois Urbana-Champaign — BS Computer Science, 2017
+- GPA 3.8/4.0, ACM ICPC regional finalist
+
+SKILLS
+Languages: Go (expert), Python (expert), Rust (intermediate), TypeScript
+Databases: Postgres, MySQL, Cassandra, DynamoDB, Redis
+Infra: Kubernetes, Terraform, AWS (EKS, RDS, MSK, S3), Datadog, PagerDuty
+Streaming: Kafka, Kinesis, Pulsar
+Other: gRPC, OpenAPI, OAuth2, OpenTelemetry
+
+OPEN SOURCE
+- pq-uuid: Postgres extension for native UUIDv7 generation. 800 stars.
+- Contributor to confluent-kafka-go (3 PRs merged).
+
+WHAT I'M LOOKING FOR
+A senior IC role at a product-led company building developer-facing
+infrastructure. Prefer remote-first or SF Bay Area hybrid. Open to fintech,
+infra, or AI tooling.

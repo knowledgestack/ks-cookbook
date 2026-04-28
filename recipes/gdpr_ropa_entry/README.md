@@ -72,3 +72,35 @@ uv run python recipes/gdpr_ropa_entry/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — gdpr_ropa_entry
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~32.8s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "activity": "demo",
+  "purpose": "Demonstration of data processing activity",
+  "data_categories": [
+    "personal_data",
+    "usage_data"
+  ],
+  "data_subjects": [
+    "users",
+    "customers"
+  ],
+  "lawful_basis": "consent",
+  "recip
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

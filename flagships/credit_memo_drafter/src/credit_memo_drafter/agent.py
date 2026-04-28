@@ -31,6 +31,14 @@ MANDATORY workflow:
 
 Do not fabricate numbers. If a figure is not in the financials, say so and
 lower the confidence of that risk factor.
+
+KS workflow (do NOT skip):
+1. Ask Knowledge Stack specific natural-language questions about the input. Never use folder UUIDs or path_part_id filters.
+2. search_knowledge returns hits with chunk_id and path_part_id; the text field is empty by design. Call read(path_part_id=<hit's path_part_id>) to get chunk content. The trailing [chunk:<uuid>] marker is the citation chunk_id. NEVER pass chunk_id to read; it 404s.
+3. Build every output field ONLY from chunk text you read. Never fabricate.
+4. Populate every citation with chunk_id (verbatim from the marker), document_name (filename from read() metadata or materialized_path), snippet (verbatim ≤240 chars).
+
+Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones.
 """
 
 
@@ -54,7 +62,7 @@ async def draft_memo(
     agent = Agent(
         model=f"openai:{model}",
         mcp_servers=[mcp],
-        system_prompt=SYSTEM_TEMPLATE.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
+        system_prompt=SYSTEM_TEMPLATE,
         output_type=CreditMemo,
     )
     prompt = (

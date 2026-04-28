@@ -82,7 +82,19 @@ DEFAULTS: dict[str, str] = {
     "deal-id": "DEAL-2025-0042",
     "deal_id": "DEAL-2025-0042",
     "team": "platform",
+    "doc-id": "019dd1f7-65c9-74db-aa97-39e4447fbbd1",
+    "doc_id": "019dd1f7-65c9-74db-aa97-39e4447fbbd1",
+    "save": "",
     "service": "ingest-api",
+    "capacity-days": "10",
+    "capacity_days": "10",
+    "scenario": "baseline",
+    "sprint": "FY26-Q2-S1",
+    "pr": "PR-1234",
+    "risk": "high",
+    "vendor": "Acme Vendor LLC",
+    "drug": "metformin",
+    "event": "Patient developed lactic acidosis on day 7 of metformin therapy.",
 }
 
 
@@ -117,6 +129,9 @@ def build_cmdline(recipe: Path) -> list[str] | None:
         if not flag.startswith("--"):
             continue
         name = flag[2:]
+        # Skip store_true/store_false flags entirely.
+        if attrs.get("action") in ("store_true", "store_false"):
+            continue
         # If a default is set, skip — argparse will use it.
         if attrs.get("required") is not True and "default" in attrs:
             continue
@@ -124,7 +139,7 @@ def build_cmdline(recipe: Path) -> list[str] | None:
         is_file_arg = (
             name.endswith("-file") or name.endswith("_file")
             or name in ("csv", "cur-file", "cur_file", "note-file", "note_file",
-                        "commits-file", "commits_file", "input", "doc")
+                        "commits-file", "commits_file", "input", "doc", "template")
         )
         if is_file_arg and sample_files:
             cmd += [flag, str(sample_files[0].relative_to(REPO))]

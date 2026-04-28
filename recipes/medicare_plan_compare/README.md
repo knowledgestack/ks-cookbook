@@ -72,3 +72,31 @@ uv run python recipes/medicare_plan_compare/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — medicare_plan_compare
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~13.0s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "beneficiary_profile": "demo",
+  "plans": [
+    {
+      "plan_name": "Basic Medicare Advantage Plan",
+      "plan_type": "advantage",
+      "monthly_premium": "$30",
+      "moop": "$4,000",
+      "network_note": "In-network providers on
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

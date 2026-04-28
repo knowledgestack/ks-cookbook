@@ -72,3 +72,31 @@ uv run python recipes/coa_mapper/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — coa_mapper
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~60.4s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "source_system": "QuickBooks",
+  "target_system": "NetSuite",
+  "mappings": [
+    {
+      "source_account": "1010",
+      "target_account": "Cash and Cash Equivalents",
+      "confidence": "high",
+      "reason": "Cash is typically cate
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

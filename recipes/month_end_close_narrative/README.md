@@ -72,3 +72,29 @@ uv run python recipes/month_end_close_narrative/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — month_end_close_narrative
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~7.9s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "period": "March 2026",
+  "tl_dr": "Summary of material variances for March 2026. No variances to report this month.",
+  "material_variances": [
+    {
+      "account": "General Expenses",
+      "actual_vs_budget": "Actual exceeded budge
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

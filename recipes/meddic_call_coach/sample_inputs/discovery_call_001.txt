@@ -1,0 +1,74 @@
+DISCOVERY CALL TRANSCRIPT — Knowledge Stack ↔ Acme Manufacturing
+===================================================================
+Date: 2026-04-22
+KS Rep: AE — Sasha Patel
+Acme: Director of Engineering — Marcus Chen, VP IT — Lisa Rodriguez
+Duration: 38 minutes
+
+[00:00] Sasha: Thanks for taking the time, Marcus and Lisa. To make this
+useful for both sides — could you tell me what triggered the conversation?
+Where's the pain right now?
+
+[00:30] Marcus: We have a hundred thousand engineering documents — CAD
+specs, MRO procedures, ISO compliance docs — scattered across SharePoint,
+Confluence, and a couple of legacy file shares. When a field tech needs
+the torque spec for a specific pump, they open a ticket. Average resolution
+time is 4 hours. We're losing real money in downtime.
+
+[01:50] Sasha: That's exactly the use case we see most often in
+manufacturing. Quick question: do your techs have laptops in the field, or
+are they on phones / tablets?
+
+[02:15] Marcus: Mostly tablets. Some on phones in tight spots.
+
+[02:30] Lisa: We need this to work offline too — some of our facilities have
+spotty connectivity.
+
+[02:45] Sasha: Got it. Offline isn't out of the box, but we have a caching
+layer that handles intermittent connectivity. Walk me through how a tech
+finds info today.
+
+[03:30] Marcus: They open SharePoint, search for a pump model number, get
+30 results, half of which are outdated. They escalate to engineering. We
+get pinged 50+ times a day.
+
+[06:00] Sasha: Do you have a budget framework for this? We typically see
+mid-market deployments at $80K to $150K annually.
+
+[06:30] Lisa: We have $200K allocated for the platform side this fiscal
+year. There's also a separate ops budget that could cover edge cache
+hardware.
+
+[07:00] Sasha: Perfect, in range. Who else needs to be in the conversation?
+Procurement, security, anyone else from engineering?
+
+[07:30] Marcus: Eric Wong from Security needs to bless it. Procurement is
+straightforward as long as we're under $250K. I'm the technical decision
+maker; Lisa signs off on the contract.
+
+[08:00] Sasha: Any timeline pressure?
+
+[08:10] Marcus: We want to pilot in Q3 — September — at one facility. If
+that goes well, roll out to all 12 plants by end of FY26. We have a
+contractual obligation around ISO recertification in March that this would
+help with.
+
+[10:00] Sasha: Have you looked at any other vendors?
+
+[10:15] Marcus: We evaluated Glean and Coveo. Glean was too SaaS-only, no
+on-prem story. Coveo was too expensive at our document volume.
+
+[14:00] Sasha: What does success look like 12 months in?
+
+[14:20] Marcus: Tech-to-engineer escalations cut from 50/day to under 10.
+ISO docs always current. Field response time under 1 hour. Maybe a 20%
+reduction in unplanned downtime hours.
+
+[20:00] Sasha: Any blockers I'm missing?
+
+[20:15] Lisa: We need SOC 2 Type II evidence and a data residency commitment
+— our German customers require EU-only processing.
+
+[28:00] Sasha: Thanks. To recap: pilot Q3, go-live Q1 next year, $100-150K
+budget, you, Lisa, and Eric Wong sign off. I'll send the SOC 2 + EU
+residency docs tomorrow and we can schedule a security review with Eric.

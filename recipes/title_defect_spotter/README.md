@@ -72,3 +72,29 @@ uv run python recipes/title_defect_spotter/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — title_defect_spotter
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~16.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "parcel": "demo",
+  "defects": [
+    {
+      "type": "chain_break",
+      "description": "2002 Grant Deed missing trustee acknowledgment; only signed by Robert Holloway as 'trustee,' but trust originally had two trustees.",
+      "sever
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

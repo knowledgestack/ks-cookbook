@@ -10,6 +10,7 @@ Framework: raw MCP + OpenAI (no agent framework — shortest possible code path)
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 from pathlib import Path
@@ -20,10 +21,29 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
 
 POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
+
+async def _search_policies(session):
+    """Replace folder-listing with whole-tenant search; returns list of {name,path_part_id}."""
+    import json as _json
+    raw = await call(session, "search_knowledge", {"query": "policy", "limit": 10})
+    try:
+        hits = _json.loads(raw) if isinstance(raw, str) else raw
+    except _json.JSONDecodeError:
+        hits = []
+    items = hits if isinstance(hits, list) else (hits.get("hits") or hits.get("results") or [])
+    out = []
+    for h in items:
+        ppid = h.get("path_part_id") or h.get("chunk_id")
+        if not ppid: continue
+        name = (h.get("document_name") or "").split("/")[-1] or f"chunk-{str(ppid)[:8]}"
+        out.append({"name": name, "path_part_id": ppid, "part_type": "DOCUMENT"})
+    return out
+
+
 async def run(question: str) -> None:
     # 1. Enumerate policies and ask the LLM which one is most relevant.
     async with ks_mcp_session() as session:
-        listing = await call_list(session, "list_contents", {"folder_id": POLICIES_FOLDER})
+        listing = await _search_policies(session)
         policies = [p for p in listing if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"]
         if not policies:
             sys.exit("No policies found in the configured folder.")
@@ -70,7 +90,7 @@ async def run(question: str) -> None:
                 },
             ],
         )
-        print(answer.choices[0].message.content)
+        print(json.dumps({"answer_markdown": answer.choices[0].message.content}, indent=2))
 
 
 def main() -> None:

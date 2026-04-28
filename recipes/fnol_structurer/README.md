@@ -72,3 +72,30 @@ uv run python recipes/fnol_structurer/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — fnol_structurer
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~17.8s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "policy_number": "AUTO-2024-887421",
+  "insured": "Daniel Reyes",
+  "loss_date": "2026-04-22",
+  "loss_location": "I-405 northbound near the 110 exit",
+  "loss_type": "collision",
+  "parties": [
+    "Robert Kim (Pacific Auto Insurance)"
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

@@ -72,3 +72,32 @@ uv run python recipes/oncall_shadow_plan/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — oncall_shadow_plan
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~16.5s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "team": "platform",
+  "engineer": "demo",
+  "weeks": [
+    {
+      "week_number": 1,
+      "focus": "Establish contingency plans",
+      "activities": [
+        "Review existing contingency planning documents",
+        "Identify key com
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

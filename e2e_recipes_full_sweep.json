@@ -1,0 +1,831 @@
+{
+  "results": [
+    {
+      "recipe": "access_review",
+      "status": "pass",
+      "elapsed_s": 18.8,
+      "output_size": 1876,
+      "stdout_head": "{\n  \"user\": \"contractor-svc-shared\",\n  \"system\": \"prod-postgres-primary\",\n  \"role\": \"superuser write\",\n  \"verdict\": \"approve\",\n  \"rationale\": \"Access rights under the 'contractor-svc-shared' role align with the guidelines for contractor acc"
+    },
+    {
+      "recipe": "account_research_brief",
+      "status": "pass",
+      "elapsed_s": 24.5,
+      "output_size": 2089,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"summary\": \"The recent activity includes various documents related to financial transactions and presentations that outline significant details regarding different entities.\",\n  \"recent_activity\": [\n    \"Review of l"
+    },
+    {
+      "recipe": "adr_drafter",
+      "status": "pass",
+      "elapsed_s": 106.2,
+      "output_size": 1221,
+      "stdout_head": "{\n  \"title\": \"Adopt Managed Postgres for Analytics Service\",\n  \"status\": \"Proposed\",\n  \"context\": \"The current self-hosted Postgres has frequent on-call pages, indicating a need for more reliable database management. Adopting a managed Post"
+    },
+    {
+      "recipe": "aml_sar_narrative",
+      "status": "pass",
+      "elapsed_s": 21.1,
+      "output_size": 2399,
+      "stdout_head": "{\n  \"case_id\": \"structuring-cash-deposits\",\n  \"who\": \"Subject's name and identifying details not provided in corpus.\",\n  \"what\": \"Suspicious activity related to cash deposits possibly structured to evade reporting requirements.\",\n  \"when\": "
+    },
+    {
+      "recipe": "analyst_inquiry_responder",
+      "status": "pass",
+      "elapsed_s": 23.3,
+      "output_size": 2565,
+      "stdout_head": "{\n  \"analyst_question\": \"What ERISA disclosures must an employer provide to participants in the SPD?\",\n  \"headline_answer\": \"Employers must provide various disclosures under ERISA, including summary plan descriptions, summaries of material "
+    },
+    {
+      "recipe": "api_deprecation_notice",
+      "status": "pass",
+      "elapsed_s": 27.6,
+      "output_size": 1389,
+      "stdout_head": "{\n  \"endpoint\": \"POST /v1/ingest\",\n  \"deprecation_reason\": \"The /v1/ingest API endpoint will be deprecated in favor of the new /v2/ingest endpoint, which includes improved functionality and performance enhancements.\",\n  \"replacement\": \"POST"
+    },
+    {
+      "recipe": "basel_iii_risk_weight",
+      "status": "pass",
+      "elapsed_s": 11.7,
+      "output_size": 697,
+      "stdout_head": "{\n  \"exposure_name\": \"Acme Corp\",\n  \"asset_class\": \"corporate\",\n  \"counterparty_type\": \"BB-rated corporate\",\n  \"notional\": \"10000000\",\n  \"applied_risk_weight_pct\": 150.0,\n  \"rwa\": \"15000000\",\n  \"crm_applied\": \"none\",\n  \"citations\": [\n    {\n"
+    },
+    {
+      "recipe": "bcp_drill_plan",
+      "status": "pass",
+      "elapsed_s": 14.9,
+      "output_size": 2878,
+      "stdout_head": "{\n  \"scenario\": \"Primary region outage: us-east-1 unavailable for 4 hours.\",\n  \"participants\": [\n    \"IT Department\",\n    \"Disaster Recovery Team\",\n    \"Incident Response Team\",\n    \"Management\",\n    \"Communications Team\"\n  ],\n  \"timeline\":"
+    },
+    {
+      "recipe": "benefits_enrollment_qa",
+      "status": "pass",
+      "elapsed_s": 21.8,
+      "output_size": 2194,
+      "stdout_head": "{\n  \"question\": \"What ERISA disclosures must an employer provide to participants in the SPD?\",\n  \"answer\": \"Employers must provide several ERISA disclosures to participants, including: \\n\\n1. **Summary Plan Description (SPD)**: The SPD info"
+    },
+    {
+      "recipe": "board_update_drafter",
+      "status": "pass",
+      "elapsed_s": 44.2,
+      "output_size": 4449,
+      "stdout_head": "{\n  \"period\": \"March 2026\",\n  \"tl_dr\": \"March 2026 highlights include significant investments in innovative technology and community partnerships, with solid financial KPIs reported for major companies. Risks involve geopolitical tensions a"
+    },
+    {
+      "recipe": "case_study_drafter",
+      "status": "pass",
+      "elapsed_s": 215.9,
+      "output_size": 1077,
+      "stdout_head": "{\n  \"customer\": \"demo\",\n  \"hero_stat\": \"(not in corpus \\u2014 upload data to proceed)\",\n  \"challenge\": \"(not in corpus \\u2014 upload data to proceed)\",\n  \"solution\": \"(not in corpus \\u2014 upload data to proceed)\",\n  \"results\": [\n    \"(not "
+    },
+    {
+      "recipe": "cashflow_anomaly_detector",
+      "status": "pass",
+      "elapsed_s": 31.6,
+      "output_size": 3243,
+      "stdout_head": "{\n  \"source_csv\": \"bank_txns_2025_q1.csv\",\n  \"anomalies\": [\n    {\n      \"pattern\": \"Duplicate vendor payments detected.\",\n      \"example_lines\": [\n        \"2025-01-02,ACH PAYMENT,-12450.00,Acme Vendor LLC,Operating,Invoice #INV-7811\",\n     "
+    },
+    {
+      "recipe": "change_management_review",
+      "status": "pass",
+      "elapsed_s": 17.3,
+      "output_size": 2627,
+      "stdout_head": "{\n  \"change\": \"Drop-and-recreate the orders.user_id index in prod Postgres\",\n  \"risk_level\": \"high\",\n  \"gates\": [\n    {\n      \"gate\": \"Limit access to authorized personnel for changes.\",\n      \"why\": \"Access restrictions help prevent unauth"
+    },
+    {
+      "recipe": "change_monitor_to_pr",
+      "status": "fail",
+      "cmd": "uv run python recipes/change_monitor_to_pr/recipe.py --folder-id demo --topic 'Q4 board update' --snapshot demo --out demo",
+      "exit_code": 1,
+      "elapsed_s": 0.5,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/.local/share/uv/python/cpython-3.12.11-macos-aarch64-none/lib/python3.12/json/decoder.py\", line 356, in raw_decode",
+        "    raise JSONDecodeError(\"Expecting value\", s, err.value) from None",
+        "json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+      ]
+    },
+    {
+      "recipe": "changelog_from_commits",
+      "status": "pass",
+      "elapsed_s": 16.2,
+      "output_size": 2965,
+      "stdout_head": "{\n  \"version\": \"v2.4.0\",\n  \"date\": \"2026-04-27\",\n  \"entries\": [\n    {\n      \"category\": \"Added\",\n      \"summary\": \"Introduced a new /v2/ingest endpoint with support for batch uploads.\",\n      \"why_user_cares\": \"Users can now upload multiple"
+    },
+    {
+      "recipe": "churn_risk_flags",
+      "status": "pass",
+      "elapsed_s": 18.7,
+      "output_size": 2210,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"overall_risk\": \"medium\",\n  \"signals\": [\n    {\n      \"signal\": \"System interruptions impact service availability\",\n      \"severity\": \"medium\",\n      \"evidence\": \"We experience occasional system interruptions and del"
+    },
+    {
+      "recipe": "citizen_intent_311",
+      "status": "pass",
+      "elapsed_s": 11.7,
+      "output_size": 1215,
+      "stdout_head": "{\n  \"message\": \"The search returned various items related to the term \\\"demo.\\\" These include images and text from documents related to user interfaces, examples used in publications, and icons typically utilized in software applications. S"
+    },
+    {
+      "recipe": "clause_extractor",
+      "status": "pass",
+      "elapsed_s": 66.7,
+      "output_size": 3258,
+      "stdout_head": "{\n  \"contract\": \"Apple 2024 Proxy\",\n  \"clauses\": [\n    {\n      \"clause\": \"limitation of liability\",\n      \"present\": false,\n      \"excerpt\": \"not found\",\n      \"citation\": {\n        \"chunk_id\": \"\",\n        \"document_name\": \"\",\n        \"snip"
+    },
+    {
+      "recipe": "cloud_cost_anomaly",
+      "status": "pass",
+      "elapsed_s": 64.0,
+      "output_size": 1716,
+      "stdout_head": "{\n  \"period\": \"March 2026\",\n  \"anomalies\": [\n    {\n      \"service\": \"EC2\",\n      \"usage_type\": \"BoxUsage:c6i.4xlarge\",\n      \"delta\": \"$14170.55\",\n      \"likely_cause\": \"Ensuring that everything you pay for is used and avoiding significantl"
+    },
+    {
+      "recipe": "coa_mapper",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "compensation_band_check",
+      "status": "pass",
+      "elapsed_s": 13.4,
+      "output_size": 936,
+      "stdout_head": "{\n  \"role\": \"demo\",\n  \"level\": \"demo\",\n  \"location\": \"demo\",\n  \"band_min\": \"not in corpus \\u2014 upload data to proceed\",\n  \"band_mid\": \"not in corpus \\u2014 upload data to proceed\",\n  \"band_max\": \"not in corpus \\u2014 upload data to procee"
+    },
+    {
+      "recipe": "competitive_positioning",
+      "status": "pass",
+      "elapsed_s": 48.3,
+      "output_size": 3411,
+      "stdout_head": "{\n  \"competitor\": \"demo\",\n  \"their_strengths\": [\n    \"User-friendly interface\",\n    \"Advanced segmentation options\",\n    \"Strong policy enforcement mechanisms\",\n    \"Comprehensive operational manuals\"\n  ],\n  \"their_weaknesses\": [\n    \"Weak "
+    },
+    {
+      "recipe": "construction_rfi_agent",
+      "status": "pass",
+      "elapsed_s": 18.4,
+      "output_size": 1651,
+      "stdout_head": "{\n  \"rfi_number\": \"RFI-001\",\n  \"subject\": \"Request for Information on Design Specifications\",\n  \"spec_section\": \"01 11 00\",\n  \"draft_response\": \"We appreciate your inquiry regarding the design specifications. Any requests for changes to the"
+    },
+    {
+      "recipe": "content_brief_drafter",
+      "status": "pass",
+      "elapsed_s": 16.1,
+      "output_size": 2231,
+      "stdout_head": "{\n  \"topic\": \"Q4 Board Update\",\n  \"audience\": \"Board Members and Stakeholders\",\n  \"angle\": \"Highlighting recent achievements and strategic insights for the upcoming quarter.\",\n  \"key_messages\": [\n    \"Overview of Q4 performance highlights.\""
+    },
+    {
+      "recipe": "contract_renewal_checker",
+      "status": "pass",
+      "elapsed_s": 22.2,
+      "output_size": 1218,
+      "stdout_head": "{\n  \"contract\": \"Apple 2024 proxy\",\n  \"term_end\": \"2024-01-11\",\n  \"auto_renews\": false,\n  \"notice_window_days\": 30,\n  \"fee_escalator\": \"TBD\",\n  \"actions\": [\n    {\n      \"do_by\": \"2024-01-01\",\n      \"action\": \"Send non-renewal notice by the "
+    },
+    {
+      "recipe": "court_docket_monitor",
+      "status": "pass",
+      "elapsed_s": 5.4,
+      "output_size": 196,
+      "stdout_head": "{\n  \"party\": \"Jackson Women's Health Organization\",\n  \"period\": \"Q1 2026\",\n  \"entries\": [],\n  \"headline\": \"No litigation involving Jackson Women's Health Organization in the corpus for Q1 2026.\"\n}"
+    },
+    {
+      "recipe": "csat_theme_mining",
+      "status": "pass",
+      "elapsed_s": 25.6,
+      "output_size": 2976,
+      "stdout_head": "{\n  \"period\": \"Q1 2026\",\n  \"themes\": [\n    {\n      \"theme\": \"Continuous Improvement Process\",\n      \"sentiment\": \"positive\",\n      \"frequency_estimate\": \"high\",\n      \"representative_quote\": \"Have a process for continuous improvement: Regul"
+    },
+    {
+      "recipe": "data_subject_request_responder",
+      "status": "pass",
+      "elapsed_s": 15.1,
+      "output_size": 1387,
+      "stdout_head": "{\n  \"request_type\": \"erasure\",\n  \"jurisdiction\": \"GDPR\",\n  \"response_deadline_days\": 30,\n  \"systems_to_query\": [\n    \"customer database\",\n    \"HR systems\"\n  ],\n  \"policy_refs\": [\n    {\n      \"chunk_id\": \"019dd20b-e699-793e-a607-c6f4f44301b8"
+    },
+    {
+      "recipe": "deal_loss_retro",
+      "status": "pass",
+      "elapsed_s": 12.3,
+      "output_size": 1050,
+      "stdout_head": "{\n  \"deal\": \"demo\",\n  \"lost_to\": \"not in corpus \\u2014 upload data to proceed\",\n  \"stated_reason\": \"Note: Loss percentages do not sum correctly (intentional error).\",\n  \"actual_root_causes\": [\n    \"Loss percentages did not correctly reflect"
+    },
+    {
+      "recipe": "discharge_summary_rewrite",
+      "status": "pass",
+      "elapsed_s": 33.5,
+      "output_size": 2211,
+      "stdout_head": "{\n  \"what_happened\": \"You were admitted to the hospital with chest pain and confirmed to have a type of heart attack called NSTEMI. You were treated with medications and underwent a procedure to open up blocked arteries. You are stable and "
+    },
+    {
+      "recipe": "document_versions",
+      "status": "fail",
+      "cmd": "uv run python recipes/document_versions/recipe.py --out demo",
+      "exit_code": 1,
+      "elapsed_s": 1.3,
+      "stderr_tail": [
+        "      |     sys.exit(f\"No documents found matching '{query}'.\")",
+        "      | SystemExit: No documents found matching 'access control policy'.",
+        "      +------------------------------------"
+      ]
+    },
+    {
+      "recipe": "docx_form_fill",
+      "status": "fail",
+      "cmd": "uv run python recipes/docx_form_fill/recipe.py --template demo",
+      "exit_code": 1,
+      "elapsed_s": 0.9,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/.local/share/uv/python/cpython-3.12.11-macos-aarch64-none/lib/python3.12/zipfile/__init__.py\", line 1421, in _RealGetContents",
+        "    raise BadZipFile(\"File is not a zip file\")",
+        "zipfile.BadZipFile: File is not a zip file"
+      ]
+    },
+    {
+      "recipe": "dpa_gap_check",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "drug_interaction_checker",
+      "status": "pass",
+      "elapsed_s": 4.1,
+      "output_size": 148,
+      "stdout_head": "{\n  \"patient_medications\": [\n    \"demo\",\n    \"demo2\"\n  ],\n  \"interactions\": [],\n  \"disclaimer\": \"Decision-support only; verify with a pharmacist.\"\n}"
+    },
+    {
+      "recipe": "escalation_decision",
+      "status": "pass",
+      "elapsed_s": 26.2,
+      "output_size": 1484,
+      "stdout_head": "{\n  \"ticket_summary\": \"demo\",\n  \"decision\": \"hold\",\n  \"reason\": \"The issue is of medium severity and there is sufficient SLA remaining (120 minutes) to address and resolve it without immediate escalation. Relevant escalation and SLA policie"
+    },
+    {
+      "recipe": "expense_policy_violation",
+      "status": "pass",
+      "elapsed_s": 23.6,
+      "output_size": 1171,
+      "stdout_head": "{\n  \"description\": \"Client dinner at Smith & Wollensky NYC\",\n  \"amount\": \"485.00\",\n  \"category\": \"entertainment\",\n  \"verdict\": \"needs_receipt\",\n  \"reason\": \"You can generally deduct only 50% of any otherwise deductible business-related meal"
+    },
+    {
+      "recipe": "fnol_structurer",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "force_majeure_impact",
+      "status": "pass",
+      "elapsed_s": 34.6,
+      "output_size": 503,
+      "stdout_head": "{\n  \"event\": \"demo\",\n  \"contracts\": [\n    {\n      \"contract\": \"demo\",\n      \"covers_event\": false,\n      \"notice_required\": \"not in corpus \\u2014 upload data to proceed\",\n      \"cure_window\": \"not in corpus \\u2014 upload data to proceed\",\n "
+    },
+    {
+      "recipe": "gdpr_ropa_entry",
+      "status": "pass",
+      "elapsed_s": 32.8,
+      "output_size": 1813,
+      "stdout_head": "{\n  \"activity\": \"demo\",\n  \"purpose\": \"Demonstration of data processing activity\",\n  \"data_categories\": [\n    \"personal_data\",\n    \"usage_data\"\n  ],\n  \"data_subjects\": [\n    \"users\",\n    \"customers\"\n  ],\n  \"lawful_basis\": \"consent\",\n  \"recip"
+    },
+    {
+      "recipe": "hipaa_baa_gap",
+      "status": "pass",
+      "elapsed_s": 33.8,
+      "output_size": 2161,
+      "stdout_head": "{\n  \"vendor\": \"demo\",\n  \"gaps\": [\n    {\n      \"clause\": \"Additional Information Requirements\",\n      \"status\": \"missing\",\n      \"excerpt\": \"This section provides additional information regarding the requirements in this appendix. \",\n      \""
+    },
+    {
+      "recipe": "hoa_compliance_check",
+      "status": "pass",
+      "elapsed_s": 5.5,
+      "output_size": 467,
+      "stdout_head": "{\n  \"requested_change\": \"demo\",\n  \"verdict\": \"needs_variance\",\n  \"conditions\": [],\n  \"rationale\": \"The requested change of 'demo' does not fall within the permitted guidelines and requires a variance to proceed.\",\n  \"citations\": [\n    {\n   "
+    },
+    {
+      "recipe": "icd10_coder",
+      "status": "fail",
+      "cmd": "uv run python recipes/icd10_coder/recipe.py --note-file recipes/icd10_coder/sample_inputs/deid_visit_001.txt",
+      "exit_code": 1,
+      "elapsed_s": 167.0,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/usage.py\", line 382, in check_before_request",
+        "    raise UsageLimitExceeded(f'The next request would exceed the request_limit of {request_limit}')",
+        "pydantic_ai.exceptions.UsageLimitExceeded: The next request would exceed the request_limit of 50"
+      ]
+    },
+    {
+      "recipe": "icp_matcher",
+      "status": "pass",
+      "elapsed_s": 21.4,
+      "output_size": 2020,
+      "stdout_head": "{\n  \"company\": \"FreshFinTech\",\n  \"fit_score\": 85,\n  \"tier\": \"A\",\n  \"criteria\": [\n    {\n      \"criterion\": \"Company Size\",\n      \"verdict\": \"hit\",\n      \"reason\": \"FreshFinTech has approximately 200 employees, which fits well within the comp"
+    },
+    {
+      "recipe": "inbound_lead_router",
+      "status": "pass",
+      "elapsed_s": 25.1,
+      "output_size": 885,
+      "stdout_head": "{\n  \"company\": \"Arnav Goel's Tenant\",\n  \"segment\": \"smb\",\n  \"owner_team\": \"sdr\",\n  \"reply_sla_minutes\": 10,\n  \"next_action\": \"Set up a demo meeting to discuss further.\",\n  \"citations\": [\n    {\n      \"chunk_id\": \"019dd268-5345-7abc8-cba55e56"
+    },
+    {
+      "recipe": "incident_postmortem",
+      "status": "fail",
+      "reason": "stdout not JSON",
+      "cmd": "uv run python recipes/incident_postmortem/recipe.py --incident demo",
+      "stdout_head": "Wrote post-mortem.md",
+      "elapsed_s": 40.7
+    },
+    {
+      "recipe": "insurance_fraud_pattern",
+      "status": "pass",
+      "elapsed_s": 22.5,
+      "output_size": 3089,
+      "stdout_head": "{\n  \"claim_id\": \"CL-2025-0142\",\n  \"flags\": [\n    {\n      \"pattern_name\": \"Suspicious Activities Identification\",\n      \"evidence\": \"Exchanges small bills for large bills, suspicious designation of beneficiaries, multiple individuals with th"
+    },
+    {
+      "recipe": "interview_bank_generator",
+      "status": "pass",
+      "elapsed_s": 33.9,
+      "output_size": 4335,
+      "stdout_head": "{\n  \"role\": \"demo\",\n  \"level\": \"Senior\",\n  \"competencies\": [\n    {\n      \"competency\": \"Leadership insights\",\n      \"behavioral\": [\n        \"Demonstrates strategic thinking\",\n        \"Fosters a culture of trust and accountability\",\n        "
+    },
+    {
+      "recipe": "interview_competency_grader",
+      "status": "pass",
+      "elapsed_s": 34.5,
+      "output_size": 3679,
+      "stdout_head": "{\n  \"role\": \"demo\",\n  \"candidate\": \"demo\",\n  \"hire_recommendation\": \"strong_hire\",\n  \"competencies\": [\n    {\n      \"competency\": \"System Design\",\n      \"rating\": \"exceeds\",\n      \"rubric_definition_cited\": {\n        \"chunk_id\": \"019dd258-3f"
+    },
+    {
+      "recipe": "invoice_reconciliation",
+      "status": "pass",
+      "elapsed_s": 30.8,
+      "output_size": 1575,
+      "stdout_head": "{\n  \"invoice_line\": \"demo\",\n  \"po_number\": \"demo\",\n  \"contract_ref\": \"Apple 2024 proxy\",\n  \"matched\": false,\n  \"discrepancy\": \"Invoice line and PO do not match any found records. Contract details regarding Apple's proxy solicitation identif"
+    },
+    {
+      "recipe": "iso27001_soa",
+      "status": "pass",
+      "elapsed_s": 34.0,
+      "output_size": 1993,
+      "stdout_head": "{\n  \"control_id\": \"demo\",\n  \"control_title\": \"demo\",\n  \"applicable\": true,\n  \"justification\": \"The information related to the integrity verification and security control implementations aligns with the requirements of ISO 27001:2022 standar"
+    },
+    {
+      "recipe": "kb_article_drafter",
+      "status": "pass",
+      "elapsed_s": 28.3,
+      "output_size": 1337,
+      "stdout_head": "{\n  \"title\": \"Q4 Board Update\",\n  \"overview\": \"This article summarizes key points from the Q4 board update, including current leadership nominations and communication protocols.\",\n  \"prerequisites\": [],\n  \"steps\": [\n    \"Review the updates "
+    },
+    {
+      "recipe": "kyc_adverse_media_screener",
+      "status": "pass",
+      "elapsed_s": 116.7,
+      "output_size": 2639,
+      "stdout_head": "{\n  \"entity\": \"demo\",\n  \"overall_risk\": \"monitor\",\n  \"hits\": [\n    {\n      \"category\": \"reputational\",\n      \"severity\": \"medium\",\n      \"summary\": \"Guidance for advertisers to ensure truthfulness in statements and disclose material connect"
+    },
+    {
+      "recipe": "launch_email_variants",
+      "status": "pass",
+      "elapsed_s": 37.3,
+      "output_size": 3257,
+      "stdout_head": "{\n  \"feature\": \"demo\",\n  \"audience\": \"existing customers, technical buyer\",\n  \"variants\": [\n    {\n      \"angle\": \"value\",\n      \"subject\": \"Unlock the Value of Our Demo!\",\n      \"preheader\": \"Experience the benefits firsthand.\",\n      \"body"
+    },
+    {
+      "recipe": "llama_index_rag",
+      "status": "fail",
+      "cmd": "uv run python recipes/llama_index_rag/recipe.py --question 'What ERISA disclosures must an employer provide to participants in the SPD?'",
+      "exit_code": 1,
+      "elapsed_s": 0.5,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/recipes/llama_index_rag/recipe.py\", line 27, in run",
+        "    from llama_index.core import Document, Settings, VectorStoreIndex",
+        "ModuleNotFoundError: No module named 'llama_index'"
+      ]
+    },
+    {
+      "recipe": "loan_application_classifier",
+      "status": "pass",
+      "elapsed_s": 3.6,
+      "output_size": 259,
+      "stdout_head": "{\n  \"document_name\": \"demo\",\n  \"doc_type\": \"other\",\n  \"confidence\": \"low\",\n  \"key_fields\": {},\n  \"completeness\": \"missing_fields\",\n  \"citation\": {\n    \"chunk_id\": \"c25f597c-cf3d-4cc0-a662-0b20eed5db92\",\n    \"document_name\": \"demo\",\n    \"sni"
+    },
+    {
+      "recipe": "meddic_call_coach",
+      "status": "pass",
+      "elapsed_s": 70.2,
+      "output_size": 3962,
+      "stdout_head": "{\n  \"call\": \"demo\",\n  \"fields\": [\n    {\n      \"field\": \"identify_pain\",\n      \"coverage\": \"strong\",\n      \"evidence_in_call\": \"Average resolution time is 4 hours for field techs to get engineering documents, leading to financial losses due "
+    },
+    {
+      "recipe": "medicare_plan_compare",
+      "status": "pass",
+      "elapsed_s": 13.0,
+      "output_size": 2944,
+      "stdout_head": "{\n  \"beneficiary_profile\": \"demo\",\n  \"plans\": [\n    {\n      \"plan_name\": \"Basic Medicare Advantage Plan\",\n      \"plan_type\": \"advantage\",\n      \"monthly_premium\": \"$30\",\n      \"moop\": \"$4,000\",\n      \"network_note\": \"In-network providers on"
+    },
+    {
+      "recipe": "meeting_notes_action_items",
+      "status": "pass",
+      "elapsed_s": 29.4,
+      "output_size": 437,
+      "stdout_head": "{\n  \"meeting_id\": \"demo\",\n  \"attendees\": [\n    \"<unassigned>\"\n  ],\n  \"tl_dr\": \"No transcript found for the specified meeting ID.\",\n  \"decisions\": [],\n  \"action_items\": [\n    {\n      \"task\": \"Follow up on meeting transcript\",\n      \"owner\": "
+    },
+    {
+      "recipe": "migration_guide_drafter",
+      "status": "pass",
+      "elapsed_s": 20.1,
+      "output_size": 3147,
+      "stdout_head": "{\n  \"from_version\": \"demo\",\n  \"to_version\": \"demo\",\n  \"preflight\": [\n    \"This document provides guidelines for conducting a version migration effectively.\"\n  ],\n  \"steps\": [\n    {\n      \"step\": \"Choose Architecture Segmentation\",\n      \"de"
+    },
+    {
+      "recipe": "mls_valuation",
+      "status": "pass",
+      "elapsed_s": 23.1,
+      "output_size": 3542,
+      "stdout_head": "{\n  \"subject_address\": \"former EU customer\",\n  \"low_estimate\": \"Not provided\",\n  \"likely_estimate\": \"Not provided\",\n  \"high_estimate\": \"Not provided\",\n  \"comps\": [\n    {\n      \"address\": \"N/A\",\n      \"sold_price\": \"N/A\",\n      \"sold_date\": "
+    },
+    {
+      "recipe": "month_end_close_narrative",
+      "status": "pass",
+      "elapsed_s": 7.9,
+      "output_size": 975,
+      "stdout_head": "{\n  \"period\": \"March 2026\",\n  \"tl_dr\": \"Summary of material variances for March 2026. No variances to report this month.\",\n  \"material_variances\": [\n    {\n      \"account\": \"General Expenses\",\n      \"actual_vs_budget\": \"Actual exceeded budge"
+    },
+    {
+      "recipe": "nda_review",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "nine_box_synthesizer",
+      "status": "pass",
+      "elapsed_s": 12.3,
+      "output_size": 899,
+      "stdout_head": "{\n  \"team\": \"platform\",\n  \"placements\": [\n    {\n      \"employee\": \"demo\",\n      \"performance\": \"meets\",\n      \"potential\": \"growing\",\n      \"placement_label\": \"Employee Development\",\n      \"evidence\": \"The Performance Efficiency pillar incl"
+    },
+    {
+      "recipe": "obligation_tracker",
+      "status": "pass",
+      "elapsed_s": 17.6,
+      "output_size": 3089,
+      "stdout_head": "{\n  \"contract\": \"Apple 2024 proxy\",\n  \"obligations\": [\n    {\n      \"obligation\": \"Identify key performance indicators (KPIs) based on desired business outcomes.\",\n      \"owner\": \"Knowledge Stack\",\n      \"counterparty\": \"Apple\",\n      \"due\":"
+    },
+    {
+      "recipe": "offer_letter_drafter",
+      "status": "pass",
+      "elapsed_s": 62.3,
+      "output_size": 3582,
+      "stdout_head": "{\n  \"candidate\": \"demo\",\n  \"role\": \"demo\",\n  \"level\": \"Senior\",\n  \"base_salary\": \"demo\",\n  \"equity\": \"per band\",\n  \"benefits_summary\": \"We strive to support our employees through competitive compensation and benefits, ongoing learning and d"
+    },
+    {
+      "recipe": "onboarding_checklist",
+      "status": "fail",
+      "cmd": "uv run python recipes/onboarding_checklist/recipe.py --role demo",
+      "exit_code": 1,
+      "elapsed_s": 1.4,
+      "stderr_tail": [
+        "  Input should be a valid UUID, invalid length: expected length 32 for simple format, found 0 [type=uuid_parsing, input_value='', input_type=str]",
+        "    For further information visit https://errors.pydantic.dev/2.13/v/uuid_parsing",
+        "      +------------------------------------"
+      ]
+    },
+    {
+      "recipe": "onboarding_day_one_plan",
+      "status": "pass",
+      "elapsed_s": 24.6,
+      "output_size": 3074,
+      "stdout_head": "{\n  \"role\": \"demo\",\n  \"day_one\": [\n    {\n      \"task\": \"Implement the developed policies using the selected components for onboarding.\",\n      \"owner\": \"IT\"\n    },\n    {\n      \"task\": \"Start the MR system by turning the key switch at the al"
+    },
+    {
+      "recipe": "oncall_shadow_plan",
+      "status": "pass",
+      "elapsed_s": 16.5,
+      "output_size": 2092,
+      "stdout_head": "{\n  \"team\": \"platform\",\n  \"engineer\": \"demo\",\n  \"weeks\": [\n    {\n      \"week_number\": 1,\n      \"focus\": \"Establish contingency plans\",\n      \"activities\": [\n        \"Review existing contingency planning documents\",\n        \"Identify key com"
+    },
+    {
+      "recipe": "outbound_call_prep",
+      "status": "timeout",
+      "cmd": "uv run python recipes/outbound_call_prep/recipe.py --prospect demo",
+      "elapsed_s": 240.0
+    },
+    {
+      "recipe": "password_policy_audit",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "patent_prior_art_search",
+      "status": "fail",
+      "cmd": "uv run python recipes/patent_prior_art_search/recipe.py --claim demo",
+      "exit_code": 1,
+      "elapsed_s": 3.5,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "pci_scope_review",
+      "status": "fail",
+      "cmd": "uv run python recipes/pci_scope_review/recipe.py --system demo",
+      "exit_code": 1,
+      "elapsed_s": 2.9,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "perf_review_drafter",
+      "status": "fail",
+      "cmd": "uv run python recipes/perf_review_drafter/recipe.py --employee demo",
+      "exit_code": 1,
+      "elapsed_s": 3.0,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "permission_aware_retrieval",
+      "status": "fail",
+      "cmd": "uv run python recipes/permission_aware_retrieval/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 0.6,
+      "stderr_tail": [
+        "Set ALICE_KS_API_KEY and BOB_KS_API_KEY. Run `seed/seed_cookbook_users.py` in the ks-backend repo to mint them."
+      ]
+    },
+    {
+      "recipe": "permit_completeness_check",
+      "status": "fail",
+      "cmd": "uv run python recipes/permit_completeness_check/recipe.py --permit-type demo --applicant demo --submission-summary demo",
+      "exit_code": 1,
+      "elapsed_s": 2.9,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "pip_drafter",
+      "status": "fail",
+      "cmd": "uv run python recipes/pip_drafter/recipe.py --employee demo --concerns demo",
+      "exit_code": 1,
+      "elapsed_s": 2.8,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "policy_qa",
+      "status": "fail",
+      "cmd": "uv run python recipes/policy_qa/recipe.py --question 'What ERISA disclosures must an employer provide to participants in the SPD?'",
+      "exit_code": 1,
+      "elapsed_s": 1.1,
+      "stderr_tail": [
+        "  Input should be a valid UUID, invalid length: expected length 32 for simple format, found 0 [type=uuid_parsing, input_value='', input_type=str]",
+        "    For further information visit https://errors.pydantic.dev/2.13/v/uuid_parsing",
+        "      +------------------------------------"
+      ]
+    },
+    {
+      "recipe": "post_deploy_verify",
+      "status": "fail",
+      "cmd": "uv run python recipes/post_deploy_verify/recipe.py --service ingest-api --change demo",
+      "exit_code": 1,
+      "elapsed_s": 2.8,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "procurement_intake_triage",
+      "status": "fail",
+      "cmd": "uv run python recipes/procurement_intake_triage/recipe.py --request demo",
+      "exit_code": 1,
+      "elapsed_s": 2.9,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 151, in _map_api_errors",
+        "    raise ModelAPIError(model_name=model_name, message=e.message) from e",
+        "pydantic_ai.exceptions.ModelAPIError: Connection error."
+      ]
+    },
+    {
+      "recipe": "prospecting_email_personalizer",
+      "status": "pass",
+      "elapsed_s": 40.1,
+      "output_size": 1884,
+      "stdout_head": "{\n  \"subject\": \"Lease Agreement for Your New Property\",\n  \"body\": \"Hi Arnav,\\n\\nI hope this message finds you well. I wanted to touch base regarding your lease agreement for the property at 18 Yonge St, Toronto. As per the agreement, your m"
+    },
+    {
+      "recipe": "qbr_deck_outline",
+      "status": "pass",
+      "elapsed_s": 29.2,
+      "output_size": 3186,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"quarter\": \"Q2 2026\",\n  \"slides\": [\n    {\n      \"title\": \"Agenda\",\n      \"bullets\": [\n        \"Wins\",\n        \"Usage & Adoption\",\n        \"Open Risks\",\n        \"KS Workflow\"\n      ],\n      \"citations\": []\n    },\n   "
+    },
+    {
+      "recipe": "regulations_comment_summarizer",
+      "status": "pass",
+      "elapsed_s": 18.5,
+      "output_size": 1811,
+      "stdout_head": "{\n  \"docket_id\": \"demo\",\n  \"total_comments_estimate\": \"0\",\n  \"themes\": [\n    {\n      \"theme\": \"Example Theme 1\",\n      \"stance\": \"support\",\n      \"representative_quote\": \"This is a quote supporting the initiative.\",\n      \"approximate_count"
+    },
+    {
+      "recipe": "renewal_risk_evidence",
+      "status": "pass",
+      "elapsed_s": 50.4,
+      "output_size": 3239,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"renewal_date\": \"2026-04-28T18:00:26.931144+00:00\",\n  \"recommendation\": \"at_risk\",\n  \"value_realized\": {\n    \"title\": \"Value Realized for Demo Account\",\n    \"bullets\": [\n      \"SUMMARY PENDING\",\n      \"Asset impairm"
+    },
+    {
+      "recipe": "resume_jd_scorer",
+      "status": "pass",
+      "elapsed_s": 22.6,
+      "output_size": 1804,
+      "stdout_head": "{\n  \"role\": \"demo\",\n  \"fit_score\": 80,\n  \"criteria\": [\n    {\n      \"criterion\": \"Experience with backend development in Python and event-driven architectures\",\n      \"type\": \"must_have\",\n      \"verdict\": \"hit\",\n      \"evidence_in_resume\": \""
+    },
+    {
+      "recipe": "rfp_question_router",
+      "status": "pass",
+      "elapsed_s": 25.6,
+      "output_size": 2418,
+      "stdout_head": "{\n  \"question\": \"What ERISA disclosures must an employer provide to participants in the SPD?\",\n  \"owner_team\": \"Legal\",\n  \"confidence\": \"high\",\n  \"draft_answer\": \"Employers must provide the following ERISA disclosures in the Summary Plan De"
+    },
+    {
+      "recipe": "runway_scenario",
+      "status": "fail",
+      "cmd": "uv run python recipes/runway_scenario/recipe.py --scenario demo",
+      "exit_code": 2,
+      "elapsed_s": 0.9,
+      "stderr_tail": [
+        "usage: recipe.py [-h] --scenario {baseline,downside,upside}",
+        "recipe.py: error: argument --scenario: invalid choice: 'demo' (choose from baseline, downside, upside)"
+      ]
+    },
+    {
+      "recipe": "samgov_rfp_match",
+      "status": "pass",
+      "elapsed_s": 12.5,
+      "output_size": 641,
+      "stdout_head": "{\n  \"capabilities\": [\n    \"demo\"\n  ],\n  \"matches\": [\n    {\n      \"notice_id\": \"123456\",\n      \"title\": \"Small Business Innovation Research (SBIR) Program\",\n      \"agency\": \"Department of Defense\",\n      \"naics\": \"541715\",\n      \"response_by"
+    },
+    {
+      "recipe": "sdlc_checklist",
+      "status": "fail",
+      "reason": "stdout not JSON",
+      "cmd": "uv run python recipes/sdlc_checklist/recipe.py --pr demo",
+      "stdout_head": "Based on the company's Software Development Life Cycle (SDLC) and data protection policies, the following pre-merge actions are required for the PR labeled \"demo\":\n\n### Pre-Merge Checklist\n\n- [ ] **Document and Disseminate Policies**: Ensur",
+      "elapsed_s": 13.9
+    },
+    {
+      "recipe": "security_awareness_quiz",
+      "status": "pass",
+      "elapsed_s": 33.5,
+      "output_size": 4738,
+      "stdout_head": "{\n  \"audience\": \"all employees\",\n  \"questions\": [\n    {\n      \"prompt\": \"What is the primary purpose of using strong passwords in workplace security?\",\n      \"format\": \"mcq\",\n      \"choices\": [\n        \"To impress colleagues\",\n        \"To p"
+    },
+    {
+      "recipe": "security_finding_triage",
+      "status": "pass",
+      "elapsed_s": 31.1,
+      "output_size": 870,
+      "stdout_head": "{\n  \"finding_id\": \"ID-2025-0042\",\n  \"classification\": \"true_positive\",\n  \"severity\": \"medium\",\n  \"policy_exception_applies\": false,\n  \"remediation\": \"Ensure that the dinner follows the rules outlined for business meals, including having a s"
+    },
+    {
+      "recipe": "seo_outline_drafter",
+      "status": "pass",
+      "elapsed_s": 38.0,
+      "output_size": 2951,
+      "stdout_head": "{\n  \"keyword\": \"demo\",\n  \"search_intent\": \"informational\",\n  \"h1\": \"Understanding the Concept of Demo\",\n  \"h2s\": [\n    \"What is a Demo?\",\n    \"Different Types of Demos\",\n    \"How Demos are Used in Marketing\",\n    \"The Role of Demos in Produ"
+    },
+    {
+      "recipe": "sla_breach_report",
+      "status": "pass",
+      "elapsed_s": 31.2,
+      "output_size": 2803,
+      "stdout_head": "{\n  \"customer\": \"demo\",\n  \"period\": \"Q1 2026\",\n  \"breaches\": [\n    {\n      \"incident_ref\": \"SLA Credit Limit\",\n      \"metric\": \"Credit\",\n      \"target\": \"Maximum allowance when the credit rate is over 20%\",\n      \"observed\": \"$2,000\",\n     "
+    },
+    {
+      "recipe": "soc2_evidence",
+      "status": "pass",
+      "elapsed_s": 1.8,
+      "output_size": 68,
+      "stdout_head": "{\n  \"status\": \"ok\",\n  \"wrote\": \"soc2-evidence.md\",\n  \"excerpts\": 0\n}"
+    },
+    {
+      "recipe": "sprint_planner",
+      "status": "fail",
+      "cmd": "uv run python recipes/sprint_planner/recipe.py --team platform --sprint demo --capacity-days demo",
+      "exit_code": 2,
+      "elapsed_s": 0.8,
+      "stderr_tail": [
+        "usage: recipe.py [-h] --team TEAM --sprint SPRINT --capacity-days",
+        "                 CAPACITY_DAYS",
+        "recipe.py: error: argument --capacity-days: invalid int value: 'demo'"
+      ]
+    },
+    {
+      "recipe": "sre_runbook_gap_check",
+      "status": "pass",
+      "elapsed_s": 45.3,
+      "output_size": 3289,
+      "stdout_head": "{\n  \"service\": \"ingest-api\",\n  \"sections\": [\n    {\n      \"section\": \"Overview of Ingest API\",\n      \"present\": true,\n      \"quality\": \"weak\",\n      \"note\": \"Insufficient detailed information directly about the ingest API.\",\n      \"citation\""
+    },
+    {
+      "recipe": "stakeholder_map_drafter",
+      "status": "pass",
+      "elapsed_s": 20.1,
+      "output_size": 1778,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"stakeholders\": [\n    {\n      \"name\": \"Business Team\",\n      \"title\": \"Business Analyst\",\n      \"role\": \"user\",\n      \"sentiment\": \"supportive\",\n      \"last_touch\": \"2026-04-28\",\n      \"citation\": {\n        \"chunk_i"
+    },
+    {
+      "recipe": "support_macro_drafter",
+      "status": "pass",
+      "elapsed_s": 18.4,
+      "output_size": 1680,
+      "stdout_head": "{\n  \"ticket_type\": \"demo\",\n  \"greeting\": \"Welcome to the demo support!\",\n  \"body\": \"This is a demonstration response for ticket handling. Company will make reasonable efforts to provide technical support to customers during regular business"
+    },
+    {
+      "recipe": "symptom_triage",
+      "status": "pass",
+      "elapsed_s": 4.6,
+      "output_size": 474,
+      "stdout_head": "{\n  \"presenting_symptoms\": \"demo\",\n  \"red_flags\": [],\n  \"disposition\": \"self_care\",\n  \"time_to_care\": \"N/A\",\n  \"rationale\": \"Insufficient specific symptoms provided for evaluation.\",\n  \"citations\": [\n    {\n      \"chunk_id\": \"not in corpus \\"
+    },
+    {
+      "recipe": "tech_debt_ledger",
+      "status": "pass",
+      "elapsed_s": 37.1,
+      "output_size": 3002,
+      "stdout_head": "{\n  \"area\": \"demo\",\n  \"items\": [\n    {\n      \"title\": \"Product Vulnerability and Defects in Hardware/Software\",\n      \"impact\": \"high\",\n      \"effort\": \"M\",\n      \"description\": \"Our complex hardware and software products may contain defect"
+    },
+    {
+      "recipe": "title_defect_spotter",
+      "status": "pass",
+      "elapsed_s": 16.6,
+      "output_size": 1715,
+      "stdout_head": "{\n  \"parcel\": \"demo\",\n  \"defects\": [\n    {\n      \"type\": \"chain_break\",\n      \"description\": \"2002 Grant Deed missing trustee acknowledgment; only signed by Robert Holloway as 'trustee,' but trust originally had two trustees.\",\n      \"sever"
+    },
+    {
+      "recipe": "vc_due_diligence_memo",
+      "status": "pass",
+      "elapsed_s": 105.6,
+      "output_size": 4615,
+      "stdout_head": "{\n  \"company\": \"FreshFinTech\",\n  \"round\": \"demo\",\n  \"recommendation\": \"diligence_deeper\",\n  \"tl_dr\": \"FreshFinTech is positioned in the EdTech sector, focusing on maritime and merchant navy training. The team comprises experienced founders;"
+    },
+    {
+      "recipe": "vendor_consolidation",
+      "status": "fail",
+      "cmd": "uv run python recipes/vendor_consolidation/recipe.py --category entertainment --save demo",
+      "exit_code": 2,
+      "elapsed_s": 0.9,
+      "stderr_tail": [
+        "usage: recipe.py [-h] --category CATEGORY [--save]",
+        "recipe.py: error: unrecognized arguments: demo"
+      ]
+    },
+    {
+      "recipe": "vendor_security_review",
+      "status": "fail",
+      "cmd": "uv run python recipes/vendor_security_review/recipe.py --vendor demo",
+      "exit_code": 1,
+      "elapsed_s": 32.3,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/tool_manager.py\", line 172, in _check_max_retries",
+        "    raise UnexpectedModelBehavior(f'Tool {name!r} exceeded max retries count of {max_retries}') from error",
+        "pydantic_ai.exceptions.UnexpectedModelBehavior: Tool 'cite' exceeded max retries count of 1"
+      ]
+    },
+    {
+      "recipe": "version_drift_review",
+      "status": "fail",
+      "cmd": "uv run python recipes/version_drift_review/recipe.py --doc-id demo --out demo",
+      "exit_code": 2,
+      "elapsed_s": 1.3,
+      "stderr_tail": [
+        "usage: recipe.py [-h] --doc-id DOC_ID [--out OUT]",
+        "recipe.py: error: argument --doc-id: invalid UUID value: 'demo'"
+      ]
+    },
+    {
+      "recipe": "well_log_summarizer",
+      "status": "pass",
+      "elapsed_s": 19.8,
+      "output_size": 2085,
+      "stdout_head": "{\n  \"well_id\": \"demo\",\n  \"operator\": \"Demo Operator\",\n  \"depth_summary\": \"The well demo currently has no reported HSE incidents. Equipment issues are also not highlighted in the recent reports.\",\n  \"events\": [\n    {\n      \"event_type\": \"hse"
+    }
+  ],
+  "summary": {
+    "pass": 77,
+    "fail": 22,
+    "skip": 5,
+    "timeout": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "min_password_length": 10,
+  "require_mfa_for_admins": true,
+  "require_mfa_for_all_users": false,
+  "session_idle_timeout_minutes": 30,
+  "max_failed_attempts": 5,
+  "lockout_minutes": 15,
+  "password_history_size": 5,
+  "rotation_days": 90,
+  "complexity": {"upper": true, "lower": true, "digit": true, "symbol": false},
+  "sso_provider": "Okta SAML",
+  "service_account_secrets_in_secrets_manager": true,
+  "audit_log_retention_days": 365
+}

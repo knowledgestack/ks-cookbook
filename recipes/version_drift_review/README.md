@@ -72,3 +72,21 @@ uv run python recipes/version_drift_review/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Known issue — pending fix
+
+Last verification run failed on 2026-04-28.
+
+```bash
+uv run python recipes/version_drift_review/recipe.py --doc-id 019dd1f7-65c9-74db-aa97-39e4447fbbd1 --out demo
+```
+
+**Failure:** see stderr below
+
+```text
+Reason: Unauthorized
+HTTP response headers: HTTPHeaderDict({'Date': 'Tue, 28 Apr 2026 18:59:47 GMT', 'Content-Type': 'application/json', 'Content-Length': '30', 'Connection': 'keep-alive', 'x-request-id': '019dd576-371a-7143-ad92-c617eec78f79', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains'})
+HTTP response body: {"detail":"Not authenticated"}
+```
+<!-- end ks-cookbook auto-generated section -->

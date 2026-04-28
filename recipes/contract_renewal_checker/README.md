@@ -72,3 +72,32 @@ uv run python recipes/contract_renewal_checker/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — contract_renewal_checker
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~22.2s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "contract": "Apple 2024 proxy",
+  "term_end": "2024-01-11",
+  "auto_renews": false,
+  "notice_window_days": 30,
+  "fee_escalator": "TBD",
+  "actions": [
+    {
+      "do_by": "2024-01-01",
+      "action": "Send non-renewal notice by the
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

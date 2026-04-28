@@ -50,7 +50,7 @@ def _mcp() -> MCPServerStdio:
 
 
 def build_turn_agent(*, corpus_folder_id: str, prospect_context: str, model: str) -> Agent:
-    prompt = TURN_SYSTEM.replace("__CORPUS_FOLDER_ID__", corpus_folder_id).replace(
+    prompt = TURN_SYSTEM.replace(
         "__PROSPECT_CONTEXT__", prospect_context
     )
     return Agent(model=f"openai:{model}", mcp_servers=[_mcp()], system_prompt=prompt)

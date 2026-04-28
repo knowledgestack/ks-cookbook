@@ -71,8 +71,8 @@ PROMPT = (
 async def run(period: str, cur_path: Path) -> None:
     data = cur_path.read_text()[:8000]
     mcp = MCPServerStdio(
-        command=os.environ.get("KS_MCP_COMMAND", "uvx"),
-        args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
+        command=os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp"),
+        args=(os.environ.get("KS_MCP_ARGS", "") or "").split(),
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),

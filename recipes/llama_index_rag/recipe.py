@@ -15,6 +15,7 @@ Output: stdout (one cited paragraph).
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 from pathlib import Path
@@ -32,8 +33,22 @@ async def run(question: str) -> None:
     # 1. Pull the corpus through the MCP tool surface — enforced-by-KS.
     docs: list[Document] = []
     async with ks_mcp_session() as session:
-        listing = await call_list(session, "list_contents", {"folder_id": POLICIES_FOLDER})
-        policies = [p for p in listing if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"]
+        # Search the whole tenant instead of folder enumeration.
+        raw = await call(session, "search_knowledge", {"query": question, "limit": 10})
+        try:
+            hits = json.loads(raw) if isinstance(raw, str) else raw
+        except json.JSONDecodeError:
+            hits = []
+        items = hits if isinstance(hits, list) else (hits.get("hits") or hits.get("results") or [])
+        policies = []
+        seen = set()
+        for h in items:
+            ppid = h.get("path_part_id") or h.get("chunk_id")
+            if not ppid or ppid in seen:
+                continue
+            seen.add(ppid)
+            name = (h.get("document_name") or "").split("/")[-1] or f"chunk-{str(ppid)[:8]}"
+            policies.append({"name": name, "path_part_id": ppid, "part_type": "DOCUMENT"})
         for policy in policies:
             text = await call(
                 session,
@@ -61,8 +76,9 @@ async def run(question: str) -> None:
     #    traceable all the way back to the KS chunk_id.
     query_engine = index.as_query_engine(similarity_top_k=3)
     resp = query_engine.query(question)
-    print(resp)
-    print("\n--- Source nodes ---")
+    sources = [{"name": n.metadata.get("name"), "score": float(n.score), "path_part_id": n.metadata.get("path_part_id")} for n in resp.source_nodes]
+    print(json.dumps({"answer": str(resp), "sources": sources}, indent=2))
+    return
     for node in resp.source_nodes:
         print(f"  policy={node.metadata.get('name')!r:22s} score={node.score:.3f}")
 

@@ -71,3 +71,27 @@ uv run python recipes/vc_due_diligence_memo/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — vc_due_diligence_memo
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~105.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "company": "FreshFinTech",
+  "round": "demo",
+  "recommendation": "diligence_deeper",
+  "tl_dr": "FreshFinTech is positioned in the EdTech sector, focusing on maritime and merchant navy training. The team comprises experienced founders;
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

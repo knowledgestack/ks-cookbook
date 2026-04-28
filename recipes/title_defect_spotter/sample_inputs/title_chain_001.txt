@@ -1,0 +1,59 @@
+TITLE CHAIN OF RECORD — Parcel APN 4321-008-014
+========================================================
+Address: 1428 Mockingbird Lane, Anytown, CA 90210
+Property Type: Single-family residential
+
+ABSTRACT OF TITLE — All Recorded Documents
+
+[1972] Patent Deed, Anytown Land Company → Robert and Mary Holloway
+       Recorded 1972-03-14, Book 1241, Page 322. Fee simple.
+
+[1985] Grant Deed, Robert and Mary Holloway → Holloway Family Trust
+       Recorded 1985-09-10, Document #19850910-432.
+
+[1992] Easement (Utility), Holloway Family Trust → SoCal Edison
+       Recorded 1992-04-01, Document #19920401-115. 10-foot strip along
+       eastern boundary for transmission lines. Recorded properly.
+
+[2002] Grant Deed, Holloway Family Trust → Henry and Susan Park
+       Recorded 2002-08-22, Document #20020822-7741. ★ ANOMALY: missing
+       trustee acknowledgment on the conveyance — only signed by Robert
+       Holloway as "trustee" but trust originally had two trustees.
+
+[2002] Deed of Trust (1st mortgage, Wells Fargo), Park family
+       Recorded 2002-08-22, Document #20020822-7742. $480,000 principal.
+
+[2007] Deed of Trust (2nd mortgage / HELOC, Bank of America), Park family
+       Recorded 2007-11-02, Document #20071102-9210. $120,000 line. ★
+       NOT released of record despite payoff statements suggesting it
+       was paid off in 2014.
+
+[2014] Mechanic's Lien, Pacific Roofing → Henry Park
+       Recorded 2014-06-18, Document #20140618-2105. $14,800. ★ Never
+       released. Lien still appears in record.
+
+[2018] Notice of Substitution of Trustee (Wells Fargo)
+       Recorded 2018-03-09, Document #20180309-3344.
+
+[2019] Reconveyance, Wells Fargo (1st mortgage from 2002)
+       Recorded 2019-04-12, Document #20190412-1180. PROPER.
+
+[2024] Grant Deed, Henry and Susan Park → Park Family Living Trust
+       Recorded 2024-02-08, Document #20240208-998.
+
+[2024] Notice of Default, Pacific Roofing → Park Family Living Trust
+       Recorded 2024-09-15, Document #20240915-7711. Re: 2014 mechanic's
+       lien with accrued interest. Total claimed: $24,200.
+
+CURRENT TAX STATUS
+2024 property taxes paid. 2025 first installment delinquent ($4,200
+including penalty).
+
+CURRENT VESTING
+Park Family Living Trust as recorded 2024-02-08.
+
+KNOWN OPEN ITEMS
+- 2007 BoA HELOC deed of trust not formally reconveyed.
+- 2014 mechanic's lien not released; default notice in 2024.
+- 2002 trustee-signature anomaly questioned.
+- 2025 property tax delinquent (first half).

@@ -72,3 +72,27 @@ uv run python recipes/iso27001_soa/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — iso27001_soa
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~34.0s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "control_id": "demo",
+  "control_title": "demo",
+  "applicable": true,
+  "justification": "The information related to the integrity verification and security control implementations aligns with the requirements of ISO 27001:2022 standar
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

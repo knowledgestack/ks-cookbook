@@ -72,3 +72,33 @@ uv run python recipes/data_subject_request_responder/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — data_subject_request_responder
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~15.1s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "request_type": "erasure",
+  "jurisdiction": "GDPR",
+  "response_deadline_days": 30,
+  "systems_to_query": [
+    "customer database",
+    "HR systems"
+  ],
+  "policy_refs": [
+    {
+      "chunk_id": "019dd20b-e699-793e-a607-c6f4f44301b8
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

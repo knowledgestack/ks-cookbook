@@ -1,0 +1,26 @@
+account_number,account_name,account_type
+1010,Cash - Operating Checking,Asset
+1020,Cash - Payroll Account,Asset
+1100,Accounts Receivable,Asset
+1200,Inventory - Finished Goods,Asset
+1500,Office Equipment,Asset
+1510,Accumulated Depreciation - Office Equipment,Asset
+2010,Accounts Payable,Liability
+2050,Accrued Wages Payable,Liability
+2100,Sales Tax Payable,Liability
+2200,Note Payable - Bank Line of Credit,Liability
+3010,Common Stock,Equity
+3100,Retained Earnings,Equity
+4010,Product Sales Revenue,Revenue
+4020,Service Revenue,Revenue
+4030,Shipping Revenue,Revenue
+5010,Cost of Goods Sold - Materials,Expense
+5020,Cost of Goods Sold - Labor,Expense
+6010,Salaries - Engineering,Expense
+6020,Salaries - Sales,Expense
+6030,Salaries - G&A,Expense
+6100,Rent Expense,Expense
+6200,Software Subscriptions,Expense
+6300,Travel & Entertainment,Expense
+6400,Professional Fees - Legal,Expense
+6410,Professional Fees - Accounting,Expense

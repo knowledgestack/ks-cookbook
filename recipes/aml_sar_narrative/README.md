@@ -72,3 +72,27 @@ uv run python recipes/aml_sar_narrative/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — aml_sar_narrative
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~21.1s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "case_id": "structuring-cash-deposits",
+  "who": "Subject's name and identifying details not provided in corpus.",
+  "what": "Suspicious activity related to cash deposits possibly structured to evade reporting requirements.",
+  "when":
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

@@ -72,3 +72,31 @@ uv run python recipes/onboarding_day_one_plan/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — onboarding_day_one_plan
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~24.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "role": "demo",
+  "day_one": [
+    {
+      "task": "Implement the developed policies using the selected components for onboarding.",
+      "owner": "IT"
+    },
+    {
+      "task": "Start the MR system by turning the key switch at the al
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

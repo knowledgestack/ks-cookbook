@@ -72,3 +72,29 @@ uv run python recipes/well_log_summarizer/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — well_log_summarizer
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~19.8s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "well_id": "demo",
+  "operator": "Demo Operator",
+  "depth_summary": "The well demo currently has no reported HSE incidents. Equipment issues are also not highlighted in the recent reports.",
+  "events": [
+    {
+      "event_type": "hse
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

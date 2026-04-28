@@ -72,3 +72,28 @@ uv run python recipes/invoice_reconciliation/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — invoice_reconciliation
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~30.8s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "invoice_line": "demo",
+  "po_number": "demo",
+  "contract_ref": "Apple 2024 proxy",
+  "matched": false,
+  "discrepancy": "Invoice line and PO do not match any found records. Contract details regarding Apple's proxy solicitation identif
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

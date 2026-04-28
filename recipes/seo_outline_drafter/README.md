@@ -72,3 +72,31 @@ uv run python recipes/seo_outline_drafter/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — seo_outline_drafter
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~38.0s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "keyword": "demo",
+  "search_intent": "informational",
+  "h1": "Understanding the Concept of Demo",
+  "h2s": [
+    "What is a Demo?",
+    "Different Types of Demos",
+    "How Demos are Used in Marketing",
+    "The Role of Demos in Produ
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

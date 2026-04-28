@@ -72,3 +72,32 @@ uv run python recipes/competitive_positioning/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — competitive_positioning
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~48.3s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "competitor": "demo",
+  "their_strengths": [
+    "User-friendly interface",
+    "Advanced segmentation options",
+    "Strong policy enforcement mechanisms",
+    "Comprehensive operational manuals"
+  ],
+  "their_weaknesses": [
+    "Weak
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

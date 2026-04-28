@@ -11,6 +11,7 @@ Output: file (soc2-evidence.md).
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 from pathlib import Path
@@ -71,7 +72,7 @@ async def run(control: str, out_path: Path) -> None:
                 )
                 lines.append(f"### {doc_name}\n\n{excerpt}\n")
     out_path.write_text("\n".join(lines))
-    print(f"Wrote {out_path} ({len(seen_chunks)} excerpts)")
+    print(json.dumps({"status": "ok", "wrote": str(out_path), "excerpts": len(seen_chunks)}, indent=2))
 
 
 def main() -> None:

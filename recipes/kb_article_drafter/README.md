@@ -72,3 +72,28 @@ uv run python recipes/kb_article_drafter/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — kb_article_drafter
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~28.3s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "title": "Q4 Board Update",
+  "overview": "This article summarizes key points from the Q4 board update, including current leadership nominations and communication protocols.",
+  "prerequisites": [],
+  "steps": [
+    "Review the updates
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

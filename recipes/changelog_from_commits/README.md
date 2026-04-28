@@ -72,3 +72,30 @@ uv run python recipes/changelog_from_commits/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — changelog_from_commits
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~16.2s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "version": "v2.4.0",
+  "date": "2026-04-27",
+  "entries": [
+    {
+      "category": "Added",
+      "summary": "Introduced a new /v2/ingest endpoint with support for batch uploads.",
+      "why_user_cares": "Users can now upload multiple
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

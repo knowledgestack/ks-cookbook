@@ -72,3 +72,30 @@ uv run python recipes/runway_scenario/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — runway_scenario
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~191.7s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "scenario": "baseline",
+  "starting_cash": "not in corpus \u2014 upload data to proceed",
+  "monthly_burn": "not in corpus \u2014 upload data to proceed",
+  "runway_months": 0,
+  "assumptions": [
+    {
+      "driver": "financial project
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

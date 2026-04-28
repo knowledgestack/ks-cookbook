@@ -40,7 +40,7 @@ class VendorReview(BaseModel):
     rationale: str = Field(..., max_length=400)
 
 
-PROMPT = """You're a security analyst drafting a first-pass vendor-risk memo. Knowledge Stack is your search backend; ask it natural-language questions about the company's vendor-management, breach-response, and data-protection policies.
+PROMPT = """Available MCP tools (use ONLY these): search_knowledge, search_keyword, read, find, list_contents, get_info. There is NO 'cite' tool. You're a security analyst drafting a first-pass vendor-risk memo. Knowledge Stack is your search backend; ask it natural-language questions about the company's vendor-management, breach-response, and data-protection policies.
 
 KS workflow:
 1. Ask Knowledge Stack questions like 'What does our vendor management policy require for sub-processors?' or 'What is our breach notification timeline?'. Never use folder UUIDs or path_part_id filters.
@@ -53,8 +53,8 @@ Output format (STRICT): Your final response is a single JSON object that matches
 
 async def run(vendor: str, category: str) -> None:
     mcp = MCPServerStdio(
-        command=os.environ.get("KS_MCP_COMMAND", "uvx"),
-        args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
+        command=os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp"),
+        args=(os.environ.get("KS_MCP_ARGS", "") or "").split(),
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),

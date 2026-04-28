@@ -1,0 +1,35 @@
+DISCHARGE SUMMARY (DRAFT — to be rewritten in plain language)
+==============================================================
+Patient: [**Patient**], 64M
+Admission date: 2026-04-20
+Discharge date: 2026-04-25
+
+PRINCIPAL DIAGNOSIS
+Acute non-ST elevation myocardial infarction (NSTEMI), I21.4
+
+SECONDARY DIAGNOSES
+- Type 2 diabetes mellitus with diabetic peripheral neuropathy (E11.42)
+- Essential hypertension (I10)
+- Hyperlipidemia (E78.5)
+- Former tobacco use, 30 pack-years, quit 6 months ago
+
+HOSPITAL COURSE
+Pt presented to ED w/ substernal chest pressure rated 8/10, diaphoretic, nauseous.
+Initial trop I 0.42 -> 1.18 ng/mL at 3h. ECG c/w 1.5mm ST depression V4-V6, no Q
+waves. Loaded ASA 325 + clopidogrel 600, started heparin gtt, atorvastatin 80.
+Cards consulted; LHC POD#1 showed 80% mid-LAD lesion, successfully PCI'd w/ DES.
+Post-cath course unremarkable. Echo EF 50%, mild anterior wall hypokinesis.
+
+DISCHARGE MEDICATIONS
+- Aspirin 81 mg daily
+- Clopidogrel 75 mg daily x 12 months
+- Atorvastatin 80 mg daily
+- Metoprolol succinate 50 mg daily
+- Lisinopril 20 mg daily
+- Insulin glargine 24 units qHS
+- Insulin lispro per sliding scale
+
+FOLLOW UP
+- Cardiology: 1 week
+- PCP: 2 weeks
+- Cardiac rehab: schedule on discharge

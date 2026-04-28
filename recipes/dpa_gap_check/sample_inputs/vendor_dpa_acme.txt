@@ -1,0 +1,60 @@
+DATA PROCESSING ADDENDUM
+========================
+Effective Date: 2026-04-15
+Controller: Customer (signing the Master Subscription Agreement)
+Processor: Acme Cloud Services Inc., 100 Market St., San Francisco, CA
+
+1. SCOPE AND ROLES
+1.1 This DPA applies whenever Acme Processes Personal Data on behalf of
+Customer in connection with the Services. Customer is the Controller;
+Acme is the Processor. Where Customer is itself a Processor, Acme acts
+as a sub-processor.
+
+2. PROCESSING INSTRUCTIONS
+2.1 Acme will Process Personal Data only on documented instructions from
+Customer, including with regard to international transfers, unless
+required by Union or Member State law.
+
+3. SUB-PROCESSORS
+3.1 Customer authorizes Acme to engage the sub-processors listed at
+acme.com/subprocessors. Acme will provide notice of any new sub-processor
+at least 30 days prior to authorizing the new sub-processor.
+3.2 Customer may object to a new sub-processor on reasonable grounds. If
+the parties cannot resolve the objection within 30 days, Customer may
+terminate the affected Services with a pro-rata refund.
+
+4. SECURITY MEASURES
+4.1 Acme will implement and maintain appropriate technical and
+organizational measures to protect Personal Data, including:
+    (a) Encryption in transit (TLS 1.2+) and at rest (AES-256).
+    (b) Access controls based on least privilege; multi-factor
+        authentication for administrative access.
+    (c) Annual penetration testing and quarterly vulnerability scans.
+    (d) Personnel training on data protection at hire and annually.
+
+5. PERSONAL DATA BREACH NOTIFICATION
+5.1 Acme will notify Customer without undue delay, and in no event later
+than 48 hours after becoming aware of a Personal Data Breach affecting
+Customer Personal Data.
+
+6. DATA SUBJECT REQUESTS
+6.1 Acme will, taking into account the nature of the Processing, assist
+Customer by appropriate technical and organisational measures, insofar
+as this is possible, for the fulfilment of Customer's obligation to
+respond to requests for exercising the Data Subject's rights laid down
+in Chapter III of the GDPR.
+
+7. RETURN OR DELETION
+7.1 At termination of the Services, Acme will, at Customer's choice,
+return or delete all Personal Data unless retention is required by law.
+Deletion is final after 30 days from termination.
+
+8. INTERNATIONAL TRANSFERS
+8.1 The parties incorporate the Standard Contractual Clauses (Module 2,
+Controller-to-Processor) for transfers from the EEA, UK, or Switzerland
+to third countries.
+
+9. AUDITS
+9.1 Customer may audit Acme's compliance with this DPA at most once per
+year on 30 days' written notice. Acme may satisfy this obligation by
+providing its most recent SOC 2 Type II report.

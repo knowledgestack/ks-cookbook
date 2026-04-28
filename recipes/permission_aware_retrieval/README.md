@@ -72,3 +72,19 @@ uv run python recipes/permission_aware_retrieval/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Known issue — pending fix
+
+Last verification run failed on 2026-04-28.
+
+```bash
+uv run python recipes/permission_aware_retrieval/recipe.py
+```
+
+**Failure:** see stderr below
+
+```text
+Set ALICE_KS_API_KEY and BOB_KS_API_KEY. Run `seed/seed_cookbook_users.py` in the ks-backend repo to mint them.
+```
+<!-- end ks-cookbook auto-generated section -->

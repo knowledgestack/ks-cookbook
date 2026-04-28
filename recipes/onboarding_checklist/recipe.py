@@ -53,10 +53,27 @@ SYSTEM = (
 
 async def run(role: str) -> None:
     async with ks_mcp_session() as session:
-        listing = await call_list(session, "list_contents", {"folder_id": POLICIES_FOLDER})
-        policies = [p for p in listing if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"]
+        # No folder_id — search the whole tenant for relevant policy docs.
+        hits_json = await call(
+            session,
+            "search_knowledge",
+            {"query": f"onboarding checklist {role} policies", "limit": 6},
+        )
+        try:
+            hits = json.loads(hits_json) if isinstance(hits_json, str) else hits_json
+        except json.JSONDecodeError:
+            hits = []
+        results = hits if isinstance(hits, list) else (hits.get("hits") or hits.get("results") or [])
+        policies = [
+            {
+                "name": (p.get("document_name") or "").split("/")[-1] or f"chunk-{p.get('chunk_id', '')[:8]}",
+                "path_part_id": p.get("path_part_id") or p.get("chunk_id"),
+            }
+            for p in results
+            if (p.get("path_part_id") or p.get("chunk_id"))
+        ]
         if not policies:
-            sys.exit("No policies found in the configured folder.")
+            sys.exit("No policies found in the tenant.")
 
         client = AsyncOpenAI()
         model = os.environ.get("MODEL", "gpt-4o")
@@ -92,7 +109,7 @@ async def run(role: str) -> None:
                 {"role": "user", "content": f"Role: {role}\n\nPolicies:\n{chr(10).join(sections)}"},
             ],
         )
-        print(out.choices[0].message.content)
+        print(json.dumps({"checklist_markdown": out.choices[0].message.content}, indent=2))
 
 
 def main() -> None:

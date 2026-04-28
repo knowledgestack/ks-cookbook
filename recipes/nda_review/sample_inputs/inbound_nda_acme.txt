@@ -1,0 +1,69 @@
+MUTUAL NON-DISCLOSURE AGREEMENT
+================================
+This Agreement is entered into as of [DATE] by and between Acme Vendor LLC,
+a Delaware limited liability company ("Acme"), and the counterparty
+identified below ("Recipient").
+
+1. CONFIDENTIAL INFORMATION
+"Confidential Information" means any non-public information disclosed by one
+party to the other, whether orally, in writing, or by inspection of tangible
+objects, that is designated as confidential or that reasonably should be
+understood to be confidential given its nature and the circumstances of
+disclosure.
+
+2. EXCLUSIONS
+Confidential Information does not include information that: (a) is or
+becomes publicly known through no fault of the Recipient; (b) was rightfully
+known by the Recipient before receipt; (c) is independently developed
+without use of the Confidential Information; or (d) is disclosed with
+written permission of the disclosing party.
+
+3. OBLIGATIONS
+Recipient agrees to: (a) hold Confidential Information in strict confidence;
+(b) use the same degree of care as it uses with its own confidential
+information, but not less than reasonable care; (c) use Confidential
+Information solely to evaluate a potential business relationship between
+the parties; and (d) not disclose Confidential Information to any third
+party without the disclosing party's prior written consent.
+
+4. TERM
+This Agreement shall remain in effect for five (5) years from the Effective
+Date. Confidential Information shall remain confidential perpetually as
+long as it qualifies as a trade secret under applicable law.
+
+5. INJUNCTIVE RELIEF
+Recipient acknowledges that any breach of this Agreement may cause
+irreparable harm to the disclosing party, entitling the disclosing party
+to seek injunctive relief in addition to any other remedies available at
+law or in equity.
+
+6. ASSIGNMENT
+This Agreement may not be assigned by either party without the prior
+written consent of the other party, except that either party may assign
+this Agreement to a successor in connection with a merger, acquisition,
+or sale of all or substantially all of its assets.
+
+7. GOVERNING LAW; JURISDICTION
+This Agreement shall be governed by the laws of the State of California,
+without regard to conflicts of law principles. Any dispute shall be
+resolved in the state or federal courts located in San Francisco County,
+California.
+
+8. NO LICENSE
+Nothing in this Agreement grants to Recipient any rights or license to
+the disclosing party's intellectual property, except as expressly set
+forth herein.
+
+9. NO WAIVER
+Failure to enforce any right under this Agreement shall not be deemed a
+waiver of that right.
+
+10. ENTIRE AGREEMENT
+This Agreement constitutes the entire understanding between the parties
+regarding the subject matter and supersedes all prior agreements.
+
+ACME VENDOR LLC                       COUNTERPARTY
+By: _____________________             By: _____________________
+Name: ___________________             Name: ___________________
+Title: __________________             Title: __________________
+Date: ___________________             Date: ___________________

@@ -72,3 +72,27 @@ uv run python recipes/rfp_question_router/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — rfp_question_router
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~25.6s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "question": "What ERISA disclosures must an employer provide to participants in the SPD?",
+  "owner_team": "Legal",
+  "confidence": "high",
+  "draft_answer": "Employers must provide the following ERISA disclosures in the Summary Plan De
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

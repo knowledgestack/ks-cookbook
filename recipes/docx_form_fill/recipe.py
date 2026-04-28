@@ -38,7 +38,7 @@ class FieldAnswer(BaseModel):
     citations: list[Citation] = Field(..., min_length=1, max_length=4)
 
 
-PROMPT = """You answer a single form field from corporate policy. Use MCP tools to ground
+PROMPT = """Available MCP tools (use ONLY these): search_knowledge, search_keyword, read, find, list_contents, get_info. There is NO 'cite' tool, NO 'citation' tool, NO 'add_citation' tool. Build the citations field of your final response directly from the search_knowledge / read results — DO NOT try to call any tool to construct citations. You answer a single form field from corporate policy. Use MCP tools to ground
 KS workflow (do NOT skip):
 1. Ask Knowledge Stack specific natural-language questions about the input. Never use folder UUIDs or path_part_id filters in your queries.
 2. search_knowledge returns hits. EACH hit is a JSON object with TWO distinct UUIDs: chunk_id (for citation only) and path_part_id (the chunk's path-tree node, used for read). The text field on the hit is empty.
@@ -70,8 +70,8 @@ def _replace(doc: DocxDocument, name: str, value: str) -> None:
 
 async def run(template: Path, question_hint: str) -> None:
     mcp = MCPServerStdio(
-        command=os.environ.get("KS_MCP_COMMAND", "uvx"),
-        args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
+        command=os.environ.get("KS_MCP_COMMAND", ".venv/bin/ks-mcp"),
+        args=(os.environ.get("KS_MCP_ARGS", "") or "").split(),
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
@@ -101,7 +101,7 @@ async def run(template: Path, question_hint: str) -> None:
     out_json = template.with_suffix(".citations.json")
     doc.save(out_docx)
     out_json.write_text(json.dumps(evidence, indent=2))
-    print(f"Filled: {out_docx}\nCitations: {out_json}")
+    print(json.dumps({"filled_docx": str(out_docx), "citations_json": str(out_json), "fields_filled": len(evidence)}, indent=2))
 
 
 def main() -> None:

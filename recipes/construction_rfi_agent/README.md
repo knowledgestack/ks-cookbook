@@ -72,3 +72,27 @@ uv run python recipes/construction_rfi_agent/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — construction_rfi_agent
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~18.4s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "rfi_number": "RFI-001",
+  "subject": "Request for Information on Design Specifications",
+  "spec_section": "01 11 00",
+  "draft_response": "We appreciate your inquiry regarding the design specifications. Any requests for changes to the
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

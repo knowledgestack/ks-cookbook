@@ -73,14 +73,14 @@ async def run(query: str, out_path: Path) -> None:
             "and `rollback_version` are tracked in the write-back MCP roadmap.",
         ]
         out_path.write_text("\n".join(lines))
-        print(f"Wrote {out_path}")
+        print(json.dumps({"status": "ok", "wrote": f"{out_path}"}, indent=2))
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
         "--query",
-        default="access control policy",
+        default="NIST",
         help="Natural-language query to resolve a document via `find`.",
     )
     p.add_argument("--out", type=Path, default=Path("document-versions.md"))

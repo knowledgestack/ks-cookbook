@@ -72,3 +72,31 @@ uv run python recipes/nine_box_synthesizer/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — nine_box_synthesizer
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~12.3s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "team": "platform",
+  "placements": [
+    {
+      "employee": "demo",
+      "performance": "meets",
+      "potential": "growing",
+      "placement_label": "Employee Development",
+      "evidence": "The Performance Efficiency pillar incl
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

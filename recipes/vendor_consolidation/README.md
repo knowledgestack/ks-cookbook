@@ -236,3 +236,29 @@ uv run python recipes/vendor_consolidation/recipe.py --help
 - Prompt too generic for domain-specific constraints
 - Inconsistent output shape for downstream systems
 - Environment drift across local/CI (`KS_API_KEY`, `OPENAI_API_KEY`, `MODEL`)
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — vendor_consolidation
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~52.9s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "category": "entertainment",
+  "vendors": [
+    {
+      "vendor": "Nvidia",
+      "action": "keep",
+      "rationale": "Strategically relevant vendor with effective solutions for managing risks related to foreign currency contracts and
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->

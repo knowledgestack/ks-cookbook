@@ -465,3 +465,26 @@ clean: ## Remove generated artifacts
 	@rm -f flagships/*/sample_output.docx
 	@rm -f flagships/*/sample_output.xlsx
 	@rm -f flagships/*/sample_output.csv
+
+# ---------------------------------------------------------------------------
+# Verification helpers (added 2026-04-28 — see docs/CLONE_AND_RUN.md)
+# ---------------------------------------------------------------------------
+
+.PHONY: verify-clone seed-unified-corpus verify-clone-retry
+
+seed-unified-corpus: check-env ## Ingest the unified cookbook corpus. Set PARENT_FOLDER_ID.
+	@test -n "$(PARENT_FOLDER_ID)" || (echo 'Usage: make seed-unified-corpus PARENT_FOLDER_ID=<uuid>'; exit 1)
+	@uv run python scripts/seed_unified_corpus.py --parent-folder-id $(PARENT_FOLDER_ID)
+
+verify-clone: check-env ## End-to-end verify N recipes (default 5). Set N=all to sweep all 105.
+	@N=$${N:-5}; \
+	if [ "$$N" = "all" ]; then \
+	  uv run python scripts/bulk_verify_recipes.py --timeout 240 --out e2e_recipes_full_sweep.json; \
+	else \
+	  uv run python scripts/bulk_verify_recipes.py --limit $$N --timeout 240 --out e2e_recipes_smoke.json; \
+	fi
+
+verify-clone-retry: ## Re-run only the failed recipes from the last verify-clone sweep.
+	@FAILS=$$(jq -r '.results[] | select(.status!="pass") | .recipe' e2e_recipes_full_sweep.json 2>/dev/null | paste -sd, -); \
+	if [ -z "$$FAILS" ]; then echo "No failures to retry."; exit 0; fi; \
+	uv run python scripts/bulk_verify_recipes.py --only "$$FAILS" --timeout 240 --out e2e_recipes_retry.json

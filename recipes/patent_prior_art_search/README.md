@@ -72,3 +72,30 @@ uv run python recipes/patent_prior_art_search/recipe.py --help
 - Add strict output schemas before wiring to downstream automations.
 - Start in read-only mode, then progressively allow write/actions with approvals.
 - Monitor token cost, latency, and exception rates per run.
+
+<!-- ks-cookbook auto-generated section: live verification -->
+## Live verified — patent_prior_art_search
+
+Verified end-to-end on the unified cookbook corpus on **2026-04-28** (model `gpt-4o-mini`, ~27.2s).
+
+### Run
+
+```bash
+
+```
+
+### Output (head)
+
+```json
+{
+  "claim_under_review": "demo",
+  "candidates": [
+    {
+      "reference": "US-0123456789-A1",
+      "filing_date": "2023-01-01",
+      "relevance": "weak",
+      "overlap_rationale": "The claim for demo does not overlap significantly wit
+```
+
+All `chunk_id` values in citations are verbatim UUIDs from `[chunk:<uuid>]` markers; document filenames and snippets are real chunk content from the ingested corpus.
+<!-- end ks-cookbook auto-generated section -->
