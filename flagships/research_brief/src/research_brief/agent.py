@@ -1,6 +1,5 @@
 """pydantic-ai agent wired to the KS MCP server."""
 
-
 import os
 from pathlib import Path
 
@@ -69,4 +68,4 @@ async def research_topic(topic: str, *, model: str = "openai:gpt-4o") -> BriefOu
     agent = build_agent(model=model)
     async with agent.run_mcp_servers():
         result = await agent.run(topic)
-    return result.data
+    return result.output

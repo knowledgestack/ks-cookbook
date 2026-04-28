@@ -1,6 +1,5 @@
 """KYC onboarding review CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -40,10 +39,7 @@ def _render_markdown(review: KYCReview) -> str:
         lines.append("**Policy basis:**")
         for c in item.citations:
             q = (c.quote or "").replace("\n", " ").strip()[:300]
-            lines.append(
-                f"- *{c.document_name}* (chunk:{c.chunk_id}): "
-                f"\u201c{q}\u201d"
-            )
+            lines.append(f"- *{c.document_name}* (chunk:{c.chunk_id}): \u201c{q}\u201d")
         lines.append("")
 
     lines.append("## Risk Factors")
@@ -64,8 +60,7 @@ def _render_markdown(review: KYCReview) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Review a KYC onboarding application against bank CDD "
-        "policy with citations.",
+        description="Review a KYC onboarding application against bank CDD policy with citations.",
     )
     parser.add_argument(
         "--corpus-folder",
@@ -87,10 +82,12 @@ def main() -> None:
 
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
-    review = asyncio.run(review_kyc(
-        corpus_folder_id=args.corpus_folder or None,
-        model=args.model,
-    ))
+    review = asyncio.run(
+        review_kyc(
+            corpus_folder_id=args.corpus_folder or None,
+            model=args.model,
+        )
+    )
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(_render_markdown(review), encoding="utf-8")

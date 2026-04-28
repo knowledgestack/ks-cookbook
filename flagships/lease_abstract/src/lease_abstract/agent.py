@@ -1,6 +1,5 @@
 """Raw OpenAI function-calling agent grounded in the KS HTTP API."""
 
-
 import json
 import os
 from typing import Any
@@ -58,11 +57,13 @@ def _do_list_contents(api: ksapi.ApiClient, folder_id: str) -> str:
     for raw in getattr(resp, "items", None) or []:
         inner = getattr(raw, "actual_instance", None) or raw
         pp_id = getattr(inner, "path_part_id", None) or getattr(inner, "id", None)
-        rows.append({
-            "path_part_id": str(pp_id) if pp_id else None,
-            "name": getattr(inner, "name", ""),
-            "part_type": str(getattr(inner, "part_type", "UNKNOWN")),
-        })
+        rows.append(
+            {
+                "path_part_id": str(pp_id) if pp_id else None,
+                "name": getattr(inner, "name", ""),
+                "part_type": str(getattr(inner, "part_type", "UNKNOWN")),
+            }
+        )
     return json.dumps(rows)
 
 
@@ -83,7 +84,9 @@ def _do_read(api: ksapi.ApiClient, path_part_id: str, max_chars: int) -> str:
     offset = 0
     while True:
         contents: Any = DocumentVersionsApi(api).get_document_version_contents(
-            version_id=version_id, limit=100, offset=offset,
+            version_id=version_id,
+            limit=100,
+            offset=offset,
         )
         items = getattr(contents, "items", None) or []
         if not items:
@@ -113,7 +116,10 @@ def _dispatch(api: ksapi.ApiClient, name: str, args: dict[str, Any]) -> str:
 
 
 def draft_abstract(
-    *, corpus_folder_id: str, target_lease: str, model: str = "gpt-4o",
+    *,
+    corpus_folder_id: str,
+    target_lease: str,
+    model: str = "gpt-4o",
     max_steps: int = 12,
 ) -> str:
     api = _build_client()
@@ -125,27 +131,40 @@ def draft_abstract(
     )
     messages: list[dict[str, Any]] = [
         {"role": "system", "content": prompt},
-        {"role": "user", "content": f"Produce the lease abstract for '{target_lease}'."},
+        {
+            "role": "user",
+            "content": f"Produce the lease abstract for '{target_lease}'.",
+        },
     ]
     for _ in range(max_steps):
         resp = openai.chat.completions.create(
-            model=model, messages=messages, tools=TOOLS, tool_choice="auto",
+            model=model,
+            messages=messages,
+            tools=TOOLS,
+            tool_choice="auto",
         )
         msg = resp.choices[0].message
         if not msg.tool_calls:
             return (msg.content or "").strip()
-        messages.append({
-            "role": "assistant", "content": msg.content or "",
-            "tool_calls": [t.model_dump() for t in msg.tool_calls],
-        })
+        messages.append(
+            {
+                "role": "assistant",
+                "content": msg.content or "",
+                "tool_calls": [t.model_dump() for t in msg.tool_calls],
+            }
+        )
         for call in msg.tool_calls:
             try:
                 args = json.loads(call.function.arguments or "{}")
                 output = _dispatch(api, call.function.name, args)
             except Exception as exc:  # noqa: BLE001
                 output = json.dumps({"error": f"{type(exc).__name__}: {exc}"})
-            messages.append({
-                "role": "tool", "tool_call_id": call.id,
-                "name": call.function.name, "content": output,
-            })
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call_id": call.id,
+                    "name": call.function.name,
+                    "content": output,
+                }
+            )
     return "ERROR: agent exceeded max_steps without producing a final abstract."

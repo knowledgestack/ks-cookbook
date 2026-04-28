@@ -1,6 +1,5 @@
 """Structured output and prompt template for the audit workpaper drafter."""
 
-
 WORKPAPER_TEMPLATE = """\
 # Audit Workpaper — {account_name}
 

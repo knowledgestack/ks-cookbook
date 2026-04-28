@@ -9,9 +9,13 @@ members = [
     "ks-cookbook-api-doc",
     "ks-cookbook-audit-workpaper",
     "ks-cookbook-battlecard",
+    "ks-cookbook-chiro-autopilot",
     "ks-cookbook-claim-memo",
+    "ks-cookbook-claims-rebuttal",
     "ks-cookbook-compliance-questionnaire",
+    "ks-cookbook-condo-board",
     "ks-cookbook-contract-obligations",
+    "ks-cookbook-contract-redline",
     "ks-cookbook-covenant-monitor",
     "ks-cookbook-credit-memo",
     "ks-cookbook-csv-enrichment",
@@ -19,9 +23,12 @@ members = [
     "ks-cookbook-foia-response",
     "ks-cookbook-grant-compliance",
     "ks-cookbook-handbook-qa",
+    "ks-cookbook-hcc-coder",
+    "ks-cookbook-invoice-followup",
     "ks-cookbook-jd-generator",
     "ks-cookbook-kyc-review",
     "ks-cookbook-lease-abstract",
+    "ks-cookbook-legal-intake",
     "ks-cookbook-msa-redline",
     "ks-cookbook-nerc-evidence",
     "ks-cookbook-pia",
@@ -1549,6 +1556,25 @@ requires-dist = [
 ]
 
 [[package]]
+name = "ks-cookbook-chiro-autopilot"
+version = "0.1.0"
+source = { editable = "flagships/chiro_visit_autopilot" }
+dependencies = [
+    { name = "openpyxl" },
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+    { name = "python-docx" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openpyxl", specifier = ">=3.1" },
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+    { name = "python-docx", specifier = ">=1.1" },
+]
+
+[[package]]
 name = "ks-cookbook-claim-memo"
 version = "0.1.0"
 source = { editable = "flagships/claim_adjudication_memo" }
@@ -1567,6 +1593,23 @@ requires-dist = [
     { name = "langchain-openai", specifier = ">=0.2" },
     { name = "langgraph", specifier = ">=0.2.50" },
     { name = "pydantic", specifier = ">=2.6" },
+]
+
+[[package]]
+name = "ks-cookbook-claims-rebuttal"
+version = "0.1.0"
+source = { editable = "flagships/claims_denial_rebuttal_drafter" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+    { name = "python-docx" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+    { name = "python-docx", specifier = ">=1.1" },
 ]
 
 [[package]]
@@ -1595,6 +1638,23 @@ requires-dist = [
 ]
 
 [[package]]
+name = "ks-cookbook-condo-board"
+version = "0.1.0"
+source = { editable = "flagships/condo_board_decision_pack" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+    { name = "python-docx" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+    { name = "python-docx", specifier = ">=1.1" },
+]
+
+[[package]]
 name = "ks-cookbook-contract-obligations"
 version = "0.1.0"
 source = { editable = "flagships/contract_obligation_extractor" }
@@ -1609,6 +1669,23 @@ requires-dist = [
     { name = "mcp", specifier = ">=1.0" },
     { name = "openai", specifier = ">=1.50" },
     { name = "pydantic", specifier = ">=2.6" },
+]
+
+[[package]]
+name = "ks-cookbook-contract-redline"
+version = "0.1.0"
+source = { editable = "flagships/contract_redline_with_provenance" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+    { name = "python-docx" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+    { name = "python-docx", specifier = ">=1.1" },
 ]
 
 [[package]]
@@ -1740,6 +1817,38 @@ requires-dist = [
 ]
 
 [[package]]
+name = "ks-cookbook-hcc-coder"
+version = "0.1.0"
+source = { editable = "flagships/audit_defensible_hcc_coder" }
+dependencies = [
+    { name = "openpyxl" },
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openpyxl", specifier = ">=3.1" },
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+]
+
+[[package]]
+name = "ks-cookbook-invoice-followup"
+version = "0.1.0"
+source = { editable = "flagships/smb_invoice_followup_agent" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+]
+
+[[package]]
 name = "ks-cookbook-jd-generator"
 version = "0.1.0"
 source = { editable = "flagships/job_description_generator" }
@@ -1784,6 +1893,23 @@ requires-dist = [
     { name = "ksapi", specifier = ">=0.1.0" },
     { name = "openai", specifier = ">=1.40" },
     { name = "pydantic", specifier = ">=2.6" },
+]
+
+[[package]]
+name = "ks-cookbook-legal-intake"
+version = "0.1.0"
+source = { editable = "flagships/legal_matter_intake" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-ai" },
+    { name = "python-docx" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "pydantic-ai", extras = ["mcp"], specifier = ">=0.0.14" },
+    { name = "python-docx", specifier = ">=1.1" },
 ]
 
 [[package]]

@@ -1,6 +1,5 @@
 """pydantic-ai agent wired to the KS MCP server to produce an ASC 606 memo."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -45,7 +44,8 @@ RULES:
 
 
 def build_agent(
-    *, model: str = "openai:gpt-4o",
+    *,
+    model: str = "openai:gpt-4o",
 ) -> Agent[None, RevRecMemo]:
     command = os.environ.get("KS_MCP_COMMAND", "uvx")
     args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
@@ -67,8 +67,12 @@ def build_agent(
 
 
 async def draft_memo(
-    *, customer: str, product: str, contract_summary: str,
-    corpus_folder_id: str, model: str,
+    *,
+    customer: str,
+    product: str,
+    contract_summary: str,
+    corpus_folder_id: str,
+    model: str,
 ) -> RevRecMemo:
     agent = build_agent(model=model)
     user_prompt = (

@@ -1,6 +1,5 @@
 """LangGraph ReAct agent wired to KS MCP for audit workpaper drafting."""
 
-
 import os
 from typing import Any
 
@@ -54,17 +53,19 @@ async def _build_tools() -> list[Any]:
     command = os.environ.get("KS_MCP_COMMAND", "uvx")
     args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
     args = args_raw.split() if args_raw else []
-    client = MultiServerMCPClient({
-        "knowledgestack": {
-            "command": command,
-            "args": args,
-            "transport": "stdio",
-            "env": {
-                "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-                "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
-            },
+    client = MultiServerMCPClient(
+        {
+            "knowledgestack": {
+                "command": command,
+                "args": args,
+                "transport": "stdio",
+                "env": {
+                    "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+                    "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+                },
+            }
         }
-    })
+    )
     return await client.get_tools()
 
 

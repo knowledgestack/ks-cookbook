@@ -1,25 +1,48 @@
+<div align="center">
+
 # Knowledge Stack Cookbook
 
-> **Focus on agents. We handle document intelligence.**
->
-> A developer acceleration layer for enterprise RAG + agent pipelines.
+### **Focus on agents. We handle document intelligence.**
 
-Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, and citation tracking — exposed through a stable **MCP** surface that plugs into [LangChain](https://www.langchain.com/), [LangGraph](https://langchain-ai.github.io/langgraph/), [CrewAI](https://www.crewai.com/), [Temporal](https://temporal.io/), [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), [pydantic-ai](https://ai.pydantic.dev/), [Claude Desktop](https://claude.ai/download), [Cursor](https://cursor.com/), and anything else that speaks [Model Context Protocol](https://modelcontextprotocol.io/).
+**32 production-style flagship agents + 100+ recipes for enterprise RAG — built on [MCP](https://modelcontextprotocol.io/), works with every major agent framework.**
 
-This repo is **32 production-style flagship agents + lightweight recipes** showing how to build enterprise RAG pipelines in minutes instead of weeks. Verticals covered: banking, finance, legal, accounting, tax, healthcare, insurance, real estate, sales, HR, engineering, government, pharma, energy.
+[![GitHub Repo stars](https://img.shields.io/github/stars/knowledgestack/ks-cookbook?style=for-the-badge&logo=github&color=yellow)](https://github.com/knowledgestack/ks-cookbook/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/knowledgestack/ks-cookbook?style=for-the-badge&logo=github&color=blue)](https://github.com/knowledgestack/ks-cookbook/network/members)
+[![Discord](https://img.shields.io/badge/Discord-join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/McHmxUeS)
+
+### ⭐ If this repo helps you ship, please [star it on GitHub](https://github.com/knowledgestack/ks-cookbook) — it's the single biggest signal for what we build next.
+
+<a href="https://github.com/knowledgestack/ks-cookbook">
+  <img src="https://img.shields.io/github/stars/knowledgestack/ks-cookbook?style=social" alt="Star on GitHub" />
+</a>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![Flagships](https://img.shields.io/badge/flagships-32-green)](https://github.com/knowledgestack/ks-cookbook/tree/main/flagships)
+[![Recipes](https://img.shields.io/badge/recipes-100%2B-green)](https://github.com/knowledgestack/ks-cookbook/tree/main/recipes)
 [![MCP compatible](https://img.shields.io/badge/MCP-compatible-purple)](https://modelcontextprotocol.io/)
-[![Discord](https://img.shields.io/badge/Discord-join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/McHmxUeS)
 [![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-181717?logo=github)](https://github.com/knowledgestack/ks-cookbook/discussions)
 [![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](https://www.langchain.com/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](https://langchain-ai.github.io/langgraph/)
 [![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](https://www.crewai.com/)
 [![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](https://temporal.io/)
 
-⭐ **[Star this repo](https://github.com/knowledgestack/ks-cookbook)** if you're building enterprise AI — it signals which flagships and frameworks to expand next.
+[**Quickstart**](#quickstart) · [**Flagships**](#flagships-by-vertical) · [**Discord**](https://discord.gg/McHmxUeS) · [**Docs**](docs/wiki/README.md) · [**Star History**](#-star-history)
+
+</div>
+
+---
+
+Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, and citation tracking — exposed through a stable **MCP** surface that plugs into [LangChain](https://www.langchain.com/), [LangGraph](https://langchain-ai.github.io/langgraph/), [CrewAI](https://www.crewai.com/), [Temporal](https://temporal.io/), [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), [pydantic-ai](https://ai.pydantic.dev/), [Claude Desktop](https://claude.ai/download), [Cursor](https://cursor.com/), and anything else that speaks [Model Context Protocol](https://modelcontextprotocol.io/).
+
+This repo shows how to build **enterprise RAG pipelines in minutes instead of weeks** — across banking, finance, legal, accounting, tax, healthcare, insurance, real estate, sales, HR, engineering, government, pharma, and energy.
+
+> ### ⭐ Why star this repo?
+> - **Stars decide our roadmap.** They tell us which verticals and frameworks to deepen next.
+> - **Get notified** when we ship new flagships, recipes, and framework integrations.
+> - **Help other engineers** discover production-grade RAG patterns instead of toy demos.
+>
+> **[→ Star ks-cookbook](https://github.com/knowledgestack/ks-cookbook)** (it takes 2 seconds and means a lot.)
 
 ## 👋 Welcome
 
@@ -157,17 +180,43 @@ Teams building internal AI agents on top of large document collections where **p
 
 ## Quickstart
 
-> **Full end-to-end walkthrough** (install → seed → run → verify) lives in
-> [docs/END_TO_END.md](docs/END_TO_END.md). Run `make smoke` after install to
-> verify all 131 cataloged use-case CLIs import, parse args, and build
-> schemas cleanly.
+> **Junior-engineer path: from `git clone` to a working recipe in ~5 minutes.**
+
+There are two ways to run the cookbook. Pick one:
+
+| Path | Use this when… | What you do |
+| ---- | -------------- | ----------- |
+| **A — `ingestion: true`** | You just want to see the recipes work against pre-ingested data. | Sign up at <https://app.knowledgestack.ai>, request a read-only "Cookbook demo" key, run any recipe. |
+| **B — `ingestion: false`** | You want to ingest real PDFs/XLSX/PPTX into your **own** tenant and run the recipes against your data. | Clone this repo, run `scripts/seed_unified_corpus.py` against your tenant, then run any recipe. |
+
+### Architecture (one diagram)
+
+```text
+                                     ┌────────────────────────┐
+   recipes/<name>/recipe.py ───stdio─►   knowledgestack-mcp   │  ── HTTPS ──► api.knowledgestack.ai
+   (≤100 LOC, no FOLDER_IDs)         │   (search/read/find)   │                (your tenant)
+                                     └────────────────────────┘
+              │                                   ▲
+              │                                   │
+              ▼                                   │
+   pydantic-ai Agent ─── tools: search_knowledge ─┘
+        │                       └─► read(path_part_id=<hit>)  ─► [chunk:<uuid>] marker
+        ▼
+   Structured output (pydantic schema) with citations[chunk_id, document_name, snippet]
+```
+
+Every recipe asks Knowledge Stack questions in **natural language**
+(`search_knowledge(query="When does the {company} agreement expire?")`) and
+follows each hit with `read(path_part_id=<hit>)` to retrieve the chunk text
+and the `[chunk:<uuid>]` citation marker. There are no folder UUIDs in any
+recipe — Knowledge Stack finds the right document by content.
 
 ### 1. Prerequisites
 
 - Python `3.11+`
-- `uv`
-- a Knowledge Stack API key
-- an OpenAI or Anthropic API key
+- [`uv`](https://docs.astral.sh/uv/) (install: `curl -LsSf https://astral.sh/uv/install.sh | sh`)
+- A Knowledge Stack API key — sign in at <https://app.knowledgestack.ai>
+- An OpenAI key (`gpt-4o`) — `gpt-4o-mini` skips grounding and produces empty citations
 
 ### 2. Clone and configure
 
@@ -183,8 +232,7 @@ Fill in `.env`:
 KS_API_KEY=sk-user-...
 KS_BASE_URL=https://api.knowledgestack.ai
 OPENAI_API_KEY=sk-proj-...
-# or
-ANTHROPIC_API_KEY=...
+MODEL=gpt-4o
 ```
 
 ### 3. Install everything
@@ -193,35 +241,57 @@ ANTHROPIC_API_KEY=...
 make setup
 ```
 
-That installs every workspace package into `.venv`, validates env vars, and gets the cookbook ready to run.
+Installs every workspace package into `.venv`, validates env vars.
 
-### 4. Run a first flagship
+### 4a. Path A — run against the shared cookbook tenant
 
-```bash
-make demo-credit-memo
-```
+The maintainers run a public-read cookbook tenant where the corpus is
+pre-ingested. Use the cookbook key from <https://app.knowledgestack.ai>
+and skip straight to step 5.
 
-Expected result:
-
-- the flagship runs through the MCP server against the sample tenant corpus
-- it writes a file artifact in the repo root
-- you get a developer-friendly output such as `credit-memo.md`
-
-Try a few more:
+### 4b. Path B — ingest the unified corpus into your own tenant
 
 ```bash
-make demo-contract-obligations
-make demo-rev-rec-memo
-make demo-prior-auth
-make demo-compliance
-make demo-earnings-risk
+# 1. Create a parent folder in your tenant via the UI; copy its path_part_id
+# 2. Run the unified ingest:
+uv run python scripts/seed_unified_corpus.py \
+    --parent-folder-id <YOUR_PARENT_FOLDER_PATH_PART_ID>
 ```
 
-To see the full target list:
+The script uploads every file under `seed/<vertical>/` (29 real public-domain
+documents — CMS, NIST, IRS, FDA, FAR, NERC, NAIC, OCC, FinCEN, AWS,
+SEC EDGAR, BLS XLSX, CDC PPTX, …) and waits for KS ingestion (~4 min/doc).
+
+Format coverage in the bundled corpus:
+- 25 PDF (multi-page, with tables/images)
+- 2 PPTX (CDC PowerPoint decks)
+- 2 XLSX (BLS occupational data, FRED GDP)
+
+### 5. Run your first recipe
 
 ```bash
-make help
+uv run python recipes/icd10_coder/recipe.py \
+    --note-file recipes/icd10_coder/sample_inputs/deid_visit_001.txt
 ```
+
+You'll see the agent make ~10–20 MCP tool calls (`search_knowledge`,
+`read`), then emit a JSON `CodingResult` with real `chunk_id`s pointing into
+`cms_fy2026_icd10cm_coding_guidelines.pdf` in your tenant.
+
+Other quick wins:
+
+```bash
+uv run python recipes/clause_extractor/recipe.py --contract "Apple 2024 proxy"
+uv run python recipes/contract_renewal_checker/recipe.py --contract "Donna Huang software development"
+uv run python recipes/benefits_enrollment_qa/recipe.py \
+    --question "What ERISA disclosures must an employer provide to participants in the company SPD?"
+uv run python recipes/aml_sar_narrative/recipe.py --case-id "structuring-cash-deposits"
+```
+
+Each recipe folder has its own `README.md` with a live captured output
+example, sign-in steps, and troubleshooting.
+
+To see every demo target: `make help`
 
 ## Output examples
 
@@ -489,9 +559,32 @@ If you're building an internal agent, ingestion pipeline, or enterprise RAG syst
 - 📧 Email the team — details on [knowledgestack.ai](https://knowledgestack.ai)
 - ⭐ [Star the repo](https://github.com/knowledgestack/ks-cookbook) — it signals which flagships and frameworks to prioritize next
 
+## ⭐ Star History
+
+If this repo is useful to you, **[give it a star](https://github.com/knowledgestack/ks-cookbook)** — it's the single biggest signal we use to decide which flagships, frameworks, and verticals to prioritize next.
+
+<div align="center">
+
+<a href="https://star-history.com/#knowledgestack/ks-cookbook&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=knowledgestack/ks-cookbook&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=knowledgestack/ks-cookbook&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=knowledgestack/ks-cookbook&type=Date" width="700" />
+  </picture>
+</a>
+
+### [⭐ Star ks-cookbook on GitHub](https://github.com/knowledgestack/ks-cookbook)
+
+</div>
+
 ## Community ask
 
 If this repo helped you ship or prototype something, [star the repository](https://github.com/knowledgestack/ks-cookbook). Stars improve discoverability, help us prioritize which examples to deepen, and validate that open-source, enterprise-grade agent patterns are worth maintaining in the open.
+
+You can also:
+- 🐦 **Share it** — tweet/post about a flagship that solved a real problem for you
+- 💬 **Tell us what's missing** — open a [flagship request](https://github.com/knowledgestack/ks-cookbook/issues/new?template=flagship_request.yml)
+- 🛠️ **Contribute** — see [CONTRIBUTING.md](CONTRIBUTING.md), every PR is reviewed quickly
 
 ## Keywords
 

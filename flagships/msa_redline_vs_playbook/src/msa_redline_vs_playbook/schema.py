@@ -1,6 +1,5 @@
 """Structured output for the MSA redline-vs-playbook agent."""
 
-
 from enum import Enum
 
 from pydantic import BaseModel, Field

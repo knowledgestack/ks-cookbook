@@ -1,6 +1,5 @@
 """Covenant compliance monitor CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -45,20 +44,19 @@ def main() -> None:
 
     if not os.environ.get("KS_API_KEY"):
         sys.exit("KS_API_KEY is not set. See the README.")
-    report = asyncio.run(monitor_covenants(
-        borrower=args.borrower,
-        period=args.period,
-        corpus_folder_id=args.corpus_folder or None,
-        model=args.model,
-    ))
+    report = asyncio.run(
+        monitor_covenants(
+            borrower=args.borrower,
+            period=args.period,
+            corpus_folder_id=args.corpus_folder or None,
+            model=args.model,
+        )
+    )
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(report, encoding="utf-8")
     cite_count = report.count("[chunk:")
-    print(
-        f"Wrote {args.out} — {len(report)} chars, {cite_count} chunk "
-        f"citation(s)."
-    )
+    print(f"Wrote {args.out} — {len(report)} chars, {cite_count} chunk citation(s).")
 
 
 if __name__ == "__main__":

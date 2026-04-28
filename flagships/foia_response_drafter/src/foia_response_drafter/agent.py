@@ -7,7 +7,6 @@ Workflow:
 3. Ask the LLM to draft a FOIA response letter with exemption analysis.
 """
 
-
 import json
 import os
 from contextlib import asynccontextmanager
@@ -18,14 +17,15 @@ from mcp.client.stdio import stdio_client
 from openai import AsyncOpenAI
 
 
-
 @asynccontextmanager
 async def ks_mcp_session():
     params = StdioServerParameters(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
     async with stdio_client(params) as (reader, writer):
         async with ClientSession(reader, writer) as session:
@@ -36,16 +36,22 @@ async def ks_mcp_session():
 async def call(session: ClientSession, name: str, arguments: dict[str, Any]) -> str:
     result = await session.call_tool(name, arguments)
     if result.isError:
-        raise RuntimeError(f"tool `{name}` failed: "
-                           + (result.content[0].text if result.content else ""))
+        raise RuntimeError(
+            f"tool `{name}` failed: "
+            + (result.content[0].text if result.content else "")
+        )
     return "\n".join(c.text for c in result.content if hasattr(c, "text"))
 
 
-async def call_list(session: ClientSession, name: str, arguments: dict[str, Any]) -> list[Any]:
+async def call_list(
+    session: ClientSession, name: str, arguments: dict[str, Any]
+) -> list[Any]:
     result = await session.call_tool(name, arguments)
     if result.isError:
-        raise RuntimeError(f"tool `{name}` failed: "
-                           + (result.content[0].text if result.content else ""))
+        raise RuntimeError(
+            f"tool `{name}` failed: "
+            + (result.content[0].text if result.content else "")
+        )
     out: list[Any] = []
     for c in result.content:
         if not hasattr(c, "text"):
@@ -83,7 +89,10 @@ RULES:
 
 
 async def draft_foia_response(
-    *, request_text: str, corpus_folder_id: str, model: str,
+    *,
+    request_text: str,
+    corpus_folder_id: str,
+    model: str,
 ) -> str:
     all_texts: list[str] = []
     doc_names: list[str] = []
@@ -93,7 +102,8 @@ async def draft_foia_response(
             session, "list_contents", {"folder_id": corpus_folder_id}
         )
         docs = [
-            p for p in listing
+            p
+            for p in listing
             if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"
         ]
         if not docs:
@@ -101,7 +111,8 @@ async def draft_foia_response(
 
         for doc in docs:
             text = await call(
-                session, "read",
+                session,
+                "read",
                 {"path_part_id": doc["path_part_id"], "max_chars": 8000},
             )
             all_texts.append(f"=== {doc['name']} ===\n{text}")

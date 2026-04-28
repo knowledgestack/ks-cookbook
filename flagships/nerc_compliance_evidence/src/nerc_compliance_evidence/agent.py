@@ -1,6 +1,5 @@
 """pydantic-ai agent that builds NERC CIP compliance evidence packs."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -40,19 +39,25 @@ INSTRUCTIONS:
 
 
 async def build_evidence_pack(
-    *, standard: str, requirement: str, corpus_folder_id: str, model: str,
+    *,
+    standard: str,
+    requirement: str,
+    corpus_folder_id: str,
+    model: str,
 ) -> NERCEvidencePack:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
     server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
-        command=server_cmd, args=server_args,
+        command=server_cmd,
+        args=server_args,
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
         },
     )
     agent = Agent(
-        model=f"openai:{model}", mcp_servers=[mcp],
+        model=f"openai:{model}",
+        mcp_servers=[mcp],
         system_prompt=SYSTEM.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
         output_type=NERCEvidencePack,
     )
@@ -63,9 +68,15 @@ async def build_evidence_pack(
                 f"Build a compliance evidence pack for NERC {standard} "
                 f"requirement {requirement}."
             )
-            pack = getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[assignment]
+            pack = (
+                getattr(result, "output", None)
+                or getattr(result, "data", None)
+                or result
+            )  # type: ignore[assignment]
     except BaseExceptionGroup:
         pass
     if pack is None:
-        raise RuntimeError("Agent did not produce a result before the MCP session closed.")
+        raise RuntimeError(
+            "Agent did not produce a result before the MCP session closed."
+        )
     return pack

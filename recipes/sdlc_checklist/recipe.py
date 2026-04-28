@@ -7,7 +7,6 @@ policy and emits the PR-specific checklist with citations.
 Framework: LangGraph + MCP adapters (showcases yet another framework).
 """
 
-
 import argparse
 import asyncio
 import os
@@ -17,10 +16,7 @@ from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 
-POLICIES_FOLDER = os.environ.get(
-    "POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41"
-)
-
+POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 SYSTEM = (
     "You are a tech-lead gatekeeper. Given a pull-request description, read the "
     "company's SDLC and data-protection policies from the MCP tools "
@@ -33,22 +29,28 @@ SYSTEM = (
 async def run(pr: str) -> None:
     cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
     args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
-    client = MultiServerMCPClient({
-        "knowledgestack": {
-            "command": cmd, "args": args, "transport": "stdio",
-            "env": {
-                "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-                "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+    client = MultiServerMCPClient(
+        {
+            "knowledgestack": {
+                "command": cmd,
+                "args": args,
+                "transport": "stdio",
+                "env": {
+                    "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+                    "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+                },
             },
-        },
-    })
+        }
+    )
     tools = await client.get_tools()
-    model = ChatOpenAI(model=os.environ.get("MODEL", "gpt-4o-mini"), max_tokens=1200)
+    model = ChatOpenAI(model=os.environ.get("MODEL", "gpt-4o"), max_tokens=1200)
     agent = create_react_agent(model, tools)
 
-    result = await agent.ainvoke({
-        "messages": [("system", SYSTEM), ("user", f"PR description:\n{pr}")],
-    })
+    result = await agent.ainvoke(
+        {
+            "messages": [("system", SYSTEM), ("user", f"PR description:\n{pr}")],
+        }
+    )
     messages = result.get("messages", [])
     text = messages[-1].content if messages else ""
     if isinstance(text, list):

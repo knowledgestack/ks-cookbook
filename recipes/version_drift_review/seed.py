@@ -80,9 +80,7 @@ def main() -> None:
     p.add_argument(
         "--folder-id",
         type=UUID,
-        default=UUID(os.environ.get(
-            "POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41"
-        )),
+        default=UUID(os.environ.get("POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")),
         help="Parent folder path_part_id (must be a FOLDER).",
     )
     p.add_argument("--name", default="Access Control Policy")

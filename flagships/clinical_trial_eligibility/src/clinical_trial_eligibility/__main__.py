@@ -1,6 +1,5 @@
 """Clinical trial eligibility assessment CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -38,8 +37,7 @@ def _render_markdown(assess: EligibilityAssessment) -> str:
         for cit in c.citations:
             q = (cit.quote or "").replace("\n", " ").strip()[:300]
             lines.append(
-                f"- *{cit.source_document}* "
-                f"(chunk:{cit.chunk_id}): \u201c{q}\u201d"
+                f"- *{cit.source_document}* (chunk:{cit.chunk_id}): \u201c{q}\u201d"
             )
         lines.append("")
 
@@ -53,9 +51,7 @@ def _render_markdown(assess: EligibilityAssessment) -> str:
 def _load_patient(in_path: Path | None) -> str:
     if in_path is not None:
         return in_path.read_text(encoding="utf-8")
-    default = (
-        Path(__file__).resolve().parents[2] / "sample_inputs" / "patient.txt"
-    )
+    default = Path(__file__).resolve().parents[2] / "sample_inputs" / "patient.txt"
     return default.read_text(encoding="utf-8")
 
 
@@ -85,9 +81,7 @@ def main() -> None:
     )
     args = p.parse_args()
 
-    if not os.environ.get("KS_API_KEY") or not os.environ.get(
-        "OPENAI_API_KEY"
-    ):
+    if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
     patient = _load_patient(args.in_path)
     assessment = asyncio.run(

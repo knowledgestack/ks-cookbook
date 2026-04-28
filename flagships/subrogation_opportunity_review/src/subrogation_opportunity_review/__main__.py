@@ -1,6 +1,5 @@
 """CLI entry for the subrogation opportunity review demo."""
 
-
 import argparse
 import os
 import sys
@@ -12,17 +11,13 @@ from subrogation_opportunity_review.agent import draft_review
 def _load_claim(in_path: Path | None) -> str:
     if in_path is not None:
         return in_path.read_text(encoding="utf-8")
-    default = (
-        Path(__file__).resolve().parents[2] / "sample_inputs" / "claim.txt"
-    )
+    default = Path(__file__).resolve().parents[2] / "sample_inputs" / "claim.txt"
     return default.read_text(encoding="utf-8")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description=(
-            "Assess subrogation recovery opportunity from a P&C claim."
-        )
+        description=("Assess subrogation recovery opportunity from a P&C claim.")
     )
     parser.add_argument(
         "--in",
@@ -68,10 +63,7 @@ def main() -> None:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(memo, encoding="utf-8")
     cite_count = memo.count("[chunk:")
-    print(
-        f"Wrote {args.out} -- {len(memo)} chars, "
-        f"{cite_count} chunk citation(s)."
-    )
+    print(f"Wrote {args.out} -- {len(memo)} chars, {cite_count} chunk citation(s).")
 
 
 if __name__ == "__main__":

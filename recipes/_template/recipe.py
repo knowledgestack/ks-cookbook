@@ -14,7 +14,6 @@ Framework: <OpenAI | Anthropic | pydantic-ai | LangGraph | raw MCP>
 Pain point: <who feels this and why>
 """
 
-
 import argparse
 import asyncio
 import os

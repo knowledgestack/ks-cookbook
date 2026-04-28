@@ -1,6 +1,5 @@
 """CLI entry for the prior-authorization-letter demo."""
 
-
 import argparse
 import asyncio
 import os
@@ -55,10 +54,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Draft a cited prior-auth letter from a clinical scenario."
     )
-    parser.add_argument("--in", dest="in_path", type=Path, default=None,
-                        help="Scenario text file (default: sample_inputs/scenario.txt).")
-    parser.add_argument("--out", type=Path, default=Path("prior-auth-letter.docx"),
-                        help="Output .docx (default: prior-auth-letter.docx).")
+    parser.add_argument(
+        "--in",
+        dest="in_path",
+        type=Path,
+        default=None,
+        help="Scenario text file (default: sample_inputs/scenario.txt).",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=Path("prior-auth-letter.docx"),
+        help="Output .docx (default: prior-auth-letter.docx).",
+    )
     parser.add_argument(
         "--corpus-folder",
         default=os.environ.get("CORPUS_FOLDER_ID", ""),
@@ -74,14 +82,16 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY"):
         sys.exit("KS_API_KEY is not set. See the README.")
     if not args.corpus_folder:
-        sys.exit(
-            "--corpus-folder (or CORPUS_FOLDER_ID env var) is required."
-        )
+        sys.exit("--corpus-folder (or CORPUS_FOLDER_ID env var) is required.")
 
     request = _load_request(args.in_path)
-    letter = asyncio.run(draft_letter(
-        request, corpus_folder_id=args.corpus_folder, model=args.model,
-    ))
+    letter = asyncio.run(
+        draft_letter(
+            request,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     _render_docx(letter, args.out)
     print(
         f"Wrote {args.out} — {len(letter.citations)} citation(s); "

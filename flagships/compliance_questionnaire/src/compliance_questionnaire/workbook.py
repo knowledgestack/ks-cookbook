@@ -1,6 +1,5 @@
 """CAIQ XLSX read/write. Preserves original formatting; fills columns C + E."""
 
-
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -8,10 +7,10 @@ from openpyxl import load_workbook
 from openpyxl.workbook import Workbook
 
 # Columns (1-indexed) in the CAIQv4.0.2 sheet.
-COL_ID = 1          # Question ID (e.g. A&A-06.2)
-COL_QUESTION = 2    # Question text
-COL_ANSWER = 3      # CSP CAIQ Answer  ← agent fills
-COL_DESCRIPTION = 5 # CSP Implementation Description  ← agent fills
+COL_ID = 1  # Question ID (e.g. A&A-06.2)
+COL_QUESTION = 2  # Question text
+COL_ANSWER = 3  # CSP CAIQ Answer  ← agent fills
+COL_DESCRIPTION = 5  # CSP Implementation Description  ← agent fills
 SHEET = "CAIQv4.0.2"
 HEADER_ROW = 2  # row 1 is metadata, row 2 is headers; questions start at row 3
 
@@ -23,7 +22,9 @@ class QuestionRow:
     question: str
 
 
-def load_questions(path: Path, *, sheet: str = SHEET, limit: int | None = None) -> list[QuestionRow]:
+def load_questions(
+    path: Path, *, sheet: str = SHEET, limit: int | None = None
+) -> list[QuestionRow]:
     wb = load_workbook(path)
     ws = wb[sheet]
     out: list[QuestionRow] = []

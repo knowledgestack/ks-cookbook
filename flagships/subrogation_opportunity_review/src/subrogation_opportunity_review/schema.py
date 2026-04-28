@@ -1,6 +1,5 @@
 """Tool schemas and review template for subrogation opportunity review."""
 
-
 from typing import Any
 
 TOOLS: list[dict[str, Any]] = [

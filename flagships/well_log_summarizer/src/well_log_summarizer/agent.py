@@ -1,6 +1,5 @@
 """pydantic-ai agent that summarizes well logs + drilling reports grounded in KS corpus."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -34,19 +33,24 @@ missing from the corpus, say so explicitly in ``depth_summary`` or
 
 
 async def summarize_well(
-    *, well_id: str, corpus_folder_id: str, model: str,
+    *,
+    well_id: str,
+    corpus_folder_id: str,
+    model: str,
 ) -> WellSummary:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
     server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
-        command=server_cmd, args=server_args,
+        command=server_cmd,
+        args=server_args,
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
         },
     )
     agent = Agent(
-        model=f"openai:{model}", mcp_servers=[mcp],
+        model=f"openai:{model}",
+        mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
         output_type=WellSummary,
     )

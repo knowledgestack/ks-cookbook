@@ -1,6 +1,5 @@
 """LangGraph ReAct agent wired to KS MCP for coverage-analysis memos."""
 
-
 import os
 from typing import Any
 
@@ -51,22 +50,27 @@ async def _build_tools() -> list[Any]:
     command = os.environ.get("KS_MCP_COMMAND", "uvx")
     args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
     args = args_raw.split() if args_raw else []
-    client = MultiServerMCPClient({
-        "knowledgestack": {
-            "command": command,
-            "args": args,
-            "transport": "stdio",
-            "env": {
-                "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-                "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
-            },
+    client = MultiServerMCPClient(
+        {
+            "knowledgestack": {
+                "command": command,
+                "args": args,
+                "transport": "stdio",
+                "env": {
+                    "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+                    "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+                },
+            }
         }
-    })
+    )
     return await client.get_tools()
 
 
 async def draft_memo(
-    claim_narrative: str, *, corpus_folder_id: str, model: str = "gpt-4o",
+    claim_narrative: str,
+    *,
+    corpus_folder_id: str,
+    model: str = "gpt-4o",
 ) -> str:
     tools = await _build_tools()
     llm = ChatOpenAI(model=model, max_tokens=3000)
@@ -74,9 +78,12 @@ async def draft_memo(
     prompt = SYSTEM_PROMPT_TEMPLATE.format(MEMO_TEMPLATE=MEMO_TEMPLATE).replace(
         "__FOLDER_ID__", corpus_folder_id
     )
-    result = await agent.ainvoke({
-        "messages": [("system", prompt), ("user", claim_narrative)],
-    }, {"recursion_limit": 50})
+    result = await agent.ainvoke(
+        {
+            "messages": [("system", prompt), ("user", claim_narrative)],
+        },
+        {"recursion_limit": 50},
+    )
     messages = result.get("messages", [])
     text = messages[-1].content if messages else ""
     if isinstance(text, list):

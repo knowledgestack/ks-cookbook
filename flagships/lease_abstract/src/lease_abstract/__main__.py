@@ -1,6 +1,5 @@
 """CLI entry for the lease-abstract demo."""
 
-
 import argparse
 import os
 import sys
@@ -22,14 +21,20 @@ def _resolve_lease(cli_name: str, lease_file: Path | None) -> str:
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Produce a one-page cited lease abstract.")
-    p.add_argument("--lease", default="retail_lease_pinetree_crossing",
-                   help="Name of the lease document inside the corpus folder.")
-    p.add_argument("--lease-file", type=Path, default=None,
-                   help="File whose first line overrides --lease.")
+    p.add_argument(
+        "--lease",
+        default="retail_lease_pinetree_crossing",
+        help="Name of the lease document inside the corpus folder.",
+    )
+    p.add_argument(
+        "--lease-file",
+        type=Path,
+        default=None,
+        help="File whose first line overrides --lease.",
+    )
     p.add_argument("--out", type=Path, default=Path("lease-abstract.md"))
     p.add_argument("--corpus-folder", default=os.environ.get("CORPUS_FOLDER_ID", ""))
-    p.add_argument("--model",
-                   default=os.environ.get("LEASE_ABSTRACT_MODEL", "gpt-4o"))
+    p.add_argument("--model", default=os.environ.get("LEASE_ABSTRACT_MODEL", "gpt-4o"))
     args = p.parse_args()
 
     if not os.environ.get("KS_API_KEY"):
@@ -42,7 +47,8 @@ def main() -> None:
     lease_name = _resolve_lease(args.lease, args.lease_file)
     abstract = draft_abstract(
         corpus_folder_id=args.corpus_folder,
-        target_lease=lease_name, model=args.model,
+        target_lease=lease_name,
+        model=args.model,
     )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(abstract, encoding="utf-8")

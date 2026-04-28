@@ -1,0 +1,43 @@
+DE-IDENTIFIED PROGRESS NOTE
+===========================
+Encounter date: [**2026-03-12**]
+Provider: [**Attending**], MD — Internal Medicine
+Patient: 64 y/o [**Sex**], [**MRN**]
+
+CHIEF COMPLAINT
+Substernal chest pressure x 2 hours, radiating to left arm, with diaphoresis
+and nausea. Onset at rest.
+
+HISTORY OF PRESENT ILLNESS
+Patient with longstanding type 2 diabetes mellitus (insulin-dependent for the
+past 4 years, last A1c 8.4%) and a 30 pack-year smoking history presented to
+the ED with substernal chest pressure rated 8/10. Pain began at rest and was
+associated with diaphoresis and nausea. Initial troponin I 0.42 ng/mL (ref
+<0.04). Repeat at 3 hours: 1.18 ng/mL.
+
+ECG: 1.5 mm ST depression in V4-V6, no ST elevations. No new Q waves.
+
+PAST MEDICAL HISTORY
+- Type 2 diabetes mellitus (E11.9 historically; now with documented neuropathy)
+- Hypertension, controlled on lisinopril 20 mg daily
+- Hyperlipidemia
+- Diabetic peripheral neuropathy, bilateral lower extremities
+- Mild persistent asthma (uses albuterol PRN, no recent exacerbation)
+
+SOCIAL HISTORY
+- Tobacco: 30 pack-years, quit 6 months ago
+- Alcohol: 2-3 drinks/week
+- Lives with spouse
+
+ASSESSMENT AND PLAN
+1. Acute non-ST elevation myocardial infarction — admit to telemetry, dual
+   antiplatelet therapy (aspirin 325 mg loaded, clopidogrel 600 mg loaded),
+   atorvastatin 80 mg, heparin gtt per weight-based protocol. Cardiology
+   consult; cath within 24-48 hours.
+2. Type 2 diabetes mellitus with diabetic peripheral neuropathy — continue
+   home insulin regimen, hold metformin pending contrast.
+3. Essential hypertension — continue lisinopril.
+4. Hyperlipidemia — uptitrate to atorvastatin 80 mg.
+5. Tobacco use, former — counseled, no resumption.
+
+[**Signed electronically**] [**Attending**], MD

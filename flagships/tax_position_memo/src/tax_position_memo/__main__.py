@@ -1,6 +1,5 @@
 """CLI entry for the tax position memo flagship."""
 
-
 import argparse
 import asyncio
 import os
@@ -15,20 +14,24 @@ def main() -> None:
         description="Draft a tax position research memo citing IRC + Treasury Regs."
     )
     parser.add_argument(
-        "--question", required=True,
+        "--question",
+        required=True,
         help="The tax question to research.",
     )
     parser.add_argument(
         "--corpus-folder",
-        default=os.environ.get("CORPUS_FOLDER_ID",
-                               "e6530865-0d30-5547-ad9d-15ccc0952b6d"),
+        default=os.environ.get(
+            "CORPUS_FOLDER_ID", "e6530865-0d30-5547-ad9d-15ccc0952b6d"
+        ),
     )
     parser.add_argument(
         "--model",
         default=os.environ.get("TAX_MEMO_MODEL", "gpt-4o"),
     )
     parser.add_argument(
-        "--out", type=Path, default=Path("tax-memo.md"),
+        "--out",
+        type=Path,
+        default=Path("tax-memo.md"),
     )
     args = parser.parse_args()
 
@@ -37,11 +40,13 @@ def main() -> None:
     if not os.environ.get("OPENAI_API_KEY"):
         sys.exit("OPENAI_API_KEY is not set.")
 
-    memo = asyncio.run(draft_tax_memo(
-        args.question,
-        corpus_folder_id=args.corpus_folder,
-        model=args.model,
-    ))
+    memo = asyncio.run(
+        draft_tax_memo(
+            args.question,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(memo, encoding="utf-8")
     cite_count = memo.count("[chunk:")

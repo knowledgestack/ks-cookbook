@@ -8,7 +8,6 @@ Workflow:
    chunk_ids copied verbatim from [chunk:<uuid>] markers.
 """
 
-
 import json
 import os
 import re
@@ -225,9 +224,7 @@ async def compare_msa(
                 clause[canon] = clause.pop(alt)
         sev = clause.get("deviation_severity", "")
         if isinstance(sev, str):
-            clause["deviation_severity"] = severity_map.get(
-                sev.upper(), sev.upper()
-            )
+            clause["deviation_severity"] = severity_map.get(sev.upper(), sev.upper())
 
     # Filter out clauses whose chunk_ids don't appear in the source texts.
     # If filtering would remove all clauses, keep them (LLM best-effort).

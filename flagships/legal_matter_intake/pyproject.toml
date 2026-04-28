@@ -1,0 +1,22 @@
+[project]
+name = "ks-cookbook-legal-intake"
+version = "0.1.0"
+description = "Sertain flagship — produce a new-matter intake dossier citing the firm's conflicts database, practice playbook, jurisdiction rules, and fee schedule."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai[mcp]>=0.0.14",
+    "pydantic>=2.6",
+    "python-docx>=1.1",
+]
+
+[project.scripts]
+ks-cookbook-legal-intake = "legal_matter_intake.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/legal_matter_intake"]

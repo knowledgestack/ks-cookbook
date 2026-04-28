@@ -46,7 +46,9 @@ RECIPES = ROOT / "recipes"
 FLAGSHIPS = ROOT / "flagships"
 INPUTS_JSON = ROOT / "scripts" / "e2e_recipe_inputs.json"
 
-CHUNK_RE = re.compile(r"\[chunk:([0-9a-fA-F-]{36})\]|chunk:([0-9a-fA-F-]{36})|\"chunk_id\"\s*:\s*\"([0-9a-fA-F-]{36})\"")
+CHUNK_RE = re.compile(
+    r"\[chunk:([0-9a-fA-F-]{36})\]|chunk:([0-9a-fA-F-]{36})|\"chunk_id\"\s*:\s*\"([0-9a-fA-F-]{36})\""
+)
 
 KNOWN_SKIPS: set[str] = {
     # env-guarded — no meaningful e2e signal without additional setup.
@@ -56,7 +58,7 @@ KNOWN_SKIPS: set[str] = {
 
 @dataclass
 class Result:
-    kind: str           # "recipe" | "flagship"
+    kind: str  # "recipe" | "flagship"
     name: str
     verdict: str
     seconds: float = 0.0
@@ -105,8 +107,9 @@ def _flagship_demo_targets() -> list[tuple[str, str]]:
 def _run(cmd: list[str], timeout: int, cwd: Path = ROOT) -> tuple[int, str, str, float]:
     start = time.monotonic()
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
-                           cwd=cwd, env=os.environ.copy())
+        r = subprocess.run(
+            cmd, capture_output=True, text=True, timeout=timeout, cwd=cwd, env=os.environ.copy()
+        )
     except subprocess.TimeoutExpired as e:
         return 124, (e.stdout or ""), (e.stderr or ""), time.monotonic() - start
     return r.returncode, r.stdout or "", r.stderr or "", time.monotonic() - start
@@ -185,7 +188,9 @@ async def _verify_chunks(chunks: list[tuple[str, str]]) -> tuple[list[str], list
             resolved += 1
             # Snippet check: extract any quoted 20+ char substring near the marker
             # from the output and test it against the body.
-            quoted = re.search(r'"([^"]{20,240})"', snippet_ctx) or re.search(r"\u201c([^\u201d]{20,240})\u201d", snippet_ctx)
+            quoted = re.search(r'"([^"]{20,240})"', snippet_ctx) or re.search(
+                r"\u201c([^\u201d]{20,240})\u201d", snippet_ctx
+            )
             if quoted and quoted.group(1)[:80] not in body:
                 mismatches.append(cid)
     return fabricated, mismatches, resolved
@@ -253,7 +258,8 @@ def _run_recipe(name: str, args: list[str], timeout: int, verify: bool) -> Resul
         return res
 
     rc, out, err, secs = _run(
-        ["uv", "run", "python", str(recipe_py), *args], timeout=timeout,
+        ["uv", "run", "python", str(recipe_py), *args],
+        timeout=timeout,
     )
     res.seconds = secs
     res.stdout_tail = _tail(out)
@@ -307,8 +313,11 @@ def main() -> int:
     p.add_argument("--only", default=None, help="Comma-separated list of names to run.")
     p.add_argument("--skip", default="", help="Comma-separated list of names to skip.")
     p.add_argument("--timeout", type=int, default=240, help="Per-case timeout in seconds.")
-    p.add_argument("--no-verify", action="store_true",
-                   help="Skip MCP chunk verification (only exit-code + citation count).")
+    p.add_argument(
+        "--no-verify",
+        action="store_true",
+        help="Skip MCP chunk verification (only exit-code + citation count).",
+    )
     p.add_argument("--report", type=Path, default=ROOT / "e2e-report.json")
     p.add_argument("--limit", type=int, default=0, help="Max cases per kind (0 = all).")
     args = p.parse_args()
@@ -334,14 +343,17 @@ def main() -> int:
                 continue
             print(f"▶ flagship  {dir_name:36s}", flush=True)
             res = _run_flagship(dir_name, target, args.timeout, verify)
-            print(f"  {res.verdict:20s} {res.seconds:6.1f}s  citations={res.citations_found}"
-                  f"  resolved={res.chunks_resolved}")
+            print(
+                f"  {res.verdict:20s} {res.seconds:6.1f}s  citations={res.citations_found}"
+                f"  resolved={res.chunks_resolved}"
+            )
             results.append(res)
 
     # Recipes
     if not args.flagships_only:
-        recipe_dirs = [d.name for d in sorted(RECIPES.iterdir())
-                       if d.is_dir() and not d.name.startswith("_")]
+        recipe_dirs = [
+            d.name for d in sorted(RECIPES.iterdir()) if d.is_dir() and not d.name.startswith("_")
+        ]
         if args.limit:
             recipe_dirs = recipe_dirs[: args.limit]
         for name in recipe_dirs:
@@ -356,13 +368,17 @@ def main() -> int:
                 recipe_src = (RECIPES / name / "recipe.py").read_text()
                 if "required=True" in recipe_src:
                     results.append(Result(kind="recipe", name=name, verdict="NEEDS_INPUTS"))
-                    print(f"▶ recipe    {name:36s}  NEEDS_INPUTS (add to scripts/e2e_recipe_inputs.json)")
+                    print(
+                        f"▶ recipe    {name:36s}  NEEDS_INPUTS (add to scripts/e2e_recipe_inputs.json)"
+                    )
                     continue
                 reg_args = []
             print(f"▶ recipe    {name:36s}", flush=True)
             res = _run_recipe(name, reg_args, args.timeout, verify)
-            print(f"  {res.verdict:20s} {res.seconds:6.1f}s  citations={res.citations_found}"
-                  f"  resolved={res.chunks_resolved}")
+            print(
+                f"  {res.verdict:20s} {res.seconds:6.1f}s  citations={res.citations_found}"
+                f"  resolved={res.chunks_resolved}"
+            )
             results.append(res)
 
     # Summary
@@ -371,13 +387,21 @@ def main() -> int:
         by_verdict[r.verdict] = by_verdict.get(r.verdict, 0) + 1
 
     print("\n=== E2E verdict summary ===")
-    for v in ("PASS", "EMPTY_OUTPUT", "MISSING_CITATIONS", "FABRICATED_CHUNKS",
-              "SNIPPET_MISMATCH", "SCHEMA_ERROR", "TIMEOUT", "NEEDS_INPUTS", "SKIPPED"):
+    for v in (
+        "PASS",
+        "EMPTY_OUTPUT",
+        "MISSING_CITATIONS",
+        "FABRICATED_CHUNKS",
+        "SNIPPET_MISMATCH",
+        "SCHEMA_ERROR",
+        "TIMEOUT",
+        "NEEDS_INPUTS",
+        "SKIPPED",
+    ):
         if by_verdict.get(v, 0):
             print(f"  {v:20s} {by_verdict[v]:4d}")
 
-    failures = [r for r in results if r.verdict not in
-                {"PASS", "SKIPPED", "NEEDS_INPUTS"}]
+    failures = [r for r in results if r.verdict not in {"PASS", "SKIPPED", "NEEDS_INPUTS"}]
     if failures:
         print("\nFailures:")
         for r in failures:
@@ -385,7 +409,7 @@ def main() -> int:
             last = tail[-1][:140] if tail else ""
             print(f"  {r.verdict:20s} {r.kind}/{r.name}: {last}")
 
-    args.report.write_text(json.dumps([asdict(r) for r in results], indent=2))
+    args.report.write_text(json.dumps([asdict(r) for r in results], indent=2, default=str))
     print(f"\nWrote {args.report}")
 
     return 0 if not failures else 1

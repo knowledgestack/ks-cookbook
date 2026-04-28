@@ -1,6 +1,5 @@
 """Markdown template for FOIA response output."""
 
-
 RESPONSE_TEMPLATE = """\
 # FOIA Response — {request_summary}
 

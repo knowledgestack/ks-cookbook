@@ -36,9 +36,11 @@ RECIPES = ROOT / "recipes"
 FLAGSHIPS = ROOT / "flagships"
 
 FOLDER_ENV_RE = re.compile(r"[A-Z][A-Z0-9_]*FOLDER_ID")
-MCP_TOOL_RE = re.compile(r"\b(list_contents|read|search_knowledge|search_keyword|"
-                         r"read_around|find|get_info|view_chunk_image|"
-                         r"get_organization_info|get_current_datetime)\b")
+MCP_TOOL_RE = re.compile(
+    r"\b(list_contents|read|search_knowledge|search_keyword|"
+    r"read_around|find|get_info|view_chunk_image|"
+    r"get_organization_info|get_current_datetime)\b"
+)
 # Citation can be enforced by a pydantic field, a TypedDict, or `chunk:<uuid>`
 # markers the recipe emits inline. We only require that the source mentions
 # chunks somehow so novices can find the docs/tests for them.
@@ -49,8 +51,9 @@ ARTIFACT_RE = re.compile(
     r"Path\([^)]+\)\.write|args\.out|out\.write"
 )
 # Run blocks: accept fenced ```bash / ```sh / ``` with a visible "uv run" or "make ".
-RUN_BLOCK_RE = re.compile(r"```(?:bash|sh|shell)?\s*\n[^`]*?(uv run|make |python )",
-                          re.MULTILINE | re.DOTALL)
+RUN_BLOCK_RE = re.compile(
+    r"```(?:bash|sh|shell)?\s*\n[^`]*?(uv run|make |python )", re.MULTILINE | re.DOTALL
+)
 
 KNOWN_RECIPE_SKIPS = {
     # Non-standard shape (recipe is a notebook/template/seed-only):
@@ -62,10 +65,18 @@ KNOWN_RECIPE_SKIPS = {
 # pydantic Citation model — documented in INDEX.md as "Raw OpenAI" or
 # "MCP-only" rows. They still emit real [chunk:<uuid>] markers at runtime.
 PLAINTEXT_CITATION_RECIPES = {
-    "policy_qa", "password_policy_audit", "soc2_evidence",
-    "vendor_security_review", "dpa_gap_check", "bcp_drill_plan",
-    "adr_drafter", "change_management_review", "sdlc_checklist",
-    "onboarding_checklist", "llama_index_rag", "permission_aware_retrieval",
+    "policy_qa",
+    "password_policy_audit",
+    "soc2_evidence",
+    "vendor_security_review",
+    "dpa_gap_check",
+    "bcp_drill_plan",
+    "adr_drafter",
+    "change_management_review",
+    "sdlc_checklist",
+    "onboarding_checklist",
+    "llama_index_rag",
+    "permission_aware_retrieval",
 }
 
 
@@ -119,9 +130,7 @@ def _audit_flagship(d: Path) -> CaseReport:
         else:
             # Scan every .py file under the package for chunk refs (supports
             # flagships that use markdown templates rather than pydantic schemas).
-            all_src = "\n".join(
-                p.read_text() for p in pkg.rglob("*.py") if p.is_file()
-            )
+            all_src = "\n".join(p.read_text() for p in pkg.rglob("*.py") if p.is_file())
             if not CHUNK_REF_RE.search(all_src):
                 rep.fail("no chunk_id / [chunk: reference anywhere in src/")
             main = pkg / "__main__.py"
@@ -172,8 +181,9 @@ def _audit_recipe(d: Path) -> CaseReport:
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--report", type=Path, default=ROOT / "docs-audit.json")
-    p.add_argument("--strict", action="store_true",
-                   help="Exit non-zero if any case fails any check.")
+    p.add_argument(
+        "--strict", action="store_true", help="Exit non-zero if any case fails any check."
+    )
     args = p.parse_args()
 
     reports: list[CaseReport] = []
@@ -187,8 +197,14 @@ def main() -> int:
         if not d.is_dir() or d.name.startswith("_"):
             continue
         if d.name in KNOWN_RECIPE_SKIPS:
-            reports.append(CaseReport(kind="recipe", name=d.name, passed=True,
-                                      issues=[Issue("skipped", "known non-standard")]))
+            reports.append(
+                CaseReport(
+                    kind="recipe",
+                    name=d.name,
+                    passed=True,
+                    issues=[Issue("skipped", "known non-standard")],
+                )
+            )
             continue
         reports.append(_audit_recipe(d))
 

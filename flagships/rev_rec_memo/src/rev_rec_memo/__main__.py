@@ -1,6 +1,5 @@
 """CLI entry for the rev-rec-memo flagship."""
 
-
 import argparse
 import asyncio
 import json
@@ -12,9 +11,7 @@ from rev_rec_memo.agent import draft_memo
 from rev_rec_memo.writer import write_memo
 
 DEFAULT_INPUT = (
-    Path(__file__).resolve().parents[2]
-    / "sample_inputs"
-    / "globex_contract.json"
+    Path(__file__).resolve().parents[2] / "sample_inputs" / "globex_contract.json"
 )
 
 
@@ -23,9 +20,12 @@ def main() -> None:
         description="Produce an ASC 606 rev-rec memo grounded in seeded policy."
     )
     parser.add_argument(
-        "--in", dest="in_path", type=Path, default=DEFAULT_INPUT,
+        "--in",
+        dest="in_path",
+        type=Path,
+        default=DEFAULT_INPUT,
         help="Path to a JSON file with {customer, product, contract_summary, "
-             "total_contract_value_usd}.",
+        "total_contract_value_usd}.",
     )
     parser.add_argument(
         "--corpus-folder",
@@ -36,7 +36,9 @@ def main() -> None:
         help="folder_id of the accounting corpus in your KS tenant.",
     )
     parser.add_argument(
-        "--out", type=Path, default=Path("rev-rec-memo.md"),
+        "--out",
+        type=Path,
+        default=Path("rev-rec-memo.md"),
         help="Output markdown path (default: rev-rec-memo.md).",
     )
     parser.add_argument(
@@ -58,13 +60,15 @@ def main() -> None:
     product = payload["product"]
     contract_summary = payload["contract_summary"]
 
-    memo = asyncio.run(draft_memo(
-        customer=customer,
-        product=product,
-        contract_summary=contract_summary,
-        corpus_folder_id=args.corpus_folder,
-        model=args.model,
-    ))
+    memo = asyncio.run(
+        draft_memo(
+            customer=customer,
+            product=product,
+            contract_summary=contract_summary,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     if "total_contract_value_usd" in payload:
         memo.total_contract_value_usd = float(payload["total_contract_value_usd"])
     write_memo(memo, args.out)

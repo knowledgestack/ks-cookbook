@@ -1,6 +1,5 @@
 """LangGraph ReAct agent wired to KS MCP for covenant compliance monitoring."""
 
-
 import os
 from typing import Any
 
@@ -63,17 +62,19 @@ async def _build_tools(*, include_list_contents: bool = True) -> list[Any]:
     command = os.environ.get("KS_MCP_COMMAND", "uvx")
     args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
     args = args_raw.split() if args_raw else []
-    client = MultiServerMCPClient({
-        "knowledgestack": {
-            "command": command,
-            "args": args,
-            "transport": "stdio",
-            "env": {
-                "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-                "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
-            },
+    client = MultiServerMCPClient(
+        {
+            "knowledgestack": {
+                "command": command,
+                "args": args,
+                "transport": "stdio",
+                "env": {
+                    "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+                    "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+                },
+            }
         }
-    })
+    )
     tools = await client.get_tools()
     if include_list_contents:
         return tools
@@ -81,7 +82,10 @@ async def _build_tools(*, include_list_contents: bool = True) -> list[Any]:
 
 
 async def monitor_covenants(
-    *, borrower: str, period: str, corpus_folder_id: str | None,
+    *,
+    borrower: str,
+    period: str,
+    corpus_folder_id: str | None,
     model: str = "gpt-4o",
 ) -> str:
     """Run the covenant monitoring agent; returns a Markdown report string."""

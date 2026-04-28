@@ -13,7 +13,6 @@ Tools: list_contents, read, search_knowledge.
 Output: stdout (one cited paragraph).
 """
 
-
 import argparse
 import asyncio
 import os
@@ -23,11 +22,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
 
-POLICIES_FOLDER = os.environ.get(
-    "POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41"
-)
-
-
+POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 async def run(question: str) -> None:
     from llama_index.core import Document, Settings, VectorStoreIndex
     from llama_index.core.node_parser import SentenceSplitter
@@ -41,19 +36,22 @@ async def run(question: str) -> None:
         policies = [p for p in listing if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"]
         for policy in policies:
             text = await call(
-                session, "read",
+                session,
+                "read",
                 {"path_part_id": policy["path_part_id"], "max_chars": 8000},
             )
-            docs.append(Document(
-                text=text,
-                metadata={"name": policy["name"], "path_part_id": policy["path_part_id"]},
-            ))
+            docs.append(
+                Document(
+                    text=text,
+                    metadata={"name": policy["name"], "path_part_id": policy["path_part_id"]},
+                )
+            )
 
     if not docs:
         sys.exit("No policies visible to this API key. Check KS_API_KEY scope.")
 
     # 2. Hand the (already-permission-filtered) docs to LlamaIndex as normal.
-    Settings.llm = LlamaOpenAI(model=os.environ.get("MODEL", "gpt-4o-mini"))
+    Settings.llm = LlamaOpenAI(model=os.environ.get("MODEL", "gpt-4o"))
     Settings.embed_model = OpenAIEmbedding(model="text-embedding-3-small")
     Settings.node_parser = SentenceSplitter(chunk_size=512, chunk_overlap=60)
     index = VectorStoreIndex.from_documents(docs)

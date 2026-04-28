@@ -1,6 +1,5 @@
 """CLI entry for the research-brief demo."""
 
-
 import argparse
 import asyncio
 import os
@@ -20,10 +19,15 @@ def _default_model() -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate a cited .docx research brief from your KS tenant.")
+    parser = argparse.ArgumentParser(
+        description="Generate a cited .docx research brief from your KS tenant."
+    )
     parser.add_argument("--topic", required=True, help="Research topic to brief on.")
     parser.add_argument(
-        "--out", default="brief.docx", type=Path, help="Output .docx path (default: brief.docx)."
+        "--out",
+        default="brief.docx",
+        type=Path,
+        help="Output .docx path (default: brief.docx).",
     )
     parser.add_argument(
         "--model",
@@ -37,7 +41,9 @@ def main() -> None:
 
     brief = asyncio.run(research_topic(args.topic, model=args.model))
     write_docx(brief, args.out)
-    print(f"Wrote {args.out} — {len(brief.sections)} sections, {len(brief.citations)} citations.")
+    print(
+        f"Wrote {args.out} — {len(brief.sections)} sections, {len(brief.citations)} citations."
+    )
 
 
 if __name__ == "__main__":

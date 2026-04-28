@@ -26,9 +26,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
 
-CORPUS_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
-
-
+CORPUS_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 def _dump(obj) -> str:
     return json.dumps(obj, indent=2, default=str)
 
@@ -40,8 +38,10 @@ async def run(query: str, out_path: Path) -> None:
             sys.exit(f"No documents found matching '{query}'.")
         first = hits[0] if not isinstance(hits[0], list) else hits[0][0]
         path_part_id = (
-            first.get("path_part_id") or first.get("id") or first.get("pathPartId")
-        ) if isinstance(first, dict) else None
+            (first.get("path_part_id") or first.get("id") or first.get("pathPartId"))
+            if isinstance(first, dict)
+            else None
+        )
         if not path_part_id:
             sys.exit(f"Could not locate path_part_id in find result: {first!r}")
 
@@ -78,8 +78,11 @@ async def run(query: str, out_path: Path) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--query", default="access control policy",
-                   help="Natural-language query to resolve a document via `find`.")
+    p.add_argument(
+        "--query",
+        default="access control policy",
+        help="Natural-language query to resolve a document via `find`.",
+    )
     p.add_argument("--out", type=Path, default=Path("document-versions.md"))
     args = p.parse_args()
     if not os.environ.get("KS_API_KEY"):

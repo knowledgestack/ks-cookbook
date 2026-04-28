@@ -1,11 +1,12 @@
 """Cash-flow anomaly detector — bank CSV path → cited anomaly list.
 
 Pain point: Controllers reconcile bank statements line by line and miss
-unusual patterns (duplicate vendors, weekend ACH bursts, above-threshold cash).
-This recipe cross-references transactions with your AP/AR notes corpus and
-surfaces cited anomalies.
+unusual patterns (duplicate vendors, weekend ACH bursts, above-threshold
+cash withdrawals). This recipe scans the CSV for anomalies and asks
+Knowledge Stack about your AP/AR notes + expense / treasury policy to
+ground each suggested control in real chunks of those documents.
 
-Framework: pydantic-ai. Tools: list_contents, search_knowledge, read.
+Framework: pydantic-ai. KS access via the knowledgestack-mcp stdio server.
 Output: stdout (JSON).
 """
 
@@ -19,8 +20,6 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
-
-CORPUS = os.environ.get("FINANCE_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
 
 
 class Citation(BaseModel):
@@ -43,26 +42,59 @@ class AnomalyReport(BaseModel):
 
 
 PROMPT = (
-    f"You review bank CSV exports for anomalies. Cross-reference AP/AR notes "
-    f"and expense policy in path_part_id={CORPUS}. Flag duplicate vendors, "
-    "atypical cadence, above-threshold cash, and policy violations. Cite real "
-    "chunk_ids for each suggested control."
+    "You're a controller reviewing a bank-transaction CSV for anomalies. "
+    "Knowledge Stack is your search backend; ask it natural-language "
+    "questions about your company's expense policy, treasury controls, "
+    "AP/AR notes, and AML thresholds.\n\n"
+    "Workflow:\n"
+    "1. Scan the CSV in the user message for patterns like:\n"
+    "   • duplicate vendor (same vendor name with minor variations like "
+    "'Acme LLC' vs 'Acme L.L.C.' billed for the same invoice)\n"
+    "   • multiple sub-threshold cash withdrawals on the same/sequential "
+    "days (potential structuring)\n"
+    "   • weekend / off-hours ACH bursts\n"
+    "   • above-policy single-payment thresholds\n"
+    "   • new vendor first-payment without onboarding evidence\n"
+    "2. For EACH detected pattern, ask Knowledge Stack a specific question, "
+    "e.g.:\n"
+    "   • 'What is our company's policy on duplicate vendor payments?'\n"
+    "   • 'What does FinCEN say about cash structuring under $10,000?'\n"
+    "   • 'What is our treasury policy on new-vendor first-payment "
+    "approval?'\n"
+    "   Frame each query naturally. Never use folder UUIDs or "
+    "path_part_id filters.\n"
+    "3. search_knowledge returns hits with chunk_id and path_part_id; the "
+    "text field is empty. Call read(path_part_id=<hit's path_part_id>) to "
+    "get the chunk text. The trailing [chunk:<uuid>] marker is your "
+    "citation.chunk_id (NEVER pass chunk_id to read; it 404s).\n"
+    "4. Build suggested_control directly from the chunk text. Populate "
+    "every citation with chunk_id (from the marker), document_name "
+    "(filename in read() output's metadata), and snippet (verbatim ≤240 "
+    "chars from the chunk content).\n"
+    "5. example_lines: 1–5 verbatim CSV rows that exhibit the pattern."
+    """Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 )
-
-
 async def run(csv_path: Path) -> None:
     txns = csv_path.read_text()[:8000]
     mcp = MCPServerStdio(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
-    agent = Agent(model=f"openai:{os.environ.get('MODEL', 'gpt-4o-mini')}",
-                  mcp_servers=[mcp], system_prompt=PROMPT, result_type=AnomalyReport)
+    agent = Agent(
+        model=f"openai:{os.environ.get('MODEL', 'gpt-4o')}",
+        mcp_servers=[mcp],
+        system_prompt=PROMPT,
+        output_type=AnomalyReport,
+        retries=4,
+        output_retries=4,
+    )
     async with agent.run_mcp_servers():
         result = await agent.run(f"Source: {csv_path.name}\n\nTransactions:\n{txns}")
-    print(json.dumps(result.data.model_dump(), indent=2))
+    print(json.dumps(result.output.model_dump(), indent=2))
 
 
 def main() -> None:

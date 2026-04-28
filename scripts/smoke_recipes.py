@@ -72,8 +72,14 @@ def _flagship_targets() -> list[tuple[str, str]]:
 
 def _run_help(cmd: list[str]) -> tuple[bool, str]:
     try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=45,
-                           cwd=ROOT, env={**os.environ, "KS_API_KEY": "smoke"})
+        r = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=45,
+            cwd=ROOT,
+            env={**os.environ, "KS_API_KEY": "smoke"},
+        )
     except subprocess.TimeoutExpired:
         return False, "timeout"
     ok = r.returncode == 0
@@ -114,8 +120,10 @@ def main() -> int:
                 failures.append((f"flagship:{name}", tail))
 
     total = passed + len(failures)
-    print(f"\nSmoke test: {passed}/{total} passed, {len(failures)} failed, "
-          f"{len(KNOWN_SKIPS)} skipped (env-guarded).")
+    print(
+        f"\nSmoke test: {passed}/{total} passed, {len(failures)} failed, "
+        f"{len(KNOWN_SKIPS)} skipped (env-guarded)."
+    )
     for label, tail in failures:
         print(f"  FAIL {label}: {tail}")
     return 0 if not failures else 1

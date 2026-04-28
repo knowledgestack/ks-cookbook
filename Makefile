@@ -374,6 +374,84 @@ demo-rfi-agent: check-env ## Construction flagship: RFI / submittal draft respon
 		--out flagships/construction_rfi_agent/sample_output.md
 	@echo "Output written to: $(abspath flagships/construction_rfi_agent/sample_output.md)"
 
+seed-dbstreams-demo: check-env ## DB Streams tomorrow-demo: seed CondoStack + Sertain + ChiroCRM corpora. PARENT=<folder-uuid>
+	@test -n "$(PARENT)" || (echo 'Usage: make seed-dbstreams-demo PARENT=<folder-uuid>'; exit 1)
+	@uv run --with reportlab --with openpyxl \
+		python scripts/seed_dbstreams_demo.py --parent $(PARENT)
+
+demo-condo-board: check-env ## CondoStack flagship: architectural request → board decision memo (docx)
+	@folder_args=""; \
+	if [ -n "$${CONDO_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$CONDO_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-condo-board ks-cookbook-condo-board \
+		--request "$${REQUEST:-Unit 4B requests to install 12 solar panels on the roof terrace and a battery storage unit in the locker room}" \
+		--unit "$${UNIT:-4B}" \
+		$$folder_args \
+		--out flagships/condo_board_decision_pack/sample_output.docx
+	@echo "Output: $(abspath flagships/condo_board_decision_pack/sample_output.docx)"
+
+demo-legal-intake: check-env ## Sertain flagship: new-matter intake dossier (docx)
+	@folder_args=""; \
+	if [ -n "$${LEGAL_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$LEGAL_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-legal-intake ks-cookbook-legal-intake \
+		--client "$${CLIENT:-Northstar Biotech Ltd.}" \
+		--matter "$${MATTER:-Series B financing + technology license-in from MIT}" \
+		$$folder_args \
+		--out flagships/legal_matter_intake/sample_output.docx
+	@echo "Output: $(abspath flagships/legal_matter_intake/sample_output.docx)"
+
+demo-chiro-autopilot: check-env ## ChiroCRM flagship: SOAP note → coding xlsx + prior-auth docx + patient plan md
+	@folder_args=""; \
+	if [ -n "$${CHIRO_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$CHIRO_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-chiro-autopilot ks-cookbook-chiro-autopilot \
+		--patient-id "$${PATIENT_ID:-PT-4401}" \
+		--visit-date "$${VISIT_DATE:-2026-04-18}" \
+		$$folder_args
+	@echo "Outputs in: $(abspath flagships/chiro_visit_autopilot/)"
+
+demo-hcc-coder: check-env ## Healthcare flagship: audit-defensible HCC / ICD-10 coder (xlsx)
+	@folder_args=""; \
+	if [ -n "$${HCC_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$HCC_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-hcc-coder ks-cookbook-hcc-coder \
+		--patient-id "$${PATIENT_ID:-PT-001}" \
+		$$folder_args \
+		--out flagships/audit_defensible_hcc_coder/sample_output.xlsx
+	@echo "Output: $(abspath flagships/audit_defensible_hcc_coder/sample_output.xlsx)"
+
+demo-contract-redline: check-env ## Legal flagship: inbound contract redline memo (docx) with dual-corpus citations
+	@playbook_args=""; draft_args=""; \
+	if [ -n "$${PLAYBOOK_FOLDER_ID:-}" ]; then playbook_args="--playbook-folder $$PLAYBOOK_FOLDER_ID"; fi; \
+	if [ -n "$${DRAFT_FOLDER_ID:-}" ]; then draft_args="--draft-folder $$DRAFT_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-contract-redline ks-cookbook-contract-redline \
+		--playbook-name "$${PLAYBOOK_NAME:-firm_playbook}" \
+		--inbound-name "$${INBOUND_NAME:-counterparty_draft}" \
+		$$playbook_args $$draft_args \
+		--out flagships/contract_redline_with_provenance/sample_output.docx
+	@echo "Output: $(abspath flagships/contract_redline_with_provenance/sample_output.docx)"
+
+demo-claims-rebuttal: check-env ## Healthcare flagship: payer denial rebuttal letter (docx)
+	@chart_args=""; policy_args=""; \
+	if [ -n "$${PATIENT_CHART_FOLDER_ID:-}" ]; then chart_args="--chart-folder $$PATIENT_CHART_FOLDER_ID"; fi; \
+	if [ -n "$${PAYER_POLICY_FOLDER_ID:-}" ]; then policy_args="--policy-folder $$PAYER_POLICY_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-claims-rebuttal ks-cookbook-claims-rebuttal \
+		--patient-id "$${PATIENT_ID:-PT-9043}" \
+		--denial-code "$${DENIAL_CODE:-CO-50}" \
+		--payer "$${PAYER:-BCBS}" \
+		--service "$${SERVICE:-Lumbar epidural steroid injection}" \
+		$$chart_args $$policy_args \
+		--out flagships/claims_denial_rebuttal_drafter/sample_output.docx
+	@echo "Output: $(abspath flagships/claims_denial_rebuttal_drafter/sample_output.docx)"
+
+demo-invoice-followup: check-env ## SMB flagship: tone-matched overdue-invoice follow-up draft (md)
+	@folder_args=""; \
+	if [ -n "$${INVOICE_CORPUS_FOLDER_ID:-}" ]; then folder_args="--corpus-folder $$INVOICE_CORPUS_FOLDER_ID"; fi; \
+	uv run --package ks-cookbook-invoice-followup ks-cookbook-invoice-followup \
+		--client "$${CLIENT:-Acme Corp}" \
+		--invoice-number "$${INVOICE_NUMBER:-INV-2031}" \
+		--days-overdue $${DAYS_OVERDUE:-14} \
+		$$folder_args \
+		--out flagships/smb_invoice_followup_agent/sample_output.md
+	@echo "Output: $(abspath flagships/smb_invoice_followup_agent/sample_output.md)"
+
 recipe: check-env ## Run a recipe: make recipe NAME=policy_qa ARGS='--question "..."'
 	@if [ -z "$(NAME)" ]; then echo 'Usage: make recipe NAME=<folder> ARGS="..."'; exit 1; fi
 	@uv run python recipes/$(NAME)/recipe.py $(ARGS)

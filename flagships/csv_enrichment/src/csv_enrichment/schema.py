@@ -1,6 +1,5 @@
 """Graph state for the CSV enrichment flow."""
 
-
 from typing import TypedDict
 
 

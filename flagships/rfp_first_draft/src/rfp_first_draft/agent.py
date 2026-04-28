@@ -39,19 +39,24 @@ the past proposals.
 
 
 async def draft_rfp(
-    *, question: str, corpus_folder_id: str, model: str,
+    *,
+    question: str,
+    corpus_folder_id: str,
+    model: str,
 ) -> RFPDraft:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
     server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
-        command=server_cmd, args=server_args,
+        command=server_cmd,
+        args=server_args,
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
         },
     )
     agent = Agent(
-        model=f"openai:{model}", mcp_servers=[mcp],
+        model=f"openai:{model}",
+        mcp_servers=[mcp],
         system_prompt=SYSTEM.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
         output_type=RFPDraft,
     )
@@ -61,9 +66,15 @@ async def draft_rfp(
             result = await agent.run(
                 f"Draft responses to this RFP question:\n\n{question}"
             )
-            draft = getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[assignment]
+            draft = (
+                getattr(result, "output", None)
+                or getattr(result, "data", None)
+                or result
+            )  # type: ignore[assignment]
     except BaseExceptionGroup:
         pass
     if draft is None:
-        raise RuntimeError("Agent did not produce a result before the MCP session closed.")
+        raise RuntimeError(
+            "Agent did not produce a result before the MCP session closed."
+        )
     return draft

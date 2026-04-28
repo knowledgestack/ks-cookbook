@@ -1,6 +1,5 @@
 """Well-log summarizer CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -49,7 +48,8 @@ def main() -> None:
     p.add_argument(
         "--corpus-folder",
         default=os.environ.get(
-            "ENERGY_CORPUS_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41",
+            "ENERGY_CORPUS_FOLDER_ID",
+            "ab926019-ac7a-579f-bfda-6c52a13c5f41",
         ),
         help="Folder.id of the energy corpus in your KS tenant.",
     )
@@ -60,9 +60,13 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    summary = asyncio.run(summarize_well(
-        well_id=args.well_id, corpus_folder_id=args.corpus_folder, model=args.model,
-    ))
+    summary = asyncio.run(
+        summarize_well(
+            well_id=args.well_id,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(_render_markdown(summary))
     n_cites = sum(len(e.citations) for e in summary.events)
     print(

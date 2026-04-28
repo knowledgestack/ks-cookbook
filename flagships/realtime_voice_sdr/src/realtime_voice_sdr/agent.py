@@ -1,6 +1,5 @@
 """MCP <-> OpenAI Realtime bridge + session summarizer."""
 
-
 import json
 import os
 from contextlib import asynccontextmanager
@@ -62,12 +61,14 @@ async def discover_tools(session: ClientSession) -> list[dict[str, Any]]:
     result = await session.list_tools()
     tools: list[dict[str, Any]] = []
     for t in result.tools:
-        tools.append({
-            "type": "function",
-            "name": t.name,
-            "description": (t.description or "")[:1024],
-            "parameters": t.inputSchema or {"type": "object", "properties": {}},
-        })
+        tools.append(
+            {
+                "type": "function",
+                "name": t.name,
+                "description": (t.description or "")[:1024],
+                "parameters": t.inputSchema or {"type": "object", "properties": {}},
+            }
+        )
     return tools
 
 
@@ -86,14 +87,13 @@ async def call_mcp_tool(session: ClientSession, name: str, arguments: str) -> st
 
 def build_summary_agent(*, model: str) -> Agent:
     return Agent(
-        model=f"openai:{model}", system_prompt=SUMMARY_SYSTEM,
+        model=f"openai:{model}",
+        system_prompt=SUMMARY_SYSTEM,
         output_type=SessionSummary,
     )
 
 
 def instructions_for(corpus_folder_id: str, prospect_context: str) -> str:
-    return (
-        TURN_INSTRUCTIONS
-        .replace("__CORPUS_FOLDER_ID__", corpus_folder_id)
-        .replace("__PROSPECT_CONTEXT__", prospect_context or "(none provided)")
+    return TURN_INSTRUCTIONS.replace("__CORPUS_FOLDER_ID__", corpus_folder_id).replace(
+        "__PROSPECT_CONTEXT__", prospect_context or "(none provided)"
     )

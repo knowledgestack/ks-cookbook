@@ -1,6 +1,5 @@
 """pydantic-ai multi-turn SDR discovery agent grounded in KS corpus."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -51,16 +50,16 @@ def _mcp() -> MCPServerStdio:
 
 
 def build_turn_agent(*, corpus_folder_id: str, prospect_context: str, model: str) -> Agent:
-    prompt = (
-        TURN_SYSTEM
-        .replace("__CORPUS_FOLDER_ID__", corpus_folder_id)
-        .replace("__PROSPECT_CONTEXT__", prospect_context)
+    prompt = TURN_SYSTEM.replace("__CORPUS_FOLDER_ID__", corpus_folder_id).replace(
+        "__PROSPECT_CONTEXT__", prospect_context
     )
     return Agent(model=f"openai:{model}", mcp_servers=[_mcp()], system_prompt=prompt)
 
 
 def build_summary_agent(*, model: str) -> Agent:
     return Agent(
-        model=f"openai:{model}", mcp_servers=[], system_prompt=SUMMARY_SYSTEM,
+        model=f"openai:{model}",
+        mcp_servers=[],
+        system_prompt=SUMMARY_SYSTEM,
         output_type=SessionSummary,
     )

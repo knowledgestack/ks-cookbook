@@ -1,6 +1,5 @@
 """pydantic-ai agent that checks patient eligibility against a clinical trial."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -49,9 +48,7 @@ async def assess_eligibility(
     model: str,
 ) -> EligibilityAssessment:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
-    server_args = (
-        os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or ""
-    ).split()
+    server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
         command=server_cmd,
         args=server_args,
@@ -74,17 +71,14 @@ async def assess_eligibility(
     agent = Agent(
         model=f"openai:{model}",
         mcp_servers=[mcp],
-        system_prompt=SYSTEM.replace(
-            "__DISCOVERY_STEP__", discovery_step
-        ),
+        system_prompt=SYSTEM.replace("__DISCOVERY_STEP__", discovery_step),
         output_type=EligibilityAssessment,
     )
     assessment: EligibilityAssessment | None = None
     try:
         async with agent.run_mcp_servers():
             result = await agent.run(
-                f"Evaluate this patient for trial eligibility:\n\n"
-                f"{patient_profile}"
+                f"Evaluate this patient for trial eligibility:\n\n{patient_profile}"
             )
             assessment = (
                 getattr(result, "output", None)

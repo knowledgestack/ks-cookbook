@@ -55,7 +55,7 @@ A JSON file with:
 ## What it does
 
 1. Spawns `uvx knowledgestack-mcp` over stdio.
-2. A [pydantic-ai](https://ai.pydantic.dev) `Agent` with `result_type=RevRecMemo`
+2. A [pydantic-ai](https://ai.pydantic.dev) `Agent` with `output_type=RevRecMemo`
    iteratively calls `list_contents` + `read` against the seeded policy corpus.
 3. Produces a strictly-validated five-step memo (Identify contract / Performance
    obligations / Transaction price / Allocate / Recognize), with inline

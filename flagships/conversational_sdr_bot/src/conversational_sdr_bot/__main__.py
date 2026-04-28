@@ -4,7 +4,6 @@ Launches a live chat in the terminal. Type ``/end`` to close the session;
 the bot then produces a cited MEDDIC-scored summary artifact.
 """
 
-
 import argparse
 import asyncio
 import os
@@ -46,10 +45,17 @@ def _render(s: SessionSummary) -> str:
 
 
 async def _run(
-    *, prospect: str, prospect_context: str, corpus_folder_id: str, model: str, out: Path,
+    *,
+    prospect: str,
+    prospect_context: str,
+    corpus_folder_id: str,
+    model: str,
+    out: Path,
 ) -> None:
     turn_agent = build_turn_agent(
-        corpus_folder_id=corpus_folder_id, prospect_context=prospect_context, model=model,
+        corpus_folder_id=corpus_folder_id,
+        prospect_context=prospect_context,
+        model=model,
     )
     transcript: list[str] = []
     history: list = []
@@ -93,13 +99,15 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--prospect", required=True, help="Prospect company name.")
     p.add_argument(
-        "--prospect-context", default="",
+        "--prospect-context",
+        default="",
         help="Freeform context you know about the prospect (title, source, etc.).",
     )
     p.add_argument(
         "--corpus-folder",
         default=os.environ.get(
-            "SALES_CORPUS_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41",
+            "SALES_CORPUS_FOLDER_ID",
+            "ab926019-ac7a-579f-bfda-6c52a13c5f41",
         ),
         help="Folder.id of the product/ICP/past-wins corpus in your KS tenant.",
     )
@@ -110,10 +118,15 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    asyncio.run(_run(
-        prospect=args.prospect, prospect_context=args.prospect_context,
-        corpus_folder_id=args.corpus_folder, model=args.model, out=args.out,
-    ))
+    asyncio.run(
+        _run(
+            prospect=args.prospect,
+            prospect_context=args.prospect_context,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+            out=args.out,
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,5 @@
 """Structured output every well-log summary must conform to."""
 
-
 from pydantic import BaseModel, Field
 
 

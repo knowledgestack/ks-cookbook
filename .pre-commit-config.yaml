@@ -1,6 +1,13 @@
 repos:
   - repo: local
     hooks:
+      - id: format
+        name: ruff format
+        entry: make format
+        language: system
+        pass_filenames: false
+        always_run: true
+
       - id: lint_fix
         name: ruff check --fix
         entry: make fix

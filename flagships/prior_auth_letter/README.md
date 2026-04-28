@@ -38,7 +38,7 @@ Output: `prior-auth-letter.docx` containing the full letter with inline
 
 ## Framework
 
-Uses **pydantic-ai** with `result_type=PriorAuthLetter` — the agent MUST
+Uses **pydantic-ai** with `output_type=PriorAuthLetter` — the agent MUST
 return a validated pydantic model or the run fails.
 
 ## Guardrails

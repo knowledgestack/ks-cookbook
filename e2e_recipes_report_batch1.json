@@ -1,0 +1,209 @@
+{
+  "results": [
+    {
+      "recipe": "access_review",
+      "status": "pass",
+      "elapsed_s": 18.2,
+      "output_size": 1226,
+      "stdout_head": "{\n  \"user\": \"contractor-svc-shared\",\n  \"system\": \"prod-postgres-primary\",\n  \"role\": \"superuser write\",\n  \"verdict\": \"revoke\",\n  \"rationale\": \"The current access and privilege policies require strict enforcement, which is not aligned with th"
+    },
+    {
+      "recipe": "account_research_brief",
+      "status": "pass",
+      "elapsed_s": 21.3,
+      "output_size": 2705,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"summary\": \"The account involves ongoing legal and insurance-related activities related to asbestos claims, with Aqua-Chem and challenges from Chartis insurers that led to settlements and appeals resolved mostly in "
+    },
+    {
+      "recipe": "adr_drafter",
+      "status": "fail",
+      "cmd": "uv run python recipes/adr_drafter/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 1.3,
+      "stderr_tail": [
+        "      |     raise TypeError(",
+        "      | TypeError: \"Could not resolve authentication method. Expected either api_key or auth_token to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\"",
+        "      +------------------------------------"
+      ]
+    },
+    {
+      "recipe": "aml_sar_narrative",
+      "status": "pass",
+      "elapsed_s": 30.3,
+      "output_size": 2835,
+      "stdout_head": "{\n  \"case_id\": \"structuring-cash-deposits\",\n  \"who\": \"NOT IN CORPUS \\u2014 upload case file to proceed\",\n  \"what\": \"The activity involves cash deposits that may be structured to evade reporting requirements. Details on the specific patterns"
+    },
+    {
+      "recipe": "analyst_inquiry_responder",
+      "status": "pass",
+      "elapsed_s": 18.3,
+      "output_size": 3447,
+      "stdout_head": "{\n  \"analyst_question\": \"What ERISA disclosures must an employer provide to participants in the SPD?\",\n  \"headline_answer\": \"Employers must provide several ERISA disclosures in the Summary Plan Description (SPD), including plan operations, "
+    },
+    {
+      "recipe": "api_deprecation_notice",
+      "status": "pass",
+      "elapsed_s": 16.5,
+      "output_size": 930,
+      "stdout_head": "{\n  \"endpoint\": \"POST /v1/ingest\",\n  \"deprecation_reason\": \"The existing endpoint is outdated and will be replaced by a more efficient version.\",\n  \"replacement\": \"POST /v2/ingest\",\n  \"sunset_date\": \"2026-12-31\",\n  \"migration_steps\": [\n    "
+    },
+    {
+      "recipe": "basel_iii_risk_weight",
+      "status": "fail",
+      "cmd": "uv run python recipes/basel_iii_risk_weight/recipe.py --name 'Acme Corp' --asset-class corporate --counterparty 'BB-rated corporate' --notional 10000000",
+      "exit_code": 1,
+      "elapsed_s": 1.3,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/_utils.py\", line 699, in validate_empty_kwargs",
+        "    raise exceptions.UserError(f'Unknown keyword arguments: {unknown_kwargs}')",
+        "pydantic_ai.exceptions.UserError: Unknown keyword arguments: `result_type`"
+      ]
+    },
+    {
+      "recipe": "bcp_drill_plan",
+      "status": "fail",
+      "cmd": "uv run python recipes/bcp_drill_plan/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 1.4,
+      "stderr_tail": [
+        "      |     raise TypeError(",
+        "      | TypeError: \"Could not resolve authentication method. Expected either api_key or auth_token to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted\"",
+        "      +------------------------------------"
+      ]
+    },
+    {
+      "recipe": "benefits_enrollment_qa",
+      "status": "pass",
+      "elapsed_s": 10.4,
+      "output_size": 962,
+      "stdout_head": "{\n  \"question\": \"What ERISA disclosures must an employer provide to participants in the SPD?\",\n  \"answer\": \"Employers must provide disclosures either on paper or electronically. When providing them electronically, they must be posted on a p"
+    },
+    {
+      "recipe": "board_update_drafter",
+      "status": "pass",
+      "elapsed_s": 16.1,
+      "output_size": 1845,
+      "stdout_head": "{\n  \"period\": \"March 2026\",\n  \"tl_dr\": \"The board update includes financial highlights, specific KPIs, and identified risks for March 2026.\",\n  \"highlights\": [\n    \"Mature 2026 notes remaining outstanding, accruing interest at 1.125% per an"
+    },
+    {
+      "recipe": "case_study_drafter",
+      "status": "pass",
+      "elapsed_s": 12.2,
+      "output_size": 1609,
+      "stdout_head": "{\n  \"customer\": \"demo\",\n  \"hero_stat\": \"Deep Resolve Sharp showed increased edge sharpness in imaging tests.\",\n  \"challenge\": \"Challenge details are not specified in the available data, please provide the data to proceed.\",\n  \"solution\": \"T"
+    },
+    {
+      "recipe": "cashflow_anomaly_detector",
+      "status": "pass",
+      "elapsed_s": 12.6,
+      "output_size": 2431,
+      "stdout_head": "{\n  \"source_csv\": \"bank_txns_2025_q1.csv\",\n  \"anomalies\": [\n    {\n      \"pattern\": \"duplicate vendor (same name variation) billed for the same invoice\",\n      \"example_lines\": [\n        \"2025-01-02,ACH PAYMENT,-12450.00,Acme Vendor LLC,Oper"
+    },
+    {
+      "recipe": "change_management_review",
+      "status": "fail",
+      "cmd": "uv run python recipes/change_management_review/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 1.4,
+      "stderr_tail": [
+        "      |     sys.exit(\"Policies folder is empty.\")",
+        "      | SystemExit: Policies folder is empty.",
+        "      +------------------------------------"
+      ]
+    },
+    {
+      "recipe": "change_monitor_to_pr",
+      "status": "fail",
+      "reason": "stdout not JSON",
+      "cmd": "uv run python recipes/change_monitor_to_pr/recipe.py --folder-id demo --topic 'Q4 board update' --snapshot demo --out demo",
+      "stdout_head": "Wrote demo \u2014 0 changes (0 tracked chunks)",
+      "elapsed_s": 1.7
+    },
+    {
+      "recipe": "changelog_from_commits",
+      "status": "pass",
+      "elapsed_s": 13.1,
+      "output_size": 4351,
+      "stdout_head": "{\n  \"version\": \"v2.4.0\",\n  \"date\": \"2026-04-27\",\n  \"entries\": [\n    {\n      \"category\": \"Added\",\n      \"summary\": \"Introduce /v2/ingest endpoint with batch upload support.\",\n      \"why_user_cares\": \"Enables more efficient data ingestion by "
+    },
+    {
+      "recipe": "churn_risk_flags",
+      "status": "pass",
+      "elapsed_s": 22.1,
+      "output_size": 1409,
+      "stdout_head": "{\n  \"account\": \"demo\",\n  \"overall_risk\": \"medium\",\n  \"signals\": [\n    {\n      \"signal\": \"Security and Account Management Practices\",\n      \"severity\": \"medium\",\n      \"evidence\": \"Security programs manage account access, including emergency"
+    },
+    {
+      "recipe": "citizen_intent_311",
+      "status": "pass",
+      "elapsed_s": 10.9,
+      "output_size": 1454,
+      "stdout_head": "{\n  \"message\": \"The document outlines a notification banner system used by organizations before granting access to users. This banner provides privacy and security notices compliant with applicable laws and regulations. It informs users tha"
+    },
+    {
+      "recipe": "clause_extractor",
+      "status": "pass",
+      "elapsed_s": 28.0,
+      "output_size": 4748,
+      "stdout_head": "{\n  \"contract\": \"Apple 2024 proxy\",\n  \"clauses\": [\n    {\n      \"clause\": \"limitation of liability\",\n      \"present\": true,\n      \"excerpt\": \"NOTWITHSTANDING ANYTHING TO THE CONTRARY, EXCEPT FOR BODILY INJURY OF A PERSON, COMPANY AND ITS SUP"
+    },
+    {
+      "recipe": "cloud_cost_anomaly",
+      "status": "fail",
+      "cmd": "uv run python recipes/cloud_cost_anomaly/recipe.py --cur-file recipes/cloud_cost_anomaly/sample_inputs/aws_cur_march_2026.csv",
+      "exit_code": 1,
+      "elapsed_s": 39.3,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/_agent_graph.py\", line 1400, in process_tool_calls",
+        "    raise exceptions.UnexpectedModelBehavior(  # pragma: lax no cover",
+        "pydantic_ai.exceptions.UnexpectedModelBehavior: Exceeded maximum retries (1) for output validation"
+      ]
+    },
+    {
+      "recipe": "coa_mapper",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "compensation_band_check",
+      "status": "pass",
+      "elapsed_s": 14.2,
+      "output_size": 1886,
+      "stdout_head": "{\n  \"role\": \"demo\",\n  \"level\": \"demo\",\n  \"location\": \"demo\",\n  \"band_min\": \"not in corpus \\u2014 upload data to proceed\",\n  \"band_mid\": \"not in corpus \\u2014 upload data to proceed\",\n  \"band_max\": \"not in corpus \\u2014 upload data to procee"
+    },
+    {
+      "recipe": "competitive_positioning",
+      "status": "pass",
+      "elapsed_s": 19.0,
+      "output_size": 2191,
+      "stdout_head": "{\n  \"competitor\": \"demo\",\n  \"their_strengths\": [\n    \"Diverse product types and services\",\n    \"Rapidly evolving and competitive markets\",\n    \"Access to a wide range of distribution channels\"\n  ],\n  \"their_weaknesses\": [\n    \"Potential for"
+    },
+    {
+      "recipe": "construction_rfi_agent",
+      "status": "pass",
+      "elapsed_s": 7.1,
+      "output_size": 833,
+      "stdout_head": "{\n  \"rfi_number\": \"demo\",\n  \"subject\": \"RFI demo\",\n  \"spec_section\": \"not in corpus\",\n  \"draft_response\": \"The reference to 'RFI demo' was found, containing instructions unrelated to request for information processes. The content outlines s"
+    },
+    {
+      "recipe": "content_brief_drafter",
+      "status": "pass",
+      "elapsed_s": 20.5,
+      "output_size": 1838,
+      "stdout_head": "{\n  \"topic\": \"Q4 board update\",\n  \"audience\": \"Board of Directors\",\n  \"angle\": \"Financial and strategic performance analysis for the fourth quarter of 2025\",\n  \"key_messages\": [\n    \"Overview of Q4 2025 corporate performance.\",\n    \"Strateg"
+    },
+    {
+      "recipe": "contract_renewal_checker",
+      "status": "pass",
+      "elapsed_s": 11.7,
+      "output_size": 1450,
+      "stdout_head": "{\n  \"contract\": \"Apple 2024 proxy\",\n  \"term_end\": \"2024-12-31\",\n  \"auto_renews\": false,\n  \"notice_window_days\": 0,\n  \"fee_escalator\": \"TBD\",\n  \"actions\": [\n    {\n      \"do_by\": \"2024-12-31\",\n      \"action\": \"Review contract for potential au"
+    }
+  ],
+  "summary": {
+    "pass": 18,
+    "fail": 6,
+    "skip": 1,
+    "timeout": 0
+  }
+}

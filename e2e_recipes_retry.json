@@ -1,0 +1,99 @@
+{
+  "results": [
+    {
+      "recipe": "adr_drafter",
+      "status": "fail",
+      "cmd": "uv run python recipes/adr_drafter/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 15.6,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 148, in _map_api_errors",
+        "    raise ModelHTTPError(status_code=status_code, model_name=model_name, body=e.body) from e",
+        "pydantic_ai.exceptions.ModelHTTPError: status_code: 429, model_name: gpt-4o, body: {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}"
+      ]
+    },
+    {
+      "recipe": "basel_iii_risk_weight",
+      "status": "fail",
+      "cmd": "uv run python recipes/basel_iii_risk_weight/recipe.py --name 'Acme Corp' --asset-class corporate --counterparty 'BB-rated corporate' --notional 10000000",
+      "exit_code": 1,
+      "elapsed_s": 13.0,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 148, in _map_api_errors",
+        "    raise ModelHTTPError(status_code=status_code, model_name=model_name, body=e.body) from e",
+        "pydantic_ai.exceptions.ModelHTTPError: status_code: 429, model_name: gpt-4o, body: {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}"
+      ]
+    },
+    {
+      "recipe": "bcp_drill_plan",
+      "status": "fail",
+      "cmd": "uv run python recipes/bcp_drill_plan/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 16.3,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 148, in _map_api_errors",
+        "    raise ModelHTTPError(status_code=status_code, model_name=model_name, body=e.body) from e",
+        "pydantic_ai.exceptions.ModelHTTPError: status_code: 429, model_name: gpt-4o, body: {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}"
+      ]
+    },
+    {
+      "recipe": "change_management_review",
+      "status": "fail",
+      "cmd": "uv run python recipes/change_management_review/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 3.6,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 148, in _map_api_errors",
+        "    raise ModelHTTPError(status_code=status_code, model_name=model_name, body=e.body) from e",
+        "pydantic_ai.exceptions.ModelHTTPError: status_code: 429, model_name: gpt-4o, body: {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}"
+      ]
+    },
+    {
+      "recipe": "change_monitor_to_pr",
+      "status": "fail",
+      "cmd": "uv run python recipes/change_monitor_to_pr/recipe.py --folder-id demo --topic 'Q4 board update' --snapshot demo --out demo",
+      "exit_code": 1,
+      "elapsed_s": 0.4,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/.local/share/uv/python/cpython-3.12.11-macos-aarch64-none/lib/python3.12/json/decoder.py\", line 356, in raw_decode",
+        "    raise JSONDecodeError(\"Expecting value\", s, err.value) from None",
+        "json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+      ]
+    },
+    {
+      "recipe": "cloud_cost_anomaly",
+      "status": "fail",
+      "cmd": "uv run python recipes/cloud_cost_anomaly/recipe.py --cur-file recipes/cloud_cost_anomaly/sample_inputs/aws_cur_march_2026.csv",
+      "exit_code": 1,
+      "elapsed_s": 18.1,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 148, in _map_api_errors",
+        "    raise ModelHTTPError(status_code=status_code, model_name=model_name, body=e.body) from e",
+        "pydantic_ai.exceptions.ModelHTTPError: status_code: 429, model_name: gpt-4o, body: {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}"
+      ]
+    },
+    {
+      "recipe": "coa_mapper",
+      "status": "skip",
+      "reason": "required file arg with no sample_inputs"
+    },
+    {
+      "recipe": "vendor_security_review",
+      "status": "fail",
+      "cmd": "uv run python recipes/vendor_security_review/recipe.py --vendor demo",
+      "exit_code": 1,
+      "elapsed_s": 3.5,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/models/openai.py\", line 148, in _map_api_errors",
+        "    raise ModelHTTPError(status_code=status_code, model_name=model_name, body=e.body) from e",
+        "pydantic_ai.exceptions.ModelHTTPError: status_code: 429, model_name: gpt-4o, body: {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}"
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 0,
+    "fail": 7,
+    "skip": 1,
+    "timeout": 0
+  }
+}

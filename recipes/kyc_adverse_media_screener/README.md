@@ -1,22 +1,74 @@
-# KYC adverse-media screener
+# KYC Adverse Media Screener
 
-One-line pain: analysts manually Google every new counterparty for negative
-news (sanctions hits, enforcement actions, fraud reports, regulatory
-orders) and copy-paste findings into the onboarding packet.
+## Problem This Recipe Solves
+
+Teams in **banking and financial compliance** repeatedly face high-friction document analysis tasks that are too nuanced for simple keyword search and too repetitive for manual-only review. This recipe demonstrates a practical automation pattern that keeps outputs grounded in source evidence instead of producing uncited summaries.
+
+## Why This Is Needed
+
+- Manual review is slow, expensive, and often inconsistent across reviewers.
+- Point-in-time decisions need traceable evidence for audit, QA, or stakeholder sign-off.
+- LLM automation without retrieval usually misses critical clauses/details or hallucinates context.
+- Teams need repeatable workflows that can run daily/weekly with predictable structure.
+
+## Typical Documents Used
+
+- KYC files, sanctions/adverse-media reports, and onboarding packets
+- Credit memos, Basel policy docs, and risk-weight guidance
+- Transaction narratives, SAR guidance, and compliance procedures
+
+## How Frequently This Problem Appears
+
+This is usually a **high-frequency operational problem**. In most organizations, similar requests appear:
+
+- Daily in frontline workflows (ops, support, legal, compliance, finance, clinical, or engineering queues)
+- Weekly in review cycles (approvals, controls, leadership reporting, and escalations)
+- Monthly/quarterly during audits, board prep, renewals, and policy refreshes
+
+## Common Automation Failure Modes
+
+- Missing document context (wrong file version, partial retrieval, stale corpus)
+- Non-cited outputs that cannot be defended in audit or compliance review
+- Over-generalized prompts that ignore domain constraints and required fields
+- Inconsistent schema/output shape that breaks downstream systems
+- Hidden environment misconfiguration (`KS_API_KEY`, `OPENAI_API_KEY`, base URL, model)
+
+## Developer Setup
+
+### 1) Get your Knowledge Stack API key
+
+1. Sign in to [app.knowledgestack.ai](https://app.knowledgestack.ai).
+2. Open your account/workspace API key section.
+3. Create or copy a key for your tenant.
+4. Export it in your terminal:
 
 ```bash
-uv run python recipes/kyc_adverse_media_screener/recipe.py \
-  --entity "Verdant Sourcing Group LLC"
+export KS_API_KEY="your_ks_api_key"
+export KS_BASE_URL="https://api.knowledgestack.ai"
 ```
 
-This recipe:
+### 2) Get your OpenAI API key
 
-1. `search_knowledge` over your KS corpus (seed with OFAC SDN, OpenSanctions
-   snapshots, DOJ press releases, state enforcement bulletins, curated
-   news archive).
-2. `read` the top hits and extracts event-level flags.
-3. Emits a pydantic-validated `AdverseMediaReport` — list of hits with
-   severity, source document, and `[chunk:<uuid>]` citations copied verbatim
-   from `read` output.
+1. Sign in to [platform.openai.com](https://platform.openai.com/).
+2. Go to **API keys** and create a new secret key.
+3. Copy it once (OpenAI only shows full key at creation time).
+4. Export it in your terminal:
 
-Framework: pydantic-ai. ≤100 LOC, no fabricated chunk IDs.
+```bash
+export OPENAI_API_KEY="your_openai_api_key"
+export MODEL="gpt-4o"
+```
+
+### 3) Run this recipe
+
+```bash
+uv run python recipes/kyc_adverse_media_screener/recipe.py --help
+```
+
+
+## Notes for Production Use
+
+- Keep retrieval grounded: require citations/chunk references in outputs.
+- Add strict output schemas before wiring to downstream automations.
+- Start in read-only mode, then progressively allow write/actions with approvals.
+- Monitor token cost, latency, and exception rates per run.

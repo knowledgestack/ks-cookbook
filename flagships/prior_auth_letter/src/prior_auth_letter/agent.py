@@ -1,6 +1,5 @@
 """pydantic-ai agent that drafts a prior-auth letter from KS policies."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -50,7 +49,9 @@ CORPUS_FOLDER_ID: __FOLDER_ID__
 
 
 def build_agent(
-    *, corpus_folder_id: str, model: str = "openai:gpt-4o",
+    *,
+    corpus_folder_id: str,
+    model: str = "openai:gpt-4o",
 ) -> Agent[None, PriorAuthLetter]:
     command = os.environ.get("KS_MCP_COMMAND", "uvx")
     args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
@@ -73,7 +74,10 @@ def build_agent(
 
 
 async def draft_letter(
-    user_request: str, *, corpus_folder_id: str, model: str = "openai:gpt-4o",
+    user_request: str,
+    *,
+    corpus_folder_id: str,
+    model: str = "openai:gpt-4o",
 ) -> PriorAuthLetter:
     agent = build_agent(corpus_folder_id=corpus_folder_id, model=model)
     result = await agent.run(user_request)
