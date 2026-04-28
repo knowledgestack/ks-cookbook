@@ -1,0 +1,52 @@
+{
+  "include": [
+    "recipes",
+    "scripts",
+    "flagships"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/.venv",
+    "**/sample_inputs",
+    "flagships/_template",
+    "recipes/_template"
+  ],
+  "extraPaths": [
+    "recipes",
+    "flagships/lease_abstract/src",
+    "flagships/credit_memo_drafter/src",
+    "flagships/research_brief/src",
+    "flagships/csv_enrichment/src",
+    "flagships/rev_rec_memo/src"
+  ],
+  "pythonVersion": "3.12",
+  "useLibraryCodeForTypes": true,
+  "reportAttributeAccessIssue": "none",
+  "reportOptionalMemberAccess": "none",
+  "reportAny": "none",
+  "reportUnusedCallResult": "none",
+  "reportImplicitStringConcatenation": "none",
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": "none",
+  "reportMissingModuleSource": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownVariableType": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownLambdaType": "none",
+  "reportArgumentType": "warning",
+  "reportReturnType": "warning",
+  "reportCallIssue": "warning",
+  "reportTypedDictNotRequiredAccess": "warning",
+  "reportImplicitRelativeImport": "none",
+  "reportExplicitAny": "none",
+  "reportMissingTypeArgument": "none",
+  "reportUnusedParameter": "none",
+  "reportMissingParameterType": "none",
+  "reportUnnecessaryIsInstance": "none",
+  "reportUnusedFunction": "none",
+  "reportPrivateUsage": "none",
+  "reportDeprecated": "none",
+  "reportUnusedVariable": "none",
+  "reportUnreachable": "none"
+}

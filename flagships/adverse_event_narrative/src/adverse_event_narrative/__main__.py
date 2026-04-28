@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import cast
 
-from adverse_event_narrative.agent import draft_narrative  # pyright: ignore[reportImplicitRelativeImport]
+from adverse_event_narrative.agent import draft_narrative 
 
 
 @dataclass(slots=True)

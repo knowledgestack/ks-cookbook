@@ -84,3 +84,36 @@ ban-relative-imports = "all"
 quote-style = "double"
 indent-style = "space"
 docstring-code-format = true
+
+[tool.basedpyright]
+pythonVersion = "3.12"
+include = ["recipes", "scripts", "flagships"]
+exclude = [
+    "**/__pycache__",
+    "**/.venv",
+    "**/sample_inputs",
+    "flagships/_template",
+    "recipes/_template",
+]
+# Use the actual library code for typing when stubs are missing or wrong
+# (python-docx, openpyxl, llama_index, anthropic, pydantic-ai all have
+# partial or out-of-date stubs).
+useLibraryCodeForTypes = true
+# This is a cookbook, not a typed lib — relax the strict-mode reports
+# that fire on dynamic patterns (argparse Namespace.attr, agent.run().output,
+# etc.) and on 3rd-party stub gaps.
+reportAttributeAccessIssue = "none"
+reportOptionalMemberAccess = "none"
+reportAny = "none"
+reportUnusedCallResult = "none"
+reportImplicitStringConcatenation = "none"
+reportArgumentType = "warning"
+reportReturnType = "warning"
+reportCallIssue = "warning"
+reportTypedDictNotRequiredAccess = "warning"
+reportMissingTypeStubs = "none"
+reportMissingModuleSource = "none"
+reportUnknownMemberType = "none"
+reportUnknownVariableType = "none"
+reportUnknownArgumentType = "none"
+reportUnknownParameterType = "none"
