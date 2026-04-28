@@ -1,6 +1,5 @@
 """CLI entry for the audit-workpaper-drafter flagship."""
 
-
 import argparse
 import asyncio
 import os
@@ -81,8 +80,7 @@ def main() -> None:
     args.out.write_text(workpaper, encoding="utf-8")
     cite_count = workpaper.count("[chunk:")
     print(
-        f"Wrote {args.out} -- {len(workpaper)} chars, "
-        f"{cite_count} chunk citation(s)."
+        f"Wrote {args.out} -- {len(workpaper)} chars, {cite_count} chunk citation(s)."
     )
 
 

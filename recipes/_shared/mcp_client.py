@@ -1,6 +1,5 @@
 """Minimal MCP stdio client every recipe uses. ~50 lines, no framework."""
 
-
 import json
 import os
 from contextlib import asynccontextmanager

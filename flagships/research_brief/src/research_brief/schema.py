@@ -1,6 +1,5 @@
 """Structured output the agent produces; python-docx consumes this shape."""
 
-
 from uuid import UUID
 
 from pydantic import BaseModel, Field
@@ -17,7 +16,9 @@ class Citation(BaseModel):
 class Section(BaseModel):
     heading: str = Field(..., min_length=1, max_length=200)
     body: str = Field(
-        ..., min_length=1, max_length=8_000,
+        ...,
+        min_length=1,
+        max_length=8_000,
         description="Paragraph prose with inline [n] references to citations.",
     )
     citation_ids: list[int] = Field(

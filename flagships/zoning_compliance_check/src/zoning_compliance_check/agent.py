@@ -1,6 +1,5 @@
 """LangGraph ReAct agent wired to KS MCP for zoning compliance checks."""
 
-
 import os
 from typing import Any
 
@@ -119,7 +118,5 @@ async def check_zoning(
     messages = result.get("messages", [])
     text = messages[-1].content if messages else ""
     if isinstance(text, list):
-        text = " ".join(
-            p.get("text", "") for p in text if isinstance(p, dict)
-        )
+        text = " ".join(p.get("text", "") for p in text if isinstance(p, dict))
     return (text or "").strip()

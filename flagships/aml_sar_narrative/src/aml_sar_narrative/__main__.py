@@ -1,6 +1,5 @@
 """SAR narrative drafter CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -42,13 +41,16 @@ def _render_markdown(sar: SARNarrative) -> str:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Draft a FinCEN-format SAR narrative from case evidence.")
+    p = argparse.ArgumentParser(
+        description="Draft a FinCEN-format SAR narrative from case evidence."
+    )
     p.add_argument("--case-id", required=True)
     p.add_argument("--subject", default="", help="Subject entity or individual, if known.")
     p.add_argument(
         "--corpus-folder",
         default=os.environ.get(
-            "AML_CORPUS_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41",
+            "AML_CORPUS_FOLDER_ID",
+            "ab926019-ac7a-579f-bfda-6c52a13c5f41",
         ),
         help="Folder.id of the AML case corpus in your KS tenant.",
     )
@@ -59,10 +61,14 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    sar = asyncio.run(draft_sar(
-        case_id=args.case_id, subject_hint=args.subject,
-        corpus_folder_id=args.corpus_folder, model=args.model,
-    ))
+    sar = asyncio.run(
+        draft_sar(
+            case_id=args.case_id,
+            subject_hint=args.subject,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(_render_markdown(sar))
     print(
         f"Wrote {args.out} — case={sar.case_id} red_flags={len(sar.red_flags)} "

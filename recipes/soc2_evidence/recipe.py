@@ -18,10 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
 
-POLICIES_FOLDER = os.environ.get(
-    "POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41"
-)
-
+POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 # Map a few common SOC 2 controls to keyword sets that surface relevant policy text.
 CONTROL_KEYWORDS: dict[str, list[str]] = {
     "CC6.1": ["access control", "least privilege", "authentication"],
@@ -29,7 +26,7 @@ CONTROL_KEYWORDS: dict[str, list[str]] = {
     "CC6.3": ["password", "mfa", "multi-factor"],
     "CC7.2": ["incident response", "monitoring", "alert"],
     "CC8.1": ["change management", "deployment"],
-    "A1.2":  ["backup", "recovery", "business continuity"],
+    "A1.2": ["backup", "recovery", "business continuity"],
 }
 
 
@@ -44,7 +41,8 @@ async def run(control: str, out_path: Path) -> None:
         for kw in keywords:
             lines.append(f"\n## Keyword: `{kw}`\n")
             hits = await call_list(
-                session, "search_keyword",
+                session,
+                "search_keyword",
                 {"query": kw, "folder_id": POLICIES_FOLDER, "limit": 3},
             )
             if not hits:
@@ -58,11 +56,18 @@ async def run(control: str, out_path: Path) -> None:
                 if not ppid or ppid in seen_chunks:
                     continue
                 seen_chunks.add(ppid)
-                excerpt = await call(
-                    session, "read_around",
-                    {"chunk_id": ppid, "before": 0, "after": 1},
-                ) if hit.get("chunk_id") else await call(
-                    session, "read", {"path_part_id": ppid, "max_chars": 1200},
+                excerpt = (
+                    await call(
+                        session,
+                        "read_around",
+                        {"chunk_id": ppid, "before": 0, "after": 1},
+                    )
+                    if hit.get("chunk_id")
+                    else await call(
+                        session,
+                        "read",
+                        {"path_part_id": ppid, "max_chars": 1200},
+                    )
                 )
                 lines.append(f"### {doc_name}\n\n{excerpt}\n")
     out_path.write_text("\n".join(lines))
@@ -71,8 +76,9 @@ async def run(control: str, out_path: Path) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--control", default="CC6.1",
-                   help=f"SOC 2 control ID. Known: {sorted(CONTROL_KEYWORDS)}")
+    p.add_argument(
+        "--control", default="CC6.1", help=f"SOC 2 control ID. Known: {sorted(CONTROL_KEYWORDS)}"
+    )
     p.add_argument("--out", default="soc2-evidence.md", help="Output markdown file.")
     args = p.parse_args()
     if not os.environ.get("KS_API_KEY"):

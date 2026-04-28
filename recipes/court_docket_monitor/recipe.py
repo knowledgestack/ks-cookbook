@@ -1,10 +1,11 @@
 """Court-docket monitor — party + period → cited litigation activity summary.
 
 Pain point: Legal + strategy teams want to know "has <competitor> been sued
-in N.D. Cal. this quarter?" without paying for PACER monitoring. This recipe
-reads your ingested docket filings and returns a cited summary per party.
+in N.D. Cal. this quarter?" without paying for PACER monitoring. This
+recipe asks Knowledge Stack about the named party's litigation in the
+period and returns a cited summary.
 
-Framework: pydantic-ai. Tools: list_contents, search_knowledge, read.
+Framework: pydantic-ai. KS access via the knowledgestack-mcp stdio server.
 Output: stdout (JSON).
 """
 
@@ -17,8 +18,6 @@ import sys
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
-
-CORPUS = os.environ.get("DOCKET_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
 
 
 class Citation(BaseModel):
@@ -45,24 +44,49 @@ class DocketReport(BaseModel):
 
 
 PROMPT = (
-    "You summarize litigation activity for a named party. Only include cases "
-    f"actually documented in path_part_id={CORPUS}. Never invent case "
-    "captions. chunk_ids must be real."
+    "You summarize litigation activity for a named party. Knowledge Stack "
+    "is your search backend; ask it natural-language questions about the "
+    "party's court filings, opinions, and dockets.\n\n"
+    "Workflow:\n"
+    "1. Ask Knowledge Stack questions like:\n"
+    "   • 'What court opinions or dockets in the corpus involve <party>?'\n"
+    "   • 'Has <party> been sued in <period>?'\n"
+    "   • 'What is the nature of suit and case status for <party>'s "
+    "matters?'\n"
+    "   Frame queries naturally. Never use folder UUIDs or path_part_id "
+    "filters.\n"
+    "2. search_knowledge returns hits with chunk_id and path_part_id; the "
+    "text field is empty. Call read(path_part_id=<hit's path_part_id>) to "
+    "get the chunk text. The trailing [chunk:<uuid>] marker is your "
+    "citation.chunk_id (NEVER pass chunk_id to read; it 404s).\n"
+    "3. Build DocketEntry rows ONLY from chunks whose content actually "
+    "names the party. Never invent case captions, courts, or dates.\n"
+    "4. If no matter is documented, return entries=[] and a headline like "
+    "'No litigation involving <party> in the corpus for <period>.'\n"
+    "5. Populate every citation with chunk_id (verbatim), document_name "
+    "(filename in read() metadata), and snippet (verbatim ≤240 chars)."
+    """Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 )
-
-
 async def run(party: str, period: str) -> None:
     mcp = MCPServerStdio(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
-    agent = Agent(model=f"openai:{os.environ.get('MODEL', 'gpt-4o-mini')}",
-                  mcp_servers=[mcp], system_prompt=PROMPT, result_type=DocketReport)
+    agent = Agent(
+        model=f"openai:{os.environ.get('MODEL', 'gpt-4o')}",
+        mcp_servers=[mcp],
+        system_prompt=PROMPT,
+        output_type=DocketReport,
+        retries=4,
+        output_retries=4,
+    )
     async with agent.run_mcp_servers():
         result = await agent.run(f"Party: {party}\nPeriod: {period}")
-    print(json.dumps(result.data.model_dump(), indent=2))
+    print(json.dumps(result.output.model_dump(), indent=2))
 
 
 def main() -> None:

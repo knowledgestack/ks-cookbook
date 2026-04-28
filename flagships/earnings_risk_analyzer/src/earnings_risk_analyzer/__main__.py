@@ -1,6 +1,5 @@
 """10-K risk-flag analyst memo CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -46,9 +45,10 @@ def _render_markdown(memo: EarningsRiskMemo) -> str:
 
 def main() -> None:
     p = argparse.ArgumentParser(description="10-K risk-flag analyst memo from a real SEC filing.")
-    p.add_argument("--corpus-folder",
-                   default=os.environ.get("CORPUS_FOLDER_ID",
-                                          "a5c81290-b181-54d4-a949-bbb2cb91739a"))
+    p.add_argument(
+        "--corpus-folder",
+        default=os.environ.get("CORPUS_FOLDER_ID", "a5c81290-b181-54d4-a949-bbb2cb91739a"),
+    )
     p.add_argument("--model", default=os.environ.get("MODEL", "gpt-4o"))
     p.add_argument("--out", type=Path, default=Path("risk-flag-memo.md"))
     args = p.parse_args()
@@ -56,14 +56,19 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    memo = asyncio.run(analyze_10k(
-        corpus_folder_id=args.corpus_folder, model=args.model,
-    ))
+    memo = asyncio.run(
+        analyze_10k(
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(_render_markdown(memo))
     total_cites = sum(len(f.citations) for f in memo.flags)
-    print(f"Wrote {args.out} — {memo.company} ({memo.ticker}), "
-          f"{len(memo.flags)} flags, {total_cites} citations, "
-          f"posture: {memo.overall_risk_posture[:80]}")
+    print(
+        f"Wrote {args.out} — {memo.company} ({memo.ticker}), "
+        f"{len(memo.flags)} flags, {total_cites} citations, "
+        f"posture: {memo.overall_risk_posture[:80]}"
+    )
 
 
 if __name__ == "__main__":

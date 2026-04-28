@@ -1,6 +1,5 @@
 """Construction RFI agent CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -51,13 +50,16 @@ def _render_markdown(r: RFIDraft) -> str:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Draft a construction RFI response from KS-seeded specs.")
+    p = argparse.ArgumentParser(
+        description="Draft a construction RFI response from KS-seeded specs."
+    )
     p.add_argument("--rfi-number", required=True)
     p.add_argument("--question", required=True, help="The RFI question body.")
     p.add_argument(
         "--corpus-folder",
         default=os.environ.get(
-            "CONSTRUCTION_CORPUS_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41",
+            "CONSTRUCTION_CORPUS_FOLDER_ID",
+            "ab926019-ac7a-579f-bfda-6c52a13c5f41",
         ),
         help="Folder.id of the construction project corpus in your KS tenant.",
     )
@@ -68,10 +70,14 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    draft = asyncio.run(draft_rfi(
-        rfi_number=args.rfi_number, question=args.question,
-        corpus_folder_id=args.corpus_folder, model=args.model,
-    ))
+    draft = asyncio.run(
+        draft_rfi(
+            rfi_number=args.rfi_number,
+            question=args.question,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(_render_markdown(draft))
     print(
         f"Wrote {args.out} — rfi={draft.rfi_number} "

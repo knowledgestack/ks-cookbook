@@ -1,6 +1,5 @@
 """CLI entry for the zoning compliance check demo."""
 
-
 import argparse
 import asyncio
 import os
@@ -13,8 +12,7 @@ from zoning_compliance_check.agent import check_zoning
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Check zoning compliance for a proposed use against "
-            "Austin TX LDC."
+            "Check zoning compliance for a proposed use against Austin TX LDC."
         )
     )
     parser.add_argument(
@@ -65,10 +63,7 @@ def main() -> None:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(memo, encoding="utf-8")
     cite_count = memo.count("[chunk:")
-    print(
-        f"Wrote {args.out} -- {len(memo)} chars, "
-        f"{cite_count} chunk citation(s)."
-    )
+    print(f"Wrote {args.out} -- {len(memo)} chars, {cite_count} chunk citation(s).")
 
 
 if __name__ == "__main__":

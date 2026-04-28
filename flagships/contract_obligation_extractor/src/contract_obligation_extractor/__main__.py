@@ -1,6 +1,5 @@
 """CLI entry for the contract-obligation-extractor flagship."""
 
-
 import argparse
 import asyncio
 import os
@@ -15,9 +14,13 @@ from contract_obligation_extractor.schema import ObligationReport
 
 
 PREFERRED_ORDER = (
-    "Provider", "Customer", "Mutual",
-    "Processor", "Controller",
-    "Receiving Party", "Disclosing Party",
+    "Provider",
+    "Customer",
+    "Mutual",
+    "Processor",
+    "Controller",
+    "Receiving Party",
+    "Disclosing Party",
     "Other",
 )
 
@@ -28,13 +31,12 @@ def _render_markdown(report: ObligationReport) -> str:
         groups.setdefault(o.holder.value, []).append(o)
     # Keep only holders with at least one entry (plus the canonical trio).
     shown = [
-        h for h in PREFERRED_ORDER
+        h
+        for h in PREFERRED_ORDER
         if h in ("Provider", "Customer", "Mutual") or groups.get(h)
     ]
 
-    counts_summary = "  ".join(
-        f"**{h}:** {len(groups.get(h, []))}" for h in shown
-    )
+    counts_summary = "  ".join(f"**{h}:** {len(groups.get(h, []))}" for h in shown)
     lines: list[str] = [
         f"# Obligation Report — {report.document_name}",
         "",
@@ -79,14 +81,17 @@ def main() -> None:
         "--contract-name",
         default=None,
         help="Substring to pick which document to analyze (e.g. 'msa', 'dpa'). "
-             "Defaults to the first document in the folder.",
+        "Defaults to the first document in the folder.",
     )
     parser.add_argument(
-        "--out", type=Path, default=Path("contract-obligations.md"),
+        "--out",
+        type=Path,
+        default=Path("contract-obligations.md"),
         help="Output markdown path (default: contract-obligations.md).",
     )
     parser.add_argument(
-        "--model", default=model_id_default(),
+        "--model",
+        default=model_id_default(),
         help=f"OpenAI model (default: {model_id_default()}).",
     )
     args = parser.parse_args()
@@ -96,11 +101,13 @@ def main() -> None:
     if not os.environ.get("OPENAI_API_KEY"):
         sys.exit("OPENAI_API_KEY is not set.")
 
-    report = asyncio.run(extract_obligations(
-        corpus_folder_id=args.corpus_folder,
-        contract_name=args.contract_name,
-        model=args.model,
-    ))
+    report = asyncio.run(
+        extract_obligations(
+            corpus_folder_id=args.corpus_folder,
+            contract_name=args.contract_name,
+            model=args.model,
+        )
+    )
     md = _render_markdown(report)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(md)

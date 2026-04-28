@@ -1,10 +1,11 @@
 """Benefits enrollment Q&A — question → cited answer from SPDs + carrier docs.
 
 Pain point: Open enrollment: employees ask the same 50 questions about HDHP
-vs PPO, HSA rules, coverage abroad, dependent age cutoffs. This recipe answers
-from your Summary Plan Descriptions with citations.
+vs PPO, HSA rules, coverage abroad, dependent age cutoffs. This recipe asks
+Knowledge Stack about the question and grounds the answer in real chunks
+of your Summary Plan Descriptions / carrier docs.
 
-Framework: pydantic-ai. Tools: list_contents, search_knowledge, read.
+Framework: pydantic-ai. KS access via the knowledgestack-mcp stdio server.
 Output: stdout (JSON).
 """
 
@@ -17,8 +18,6 @@ import sys
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
-
-CORPUS = os.environ.get("HR_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
 
 
 class Citation(BaseModel):
@@ -36,29 +35,65 @@ class BenefitsAnswer(BaseModel):
 
 
 PROMPT = (
-    f"You answer benefits questions from SPDs + carrier docs in "
-    f"path_part_id={CORPUS}. If the answer depends on plan tier, say so. "
-    "Never quote a number not in the docs. chunk_ids must be real."
+    "You answer employee benefits questions for an HR team. Knowledge "
+    "Stack is your search backend; it holds the company's Summary Plan "
+    "Descriptions (SPDs), ERISA disclosures, and carrier reference docs.\n\n"
+    "Workflow:\n"
+    "1. Ask Knowledge Stack a specific natural-language question that "
+    "matches the employee's question, e.g.:\n"
+    "   • 'What is the dependent age cutoff for medical coverage under "
+    "the PPO plan?'\n"
+    "   • 'Are HSA contributions allowed if I'm enrolled in the HDHP "
+    "plan?'\n"
+    "   • 'Does the company SPD describe how COBRA coverage works after "
+    "termination?'\n"
+    "   Frame it the way you'd ask the benefits administrator. Never use "
+    "folder UUIDs or path_part_id filters.\n"
+    "2. search_knowledge returns ranked hits with chunk_id and "
+    "path_part_id. The text field is empty by design — call "
+    "read(path_part_id=<hit's path_part_id>) to retrieve the chunk text. "
+    "The trailing [chunk:<uuid>] marker is the citation chunk_id "
+    "(NEVER pass chunk_id to read; it 404s).\n"
+    "3. Build the answer ONLY from the read() text. Never quote a number "
+    "or rule that isn't in the chunk content. Set plan_specific=true if "
+    "the answer depends on plan tier (PPO vs HDHP, etc.).\n"
+    "4. Populate every citation with chunk_id (verbatim from the marker), "
+    "document_name (filename from the read() output's metadata), and "
+    "snippet (verbatim ≤240 chars from the chunk text).\n"
+    "5. contact_for_edge_case: who the employee should reach if their "
+    "case isn't covered (e.g. 'benefits@example.com' or 'HR Business "
+    "Partner'). Default: 'HR Benefits team'."
+    """Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 )
-
-
 async def run(question: str) -> None:
     mcp = MCPServerStdio(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
-    agent = Agent(model=f"openai:{os.environ.get('MODEL', 'gpt-4o-mini')}",
-                  mcp_servers=[mcp], system_prompt=PROMPT, result_type=BenefitsAnswer)
+    agent = Agent(
+        model=f"openai:{os.environ.get('MODEL', 'gpt-4o')}",
+        mcp_servers=[mcp],
+        system_prompt=PROMPT,
+        output_type=BenefitsAnswer,
+        retries=4,
+        output_retries=4,
+    )
     async with agent.run_mcp_servers():
-        result = await agent.run(f"Question: {question}")
-    print(json.dumps(result.data.model_dump(), indent=2))
+        result = await agent.run(f"Employee question: {question}")
+    print(json.dumps(result.output.model_dump(), indent=2))
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--question", required=True)
+    p.add_argument(
+        "--question",
+        required=True,
+        help="Employee benefits question, e.g. 'When can I change my HSA contribution?'",
+    )
     args = p.parse_args()
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY.")

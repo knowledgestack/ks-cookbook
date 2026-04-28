@@ -1,6 +1,5 @@
 """Structured output every credit memo must conform to."""
 
-
 from pydantic import BaseModel, Field
 
 

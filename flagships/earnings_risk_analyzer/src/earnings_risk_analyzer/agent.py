@@ -1,6 +1,5 @@
 """pydantic-ai agent that reads a 10-K from KS and produces a risk-flag memo."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -41,19 +40,23 @@ Use the UUID path_part_id values from list_contents — NOT document names.
 
 
 async def analyze_10k(
-    *, corpus_folder_id: str, model: str,
+    *,
+    corpus_folder_id: str,
+    model: str,
 ) -> EarningsRiskMemo:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
     server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
-        command=server_cmd, args=server_args,
+        command=server_cmd,
+        args=server_args,
         env={
             "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
             "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
         },
     )
     agent = Agent(
-        model=f"openai:{model}", mcp_servers=[mcp],
+        model=f"openai:{model}",
+        mcp_servers=[mcp],
         system_prompt=SYSTEM.replace("__CORPUS_FOLDER_ID__", corpus_folder_id),
         output_type=EarningsRiskMemo,
     )

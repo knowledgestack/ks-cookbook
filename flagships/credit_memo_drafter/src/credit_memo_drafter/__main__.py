@@ -1,6 +1,5 @@
 """Credit memo drafter CLI."""
 
-
 import argparse
 import asyncio
 import os
@@ -59,7 +58,8 @@ def main() -> None:
     p.add_argument(
         "--corpus-folder",
         default=os.environ.get(
-            "CORPUS_FOLDER_ID", "18001b47-295b-503f-a7ff-321100853a42",
+            "CORPUS_FOLDER_ID",
+            "18001b47-295b-503f-a7ff-321100853a42",
         ),
         help="Folder.id (not path_part_id) of the lending corpus in your KS tenant.",
     )
@@ -70,13 +70,21 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    memo = asyncio.run(draft_memo(
-        borrower=args.borrower, loan_amount=args.loan_amount,
-        corpus_folder_id=args.corpus_folder, model=args.model,
-    ))
+    memo = asyncio.run(
+        draft_memo(
+            borrower=args.borrower,
+            loan_amount=args.loan_amount,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(_render_markdown(memo, args.loan_amount))
-    n_citations = sum(len(r.citations) for r in memo.risks) + sum(len(c.citations) for c in memo.covenants)
-    print(f"Wrote {args.out} — recommendation={memo.recommendation} risk_rating={memo.risk_rating} citations={n_citations}")
+    n_citations = sum(len(r.citations) for r in memo.risks) + sum(
+        len(c.citations) for c in memo.covenants
+    )
+    print(
+        f"Wrote {args.out} — recommendation={memo.recommendation} risk_rating={memo.risk_rating} citations={n_citations}"
+    )
 
 
 if __name__ == "__main__":

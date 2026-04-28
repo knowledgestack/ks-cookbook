@@ -1,6 +1,5 @@
 """pydantic-ai agent that reviews a KYC onboarding application against policy."""
 
-
 import os
 
 from pydantic_ai import Agent
@@ -58,12 +57,12 @@ application, mark the corresponding checklist item as MISSING.
 
 
 async def review_kyc(
-    *, corpus_folder_id: str | None, model: str,
+    *,
+    corpus_folder_id: str | None,
+    model: str,
 ) -> KYCReview:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
-    server_args = (
-        os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or ""
-    ).split()
+    server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
         command=server_cmd,
         args=server_args,
@@ -87,9 +86,7 @@ async def review_kyc(
     agent = Agent(
         model=f"openai:{model}",
         mcp_servers=[mcp],
-        system_prompt=SYSTEM_TEMPLATE.replace(
-            "__DISCOVERY_STEP__", discovery_step
-        ),
+        system_prompt=SYSTEM_TEMPLATE.replace("__DISCOVERY_STEP__", discovery_step),
         output_type=KYCReview,
         model_settings=ModelSettings(max_tokens=4096),
     )
@@ -101,11 +98,7 @@ async def review_kyc(
                 "Check every CDD requirement against the submitted documents, "
                 "assign the risk tier, and produce the full KYC review."
             )
-            review = (
-                getattr(result, "output", None)
-                or getattr(result, "data", None)
-                or result
-            )  # type: ignore[assignment]
+            review = getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[assignment]
     except BaseExceptionGroup as eg:
         # pydantic-ai's MCPServerStdio raises BrokenResourceError during
         # cleanup after the result is already produced. Safe to swallow
@@ -113,16 +106,15 @@ async def review_kyc(
         if review is None:
             # Filter: only re-raise non-BrokenResource exceptions
             non_broken = [
-                e for e in eg.exceptions
+                e
+                for e in eg.exceptions
                 if "BrokenResource" not in type(e).__name__
                 and not (
                     isinstance(e, BaseExceptionGroup)
                     and all(
                         "BrokenResource" in type(sub).__name__
                         or "ClosedResource" in type(sub).__name__
-                        for sub in (
-                            e.exceptions if hasattr(e, "exceptions") else [e]
-                        )
+                        for sub in (e.exceptions if hasattr(e, "exceptions") else [e])
                     )
                 )
             ]
@@ -132,7 +124,5 @@ async def review_kyc(
         if review is None:
             raise
     if review is None:
-        raise RuntimeError(
-            "Agent did not produce a result before the MCP session closed."
-        )
+        raise RuntimeError("Agent did not produce a result before the MCP session closed.")
     return review

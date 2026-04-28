@@ -1,6 +1,5 @@
 """Structured output for NERC CIP compliance evidence packs."""
 
-
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -27,33 +26,36 @@ class Citation(BaseModel):
 
 class EvidenceItem(BaseModel):
     control_description: str = Field(
-        ..., max_length=300,
+        ...,
+        max_length=300,
         description="What the requirement asks for.",
     )
     status: EvidenceStatus
     evidence_summary: str = Field(
-        ..., max_length=1000,
+        ...,
+        max_length=1000,
         description="Description of the evidence that satisfies (or fails to satisfy) the requirement.",
     )
     citations: list[Citation] = Field(
-        ..., min_length=1, max_length=6,
+        ...,
+        min_length=1,
+        max_length=6,
         description="Citations to procedures/policies backing this evidence.",
     )
 
 
 class NERCEvidencePack(BaseModel):
-    standard_id: str = Field(
-        ..., max_length=30, description="e.g. 'CIP-007-6'."
-    )
-    requirement: str = Field(
-        ..., max_length=20, description="e.g. 'R2'."
-    )
+    standard_id: str = Field(..., max_length=30, description="e.g. 'CIP-007-6'.")
+    requirement: str = Field(..., max_length=20, description="e.g. 'R2'.")
     requirement_text: str = Field(
-        ..., max_length=1000,
+        ...,
+        max_length=1000,
         description="Full text of the NERC CIP requirement.",
     )
     evidence_items: list[EvidenceItem] = Field(
-        ..., min_length=1, max_length=15,
+        ...,
+        min_length=1,
+        max_length=15,
         description="Evidence items mapped to sub-requirements.",
     )
     gaps: list[str] = Field(

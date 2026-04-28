@@ -1,0 +1,53 @@
+{
+  "results": [
+    {
+      "recipe": "access_review",
+      "status": "pass",
+      "elapsed_s": 22.5,
+      "output_size": 2173,
+      "stdout_head": "{\n  \"user\": \"contractor-svc-shared\",\n  \"system\": \"prod-postgres-primary\",\n  \"role\": \"superuser write\",\n  \"verdict\": \"revoke\",\n  \"rationale\": \"The access policy and control documents emphasize stringent access control mechanisms, including d"
+    },
+    {
+      "recipe": "account_research_brief",
+      "status": "fail",
+      "cmd": "uv run python recipes/account_research_brief/recipe.py --account demo",
+      "exit_code": 1,
+      "elapsed_s": 9.7,
+      "stderr_tail": [
+        "  File \"/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/.venv/lib/python3.12/site-packages/pydantic_ai/tool_manager.py\", line 172, in _check_max_retries",
+        "    raise UnexpectedModelBehavior(f'Tool {name!r} exceeded max retries count of {max_retries}') from error",
+        "pydantic_ai.exceptions.UnexpectedModelBehavior: Tool 'read' exceeded max retries count of 1"
+      ]
+    },
+    {
+      "recipe": "adr_drafter",
+      "status": "fail",
+      "cmd": "uv run python recipes/adr_drafter/recipe.py",
+      "exit_code": 1,
+      "elapsed_s": 0.6,
+      "stderr_tail": [
+        "Set KS_API_KEY and ANTHROPIC_API_KEY."
+      ]
+    },
+    {
+      "recipe": "aml_sar_narrative",
+      "status": "pass",
+      "elapsed_s": 18.8,
+      "output_size": 1567,
+      "stdout_head": "{\n  \"case_id\": \"structuring-cash-deposits\",\n  \"who\": \"NOT IN CORPUS \\u2014 upload case file to proceed\",\n  \"what\": \"NOT IN CORPUS \\u2014 upload case file to proceed\",\n  \"when\": \"NOT IN CORPUS \\u2014 upload case file to proceed\",\n  \"where\": "
+    },
+    {
+      "recipe": "analyst_inquiry_responder",
+      "status": "pass",
+      "elapsed_s": 19.4,
+      "output_size": 1487,
+      "stdout_head": "{\n  \"analyst_question\": \"What ERISA disclosures must an employer provide to participants in the SPD?\",\n  \"headline_answer\": \"ERISA requires employers to provide several disclosures in the SPD, including plan terms, rights, and obligations.\""
+    }
+  ],
+  "summary": {
+    "pass": 3,
+    "fail": 2,
+    "skip": 0,
+    "timeout": 0
+  }
+}

@@ -1,6 +1,5 @@
 """Structured output for the SDR session summary."""
 
-
 from pydantic import BaseModel, Field
 
 

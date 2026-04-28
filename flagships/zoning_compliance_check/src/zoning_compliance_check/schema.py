@@ -1,6 +1,5 @@
 """Prompt template and output schema for zoning compliance check."""
 
-
 COMPLIANCE_TEMPLATE = """\
 # Zoning Compliance Report
 

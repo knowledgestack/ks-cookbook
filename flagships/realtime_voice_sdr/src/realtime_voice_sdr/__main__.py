@@ -5,7 +5,6 @@ them to the live session as function-call tools. Writes a MEDDIC-scored
 ``SessionSummary`` to disk when the session ends.
 """
 
-
 import argparse
 import asyncio
 import base64
@@ -50,8 +49,9 @@ def _render(s: SessionSummary) -> str:
     return "\n".join(lines)
 
 
-async def _summarize(prospect: str, mode: str, transcript: list[str], tool_calls: int,
-                     model: str, out: Path) -> None:
+async def _summarize(
+    prospect: str, mode: str, transcript: list[str], tool_calls: int, model: str, out: Path
+) -> None:
     summary_agent = build_summary_agent(model=model)
     convo = "\n".join(transcript) or "(empty)"
     result = await summary_agent.run(
@@ -89,11 +89,13 @@ async def _run_text(conn, mcp, transcript: list[str], tool_calls: list[int]) -> 
                 tool_calls[0] += 1
                 transcript.append(f"[tool: {name}({args[:200]})]")
                 result = await call_mcp_tool(mcp, name, args)
-                await conn.conversation.item.create(item={
-                    "type": "function_call_output",
-                    "call_id": call_id,
-                    "output": result,
-                })
+                await conn.conversation.item.create(
+                    item={
+                        "type": "function_call_output",
+                        "call_id": call_id,
+                        "output": result,
+                    }
+                )
                 await conn.response.create()
             elif t == "response.done":
                 text = "".join(buffer).strip()
@@ -113,11 +115,13 @@ async def _run_text(conn, mcp, transcript: list[str], tool_calls: list[int]) -> 
             break
         turns += 1
         transcript.append(f"prospect: {user}")
-        await conn.conversation.item.create(item={
-            "type": "message",
-            "role": "user",
-            "content": [{"type": "input_text", "text": user}],
-        })
+        await conn.conversation.item.create(
+            item={
+                "type": "message",
+                "role": "user",
+                "content": [{"type": "input_text", "text": user}],
+            }
+        )
         await conn.response.create()
         await consume_until_done()
     return turns
@@ -130,8 +134,7 @@ async def _run_voice(conn, mcp, transcript: list[str], tool_calls: list[int]) ->
         import sounddevice as sd
     except ImportError:
         sys.exit(
-            "Voice mode needs the [voice] extras:\n"
-            "  uv pip install 'ks-cookbook-voice-sdr[voice]'"
+            "Voice mode needs the [voice] extras:\n  uv pip install 'ks-cookbook-voice-sdr[voice]'"
         )
 
     print("\nLive SDR session (voice). Speak; server VAD commits on pause. Ctrl-C to end.\n")
@@ -156,10 +159,12 @@ async def _run_voice(conn, mcp, transcript: list[str], tool_calls: list[int]) ->
         if n < frames:
             outdata[n:, 0] = 0
 
-    in_stream = sd.InputStream(samplerate=SAMPLE_RATE, channels=1, dtype="int16",
-                               callback=mic_cb, blocksize=2400)
-    out_stream = sd.OutputStream(samplerate=SAMPLE_RATE, channels=1, dtype="int16",
-                                 callback=spk_cb, blocksize=2400)
+    in_stream = sd.InputStream(
+        samplerate=SAMPLE_RATE, channels=1, dtype="int16", callback=mic_cb, blocksize=2400
+    )
+    out_stream = sd.OutputStream(
+        samplerate=SAMPLE_RATE, channels=1, dtype="int16", callback=spk_cb, blocksize=2400
+    )
 
     turns = 0
     with in_stream, out_stream:
@@ -182,11 +187,13 @@ async def _run_voice(conn, mcp, transcript: list[str], tool_calls: list[int]) ->
                     tool_calls[0] += 1
                     transcript.append(f"[tool: {name}({args[:200]})]")
                     result = await call_mcp_tool(mcp, name, args)
-                    await conn.conversation.item.create(item={
-                        "type": "function_call_output",
-                        "call_id": call_id,
-                        "output": result,
-                    })
+                    await conn.conversation.item.create(
+                        item={
+                            "type": "function_call_output",
+                            "call_id": call_id,
+                            "output": result,
+                        }
+                    )
                     await conn.response.create()
                 elif t == "response.done":
                     print()
@@ -196,8 +203,14 @@ async def _run_voice(conn, mcp, transcript: list[str], tool_calls: list[int]) ->
 
 
 async def _run(
-    *, prospect: str, prospect_context: str, corpus_folder_id: str,
-    realtime_model: str, summary_model: str, voice: bool, out: Path,
+    *,
+    prospect: str,
+    prospect_context: str,
+    corpus_folder_id: str,
+    realtime_model: str,
+    summary_model: str,
+    voice: bool,
+    out: Path,
 ) -> None:
     client = AsyncOpenAI()
     transcript: list[str] = []
@@ -214,14 +227,16 @@ async def _run(
                 "tool_choice": "auto",
             }
             if voice:
-                session_config.update({
-                    "modalities": ["audio", "text"],
-                    "voice": "alloy",
-                    "input_audio_format": "pcm16",
-                    "output_audio_format": "pcm16",
-                    "turn_detection": {"type": "server_vad"},
-                    "input_audio_transcription": {"model": "whisper-1"},
-                })
+                session_config.update(
+                    {
+                        "modalities": ["audio", "text"],
+                        "voice": "alloy",
+                        "input_audio_format": "pcm16",
+                        "output_audio_format": "pcm16",
+                        "turn_detection": {"type": "server_vad"},
+                        "input_audio_transcription": {"model": "whisper-1"},
+                    }
+                )
             else:
                 session_config["modalities"] = ["text"]
             await conn.session.update(session=session_config)
@@ -230,9 +245,12 @@ async def _run(
             turns = await runner(conn, mcp, transcript, tool_calls)
 
     await _summarize(
-        prospect=prospect, mode="voice" if voice else "text",
+        prospect=prospect,
+        mode="voice" if voice else "text",
         transcript=transcript or [f"prospect: (no turns, {turns} count)"],
-        tool_calls=tool_calls[0], model=summary_model, out=out,
+        tool_calls=tool_calls[0],
+        model=summary_model,
+        out=out,
     )
 
 
@@ -243,27 +261,38 @@ def main() -> None:
     p.add_argument(
         "--corpus-folder",
         default=os.environ.get(
-            "SALES_CORPUS_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41",
+            "SALES_CORPUS_FOLDER_ID",
+            "ab926019-ac7a-579f-bfda-6c52a13c5f41",
         ),
     )
-    p.add_argument("--realtime-model", default=os.environ.get(
-        "REALTIME_MODEL", "gpt-4o-realtime-preview",
-    ))
+    p.add_argument(
+        "--realtime-model",
+        default=os.environ.get(
+            "REALTIME_MODEL",
+            "gpt-4o-realtime-preview",
+        ),
+    )
     p.add_argument("--summary-model", default=os.environ.get("MODEL", "gpt-4o"))
-    p.add_argument("--voice", action="store_true",
-                   help="Enable mic+speaker audio (needs [voice] extras).")
+    p.add_argument(
+        "--voice", action="store_true", help="Enable mic+speaker audio (needs [voice] extras)."
+    )
     p.add_argument("--out", type=Path, default=Path("voice-sdr-session.md"))
     args = p.parse_args()
 
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    asyncio.run(_run(
-        prospect=args.prospect, prospect_context=args.prospect_context,
-        corpus_folder_id=args.corpus_folder,
-        realtime_model=args.realtime_model, summary_model=args.summary_model,
-        voice=args.voice, out=args.out,
-    ))
+    asyncio.run(
+        _run(
+            prospect=args.prospect,
+            prospect_context=args.prospect_context,
+            corpus_folder_id=args.corpus_folder,
+            realtime_model=args.realtime_model,
+            summary_model=args.summary_model,
+            voice=args.voice,
+            out=args.out,
+        )
+    )
 
 
 if __name__ == "__main__":

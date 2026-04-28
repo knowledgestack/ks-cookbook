@@ -1,6 +1,5 @@
 """Tool schemas and the OpenAI function-calling tool list."""
 
-
 from typing import Any
 
 TOOLS: list[dict[str, Any]] = [

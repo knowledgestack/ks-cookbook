@@ -11,7 +11,9 @@ from api_doc_generator.agent import run_agent
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="Endpoint name → developer docs grounded in API spec + style guide.")
+    p = argparse.ArgumentParser(
+        description="Endpoint name → developer docs grounded in API spec + style guide."
+    )
     p.add_argument("--input", required=True, help="Input text or question.")
     p.add_argument("--corpus-folder", default=os.environ.get("CORPUS_FOLDER_ID", ""))
     p.add_argument("--model", default=os.environ.get("MODEL", "gpt-4o"))
@@ -23,11 +25,13 @@ def main() -> None:
     if not args.corpus_folder:
         sys.exit("--corpus-folder or CORPUS_FOLDER_ID env var required.")
 
-    result = asyncio.run(run_agent(
-        input_text=args.input,
-        corpus_folder_id=args.corpus_folder,
-        model=args.model,
-    ))
+    result = asyncio.run(
+        run_agent(
+            input_text=args.input,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(json.dumps(result.model_dump(), indent=2, default=str))
     print(f"Wrote {args.out}")
 

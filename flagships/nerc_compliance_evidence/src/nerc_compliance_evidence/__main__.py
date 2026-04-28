@@ -1,6 +1,5 @@
 """CLI entry for the NERC CIP compliance evidence pack."""
 
-
 import argparse
 import asyncio
 import os
@@ -29,9 +28,7 @@ def _render_markdown(pack: NERCEvidencePack) -> str:
         ]
         for c in item.citations:
             q = (c.quote or "").replace("\n", " ").strip()[:300]
-            lines.append(
-                f"- {c.source_document} [chunk:{c.chunk_id}]: \u201c{q}\u201d"
-            )
+            lines.append(f"- {c.source_document} [chunk:{c.chunk_id}]: \u201c{q}\u201d")
         lines.append("")
 
     if pack.gaps:
@@ -48,14 +45,19 @@ def main() -> None:
     p = argparse.ArgumentParser(
         description="Build a NERC CIP compliance evidence pack."
     )
-    p.add_argument("--standard", default="CIP-007-6",
-                   help="NERC CIP standard ID (default: CIP-007-6).")
-    p.add_argument("--requirement", default="R2",
-                   help="Requirement number (default: R2).")
+    p.add_argument(
+        "--standard",
+        default="CIP-007-6",
+        help="NERC CIP standard ID (default: CIP-007-6).",
+    )
+    p.add_argument(
+        "--requirement", default="R2", help="Requirement number (default: R2)."
+    )
     p.add_argument(
         "--corpus-folder",
-        default=os.environ.get("CORPUS_FOLDER_ID",
-                               "df0c7c21-494e-583f-a2a7-ad9d231fbee9"),
+        default=os.environ.get(
+            "CORPUS_FOLDER_ID", "df0c7c21-494e-583f-a2a7-ad9d231fbee9"
+        ),
     )
     p.add_argument("--model", default=os.environ.get("MODEL", "gpt-4o"))
     p.add_argument("--out", type=Path, default=Path("nerc-evidence.md"))
@@ -64,12 +66,14 @@ def main() -> None:
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY in .env.")
 
-    pack = asyncio.run(build_evidence_pack(
-        standard=args.standard,
-        requirement=args.requirement,
-        corpus_folder_id=args.corpus_folder,
-        model=args.model,
-    ))
+    pack = asyncio.run(
+        build_evidence_pack(
+            standard=args.standard,
+            requirement=args.requirement,
+            corpus_folder_id=args.corpus_folder,
+            model=args.model,
+        )
+    )
     args.out.write_text(_render_markdown(pack))
     total_cites = sum(len(e.citations) for e in pack.evidence_items)
     satisfied = sum(1 for e in pack.evidence_items if e.status.value == "SATISFIED")

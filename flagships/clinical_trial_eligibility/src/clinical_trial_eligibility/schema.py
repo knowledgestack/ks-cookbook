@@ -1,6 +1,5 @@
 """Structured output — clinical trial eligibility assessment."""
 
-
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -30,30 +29,21 @@ class CriterionMatch(BaseModel):
         max_length=500,
         description="The inclusion or exclusion criterion being evaluated.",
     )
-    criterion_type: str = Field(
-        ..., description="'inclusion' or 'exclusion'"
-    )
+    criterion_type: str = Field(..., description="'inclusion' or 'exclusion'")
     match_status: MatchStatus
     rationale: str = Field(
         ...,
         max_length=800,
         description=(
-            "Clinical reasoning: why this patient does or does not meet "
-            "the criterion."
+            "Clinical reasoning: why this patient does or does not meet the criterion."
         ),
     )
-    citations: list[Citation] = Field(
-        ..., min_length=1, max_length=5
-    )
+    citations: list[Citation] = Field(..., min_length=1, max_length=5)
 
 
 class EligibilityAssessment(BaseModel):
-    trial_id: str = Field(
-        ..., description="ClinicalTrials.gov NCT identifier."
-    )
-    trial_title: str = Field(
-        ..., max_length=300, description="Official trial title."
-    )
+    trial_id: str = Field(..., description="ClinicalTrials.gov NCT identifier.")
+    trial_title: str = Field(..., max_length=300, description="Official trial title.")
     patient_summary: str = Field(
         ...,
         max_length=600,

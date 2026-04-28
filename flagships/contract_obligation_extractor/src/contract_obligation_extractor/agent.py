@@ -9,7 +9,6 @@ Workflow:
    `ObligationReport`, copying chunk_ids verbatim.
 """
 
-
 import json
 import os
 import re
@@ -29,8 +28,10 @@ async def ks_mcp_session():
     params = StdioServerParameters(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
     async with stdio_client(params) as (reader, writer):
         async with ClientSession(reader, writer) as session:
@@ -41,16 +42,22 @@ async def ks_mcp_session():
 async def call(session: ClientSession, name: str, arguments: dict[str, Any]) -> str:
     result = await session.call_tool(name, arguments)
     if result.isError:
-        raise RuntimeError(f"tool `{name}` failed: "
-                           + (result.content[0].text if result.content else ""))
+        raise RuntimeError(
+            f"tool `{name}` failed: "
+            + (result.content[0].text if result.content else "")
+        )
     return "\n".join(c.text for c in result.content if hasattr(c, "text"))
 
 
-async def call_list(session: ClientSession, name: str, arguments: dict[str, Any]) -> list[Any]:
+async def call_list(
+    session: ClientSession, name: str, arguments: dict[str, Any]
+) -> list[Any]:
     result = await session.call_tool(name, arguments)
     if result.isError:
-        raise RuntimeError(f"tool `{name}` failed: "
-                           + (result.content[0].text if result.content else ""))
+        raise RuntimeError(
+            f"tool `{name}` failed: "
+            + (result.content[0].text if result.content else "")
+        )
     out: list[Any] = []
     for c in result.content:
         if not hasattr(c, "text"):
@@ -60,6 +67,7 @@ async def call_list(session: ClientSession, name: str, arguments: dict[str, Any]
         except json.JSONDecodeError:
             out.append(c.text)
     return out
+
 
 SYSTEM_PROMPT = """\
 You are a legal contract analyst. Extract every obligation clause from the
@@ -122,19 +130,24 @@ def _parse_json(text: str) -> dict:
 
 
 async def extract_obligations(
-    *, corpus_folder_id: str, contract_name: str | None, model: str,
+    *,
+    corpus_folder_id: str,
+    contract_name: str | None,
+    model: str,
 ) -> ObligationReport:
     async with ks_mcp_session() as session:
         listing = await call_list(
             session, "list_contents", {"folder_id": corpus_folder_id}
         )
         docs = [
-            p for p in listing
+            p
+            for p in listing
             if isinstance(p, dict) and p.get("part_type") == "DOCUMENT"
         ]
         contract = _pick_contract(docs, contract_name)
         text = await call(
-            session, "read",
+            session,
+            "read",
             {"path_part_id": contract["path_part_id"], "max_chars": 15000},
         )
 
@@ -144,7 +157,7 @@ async def extract_obligations(
         f"Full text (with inline [chunk:<uuid>] markers after each passage):\n\n"
         f"{text}\n\n"
         f"Return an `ObligationReport` JSON object. `document_name` MUST equal "
-        f"\"{contract['name']}\"."
+        f'"{contract["name"]}".'
     )
     reply = await client.chat.completions.create(
         model=model,

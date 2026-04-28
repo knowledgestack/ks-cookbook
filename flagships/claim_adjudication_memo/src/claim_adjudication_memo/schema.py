@@ -1,6 +1,5 @@
 """Prompt template describing the memo shape the agent must return."""
 
-
 MEMO_TEMPLATE = """\
 # Coverage Analysis Memorandum
 

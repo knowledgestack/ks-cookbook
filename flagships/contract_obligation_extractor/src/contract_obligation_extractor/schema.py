@@ -1,6 +1,5 @@
 """Structured output for the obligation extractor."""
 
-
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -31,20 +30,26 @@ class Obligation(BaseModel):
             "only if none fit."
         ),
     )
-    verb: str = Field(..., description="The modal verb used (shall | must | will).", max_length=20)
+    verb: str = Field(
+        ..., description="The modal verb used (shall | must | will).", max_length=20
+    )
     summary: str = Field(
-        ..., max_length=500,
+        ...,
+        max_length=500,
         description="Plain-English one-sentence summary of the obligation.",
     )
     quote: str = Field(
-        ..., max_length=800,
+        ...,
+        max_length=800,
         description="Verbatim (or near-verbatim) clause quote, <=800 chars.",
     )
     chunk_id: str = Field(
-        ..., description="UUID copied from a [chunk:<uuid>] marker in the retrieved text.",
+        ...,
+        description="UUID copied from a [chunk:<uuid>] marker in the retrieved text.",
     )
     section: str = Field(
-        default="", max_length=120,
+        default="",
+        max_length=120,
         description="Section heading the obligation appears under (e.g., 'Payment').",
     )
 

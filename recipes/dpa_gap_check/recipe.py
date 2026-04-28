@@ -21,10 +21,7 @@ from openai import AsyncOpenAI
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
 
-POLICIES_FOLDER = os.environ.get(
-    "POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41"
-)
-
+POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 SYSTEM = (
     "You are a privacy counsel assistant. Compare the counterparty's DPA text "
     "against the company's data-protection policy. Output markdown with one "
@@ -54,17 +51,21 @@ async def run(dpa_text: str) -> None:
     async with ks_mcp_session() as session:
         policy = await pick_policy(session, "data")
         policy_text = await call(
-            session, "read",
+            session,
+            "read",
             {"path_part_id": policy["path_part_id"], "max_chars": 6000},
         )
         resp = await client.chat.completions.create(
-            model=os.environ.get("MODEL", "gpt-4o-mini"),
+            model=os.environ.get("MODEL", "gpt-4o"),
             messages=[
                 {"role": "system", "content": SYSTEM},
-                {"role": "user", "content": (
-                    f"Company policy '{policy['name']}':\n{policy_text}\n\n"
-                    f"Counterparty DPA:\n{dpa_text}"
-                )},
+                {
+                    "role": "user",
+                    "content": (
+                        f"Company policy '{policy['name']}':\n{policy_text}\n\n"
+                        f"Counterparty DPA:\n{dpa_text}"
+                    ),
+                },
             ],
         )
         print(resp.choices[0].message.content)

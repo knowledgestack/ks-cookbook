@@ -1,6 +1,5 @@
 """Tax position memo template for LangGraph markdown output."""
 
-
 MEMO_TEMPLATE = """\
 # Tax Position Research Memorandum
 

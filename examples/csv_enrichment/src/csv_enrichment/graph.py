@@ -1,6 +1,5 @@
 """LangGraph StateGraph for concurrent CSV enrichment against the KS MCP server."""
 
-
 import asyncio
 import csv
 from pathlib import Path
@@ -120,11 +119,13 @@ def read_csv(path: Path, *, query_column: str) -> tuple[list[str], list[Row]]:
         fieldnames = list(reader.fieldnames or [])
         rows: list[Row] = []
         for i, record in enumerate(reader):
-            rows.append({
-                "index": i,
-                "data": record,
-                "query": record.get(query_column, "").strip() or record.get(fieldnames[0], ""),
-            })
+            rows.append(
+                {
+                    "index": i,
+                    "data": record,
+                    "query": record.get(query_column, "").strip() or record.get(fieldnames[0], ""),
+                }
+            )
     return fieldnames, rows
 
 

@@ -1,6 +1,5 @@
 """Structured output every SAR narrative must conform to."""
 
-
 from pydantic import BaseModel, Field
 
 
@@ -21,9 +20,10 @@ class SARNarrative(BaseModel):
     why_suspicious: str = Field(..., max_length=800)
     how: str = Field(..., max_length=800)
     narrative: str = Field(
-        ..., max_length=2400,
+        ...,
+        max_length=2400,
         description="Full FinCEN-format narrative (≤ ~200 words), flowing prose "
-                    "that combines the W/W/W/W/W/H fields.",
+        "that combines the W/W/W/W/W/H fields.",
     )
     red_flags: list[str] = Field(..., min_length=1, max_length=12)
     citations: list[Citation] = Field(..., min_length=2, max_length=10)

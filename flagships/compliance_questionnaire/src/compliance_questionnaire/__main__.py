@@ -1,6 +1,5 @@
 """CLI entry for the compliance-questionnaire demo."""
 
-
 import argparse
 import asyncio
 import os
@@ -22,14 +21,17 @@ def _format_description(parsed: dict) -> str:
         for c in citations
     )
     return (
-        f"{description}\n"
-        f"[Confidence: {parsed.get('confidence', 'LOW')}]\n"
-        f"Evidence:\n{cite_lines}"
+        f"{description}\n[Confidence: {parsed.get('confidence', 'LOW')}]\nEvidence:\n{cite_lines}"
     )
 
 
 async def _run(
-    in_path: Path, out_path: Path, *, policies_folder_id: str, limit: int, concurrency: int,
+    in_path: Path,
+    out_path: Path,
+    *,
+    policies_folder_id: str,
+    limit: int,
+    concurrency: int,
 ) -> tuple[int, int]:
     questions = load_questions(in_path, limit=limit)
     if not questions:
@@ -44,11 +46,17 @@ async def _run(
         async with sem:
             try:
                 parsed = await answer_one(
-                    control_id=q.control_id, question=q.question,
+                    control_id=q.control_id,
+                    question=q.question,
                     policies_folder_id=policies_folder_id,
-                    tools=tools, model=model,
+                    tools=tools,
+                    model=model,
                 )
-                return q.row, parsed.get("answer", "INSUFFICIENT EVIDENCE"), _format_description(parsed)
+                return (
+                    q.row,
+                    parsed.get("answer", "INSUFFICIENT EVIDENCE"),
+                    _format_description(parsed),
+                )
             except Exception as e:  # noqa: BLE001
                 return q.row, "ERROR", f"ERROR: {type(e).__name__}: {e}"
 
@@ -61,8 +69,12 @@ async def _run(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Auto-fill a CAIQ/SIG questionnaire from your KS tenant.")
-    parser.add_argument("--in", dest="in_path", type=Path, required=True, help="Input XLSX (CAIQv4-format).")
+    parser = argparse.ArgumentParser(
+        description="Auto-fill a CAIQ/SIG questionnaire from your KS tenant."
+    )
+    parser.add_argument(
+        "--in", dest="in_path", type=Path, required=True, help="Input XLSX (CAIQv4-format)."
+    )
     parser.add_argument("--out", type=Path, required=True, help="Filled XLSX to write.")
     parser.add_argument(
         "--policies-folder",
@@ -81,11 +93,15 @@ def main() -> None:
             "Run `make demo-compliance-setup` to print the folder id for the sample corpus."
         )
 
-    n, err = asyncio.run(_run(
-        args.in_path, args.out,
-        policies_folder_id=args.policies_folder,
-        limit=args.limit, concurrency=args.concurrency,
-    ))
+    n, err = asyncio.run(
+        _run(
+            args.in_path,
+            args.out,
+            policies_folder_id=args.policies_folder,
+            limit=args.limit,
+            concurrency=args.concurrency,
+        )
+    )
     print(f"Filled {n} rows — {err} needed human review. Output: {args.out}")
 
 

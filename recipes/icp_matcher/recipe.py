@@ -1,11 +1,12 @@
 """ICP matcher — score a prospect company against your Ideal Customer Profile.
 
 Pain point: SDRs spend the first 20 minutes of every prospecting session
-re-reading the ICP deck and guessing whether a company fits. This recipe:
-company name + short blurb → fit score + cited criteria hits/misses.
+re-reading the ICP deck and guessing whether a company fits. This recipe
+takes a company name + blurb and asks Knowledge Stack about your ICP
+criteria, segmentation rules, and prior conversations — then emits a fit
+score with cited hits/misses.
 
-Framework: pydantic-ai.
-Tools used: list_contents, search_knowledge, read.
+Framework: pydantic-ai. KS access via the knowledgestack-mcp stdio server.
 Output: stdout (JSON).
 """
 
@@ -18,8 +19,6 @@ import sys
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
-
-CORPUS = os.environ.get("ICP_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
 
 
 class Citation(BaseModel):
@@ -44,29 +43,53 @@ class ICPMatch(BaseModel):
 
 
 PROMPT = (
-    "You are an SDR ops analyst. Using the ICP criteria, segmentation, and "
-    f"disqualification notes in path_part_id={CORPUS}, score the prospect. "
-    "Read the actual ICP doc before scoring. Every criterion must cite real "
-    "chunk_ids from read output. Fit < 40 → disqualified; 40-65 → C; 65-80 → B; "
-    ">80 → A."
+    "You're an SDR ops analyst scoring a prospect against your company's "
+    "Ideal Customer Profile (ICP). Knowledge Stack is your search backend; "
+    "ask it natural-language questions about your ICP criteria, "
+    "segmentation rules, customer-success notes, and what works in similar "
+    "deals.\n\n"
+    "Workflow:\n"
+    "1. Ask Knowledge Stack questions like:\n"
+    "   • 'What are the company-size and industry criteria in our ICP for "
+    "enterprise tier?'\n"
+    "   • 'What disqualifies a prospect (regulated industries, "
+    "competitor relationships, etc.)?'\n"
+    "   • 'Have we had similar deals in <prospect's industry / size>?'\n"
+    "   Frame queries naturally. Never use folder UUIDs or path_part_id "
+    "filters.\n"
+    "2. search_knowledge returns hits with chunk_id and path_part_id; the "
+    "text field is empty. Call read(path_part_id=<hit's path_part_id>) to "
+    "get the chunk text. The trailing [chunk:<uuid>] marker is your "
+    "citation.chunk_id (NEVER pass chunk_id to read; it 404s).\n"
+    "3. Build 3–10 CriterionHit entries directly from the chunk text. "
+    "Each verdict (hit/miss/unclear) must be defensible by the citations.\n"
+    "4. fit_score (0-100) → tier mapping: <40 disqualified, 40-65 C, "
+    "65-80 B, >80 A.\n"
+    "5. next_step: a concrete SDR action (e.g. 'Email VP Eng with use "
+    "case 1', 'Skip — competitor reseller')."
+    """Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 )
-
-
 async def run(company: str, blurb: str) -> None:
     mcp = MCPServerStdio(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
     agent = Agent(
-        model=f"openai:{os.environ.get('MODEL', 'gpt-4o-mini')}",
-        mcp_servers=[mcp], system_prompt=PROMPT, result_type=ICPMatch,
+        model=f"openai:{os.environ.get('MODEL', 'gpt-4o')}",
+        mcp_servers=[mcp],
+        system_prompt=PROMPT,
+        output_type=ICPMatch,
+        retries=4,
+        output_retries=4,
     )
-    request = f"Company: {company}\nBlurb: {blurb}"
+    request = f"Prospect company: {company}\nBlurb: {blurb}"
     async with agent.run_mcp_servers():
         result = await agent.run(request)
-    print(json.dumps(result.data.model_dump(), indent=2))
+    print(json.dumps(result.output.model_dump(), indent=2))
 
 
 def main() -> None:

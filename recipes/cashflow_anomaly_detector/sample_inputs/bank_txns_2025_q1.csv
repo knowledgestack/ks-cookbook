@@ -1,0 +1,28 @@
+date,description,amount,vendor,account,memo
+2025-01-02,ACH PAYMENT,-12450.00,Acme Vendor LLC,Operating,Invoice #INV-7811
+2025-01-02,ACH PAYMENT,-12450.00,Acme Vendor L.L.C.,Operating,Invoice #INV-7811
+2025-01-03,WIRE OUT,-49500.00,Northbrook Capital,Operating,Equipment lease deposit
+2025-01-04,DEPOSIT,18200.00,Stripe payouts,Operating,Daily card settlement
+2025-01-05,ACH PAYMENT,-8800.00,Stark Logistics,Operating,Freight Q1
+2025-01-06,DEBIT,-9750.00,CASH,Operating,Withdrawal — branch 442
+2025-01-07,DEBIT,-9750.00,CASH,Operating,Withdrawal — branch 619
+2025-01-07,DEBIT,-9750.00,CASH,Operating,Withdrawal — branch 731
+2025-01-09,ACH PAYMENT,-15400.00,Verdant SaaS Inc,Operating,Subscription auto-renewal
+2025-01-11,REFUND,3200.00,Stark Logistics,Operating,Credit memo CM-1108
+2025-01-12,ACH PAYMENT,-4250.00,Dell Marketing,Operating,Laptop order
+2025-01-13,ACH PAYMENT,-4250.00,Dell Marketing LP,Operating,Laptop order
+2025-01-15,WIRE OUT,-220000.00,Verdant SaaS Inc,Operating,Annual contract — wire to new account
+2025-01-15,ACH PAYMENT,-1200.00,Office Supplies Direct,Operating,Q1 supplies
+2025-01-16,ACH PAYMENT,-2400.00,Office Supplies Direct,Operating,Q1 supplies (resubmit)
+2025-01-17,DEPOSIT,55000.00,Customer A,Operating,Invoice #C-AR-902
+2025-01-18,DEBIT,-10500.00,CASH,Operating,Petty cash replenishment
+2025-01-21,ACH PAYMENT,-3600.00,LinkedIn Marketing,Marketing,Q1 ads
+2025-01-22,ACH PAYMENT,-7250.00,Acme Vendor LLC,Operating,Invoice #INV-7811 (re-bill?)
+2025-01-23,WIRE IN,150000.00,Customer B,Operating,Invoice #C-AR-915
+2025-01-24,ACH PAYMENT,-12450.00,Acme Vendor LLC,Operating,Invoice #INV-7811
+2025-01-25,DEBIT,-9700.00,CASH,Operating,Withdrawal — branch 442
+2025-01-26,ACH PAYMENT,-2400.00,Verdant SaaS,Operating,Suspicious — vendor renamed
+2025-01-27,ACH PAYMENT,-2400.00,Verdant SaaS Inc,Operating,Subscription
+2025-01-28,DEPOSIT,25000.00,Stripe payouts,Operating,Daily card settlement
+2025-01-29,WIRE OUT,-78000.00,Bright Capital Holdings,Operating,New vendor — first payment
+2025-01-30,ACH PAYMENT,-1800.00,Meta Ads Manager,Marketing,Jan campaigns

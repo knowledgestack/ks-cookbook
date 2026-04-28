@@ -4,7 +4,6 @@ Mirrors the pattern used inside the KS backend's ``generate_docx`` agent tool
 but stays self-contained — no imports from ks-backend.
 """
 
-
 from pathlib import Path
 
 from docx import Document as DocxDocument

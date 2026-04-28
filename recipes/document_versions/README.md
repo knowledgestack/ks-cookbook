@@ -1,25 +1,74 @@
-# document_versions
+# Document Versions
 
-**Pain point.** Policies change quarterly. Auditors ask "what version of the
-access-control policy was in force on 2025-09-01, and which chunk proves it?"
-Teams answer from memory instead of from the system.
+## Problem This Recipe Solves
 
-**What this recipe does.** Resolves a document by query via `find`, dumps the
-raw `get_info` payload (so you can see exactly which version fields the KS MCP
-server surfaces today), and pulls the current version's chunks with
-`[chunk:<uuid>]` citations — deterministic, no LLM.
+Teams in **enterprise document workflows** repeatedly face high-friction document analysis tasks that are too nuanced for simple keyword search and too repetitive for manual-only review. This recipe demonstrates a practical automation pattern that keeps outputs grounded in source evidence instead of producing uncited summaries.
+
+## Why This Is Needed
+
+- Manual review is slow, expensive, and often inconsistent across reviewers.
+- Point-in-time decisions need traceable evidence for audit, QA, or stakeholder sign-off.
+- LLM automation without retrieval usually misses critical clauses/details or hallucinates context.
+- Teams need repeatable workflows that can run daily/weekly with predictable structure.
+
+## Typical Documents Used
+
+- SOPs, policy docs, operational handbooks, and process guides
+- Structured exports (CSV/XLSX), tickets, logs, and status updates
+- Supporting evidence files used for auditability and citations
+
+## How Frequently This Problem Appears
+
+This is usually a **high-frequency operational problem**. In most organizations, similar requests appear:
+
+- Daily in frontline workflows (ops, support, legal, compliance, finance, clinical, or engineering queues)
+- Weekly in review cycles (approvals, controls, leadership reporting, and escalations)
+- Monthly/quarterly during audits, board prep, renewals, and policy refreshes
+
+## Common Automation Failure Modes
+
+- Missing document context (wrong file version, partial retrieval, stale corpus)
+- Non-cited outputs that cannot be defended in audit or compliance review
+- Over-generalized prompts that ignore domain constraints and required fields
+- Inconsistent schema/output shape that breaks downstream systems
+- Hidden environment misconfiguration (`KS_API_KEY`, `OPENAI_API_KEY`, base URL, model)
+
+## Developer Setup
+
+### 1) Get your Knowledge Stack API key
+
+1. Sign in to [app.knowledgestack.ai](https://app.knowledgestack.ai).
+2. Open your account/workspace API key section.
+3. Create or copy a key for your tenant.
+4. Export it in your terminal:
 
 ```bash
-uv run python recipes/document_versions/recipe.py \
-  --query "access control policy" \
-  --out document-versions.md
+export KS_API_KEY="your_ks_api_key"
+export KS_BASE_URL="https://api.knowledgestack.ai"
 ```
 
-## v1 surface, honestly
+### 2) Get your OpenAI API key
 
-The KS MCP server v1 is **read-only**. Version *metadata* travels in `get_info` /
-`list_contents` payloads; mutating version tools (`create_version`,
-`promote_version`, `rollback_version`) are on the roadmap in the write-back MCP
-and are **not** callable from this recipe. Running this recipe is the right way
-to see what version fields your backend actually returns before you build on top
-of them.
+1. Sign in to [platform.openai.com](https://platform.openai.com/).
+2. Go to **API keys** and create a new secret key.
+3. Copy it once (OpenAI only shows full key at creation time).
+4. Export it in your terminal:
+
+```bash
+export OPENAI_API_KEY="your_openai_api_key"
+export MODEL="gpt-4o"
+```
+
+### 3) Run this recipe
+
+```bash
+uv run python recipes/document_versions/recipe.py --help
+```
+
+
+## Notes for Production Use
+
+- Keep retrieval grounded: require citations/chunk references in outputs.
+- Add strict output schemas before wiring to downstream automations.
+- Start in read-only mode, then progressively allow write/actions with approvals.
+- Monitor token cost, latency, and exception rates per run.

@@ -1,6 +1,5 @@
 """CLI entry for the MSA redline-vs-playbook flagship."""
 
-
 import argparse
 import asyncio
 import os
@@ -106,8 +105,7 @@ def main() -> None:
     majors = sum(
         1
         for c in memo.clauses
-        if c.deviation_severity
-        in (DeviationSeverity.MAJOR, DeviationSeverity.MISSING)
+        if c.deviation_severity in (DeviationSeverity.MAJOR, DeviationSeverity.MISSING)
     )
     print(
         f"Compared {len(memo.clauses)} clauses between "

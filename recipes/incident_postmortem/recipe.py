@@ -7,7 +7,6 @@ with timeline, root cause, remediation, and cited policy references.
 Framework: pydantic-ai with a structured ``PostMortem`` result type.
 """
 
-
 import argparse
 import asyncio
 import os
@@ -18,11 +17,7 @@ from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
 
-POLICIES_FOLDER = os.environ.get(
-    "POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41"
-)
-
-
+POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
 class Citation(BaseModel):
     chunk_id: str
     document_name: str
@@ -38,29 +33,39 @@ class PostMortem(BaseModel):
     policy_references: list[Citation] = Field(default_factory=list, min_length=1)
 
 
-PROMPT = (
-    "You draft engineering post-mortems. Use the MCP tools to list and read "
-    "the Incident Response (ir) and Breach policies from the folder "
-    f"path_part_id={POLICIES_FOLDER}. Cite policy chunks with real chunk_ids "
-    "copied from the read output in the ``policy_references`` field."
-)
+PROMPT = """You draft engineering post-mortems. Use the MCP tools to list and read
+KS workflow (do NOT skip):
+1. Ask Knowledge Stack specific natural-language questions about the input. Never use folder UUIDs or path_part_id filters in your queries.
+2. search_knowledge returns hits. EACH hit is a JSON object with TWO distinct UUIDs: chunk_id (for citation only) and path_part_id (the chunk's path-tree node, used for read). The text field on the hit is empty.
+3. To retrieve the chunk content, call read(path_part_id=<hit.path_part_id>). DO NOT pass chunk_id to read — read() returns 404 on chunk_ids. If you see a 404, you used the wrong UUID; switch to path_part_id from the SAME hit. The read() output ends in a [chunk:<uuid>] marker — that uuid is the citation.chunk_id.
+4. Build every output field ONLY from chunk text you read. Never invent facts. If the corpus has nothing relevant, mark the field accordingly (e.g. confidence='low' or 'not in corpus — upload data to proceed').
+5. Populate every citation with chunk_id (verbatim from the marker), document_name (filename from read() output's metadata or materialized_path), and snippet (verbatim ≤240 chars from the chunk text). NEVER leave document_name or snippet blank.
 
+
+Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {"<ClassName>": ...} or {"result": ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 
 async def run(incident: str) -> None:
     server_cmd = os.environ.get("KS_MCP_COMMAND", "uvx")
     server_args = (os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split()
     mcp = MCPServerStdio(
-        command=server_cmd, args=server_args,
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        command=server_cmd,
+        args=server_args,
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
     agent = Agent(
-        model=f"openai:{os.environ.get('MODEL', 'gpt-4o-mini')}",
-        mcp_servers=[mcp], system_prompt=PROMPT, result_type=PostMortem,
+        model=f"openai:{os.environ.get('MODEL', 'gpt-4o')}",
+        mcp_servers=[mcp],
+        system_prompt=PROMPT,
+        output_type=PostMortem,
+        retries=4,
+        output_retries=4,
     )
     async with agent.run_mcp_servers():
         result = await agent.run(incident)
-    pm = result.data
+    pm = result.output
     out = Path("post-mortem.md")
     out.write_text(
         f"# {pm.title}\n\n## Summary\n{pm.summary}\n\n"
@@ -78,8 +83,7 @@ async def run(incident: str) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--incident", required=True,
-                   help="One-paragraph summary of the incident.")
+    p.add_argument("--incident", required=True, help="One-paragraph summary of the incident.")
     args = p.parse_args()
     if not os.environ.get("KS_API_KEY") or not os.environ.get("OPENAI_API_KEY"):
         sys.exit("Set KS_API_KEY and OPENAI_API_KEY.")

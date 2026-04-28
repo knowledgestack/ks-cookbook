@@ -1,6 +1,5 @@
 """Render a ``RevRecMemo`` to markdown."""
 
-
 from pathlib import Path
 
 from rev_rec_memo.schema import RevRecMemo
@@ -30,8 +29,7 @@ def write_memo(memo: RevRecMemo, out_path: Path) -> None:
     for c in memo.citations:
         snippet = (c.snippet or "").replace("\n", " ").strip()
         lines.append(
-            f"- `[chunk:{c.chunk_id}]` — **{c.document_name}** — "
-            f"\u201c{snippet}\u201d"
+            f"- `[chunk:{c.chunk_id}]` — **{c.document_name}** — \u201c{snippet}\u201d"
         )
     lines.append("")
     out_path.parent.mkdir(parents=True, exist_ok=True)

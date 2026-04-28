@@ -1,6 +1,5 @@
 """LangGraph agent that answers compliance questions, grounded in KS policies."""
 
-
 import json
 import os
 from typing import Any
@@ -52,17 +51,19 @@ async def _build_tools() -> list[Any]:
     command = os.environ.get("KS_MCP_COMMAND", "uvx")
     args_raw = os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp")
     args = args_raw.split() if args_raw else []
-    client = MultiServerMCPClient({
-        "knowledgestack": {
-            "command": command,
-            "args": args,
-            "transport": "stdio",
-            "env": {
-                "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-                "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
-            },
+    client = MultiServerMCPClient(
+        {
+            "knowledgestack": {
+                "command": command,
+                "args": args,
+                "transport": "stdio",
+                "env": {
+                    "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+                    "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+                },
+            }
         }
-    })
+    )
     return await client.get_tools()
 
 
@@ -70,11 +71,13 @@ def _build_model() -> Any:
     provider = os.environ.get("COMPLIANCE_PROVIDER", "openai").lower()
     if provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
+
         return ChatAnthropic(
             model=os.environ.get("COMPLIANCE_MODEL", "claude-opus-4-6"),
             max_tokens=1500,
         )
     from langchain_openai import ChatOpenAI
+
     return ChatOpenAI(
         model=os.environ.get("COMPLIANCE_MODEL", "gpt-4o-mini"),
         max_tokens=1500,
@@ -120,16 +123,23 @@ def _parse_json_reply(text: str) -> dict[str, Any]:
 
 
 async def answer_one(
-    *, control_id: str, question: str, policies_folder_id: str, tools: list[Any], model: Any,
+    *,
+    control_id: str,
+    question: str,
+    policies_folder_id: str,
+    tools: list[Any],
+    model: Any,
 ) -> dict[str, Any]:
     prompt = SYSTEM_PROMPT_TEMPLATE.replace("__FOLDER_ID__", policies_folder_id)
     agent = create_react_agent(model, tools)
-    result = await agent.ainvoke({
-        "messages": [
-            ("system", prompt),
-            ("user", f"Control {control_id}: {question}"),
-        ]
-    })
+    result = await agent.ainvoke(
+        {
+            "messages": [
+                ("system", prompt),
+                ("user", f"Control {control_id}: {question}"),
+            ]
+        }
+    )
     messages = result.get("messages", [])
     text = messages[-1].content if messages else ""
     if isinstance(text, list):

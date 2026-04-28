@@ -1,0 +1,21 @@
+[project]
+name = "ks-cookbook-invoice-followup"
+version = "0.1.0"
+description = "SMB flagship — draft a tone-matched follow-up email for an overdue invoice, grounded in the client's past invoices + email threads stored in KS."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic-ai[mcp]>=0.0.14",
+    "pydantic>=2.6",
+]
+
+[project.scripts]
+ks-cookbook-invoice-followup = "invoice_followup.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/invoice_followup"]

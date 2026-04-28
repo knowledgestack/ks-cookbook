@@ -1,0 +1,19 @@
+feat(api): add /v2/ingest endpoint with batch upload support
+fix(auth): close session leak when refresh token expires mid-request
+feat(rbac): introduce viewer role with read-only path scoping
+chore(deps): bump pydantic from 2.7 to 2.13
+refactor(worker): extract Temporal activity wrappers into dedicated module
+feat(search): add search_keyword tool to MCP server for exact-match queries
+fix(ingestion): retry transient S3 upload failures up to 3 times with backoff
+feat(privacy): support GDPR erasure requests via /v1/data_subject/erase
+docs: add zero-trust architecture diagram to deployment guide
+fix(api): return 422 (not 500) on missing path_part_id in ingest body
+feat(observability): emit per-tenant ingestion latency histograms
+chore(test): increase Temporal test cluster timeout from 30s to 60s
+feat(billing): meter document_versions per tenant for usage-based pricing
+fix(security): rotate signing key on tenant deletion to prevent replay
+refactor(db): consolidate ChunkRow + ChunkMetadataRow into single table
+feat(streams): expose ingestion progress via SSE endpoint
+fix(worker): mark workflow FAILED when activity exceeds max retries
+feat(ui): add bulk-ingest progress bar to admin dashboard
+chore: regenerate ksapi clients (Python + TypeScript) for v2 endpoints

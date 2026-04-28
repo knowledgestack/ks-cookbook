@@ -1,10 +1,10 @@
 """Expense policy violation check — expense line → cited verdict.
 
 Pain point: Finance reviewers eyeball expense reports against a 40-page T&E
-policy. This recipe classifies each line (allowed / out-of-policy / needs
-receipt / needs approval) and cites the exact policy section.
+policy. This recipe asks Knowledge Stack about the relevant policy /
+guidance for the expense category and grounds the verdict in real chunks.
 
-Framework: pydantic-ai. Tools: list_contents, search_knowledge, read.
+Framework: pydantic-ai. KS access via the knowledgestack-mcp stdio server.
 Output: stdout (JSON).
 """
 
@@ -17,8 +17,6 @@ import sys
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent
 from pydantic_ai.mcp import MCPServerStdio
-
-CORPUS = os.environ.get("FINANCE_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
 
 
 class Citation(BaseModel):
@@ -37,26 +35,52 @@ class ExpenseVerdict(BaseModel):
 
 
 PROMPT = (
-    f"You review expense reports vs our T&E policy in path_part_id={CORPUS}. "
-    "Apply per-category caps, receipt thresholds, and pre-approval rules. "
-    "chunk_ids must be real."
+    "You're a finance reviewer assessing an expense line against your "
+    "company's T&E policy. Knowledge Stack is your search backend; ask it "
+    "natural-language questions about expense rules, receipt thresholds, "
+    "and IRS deductibility guidance.\n\n"
+    "Workflow:\n"
+    "1. Ask Knowledge Stack questions like:\n"
+    "   • 'What is the per-meal cap and receipt threshold in our T&E "
+    "policy?'\n"
+    "   • 'When is pre-approval required for travel expenses?'\n"
+    "   • 'What does IRS Pub 535 say about deductibility of business "
+    "entertainment?'\n"
+    "   Frame queries naturally. Never use folder UUIDs or path_part_id "
+    "filters.\n"
+    "2. search_knowledge returns hits with chunk_id and path_part_id; the "
+    "text field is empty. Call read(path_part_id=<hit's path_part_id>) to "
+    "get the chunk text. The trailing [chunk:<uuid>] marker is your "
+    "citation.chunk_id (NEVER pass chunk_id to read; it 404s).\n"
+    "3. Verdict (one of allowed / out_of_policy / needs_receipt / "
+    "needs_approval) must be defensible from the chunk text. Reason "
+    "quotes the relevant rule verbatim where possible.\n"
+    "4. Populate every citation with chunk_id (verbatim), document_name "
+    "(filename in read() metadata), and snippet (verbatim ≤240 chars)."
+    """Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones."""
 )
-
-
 async def run(description: str, amount: str, category: str) -> None:
     mcp = MCPServerStdio(
         command=os.environ.get("KS_MCP_COMMAND", "uvx"),
         args=(os.environ.get("KS_MCP_ARGS", "knowledgestack-mcp") or "").split(),
-        env={"KS_API_KEY": os.environ.get("KS_API_KEY", ""),
-             "KS_BASE_URL": os.environ.get("KS_BASE_URL", "")},
+        env={
+            "KS_API_KEY": os.environ.get("KS_API_KEY", ""),
+            "KS_BASE_URL": os.environ.get("KS_BASE_URL", ""),
+        },
     )
-    agent = Agent(model=f"openai:{os.environ.get('MODEL', 'gpt-4o-mini')}",
-                  mcp_servers=[mcp], system_prompt=PROMPT, result_type=ExpenseVerdict)
+    agent = Agent(
+        model=f"openai:{os.environ.get('MODEL', 'gpt-4o')}",
+        mcp_servers=[mcp],
+        system_prompt=PROMPT,
+        output_type=ExpenseVerdict,
+        retries=4,
+        output_retries=4,
+    )
     async with agent.run_mcp_servers():
         result = await agent.run(
             f"Description: {description}\nAmount: {amount}\nCategory: {category}"
         )
-    print(json.dumps(result.data.model_dump(), indent=2))
+    print(json.dumps(result.output.model_dump(), indent=2))
 
 
 def main() -> None:

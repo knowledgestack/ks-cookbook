@@ -1,6 +1,5 @@
 """Structured output every RFI draft must conform to."""
 
-
 from pydantic import BaseModel, Field
 
 

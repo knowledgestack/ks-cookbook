@@ -1,6 +1,5 @@
 """CIOMS narrative memo template for LangGraph markdown output."""
 
-
 MEMO_TEMPLATE = """\
 # Adverse Event Narrative — CIOMS Format
 

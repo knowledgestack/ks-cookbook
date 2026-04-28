@@ -1,6 +1,5 @@
 """Output schema the agent must produce for each questionnaire row."""
 
-
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -28,7 +27,8 @@ class AnsweredControl(BaseModel):
         ),
     )
     description: str = Field(
-        ..., max_length=2000,
+        ...,
+        max_length=2000,
         description="Short auditor-style narrative. Cites policy sections inline.",
     )
     confidence: Confidence

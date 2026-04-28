@@ -8,7 +8,6 @@ markdown checklist with inline `[chunk:<uuid>]` citations from `read` output.
 Framework: raw OpenAI function-calling against MCP stdio (no agent framework).
 """
 
-
 import argparse
 import asyncio
 import json
@@ -21,25 +20,28 @@ from openai import AsyncOpenAI
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from _shared.mcp_client import call, call_list, ks_mcp_session  # noqa: E402
 
-POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "ab926019-ac7a-579f-bfda-6c52a13c5f41")
-
-TOOLS = [{
-    "type": "function",
-    "function": {
-        "name": "pick_policies",
-        "description": "Choose up to 4 policy path_part_ids relevant to onboarding the role.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "path_part_ids": {
-                    "type": "array", "items": {"type": "string"},
-                    "minItems": 1, "maxItems": 4,
+POLICIES_FOLDER = os.environ.get("POLICIES_FOLDER_ID", "")
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "pick_policies",
+            "description": "Choose up to 4 policy path_part_ids relevant to onboarding the role.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path_part_ids": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "minItems": 1,
+                        "maxItems": 4,
+                    },
                 },
+                "required": ["path_part_ids"],
             },
-            "required": ["path_part_ids"],
         },
-    },
-}]
+    }
+]
 
 SYSTEM = (
     "Produce a markdown onboarding checklist for the given role using ONLY the supplied "
@@ -57,17 +59,25 @@ async def run(role: str) -> None:
             sys.exit("No policies found in the configured folder.")
 
         client = AsyncOpenAI()
-        model = os.environ.get("MODEL", "gpt-4o-mini")
+        model = os.environ.get("MODEL", "gpt-4o")
         pick = await client.chat.completions.create(
-            model=model, tools=TOOLS,
+            model=model,
+            tools=TOOLS,
             tool_choice={"type": "function", "function": {"name": "pick_policies"}},
-            messages=[{"role": "user", "content": (
-                f"Role: {role}\nPolicies (name → path_part_id): "
-                f"{[(p['name'], p['path_part_id']) for p in policies]}\n"
-                "Pick up to 4 path_part_ids most relevant to day-one onboarding."
-            )}],
+            messages=[
+                {
+                    "role": "user",
+                    "content": (
+                        f"Role: {role}\nPolicies (name → path_part_id): "
+                        f"{[(p['name'], p['path_part_id']) for p in policies]}\n"
+                        "Pick up to 4 path_part_ids most relevant to day-one onboarding."
+                    ),
+                }
+            ],
         )
-        chosen = json.loads(pick.choices[0].message.tool_calls[0].function.arguments)["path_part_ids"]
+        chosen = json.loads(pick.choices[0].message.tool_calls[0].function.arguments)[
+            "path_part_ids"
+        ]
         valid = {p["path_part_id"]: p["name"] for p in policies}
 
         sections: list[str] = []
