@@ -40,6 +40,30 @@ These pages cover **how to use** Knowledge Stack from the client side — the MC
 | [Writing a recipe](writing-a-recipe.md) | The ≤100-LOC single-file pattern, frontmatter, `ks_mcp_session()`. |
 | [Troubleshooting](troubleshooting.md) | Common errors when running flagships or connecting the MCP server. |
 
+## How this wiki is published
+
+GitHub Wikis live in a **separate git repo** — `https://github.com/knowledgestack/ks-cookbook.wiki.git` — not in `main`. Checking pages into `docs/wiki/` here doesn't reach the rendered Wiki tab on its own.
+
+A workflow at [`.github/workflows/wiki.yml`](../../.github/workflows/wiki.yml) mirrors `docs/wiki/` into the Wiki repo on every push to `main` that touches these files. It:
+
+1. Clones `<repo>.wiki.git`
+2. Copies `docs/wiki/` in (renaming `README.md` → `Home.md`)
+3. Regenerates `_Sidebar.md` from the on-disk hierarchy via [`scripts/build_wiki_sidebar.py`](../../scripts/build_wiki_sidebar.py)
+4. Commits + pushes back
+
+To preview locally:
+
+```bash
+gem install gollum
+gollum docs/wiki   # http://localhost:4567
+```
+
+To publish manually (need wiki write access):
+
+```bash
+./scripts/publish_wiki.sh
+```
+
 ## If you're brand new
 
 1. Read the root [README](../../README.md) — quick cover page.
