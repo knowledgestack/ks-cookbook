@@ -8,7 +8,7 @@ body:
     id: page
     attributes:
       label: Which page / file?
-      placeholder: "docs/wiki/seed-data.md  —  or  —  flagships/kyc_onboarding_review/README.md"
+      placeholder: "https://github.com/knowledgestack/ks-cookbook/wiki/seed-data  —  or  —  flagships/kyc_onboarding_review/README.md"
     validations:
       required: true
 

@@ -14,34 +14,34 @@
 [![Flagships](https://img.shields.io/badge/flagships-32-green)](flagships/)
 [![Recipes](https://img.shields.io/badge/recipes-100%2B-green)](recipes/)
 [![MCP compatible](https://img.shields.io/badge/MCP-compatible-purple)](https://modelcontextprotocol.io/)
-[![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](docs/wiki/frameworks/langchain.md)
-[![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](docs/wiki/frameworks/langgraph.md)
-[![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](docs/wiki/frameworks/crewai.md)
-[![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](docs/wiki/frameworks/temporal.md)
+[![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/langchain)
+[![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/langgraph)
+[![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/crewai)
+[![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/temporal)
 
-[**Quickstart**](docs/wiki/quickstart.md) · [**Flagships**](#flagships-by-vertical) · [**Frameworks**](docs/wiki/frameworks.md) · [**Wiki**](docs/wiki/README.md) · [**Discord**](https://discord.gg/McHmxUeS)
+[**Quickstart**](https://github.com/knowledgestack/ks-cookbook/wiki/quickstart) · [**Flagships**](#flagships-by-vertical) · [**Frameworks**](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks) · [**Wiki**](https://github.com/knowledgestack/ks-cookbook/wiki) · [**Discord**](https://discord.gg/McHmxUeS)
 
 </div>
 
 ---
 
-Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, citations — exposed as a stable **MCP** surface that plugs into [LangChain](docs/wiki/frameworks/langchain.md), [LangGraph](docs/wiki/frameworks/langgraph.md), [CrewAI](docs/wiki/frameworks/crewai.md), [Temporal](docs/wiki/frameworks/temporal.md), [OpenAI Agents SDK](docs/wiki/frameworks/openai-agents.md), [pydantic-ai](docs/wiki/frameworks/pydantic-ai.md), [Claude Desktop](docs/wiki/frameworks/claude-desktop.md), [Cursor](docs/wiki/frameworks/claude-desktop.md), and anything else that speaks [MCP](https://modelcontextprotocol.io/). **Every flagship runs under every framework** — pick your runtime and the [framework page](docs/wiki/frameworks.md) shows the same flagship ported end-to-end.
+Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, citations — exposed as a stable **MCP** surface that plugs into [LangChain](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/langchain), [LangGraph](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/langgraph), [CrewAI](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/crewai), [Temporal](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/temporal), [OpenAI Agents SDK](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/openai-agents), [pydantic-ai](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/pydantic-ai), [Claude Desktop](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/claude-desktop), [Cursor](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/claude-desktop), and anything else that speaks [MCP](https://modelcontextprotocol.io/). **Every flagship runs under every framework** — pick your runtime and the [framework page](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks) shows the same flagship ported end-to-end.
 
 You focus on agent logic. KS manages the knowledge layer.
 
-→ **New here?** Read the [Overview](docs/wiki/overview.md) (why this exists, mental model). Then run the [Quickstart](docs/wiki/quickstart.md).
+→ **New here?** Read the [Overview](https://github.com/knowledgestack/ks-cookbook/wiki/overview) (why this exists, mental model). Then run the [Quickstart](https://github.com/knowledgestack/ks-cookbook/wiki/quickstart).
 
 ## Index
 
-- 🚀 [Quickstart](docs/wiki/quickstart.md) — `git clone` → first recipe in ~5 min
-- 📖 [Cookbook book](docs/wiki/book/README.md) — every flagship + recipe README assembled into one navigable book ([flagships](docs/wiki/book/flagships.md) · [recipes](docs/wiki/book/recipes.md))
-- 🧠 [Overview & mental model](docs/wiki/overview.md) — what KS manages, pipeline diagram, repo map
-- 🔌 [Framework integrations](docs/wiki/frameworks.md) — every flagship runs under every framework. Worked ports:<br/>&nbsp;&nbsp;&nbsp;&nbsp;[pydantic-ai](docs/wiki/frameworks/pydantic-ai.md) · [LangChain](docs/wiki/frameworks/langchain.md) · [LangGraph](docs/wiki/frameworks/langgraph.md) · [CrewAI](docs/wiki/frameworks/crewai.md) · [OpenAI Agents SDK](docs/wiki/frameworks/openai-agents.md) · [Temporal](docs/wiki/frameworks/temporal.md) · [Claude Desktop & Cursor](docs/wiki/frameworks/claude-desktop.md) · [Custom MCP](docs/wiki/frameworks/custom-mcp.md)
-- 🛠 [MCP tool reference](docs/wiki/mcp-tools.md) — the 10 read-only tools your agent is allowed to call
-- ⚙️ [Configuration](docs/wiki/configuration.md) — env vars, per-demo overrides, base URLs
-- 📦 [Seed data](docs/wiki/seed-data.md) — what each flagship expects in your tenant
-- ✍️ [Writing a flagship](docs/wiki/writing-a-flagship.md) · [Writing a recipe](docs/wiki/writing-a-recipe.md)
-- 🩺 [Troubleshooting](docs/wiki/troubleshooting.md)
+- 🚀 [Quickstart](https://github.com/knowledgestack/ks-cookbook/wiki/quickstart) — `git clone` → first recipe in ~5 min
+- 📖 [Cookbook book](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships) — every flagship + recipe README assembled into one navigable book ([flagships](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships) · [recipes](https://github.com/knowledgestack/ks-cookbook/wiki/book/recipes))
+- 🧠 [Overview & mental model](https://github.com/knowledgestack/ks-cookbook/wiki/overview) — what KS manages, pipeline diagram, repo map
+- 🔌 [Framework integrations](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks) — every flagship runs under every framework. Worked ports:<br/>&nbsp;&nbsp;&nbsp;&nbsp;[pydantic-ai](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/pydantic-ai) · [LangChain](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/langchain) · [LangGraph](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/langgraph) · [CrewAI](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/crewai) · [OpenAI Agents SDK](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/openai-agents) · [Temporal](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/temporal) · [Claude Desktop & Cursor](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/claude-desktop) · [Custom MCP](https://github.com/knowledgestack/ks-cookbook/wiki/frameworks/custom-mcp)
+- 🛠 [MCP tool reference](https://github.com/knowledgestack/ks-cookbook/wiki/mcp-tools) — the 10 read-only tools your agent is allowed to call
+- ⚙️ [Configuration](https://github.com/knowledgestack/ks-cookbook/wiki/configuration) — env vars, per-demo overrides, base URLs
+- 📦 [Seed data](https://github.com/knowledgestack/ks-cookbook/wiki/seed-data) — what each flagship expects in your tenant
+- ✍️ [Writing a flagship](https://github.com/knowledgestack/ks-cookbook/wiki/writing-a-flagship) · [Writing a recipe](https://github.com/knowledgestack/ks-cookbook/wiki/writing-a-recipe)
+- 🩺 [Troubleshooting](https://github.com/knowledgestack/ks-cookbook/wiki/troubleshooting)
 - 🤝 [Contributing](CONTRIBUTING.md) · [Industries roadmap](INDUSTRIES.md)
 
 ## Flagships by vertical
@@ -114,13 +114,13 @@ Jump to: [Banking](#banking--financial-services) · [Legal](#legal) · [Accounti
 
 ## Browse by tag
 
-Tags are first-class metadata declared in each flagship's `pyproject.toml` `[project] keywords`. The full tag index — every flagship grouped by tag, with anchor links into the wiki book — lives at **[`docs/wiki/book/flagships-by-tag.md`](docs/wiki/book/flagships-by-tag.md)**.
+Tags are first-class metadata declared in each flagship's `pyproject.toml` `[project] keywords`. The full tag index — every flagship grouped by tag, with anchor links into the wiki book — lives at **[`https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag)**.
 
 Quick jumps:
 
-[`banking`](docs/wiki/book/flagships-by-tag.md#banking) · [`legal`](docs/wiki/book/flagships-by-tag.md#legal) · [`accounting`](docs/wiki/book/flagships-by-tag.md#accounting) · [`tax`](docs/wiki/book/flagships-by-tag.md#tax) · [`healthcare`](docs/wiki/book/flagships-by-tag.md#healthcare) · [`insurance`](docs/wiki/book/flagships-by-tag.md#insurance) · [`real-estate`](docs/wiki/book/flagships-by-tag.md#real-estate) · [`sales`](docs/wiki/book/flagships-by-tag.md#sales) · [`hr`](docs/wiki/book/flagships-by-tag.md#hr) · [`engineering`](docs/wiki/book/flagships-by-tag.md#engineering) · [`compliance`](docs/wiki/book/flagships-by-tag.md#compliance) · [`security`](docs/wiki/book/flagships-by-tag.md#security) · [`government`](docs/wiki/book/flagships-by-tag.md#government) · [`pharma`](docs/wiki/book/flagships-by-tag.md#pharma) · [`energy`](docs/wiki/book/flagships-by-tag.md#energy)
+[`banking`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#banking) · [`legal`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#legal) · [`accounting`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#accounting) · [`tax`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#tax) · [`healthcare`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#healthcare) · [`insurance`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#insurance) · [`real-estate`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#real-estate) · [`sales`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#sales) · [`hr`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#hr) · [`engineering`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#engineering) · [`compliance`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#compliance) · [`security`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#security) · [`government`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#government) · [`pharma`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#pharma) · [`energy`](https://github.com/knowledgestack/ks-cookbook/wiki/book/flagships-by-tag#energy)
 
-To **add or change tags on a flagship**: edit `keywords = [...]` in its `pyproject.toml`, then run `uv run python scripts/sync_flagship_tags.py && uv run python scripts/build_wiki_book.py`. See [Writing a flagship → Tagging](docs/wiki/writing-a-flagship.md#tagging).
+To **add or change tags on a flagship**: edit `keywords = [...]` in its `pyproject.toml`, then run `make tags`. See [Writing a flagship → Tagging](https://github.com/knowledgestack/ks-cookbook/wiki/writing-a-flagship#tagging).
 
 See [INDUSTRIES.md](INDUSTRIES.md) for the broader roadmap and proposed next flagships.
 

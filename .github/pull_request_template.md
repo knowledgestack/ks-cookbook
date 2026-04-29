@@ -54,7 +54,7 @@ CORPUS_FOLDER_ID=<your-folder> make demo-<slug>
 - [ ] I've read [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) and the relevant [cursor rule](../tree/main/.cursor/rules/)
 - [ ] No API keys, tokens, or PII in the diff
 - [ ] Every non-trivial claim in the agent output is cited (`Citation.chunk_id` or `[chunk:<uuid>]`)
-- [ ] Seed-data expectations documented (either in the flagship README or updating `docs/wiki/seed-data.md`)
+- [ ] Seed-data expectations documented (either in the flagship README or updating the [Seed data wiki page](https://github.com/knowledgestack/ks-cookbook/wiki/seed-data))
 - [ ] Workspace `pyproject.toml` updated if a new package was added
 - [ ] Makefile target added/updated if a new flagship was added
 - [ ] CHANGELOG.md updated under `[Unreleased]`

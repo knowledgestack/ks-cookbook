@@ -86,7 +86,7 @@ body:
       options:
         - label: I've searched existing issues and this isn't a duplicate.
           required: true
-        - label: I've verified my tenant has the expected seed data (`docs/wiki/seed-data.md`).
+        - label: I've verified my tenant has the expected seed data (https://github.com/knowledgestack/ks-cookbook/wiki/seed-data).
           required: true
         - label: I've redacted API keys and PII from any logs / snippets.
           required: true

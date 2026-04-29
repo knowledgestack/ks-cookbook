@@ -87,9 +87,8 @@ fix: ## Auto-fix lint issues across the workspace
 format: ## Format code with ruff
 	@uv run ruff format .
 
-tags: ## Sync flagship tags into pyproject keywords + regenerate the wiki book.
+tags: ## Sync flagship tags into pyproject keywords (source of truth).
 	@uv run python scripts/sync_flagship_tags.py
-	@uv run python scripts/build_wiki_book.py
 
 tags-check: ## Fail if any flagship is missing or stale on tags (CI).
 	@uv run python scripts/sync_flagship_tags.py --check

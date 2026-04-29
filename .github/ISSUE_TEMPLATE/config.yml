@@ -10,7 +10,7 @@ contact_links:
     url: https://github.com/knowledgestack/ks-cookbook/security/advisories/new
     about: Found a security issue? Please report it privately instead of opening a public issue.
   - name: 📖 Developer wiki
-    url: https://github.com/knowledgestack/ks-cookbook/tree/main/docs/wiki
+    url: https://github.com/knowledgestack/ks-cookbook/wiki
     about: Connecting, MCP tools, seed data, writing flagships and recipes, troubleshooting.
   - name: 🌐 Knowledge Stack docs
     url: https://knowledgestack.ai

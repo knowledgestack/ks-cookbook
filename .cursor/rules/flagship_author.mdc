@@ -45,7 +45,7 @@ Set-up steps:
 4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
 5. Run: `<CORPUS_FOLDER_ID=<id> make demo-<slug>>`
 
-Full corpus matrix: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+Full corpus matrix: [`https://github.com/knowledgestack/ks-cookbook/wiki/seed-data`](https://github.com/knowledgestack/ks-cookbook/wiki/seed-data).
 
 ## Run
 <make command + override examples>
@@ -115,4 +115,4 @@ demo-<slug>: check-env ## <One-line description>
 - [ ] System prompt includes the four invariants (see `python_clean_code.mdc`).
 - [ ] Added the package to `[tool.uv.workspace].members` in the root `pyproject.toml`.
 - [ ] Added the flagship to the root README's "Flagships by vertical" catalog with tags.
-- [ ] Added the flagship to `docs/wiki/seed-data.md` matrix.
+- [ ] Added the flagship to the [Seed data wiki page](https://github.com/knowledgestack/ks-cookbook/wiki/seed-data) matrix.
