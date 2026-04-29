@@ -8,7 +8,6 @@ from typing import Any
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from pydantic_ai import Agent
-from pydantic_ai.usage import UsageLimits
 
 from realtime_voice_sdr.schema import SessionSummary
 
