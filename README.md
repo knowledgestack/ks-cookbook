@@ -7,602 +7,141 @@
 **32 production-style flagship agents + 100+ recipes for enterprise RAG — built on [MCP](https://modelcontextprotocol.io/), works with every major agent framework.**
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/knowledgestack/ks-cookbook?style=for-the-badge&logo=github&color=yellow)](https://github.com/knowledgestack/ks-cookbook/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/knowledgestack/ks-cookbook?style=for-the-badge&logo=github&color=blue)](https://github.com/knowledgestack/ks-cookbook/network/members)
-[![Discord](https://img.shields.io/badge/Discord-join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/McHmxUeS)
-
-### ⭐ If this repo helps you ship, please [star it on GitHub](https://github.com/knowledgestack/ks-cookbook) — it's the single biggest signal for what we build next.
-
-<a href="https://github.com/knowledgestack/ks-cookbook">
-  <img src="https://img.shields.io/github/stars/knowledgestack/ks-cookbook?style=social" alt="Star on GitHub" />
-</a>
+[![Discord](https://img.shields.io/badge/Discord-join-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/McHmxUeS)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
-[![Flagships](https://img.shields.io/badge/flagships-32-green)](https://github.com/knowledgestack/ks-cookbook/tree/main/flagships)
-[![Recipes](https://img.shields.io/badge/recipes-100%2B-green)](https://github.com/knowledgestack/ks-cookbook/tree/main/recipes)
+[![Flagships](https://img.shields.io/badge/flagships-32-green)](flagships/)
+[![Recipes](https://img.shields.io/badge/recipes-100%2B-green)](recipes/)
 [![MCP compatible](https://img.shields.io/badge/MCP-compatible-purple)](https://modelcontextprotocol.io/)
-[![GitHub Discussions](https://img.shields.io/badge/GitHub-Discussions-181717?logo=github)](https://github.com/knowledgestack/ks-cookbook/discussions)
-[![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](https://www.langchain.com/)
-[![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](https://langchain-ai.github.io/langgraph/)
-[![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](https://www.crewai.com/)
-[![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](https://temporal.io/)
+[![LangChain](https://img.shields.io/badge/LangChain-supported-brightgreen)](docs/wiki/frameworks/langchain.md)
+[![LangGraph](https://img.shields.io/badge/LangGraph-supported-brightgreen)](docs/wiki/frameworks/langgraph.md)
+[![CrewAI](https://img.shields.io/badge/CrewAI-supported-brightgreen)](docs/wiki/frameworks/crewai.md)
+[![Temporal](https://img.shields.io/badge/Temporal-supported-brightgreen)](docs/wiki/frameworks/temporal.md)
 
-[**Quickstart**](#quickstart) · [**Flagships**](#flagships-by-vertical) · [**Discord**](https://discord.gg/McHmxUeS) · [**Docs**](docs/wiki/README.md) · [**Star History**](#-star-history)
+[**Quickstart**](docs/wiki/quickstart.md) · [**Flagships**](#flagships-by-vertical) · [**Frameworks**](docs/wiki/frameworks.md) · [**Wiki**](docs/wiki/README.md) · [**Discord**](https://discord.gg/McHmxUeS)
 
 </div>
 
 ---
 
-Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, and citation tracking — exposed through a stable **MCP** surface that plugs into [LangChain](https://www.langchain.com/), [LangGraph](https://langchain-ai.github.io/langgraph/), [CrewAI](https://www.crewai.com/), [Temporal](https://temporal.io/), [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), [pydantic-ai](https://ai.pydantic.dev/), [Claude Desktop](https://claude.ai/download), [Cursor](https://cursor.com/), and anything else that speaks [Model Context Protocol](https://modelcontextprotocol.io/).
-
-This repo shows how to build **enterprise RAG pipelines in minutes instead of weeks** — across banking, finance, legal, accounting, tax, healthcare, insurance, real estate, sales, HR, engineering, government, pharma, and energy.
-
-> ### ⭐ Why star this repo?
-> - **Stars decide our roadmap.** They tell us which verticals and frameworks to deepen next.
-> - **Get notified** when we ship new flagships, recipes, and framework integrations.
-> - **Help other engineers** discover production-grade RAG patterns instead of toy demos.
->
-> **[→ Star ks-cookbook](https://github.com/knowledgestack/ks-cookbook)** (it takes 2 seconds and means a lot.)
-
-## 👋 Welcome
-
-This repo is for developers building **enterprise RAG pipelines, agent workflows, and document intelligence systems** on top of Knowledge Stack. The Cookbook shows how to move from **raw documents → structured knowledge → production-ready agent workflows** without writing custom ingestion infrastructure.
-
-### What you can build
-
-Example workflows you can implement quickly on top of this cookbook:
-
-- 🔎 Enterprise document search with sentence-level citations
-- 🤖 Internal copilots grounded in company knowledge
-- 📚 Multi-document agent pipelines over PDFs, Excel, contracts, reports, technical manuals
-- 🕑 Version-aware knowledge retrieval systems
-- 🔐 Permission-aware agents with RBAC, per-tenant isolation, and audit-ready citations
-- 🏢 Secure private or on-prem deployments
-
-**You focus on agent logic. Knowledge Stack manages the knowledge layer.**
-
-### Join the developer community
-
-- 💬 **[Discord](https://discord.gg/McHmxUeS)** — fastest place to get implementation and architecture help. Many questions get answered there first.
-- 🗣️ **[GitHub Discussions](https://github.com/knowledgestack/ks-cookbook/discussions)** — share what you're building, propose flagships, ask long-form questions.
-- 🐛 **[Issues](https://github.com/knowledgestack/ks-cookbook/issues/new/choose)** — bugs, feature requests, docs fixes.
-
-### When asking a question (Discord, Discussions, or issues)
-
-Sharing these upfront makes it much faster to help:
-
-- what you're trying to build
-- which flagship or recipe you're following
-- which framework you're using (LangChain / LangGraph / CrewAI / Temporal / n8n / custom)
-- where you're stuck (ingestion, retrieval, citations, permissions, scaling, deployment, …)
-
-## Why this repo exists
-
-If you're already using LangChain, LangGraph, CrewAI, or Temporal, you've noticed the same thing: the orchestration tooling is mature, but **enterprise document infrastructure is still something every team rebuilds from scratch**.
-
-Most AI demos stop at "here is a chat response." Enterprise teams need stricter:
-
-- outputs reviewable by legal, finance, compliance, operations, or engineering
-- citations that point back to source material (chunk-level, verifiable)
-- permission-aware retrieval — the same agent behaves differently for different users
-- version-aware reads so audits reference the document as of a specific date
-- patterns that are easy to copy into real internal tooling
-
-Knowledge Stack provides the enterprise document intelligence layer. This cookbook shows how to plug that layer directly into your agent workflows.
-
-## What Knowledge Stack manages for your agent
-
-Instead of building this yourself:
-
-- document ingestion pipelines (PDF, DOCX, HTML, Markdown, …)
-- chunk storage and structured navigation
-- permission filtering and ACLs
-- version-aware retrieval
-- citation grounding (chunk-level UUIDs)
-- folder-level access control per user
-- structured document read surface (folders → documents → sections → chunks)
-
-Knowledge Stack exposes these as APIs and **MCP tools**. So your team focuses on:
-
-- agent workflows
-- orchestration logic (LangGraph nodes, CrewAI crews, Temporal activities)
-- output schemas
-- automation pipelines
-- business logic
-
-## Pipeline mental model
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│  Agent logic      (LangChain / LangGraph / CrewAI / Temporal │
-│                    / OpenAI Agents SDK / pydantic-ai)        │
-└────────────────────────────┬─────────────────────────────────┘
-                             ↓
-┌──────────────────────────────────────────────────────────────┐
-│  Knowledge Stack MCP tools  (read, search, list_contents, …) │
-└────────────────────────────┬─────────────────────────────────┘
-                             ↓
-┌──────────────────────────────────────────────────────────────┐
-│  Permission-aware retrieval   +   version-aware reads        │
-└────────────────────────────┬─────────────────────────────────┘
-                             ↓
-┌──────────────────────────────────────────────────────────────┐
-│  Chunk citations  →  schema-enforced output  →  .md/.docx    │
-└──────────────────────────────────────────────────────────────┘
-```
-
-Knowledge Stack sits between your agent runtime and your document corpus. Your orchestration layer doesn't change.
-
-## Build enterprise RAG faster
-
-Typical enterprise RAG requires building:
-
-| You would normally build | With Knowledge Stack you skip to |
-|---|---|
-| ingestion pipelines + chunking + metadata | ✅ done — upload and go |
-| ACL filtering per user / group / folder | ✅ enforced on every read |
-| version pinning + historical retrieval | ✅ version-aware by default |
-| citation-grounded output tracking | ✅ every chunk has a UUID |
-| schema-enforced agent outputs | ✅ patterns shown in this cookbook |
-
-You start directly at the agent layer.
-
-## Keep your existing agent framework
-
-Knowledge Stack does not replace your agent runtime. Use it with whatever you already run:
-
-- **[LangChain](https://www.langchain.com/)** / **[langchain-mcp-adapters](https://github.com/langchain-ai/langchain-mcp-adapters)** — see [`flagships/csv_enrichment`](flagships/csv_enrichment/) for a LangGraph example.
-- **[LangGraph](https://langchain-ai.github.io/langgraph/)** — used by the adverse-event narrative, audit workpaper, and tax memo flagships.
-- **[CrewAI](https://www.crewai.com/)** — plug `knowledgestack-mcp` in as a shared tool across a crew.
-- **[Temporal](https://temporal.io/)** — call MCP tools from activities for durable, retriable enterprise workflows.
-- **[OpenAI Agents SDK](https://github.com/openai/openai-agents-python)** — native MCP support.
-- **[pydantic-ai](https://ai.pydantic.dev/)** — used by most flagships in this repo.
-- **[Claude Desktop](https://claude.ai/download)** / **[Cursor](https://cursor.com/)** — add KS as an MCP server in config; your assistant gets tenant-scoped retrieval.
-- **Custom Python agents** — speak [MCP](https://modelcontextprotocol.io/) directly.
-
-It replaces the hardest part of enterprise RAG: **document infrastructure**.
-
-## What this repo teaches
-
-Each flagship shows how to:
-
-1. connect an agent to Knowledge Stack via MCP
-2. retrieve permission-filtered documents
-3. enforce schema-constrained output
-4. attach chunk-level citations
-5. generate a real artifact (`.md` / `.docx` / `.xlsx` / `.csv`)
-
-These are production agent patterns — not chat toys. Recipes (under [`recipes/`](recipes/)) are ≤100 LOC single-file versions of the same ideas across LangGraph, raw OpenAI, raw Anthropic, and MCP-only.
-
-## Who this is for
-
-Teams building internal AI agents on top of large document collections where **permissions**, **citations**, and **structured outputs** matter. If you're shipping agents into regulated verticals — banking, insurance, healthcare, legal, pharma, energy, government — this repo is aimed directly at you.
-
-## Quickstart
-
-> **Junior-engineer path: from `git clone` to a working recipe in ~5 minutes.**
-
-There are two ways to run the cookbook. Pick one:
-
-| Path | Use this when… | What you do |
-| ---- | -------------- | ----------- |
-| **A — `ingestion: true`** | You just want to see the recipes work against pre-ingested data. | Sign up at <https://app.knowledgestack.ai>, request a read-only "Cookbook demo" key, run any recipe. |
-| **B — `ingestion: false`** | You want to ingest real PDFs/XLSX/PPTX into your **own** tenant and run the recipes against your data. | Clone this repo, run `scripts/seed_unified_corpus.py` against your tenant, then run any recipe. |
-
-### Architecture (one diagram)
-
-```text
-                                     ┌────────────────────────┐
-   recipes/<name>/recipe.py ───stdio─►   knowledgestack-mcp   │  ── HTTPS ──► api.knowledgestack.ai
-   (≤100 LOC, no FOLDER_IDs)         │   (search/read/find)   │                (your tenant)
-                                     └────────────────────────┘
-              │                                   ▲
-              │                                   │
-              ▼                                   │
-   pydantic-ai Agent ─── tools: search_knowledge ─┘
-        │                       └─► read(path_part_id=<hit>)  ─► [chunk:<uuid>] marker
-        ▼
-   Structured output (pydantic schema) with citations[chunk_id, document_name, snippet]
-```
-
-Every recipe asks Knowledge Stack questions in **natural language**
-(`search_knowledge(query="When does the {company} agreement expire?")`) and
-follows each hit with `read(path_part_id=<hit>)` to retrieve the chunk text
-and the `[chunk:<uuid>]` citation marker. There are no folder UUIDs in any
-recipe — Knowledge Stack finds the right document by content.
-
-### 1. Prerequisites
-
-- Python `3.11+`
-- [`uv`](https://docs.astral.sh/uv/) (install: `curl -LsSf https://astral.sh/uv/install.sh | sh`)
-- A Knowledge Stack API key — sign in at <https://app.knowledgestack.ai>
-- An OpenAI key (`gpt-4o`) — `gpt-4o-mini` skips grounding and produces empty citations
-
-### 2. Clone and configure
-
-```bash
-git clone https://github.com/knowledgestack/ks-cookbook.git
-cd ks-cookbook
-cp .env.example .env
-```
-
-Fill in `.env`:
-
-```env
-KS_API_KEY=sk-user-...
-KS_BASE_URL=https://api.knowledgestack.ai
-OPENAI_API_KEY=sk-proj-...
-MODEL=gpt-4o
-```
-
-### 3. Install everything
-
-```bash
-make setup
-```
-
-Installs every workspace package into `.venv`, validates env vars.
-
-### 4a. Path A — run against the shared cookbook tenant
-
-The maintainers run a public-read cookbook tenant where the corpus is
-pre-ingested. Use the cookbook key from <https://app.knowledgestack.ai>
-and skip straight to step 5.
-
-### 4b. Path B — ingest the unified corpus into your own tenant
-
-```bash
-# 1. Create a parent folder in your tenant via the UI; copy its path_part_id
-# 2. Run the unified ingest:
-uv run python scripts/seed_unified_corpus.py \
-    --parent-folder-id <YOUR_PARENT_FOLDER_PATH_PART_ID>
-```
-
-The script uploads every file under `seed/<vertical>/` (29 real public-domain
-documents — CMS, NIST, IRS, FDA, FAR, NERC, NAIC, OCC, FinCEN, AWS,
-SEC EDGAR, BLS XLSX, CDC PPTX, …) and waits for KS ingestion (~4 min/doc).
-
-Format coverage in the bundled corpus:
-- 25 PDF (multi-page, with tables/images)
-- 2 PPTX (CDC PowerPoint decks)
-- 2 XLSX (BLS occupational data, FRED GDP)
-
-### 5. Run your first recipe
-
-```bash
-uv run python recipes/icd10_coder/recipe.py \
-    --note-file recipes/icd10_coder/sample_inputs/deid_visit_001.txt
-```
-
-You'll see the agent make ~10–20 MCP tool calls (`search_knowledge`,
-`read`), then emit a JSON `CodingResult` with real `chunk_id`s pointing into
-`cms_fy2026_icd10cm_coding_guidelines.pdf` in your tenant.
-
-Other quick wins:
-
-```bash
-uv run python recipes/clause_extractor/recipe.py --contract "Apple 2024 proxy"
-uv run python recipes/contract_renewal_checker/recipe.py --contract "Donna Huang software development"
-uv run python recipes/benefits_enrollment_qa/recipe.py \
-    --question "What ERISA disclosures must an employer provide to participants in the company SPD?"
-uv run python recipes/aml_sar_narrative/recipe.py --case-id "structuring-cash-deposits"
-```
-
-Each recipe folder has its own `README.md` with a live captured output
-example, sign-in steps, and troubleshooting.
-
-To see every demo target: `make help`
-
-## Output examples
-
-These are not toy console logs. The flagships write artifacts a team could actually inspect.
-
-Each flagship writes its output into its own package directory as `sample_output.<ext>`:
-
-- `flagships/credit_memo_drafter/sample_output.md` — cited borrower risk memo
-- `flagships/contract_obligation_extractor/sample_output.md` — obligations extracted from an MSA
-- `flagships/rev_rec_memo/sample_output.md` — ASC 606 position memo
-- `flagships/prior_auth_letter/sample_output.docx` — clinical prior-auth submission
-- `flagships/compliance_questionnaire/sample_output.xlsx` — auto-completed CAIQ questionnaire
-- `flagships/research_brief/sample_output.docx` — research brief built from KB evidence
-- `flagships/csv_enrichment/sample_output.csv` — CSV enriched from KB content
-
-Every output lives beside the flagship that produced it.
-
-## Repo map
-
-```text
-flagships/<name>/
-  README.md              # flagship-specific walkthrough
-  pyproject.toml         # package metadata + entrypoint
-  src/<module>/
-    __main__.py          # CLI entry
-    agent.py             # prompt + MCP interaction
-    schema.py            # structured output contract
-  sample_inputs/         # default demo inputs
-
-recipes/
-  INDEX.md               # lightweight patterns and starter recipes
-```
-
-The MCP server (`knowledgestack-mcp`) and the Python SDK (`ksapi`) now live in their own repos:
-
-- **[knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp)** — MCP server package; consumed here via `uvx knowledgestack-mcp`.
-- **[knowledgestack/ks-sdk-python](https://github.com/knowledgestack/ks-sdk-python)** — Python SDK (`ksapi` on PyPI); consumed here from PyPI.
-- **[knowledgestack/ks-sdk-ts](https://github.com/knowledgestack/ks-sdk-ts)** — TypeScript SDK (`@knowledge-stack/ksapi` on npm).
-- **[knowledgestack/ks-docs](https://github.com/knowledgestack/ks-docs)** — central docs site (Mintlify, deployed to `docs.knowledgestack.ai`).
-
-There are currently 32 flagship packages in the workspace and each one is independently runnable.
-
-## How a flagship is structured
-
-A typical flagship follows this flow:
-
-1. Accept a business input such as a borrower name, endpoint, alert, contract, or patient scenario.
-2. Connect to `knowledgestack-mcp`.
-3. Search, list, and read the relevant folder contents from Knowledge Stack.
-4. Ask the model to produce a schema-constrained answer grounded in that source material.
-5. Write the output artifact to disk.
-
-The important part is that the retrieval layer and citation discipline are reusable. Once you understand one flagship, the rest are easy to adapt.
+Knowledge Stack is the document intelligence layer behind your agents — ingestion, chunking, permissions, versioning, citations — exposed as a stable **MCP** surface that plugs into [LangChain](docs/wiki/frameworks/langchain.md), [LangGraph](docs/wiki/frameworks/langgraph.md), [CrewAI](docs/wiki/frameworks/crewai.md), [Temporal](docs/wiki/frameworks/temporal.md), [OpenAI Agents SDK](docs/wiki/frameworks/openai-agents.md), [pydantic-ai](docs/wiki/frameworks/pydantic-ai.md), [Claude Desktop](docs/wiki/frameworks/claude-desktop.md), [Cursor](docs/wiki/frameworks/claude-desktop.md), and anything else that speaks [MCP](https://modelcontextprotocol.io/). **Every flagship runs under every framework** — pick your runtime and the [framework page](docs/wiki/frameworks.md) shows the same flagship ported end-to-end.
+
+You focus on agent logic. KS manages the knowledge layer.
+
+→ **New here?** Read the [Overview](docs/wiki/overview.md) (why this exists, mental model). Then run the [Quickstart](docs/wiki/quickstart.md).
+
+## Index
+
+- 🚀 [Quickstart](docs/wiki/quickstart.md) — `git clone` → first recipe in ~5 min
+- 🧠 [Overview & mental model](docs/wiki/overview.md) — what KS manages, pipeline diagram, repo map
+- 🔌 [Framework integrations](docs/wiki/frameworks.md) — every flagship runs under every framework. Worked ports:<br/>&nbsp;&nbsp;&nbsp;&nbsp;[pydantic-ai](docs/wiki/frameworks/pydantic-ai.md) · [LangChain](docs/wiki/frameworks/langchain.md) · [LangGraph](docs/wiki/frameworks/langgraph.md) · [CrewAI](docs/wiki/frameworks/crewai.md) · [OpenAI Agents SDK](docs/wiki/frameworks/openai-agents.md) · [Temporal](docs/wiki/frameworks/temporal.md) · [Claude Desktop & Cursor](docs/wiki/frameworks/claude-desktop.md) · [Custom MCP](docs/wiki/frameworks/custom-mcp.md)
+- 🛠 [MCP tool reference](docs/wiki/mcp-tools.md) — the 10 read-only tools your agent is allowed to call
+- ⚙️ [Configuration](docs/wiki/configuration.md) — env vars, per-demo overrides, base URLs
+- 📦 [Seed data](docs/wiki/seed-data.md) — what each flagship expects in your tenant
+- ✍️ [Writing a flagship](docs/wiki/writing-a-flagship.md) · [Writing a recipe](docs/wiki/writing-a-recipe.md)
+- 🩺 [Troubleshooting](docs/wiki/troubleshooting.md)
+- 🤝 [Contributing](CONTRIBUTING.md) · [Industries roadmap](INDUSTRIES.md)
 
 ## Flagships by vertical
 
-32 flagship demos. Each links to its own README with the expected corpus, a sample input, and a sample output — open one to see exactly what it does before running anything.
+32 flagships. Each links to its own README with the expected corpus, a sample input, and a captured sample output — open one to see exactly what it does before running.
+
+Jump to: [Banking](#banking--financial-services) · [Legal](#legal) · [Accounting & tax](#accounting--tax) · [Healthcare](#healthcare) · [Insurance](#insurance) · [Real estate](#real-estate) · [Sales & revenue](#sales--revenue) · [HR](#hr) · [Engineering](#engineering-product--sre) · [Government, pharma, energy](#government-pharma--energy)
 
 ### Banking & financial services
 
-- **[Credit memo drafter](flagships/credit_memo_drafter/)** — Draft a cited credit memo from your bank's credit policy plus a borrower's financials.<br/>Tags: `banking` `credit-risk` `underwriting` `commercial-lending`
-- **[Loan covenant monitor](flagships/loan_covenant_monitor/)** — Flag covenant breaches or near-breaches from a borrower's quarterly financials.<br/>Tags: `banking` `covenant-monitoring` `credit-risk`
-- **[KYC onboarding review](flagships/kyc_onboarding_review/)** — CDD checklist and risk tier for a new customer against the bank's KYC policy.<br/>Tags: `banking` `kyc` `aml` `compliance`
-- **[Earnings risk analyzer](flagships/earnings_risk_analyzer/)** — Hebbia-style 10-K risk-flag memo with chunk-level citations.<br/>Tags: `finance` `sec-filings` `10-k` `investment-research`
+- **[Credit memo drafter](flagships/credit_memo_drafter/)** — Cited credit memo from your bank's policy + a borrower's financials.<br/>Tags: `banking` `credit-risk` `underwriting` `commercial-lending`
+- **[Loan covenant monitor](flagships/loan_covenant_monitor/)** — Flag covenant breaches from quarterly financials.<br/>Tags: `banking` `covenant-monitoring` `credit-risk`
+- **[KYC onboarding review](flagships/kyc_onboarding_review/)** — CDD checklist + risk tier against your KYC policy.<br/>Tags: `banking` `kyc` `aml` `compliance`
+- **[Earnings risk analyzer](flagships/earnings_risk_analyzer/)** — Hebbia-style 10-K risk-flag memo with chunk citations.<br/>Tags: `finance` `sec-filings` `10-k` `investment-research`
 
 ### Legal
 
-- **[Contract obligation extractor](flagships/contract_obligation_extractor/)** — Every `shall` / `must` / `will` obligation extracted from a contract, categorized and cited.<br/>Tags: `legal` `contracts` `msa` `obligations`
-- **[MSA redline vs. playbook](flagships/msa_redline_vs_playbook/)** — Compare an inbound MSA clause-by-clause against your company's standard playbook.<br/>Tags: `legal` `contracts` `redline` `negotiations`
-- **[Privacy impact assessment](flagships/privacy_impact_assessment/)** — PIA memo from a feature description, citing GDPR Article 35 and company template.<br/>Tags: `legal` `privacy` `gdpr` `security`
+- **[Contract obligation extractor](flagships/contract_obligation_extractor/)** — Every `shall`/`must`/`will` obligation from a contract, categorized + cited.<br/>Tags: `legal` `contracts` `msa` `obligations`
+- **[MSA redline vs. playbook](flagships/msa_redline_vs_playbook/)** — Compare an inbound MSA clause-by-clause against your playbook.<br/>Tags: `legal` `contracts` `redline` `negotiations`
+- **[Privacy impact assessment](flagships/privacy_impact_assessment/)** — PIA memo citing GDPR Article 35 + company template.<br/>Tags: `legal` `privacy` `gdpr` `security`
 
 ### Accounting & tax
 
-- **[Rev-rec memo (ASC 606)](flagships/rev_rec_memo/)** — Five-step revenue-recognition memo grounded in your company's rev-rec policy.<br/>Tags: `accounting` `asc-606` `revenue-recognition` `memos`
-- **[Audit workpaper drafter](flagships/audit_workpaper_drafter/)** — Tie a GL balance to source documents with citations to PCAOB AS 1215.<br/>Tags: `accounting` `audit` `pcaob` `workpapers`
-- **[Tax position memo](flagships/tax_position_memo/)** — Tax research memo citing IRC sections and Treasury Regs.<br/>Tags: `tax` `irc` `research` `memos`
+- **[Rev-rec memo (ASC 606)](flagships/rev_rec_memo/)** — Five-step revenue-recognition memo grounded in policy.<br/>Tags: `accounting` `asc-606` `revenue-recognition` `memos`
+- **[Audit workpaper drafter](flagships/audit_workpaper_drafter/)** — Tie a GL balance to source docs with PCAOB AS 1215 cites.<br/>Tags: `accounting` `audit` `pcaob` `workpapers`
+- **[Tax position memo](flagships/tax_position_memo/)** — Tax memo citing IRC sections + Treasury Regs.<br/>Tags: `tax` `irc` `research` `memos`
 
 ### Healthcare
 
-- **[Prior-authorization letter](flagships/prior_auth_letter/)** — Cited prior-auth or appeal letter grounded in the payer's medical policy.<br/>Tags: `healthcare` `prior-auth` `payer` `clinical`
-- **[Clinical trial eligibility](flagships/clinical_trial_eligibility/)** — Match a patient against inclusion/exclusion criteria from a real trial protocol.<br/>Tags: `healthcare` `clinical-trials` `eligibility` `ctms`
+- **[Prior-authorization letter](flagships/prior_auth_letter/)** — Cited prior-auth or appeal letter grounded in payer medical policy.<br/>Tags: `healthcare` `prior-auth` `payer` `clinical`
+- **[Clinical trial eligibility](flagships/clinical_trial_eligibility/)** — Match a patient against I/E criteria from a real protocol.<br/>Tags: `healthcare` `clinical-trials` `eligibility` `ctms`
 
 ### Insurance
 
-- **[Claim adjudication memo](flagships/claim_adjudication_memo/)** — Coverage-analysis memo for a P&C claim, grounded in the applicable policy wording.<br/>Tags: `insurance` `claims` `coverage-analysis` `p-and-c`
-- **[Subrogation opportunity review](flagships/subrogation_opportunity_review/)** — Assess recovery potential on a claim, citing NAIC Model 902 and internal SOP.<br/>Tags: `insurance` `subrogation` `claims`
+- **[Claim adjudication memo](flagships/claim_adjudication_memo/)** — Coverage-analysis memo for a P&C claim.<br/>Tags: `insurance` `claims` `coverage-analysis` `p-and-c`
+- **[Subrogation opportunity review](flagships/subrogation_opportunity_review/)** — Recovery potential, citing NAIC Model 902.<br/>Tags: `insurance` `subrogation` `claims`
 - **[Insurance policy comparison](flagships/insurance_policy_comparison/)** — Side-by-side analysis with explicit coverage gaps.<br/>Tags: `insurance` `policy-comparison` `coverage`
 
 ### Real estate
 
-- **[Lease abstract](flagships/lease_abstract/)** — One-page cited abstract (tenant, term, rent, renewals, CAM, exclusives).<br/>Tags: `real-estate` `leases` `commercial`
-- **[Zoning compliance check](flagships/zoning_compliance_check/)** — Check a proposed use against local Land Development Code.<br/>Tags: `real-estate` `zoning` `compliance` `municipal`
+- **[Lease abstract](flagships/lease_abstract/)** — One-page cited abstract (term, rent, renewals, CAM, exclusives).<br/>Tags: `real-estate` `leases` `commercial`
+- **[Zoning compliance check](flagships/zoning_compliance_check/)** — Proposed use vs. local Land Development Code.<br/>Tags: `real-estate` `zoning` `compliance` `municipal`
 
 ### Sales & revenue
 
-- **[CSV enrichment](flagships/csv_enrichment/)** — Enrich every row of a CSV with a short summary from your knowledge base.<br/>Tags: `sales` `data-enrichment` `batch` `operations`
-- **[Research brief](flagships/research_brief/)** — Generate a cited `.docx` research brief from your tenant.<br/>Tags: `research` `reports` `analyst`
-- **[RFP first draft](flagships/rfp_first_draft/)** — Draft RFP responses grounded in past proposals and capability docs.<br/>Tags: `sales` `rfp` `proposals` `go-to-market`
-- **[Sales battlecard](flagships/sales_battlecard/)** — Battlecard with differentiators, objection handlers, and win themes.<br/>Tags: `sales` `competitive` `enablement`
-- **[Compliance questionnaire filler](flagships/compliance_questionnaire/)** — Auto-complete a CAIQ / SIG questionnaire from your policy docs.<br/>Tags: `security` `compliance` `caiq` `sig` `questionnaires`
+- **[CSV enrichment](flagships/csv_enrichment/)** — Enrich every CSV row with a short summary from your KB.<br/>Tags: `sales` `data-enrichment` `batch` `operations`
+- **[Research brief](flagships/research_brief/)** — Cited `.docx` research brief from your tenant.<br/>Tags: `research` `reports` `analyst`
+- **[RFP first draft](flagships/rfp_first_draft/)** — RFP responses grounded in past proposals + capability docs.<br/>Tags: `sales` `rfp` `proposals` `go-to-market`
+- **[Sales battlecard](flagships/sales_battlecard/)** — Differentiators, objection handlers, win themes.<br/>Tags: `sales` `competitive` `enablement`
+- **[Compliance questionnaire filler](flagships/compliance_questionnaire/)** — Auto-complete CAIQ / SIG from your policy docs.<br/>Tags: `security` `compliance` `caiq` `sig` `questionnaires`
 
 ### HR
 
 - **[Employee handbook Q&A](flagships/employee_handbook_qa/)** — Cited answers from the company handbook.<br/>Tags: `hr` `handbook` `q-and-a`
-- **[Job description generator](flagships/job_description_generator/)** — Full JD grounded in leveling criteria and comp bands.<br/>Tags: `hr` `recruiting` `job-descriptions`
+- **[Job description generator](flagships/job_description_generator/)** — JD grounded in leveling + comp bands.<br/>Tags: `hr` `recruiting` `job-descriptions`
 
 ### Engineering, product & SRE
 
-- **[Incident runbook lookup](flagships/incident_runbook_lookup/)** — Match a PagerDuty alert to a runbook with cited remediation steps.<br/>Tags: `engineering` `sre` `runbooks` `incident-response`
-- **[API doc generator](flagships/api_doc_generator/)** — Endpoint → developer docs grounded in OpenAPI spec + style guide.<br/>Tags: `engineering` `api` `documentation` `devex`
-- **[Release notes generator](flagships/release_notes_generator/)** — Customer-facing notes from specs and migration guide.<br/>Tags: `product` `engineering` `release-notes`
-- **[SOW scope validator](flagships/sow_scope_validator/)** — Completeness check of a proposed SOW against template + methodology.<br/>Tags: `proserv` `sow` `scope-management`
+- **[Incident runbook lookup](flagships/incident_runbook_lookup/)** — PagerDuty alert → runbook + cited remediation.<br/>Tags: `engineering` `sre` `runbooks` `incident-response`
+- **[API doc generator](flagships/api_doc_generator/)** — Endpoint → developer docs from OpenAPI + style guide.<br/>Tags: `engineering` `api` `documentation` `devex`
+- **[Release notes generator](flagships/release_notes_generator/)** — Customer-facing notes from specs + migration guide.<br/>Tags: `product` `engineering` `release-notes`
+- **[SOW scope validator](flagships/sow_scope_validator/)** — SOW completeness vs. template + methodology.<br/>Tags: `proserv` `sow` `scope-management`
 
 ### Government, pharma & energy
 
-- **[Grant compliance checker](flagships/grant_compliance_checker/)** — Sub-awardee activity checked against NOFO and 2 CFR 200.<br/>Tags: `government` `grants` `compliance` `cfr`
-- **[FOIA response drafter](flagships/foia_response_drafter/)** — FOIA response letter with exemption analysis.<br/>Tags: `government` `foia` `public-records`
+- **[Grant compliance checker](flagships/grant_compliance_checker/)** — Sub-awardee activity vs. NOFO + 2 CFR 200.<br/>Tags: `government` `grants` `compliance` `cfr`
+- **[FOIA response drafter](flagships/foia_response_drafter/)** — FOIA letter with exemption analysis.<br/>Tags: `government` `foia` `public-records`
 - **[Adverse event narrative](flagships/adverse_event_narrative/)** — CIOMS-style AE narrative from drug label + PV SOP.<br/>Tags: `pharma` `pharmacovigilance` `cioms` `safety`
 - **[NERC CIP evidence pack](flagships/nerc_compliance_evidence/)** — Compliance evidence memo for a NERC CIP requirement.<br/>Tags: `energy` `nerc-cip` `compliance` `utilities`
 
-### Browse by tag
+## Browse by tag
 
-`accounting` · `aml` · `api` · `asc-606` · `audit` · `banking` · `batch` · `caiq` · `cfr` · `cioms` · `claims` · `clinical` · `clinical-trials` · `commercial` · `commercial-lending` · `compliance` · `contracts` · `coverage` · `coverage-analysis` · `credit-risk` · `ctms` · `data-enrichment` · `devex` · `documentation` · `eligibility` · `enablement` · `energy` · `engineering` · `finance` · `foia` · `gdpr` · `government` · `go-to-market` · `grants` · `handbook` · `healthcare` · `hr` · `incident-response` · `insurance` · `investment-research` · `irc` · `job-descriptions` · `kyc` · `leases` · `legal` · `memos` · `msa` · `municipal` · `negotiations` · `nerc-cip` · `obligations` · `operations` · `payer` · `pcaob` · `pharma` · `pharmacovigilance` · `policy-comparison` · `prior-auth` · `privacy` · `product` · `proposals` · `proserv` · `public-records` · `q-and-a` · `questionnaires` · `real-estate` · `recruiting` · `redline` · `release-notes` · `reports` · `research` · `revenue-recognition` · `rfp` · `runbooks` · `safety` · `sales` · `scope-management` · `sec-filings` · `security` · `sig` · `sow` · `sre` · `subrogation` · `tax` · `underwriting` · `utilities` · `workpapers` · `zoning` · `10-k`
+Click any tag to find every flagship and recipe that uses it (GitHub code search across the repo):
+
+[`accounting`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60accounting%60&type=code) · [`aml`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60aml%60&type=code) · [`api`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60api%60&type=code) · [`asc-606`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60asc-606%60&type=code) · [`audit`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60audit%60&type=code) · [`banking`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60banking%60&type=code) · [`caiq`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60caiq%60&type=code) · [`cfr`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60cfr%60&type=code) · [`cioms`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60cioms%60&type=code) · [`claims`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60claims%60&type=code) · [`clinical`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60clinical%60&type=code) · [`clinical-trials`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60clinical-trials%60&type=code) · [`commercial`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60commercial%60&type=code) · [`compliance`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60compliance%60&type=code) · [`contracts`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60contracts%60&type=code) · [`coverage-analysis`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60coverage-analysis%60&type=code) · [`credit-risk`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60credit-risk%60&type=code) · [`devex`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60devex%60&type=code) · [`energy`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60energy%60&type=code) · [`engineering`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60engineering%60&type=code) · [`finance`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60finance%60&type=code) · [`foia`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60foia%60&type=code) · [`gdpr`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60gdpr%60&type=code) · [`government`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60government%60&type=code) · [`grants`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60grants%60&type=code) · [`healthcare`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60healthcare%60&type=code) · [`hr`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60hr%60&type=code) · [`insurance`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60insurance%60&type=code) · [`kyc`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60kyc%60&type=code) · [`leases`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60leases%60&type=code) · [`legal`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60legal%60&type=code) · [`memos`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60memos%60&type=code) · [`msa`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60msa%60&type=code) · [`nerc-cip`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60nerc-cip%60&type=code) · [`pcaob`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60pcaob%60&type=code) · [`pharma`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60pharma%60&type=code) · [`prior-auth`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60prior-auth%60&type=code) · [`privacy`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60privacy%60&type=code) · [`real-estate`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60real-estate%60&type=code) · [`recruiting`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60recruiting%60&type=code) · [`research`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60research%60&type=code) · [`rfp`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60rfp%60&type=code) · [`runbooks`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60runbooks%60&type=code) · [`sales`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60sales%60&type=code) · [`sec-filings`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60sec-filings%60&type=code) · [`security`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60security%60&type=code) · [`sow`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60sow%60&type=code) · [`sre`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60sre%60&type=code) · [`subrogation`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60subrogation%60&type=code) · [`tax`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60tax%60&type=code) · [`underwriting`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60underwriting%60&type=code) · [`zoning`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%60zoning%60&type=code) · [`10-k`](https://github.com/search?q=repo%3Aknowledgestack%2Fks-cookbook+%6010-k%60&type=code)
 
 See [INDUSTRIES.md](INDUSTRIES.md) for the broader roadmap and proposed next flagships.
 
-## Core commands
+## Recipes
 
-```bash
-make setup               # install workspace packages and validate env
-make help                # list runnable demos
-make lint                # ruff across the workspace
-make test                # MCP package tests
-make demo-credit-memo    # run one flagship
-make demo-csv            # run a lightweight batch enrichment demo
-make demo-research       # run the research brief demo
-```
+Short (≤100 LOC) single-file patterns across LangGraph, raw OpenAI, raw Anthropic, and MCP-only — see [`recipes/INDEX.md`](recipes/INDEX.md).
 
-## Configuration notes
+## Community
 
-The cookbook auto-loads `.env` from the repo root.
+- 💬 [**Discord**](https://discord.gg/McHmxUeS) — fastest place to get implementation and architecture help.
+- 🗣️ [**GitHub Discussions**](https://github.com/knowledgestack/ks-cookbook/discussions) — long-form questions, propose flagships.
+- 🐛 [**Issues**](https://github.com/knowledgestack/ks-cookbook/issues/new/choose) — bugs, [flagship requests](https://github.com/knowledgestack/ks-cookbook/issues/new?template=flagship_request.yml), [recipe requests](https://github.com/knowledgestack/ks-cookbook/issues/new?template=recipe_request.yml), [framework integrations](https://github.com/knowledgestack/ks-cookbook/issues/new?template=framework_integration.yml).
+- 🔒 Security: see [SECURITY.md](SECURITY.md). Do **not** open public issues for vulnerabilities.
 
-Relevant variables:
+## Star history
 
-- `KS_API_KEY`: required
-- `KS_BASE_URL`: defaults to `https://api.knowledgestack.ai`
-- `OPENAI_API_KEY` or `ANTHROPIC_API_KEY`: at least one is required
-- `CORPUS_FOLDER_ID`: override the default sample corpus for many demos
-- demo-specific variables such as `TOPIC`, `QUESTION`, `BORROWER`, `IN`, and `OUT`
-
-Most flagships ship with seeded defaults, so you can run them without hunting down IDs first. When you want to point a demo at your own data, override the folder ID:
-
-```bash
-CORPUS_FOLDER_ID=your-folder-id make demo-credit-memo
-```
-
-## Bring your own data
-
-To adapt a flagship to your own tenant:
-
-1. Upload your documents to Knowledge Stack.
-2. Identify the target folder.
-3. Pass that folder ID into a flagship command.
-4. Inspect the generated artifact and verify the citations.
-
-The agent code should stay mostly unchanged. The data source changes; the retrieval and schema pattern does not.
-
-## MCP tools used by the flagships
-
-The demos rely on the `knowledgestack-mcp` read-side tool surface, including:
-
-- `list_contents`
-- `find`
-- `read`
-- `read_around`
-- `search_knowledge`
-- `search_keyword`
-- `get_info`
-- `view_chunk_image`
-- `get_organization_info`
-- `get_current_datetime`
-
-That is the contract most builders should care about when adapting these examples.
-
-## For contributors
-
-This repo is set up to be easy to extend:
-
-- copy a flagship and change the prompt and schema
-- keep citations mandatory
-- make the output a file artifact, not just stdout
-- prefer realistic sample corpora and sample inputs
-
-Useful docs:
-
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-- [INDUSTRIES.md](INDUSTRIES.md)
-- [recipes/INDEX.md](recipes/INDEX.md)
-- [knowledgestack/ks-mcp](https://github.com/knowledgestack/ks-mcp) — MCP server repo
-- [knowledgestack/ks-sdk-python](https://github.com/knowledgestack/ks-sdk-python) — Python SDK (`ksapi`) repo
-- [knowledgestack/ks-sdk-ts](https://github.com/knowledgestack/ks-sdk-ts) — TypeScript SDK (`@knowledge-stack/ksapi`) repo
-- [knowledgestack/ks-docs](https://github.com/knowledgestack/ks-docs) — central docs site
-
-## Developer docs
-
-Full developer wiki lives under [`docs/wiki/`](docs/wiki/README.md):
-
-- [Connecting to Knowledge Stack](docs/wiki/connecting.md) — API keys, base URLs, wiring the MCP server into your agent framework.
-- [MCP tool reference](docs/wiki/mcp-tools.md) — the ten read-only tools your agent is allowed to call.
-- [Seed data required](docs/wiki/seed-data.md) — what each flagship expects in your tenant, and how to seed it.
-- [Configuration](docs/wiki/configuration.md) — every env var and per-demo override.
-- [Writing a flagship](docs/wiki/writing-a-flagship.md) — file layout, prompt rules, schema shape, Makefile wiring.
-- [Writing a recipe](docs/wiki/writing-a-recipe.md) — ≤100-LOC single-file pattern, frontmatter, shared session helper.
-- [Troubleshooting](docs/wiki/troubleshooting.md) — common setup and runtime errors.
-
-To scaffold a new flagship:
-
-```bash
-cp -r flagships/_template flagships/<your-name>
-```
-
-## Using the cookbook from Claude Desktop or Cursor
-
-If you want your assistant to talk directly to Knowledge Stack, add the MCP server to your config:
-
-```json
-{
-  "mcpServers": {
-    "knowledgestack": {
-      "command": "uvx",
-      "args": ["knowledgestack-mcp"],
-      "env": {
-        "KS_API_KEY": "sk-user-..."
-      }
-    }
-  }
-}
-```
-
-## Contributing
-
-We're **actively looking for contributions**. Good first PRs:
-
-- **New flagship** for a vertical we haven't covered (proposals in [INDUSTRIES.md](INDUSTRIES.md))
-- **New recipe** (≤100 LOC single file) — patterns across LangChain, LangGraph, CrewAI, Temporal, raw OpenAI / Anthropic are all welcome
-- **Expand an existing flagship** to a second framework (e.g. port a pydantic-ai flagship to LangGraph)
-- **Improve a sample corpus** or assemble a cleaner public-domain dataset
-- **Docs fixes** and clearer developer docs in [`docs/wiki/`](docs/wiki/README.md)
-
-Start here: [CONTRIBUTING.md](CONTRIBUTING.md). Scaffold a new flagship or recipe:
-
-```bash
-cp -r flagships/_template flagships/<your-name>
-# or
-cp -r recipes/_template  recipes/<your-name>
-```
-
-## Building something with Knowledge Stack? Reach out.
-
-If you're building an internal agent, ingestion pipeline, or enterprise RAG system on top of Knowledge Stack, **we'd love to hear from you** — whether you want to collaborate on a flagship, need help with a production deployment, or have feedback on the MCP surface.
-
-- 🎮 **[Join our Discord](https://discord.gg/McHmxUeS)** — fastest channel for live architecture and implementation questions
-- 🌐 Website: [knowledgestack.ai](https://knowledgestack.ai)
-- 💬 Open a [GitHub issue](https://github.com/knowledgestack/ks-cookbook/issues/new/choose) or [discussion](https://github.com/knowledgestack/ks-cookbook/discussions)
-- 📧 Email the team — details on [knowledgestack.ai](https://knowledgestack.ai)
-- ⭐ [Star the repo](https://github.com/knowledgestack/ks-cookbook) — it signals which flagships and frameworks to prioritize next
-
-## ⭐ Star History
-
-If this repo is useful to you, **[give it a star](https://github.com/knowledgestack/ks-cookbook)** — it's the single biggest signal we use to decide which flagships, frameworks, and verticals to prioritize next.
+If this repo helps you ship, **[star it](https://github.com/knowledgestack/ks-cookbook)** — it's the single biggest signal we use to decide which flagships, frameworks, and verticals to prioritize next.
 
 <div align="center">
-
 <a href="https://star-history.com/#knowledgestack/ks-cookbook&Date">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=knowledgestack/ks-cookbook&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=knowledgestack/ks-cookbook&type=Date" />
     <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=knowledgestack/ks-cookbook&type=Date" width="700" />
   </picture>
 </a>
-
-### [⭐ Star ks-cookbook on GitHub](https://github.com/knowledgestack/ks-cookbook)
-
 </div>
-
-## Community ask
-
-If this repo helped you ship or prototype something, [star the repository](https://github.com/knowledgestack/ks-cookbook). Stars improve discoverability, help us prioritize which examples to deepen, and validate that open-source, enterprise-grade agent patterns are worth maintaining in the open.
-
-You can also:
-- 🐦 **Share it** — tweet/post about a flagship that solved a real problem for you
-- 💬 **Tell us what's missing** — open a [flagship request](https://github.com/knowledgestack/ks-cookbook/issues/new?template=flagship_request.yml)
-- 🛠️ **Contribute** — see [CONTRIBUTING.md](CONTRIBUTING.md), every PR is reviewed quickly
-
-## Keywords
-
-_enterprise RAG, AI agents, agent framework, MCP, Model Context Protocol, LangChain, LangGraph, CrewAI, Temporal workflows, OpenAI Agents SDK, pydantic-ai, Claude Desktop, Cursor, permission-aware retrieval, document intelligence, citation grounding, structured output, tool use, knowledge base, vector search, semantic search, BM25, chunk retrieval, version-aware retrieval, tenant isolation, banking AI, legal AI, healthcare AI, insurance AI, accounting AI, compliance automation, KYC, AML, ASC 606, FOIA, NERC CIP, PCAOB, GDPR, prior authorization, CIOMS, clinical trial eligibility, credit memo, covenant monitoring, MSA redline, rev-rec, audit workpaper, tax research, RFP, sales battlecard, SRE runbooks, API documentation, release notes, PIA, SOW, grant compliance._
-
-## Filing issues & PRs
-
-We've made both as low-friction as possible:
-
-- **New flagship idea?** → [Open a flagship request](https://github.com/knowledgestack/ks-cookbook/issues/new?template=flagship_request.yml)
-- **Short recipe pattern?** → [Open a recipe request](https://github.com/knowledgestack/ks-cookbook/issues/new?template=recipe_request.yml)
-- **Framework integration (LangChain, CrewAI, Temporal, …)?** → [Open a framework integration issue](https://github.com/knowledgestack/ks-cookbook/issues/new?template=framework_integration.yml)
-- **Found a bug?** → [File a bug report](https://github.com/knowledgestack/ks-cookbook/issues/new?template=bug_report.yml)
-- **Docs wrong or confusing?** → [Open a docs issue](https://github.com/knowledgestack/ks-cookbook/issues/new?template=docs_improvement.yml)
-- **Question or "is anyone else doing this?"** → [Start a discussion](https://github.com/knowledgestack/ks-cookbook/discussions)
-- **Security vulnerability?** → [Report privately](https://github.com/knowledgestack/ks-cookbook/security/advisories/new) — do not open a public issue. See [SECURITY.md](SECURITY.md).
-
-Pull requests use a [template](.github/pull_request_template.md) that walks you through summary, test plan, and checklist — nothing fancy, just so reviewers can move fast.
 
 ## License
 
