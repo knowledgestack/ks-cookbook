@@ -3,6 +3,7 @@ name = "ks-cookbook-chiro-autopilot"
 version = "0.1.0"
 description = "ChiroCRM flagship — from one SOAP note produce three cited artifacts: coding xlsx, prior-auth letter docx, and a patient-friendly plan-of-care."
 readme = "README.md"
+keywords = ["healthcare", "ehr", "soap-notes", "chiropractic"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

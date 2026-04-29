@@ -3,6 +3,7 @@ name = "ks-cookbook-trial-eligibility"
 version = "0.1.0"
 description = "Healthcare flagship — patient eligibility assessment against real clinical trial criteria (pydantic-ai)."
 readme = "README.md"
+keywords = ["healthcare", "clinical-trials", "eligibility", "ctms"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

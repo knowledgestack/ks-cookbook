@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## contract_obligation_extractor
 
-> Source: [`flagships/contract_obligation_extractor`](../../../flagships/contract_obligation_extractor)
+> Source: [`flagships/contract_obligation_extractor`](../../../flagships/contract_obligation_extractor)  
+> Tags: [`legal`](../flagships-by-tag.md#legal) · [`contracts`](../flagships-by-tag.md#contracts) · [`msa`](../flagships-by-tag.md#msa) · [`obligations`](../flagships-by-tag.md#obligations)
 
 ### Contract Obligation Extractor
 
@@ -125,7 +126,8 @@ flagships/contract_obligation_extractor/
 
 ## contract_redline_with_provenance
 
-> Source: [`flagships/contract_redline_with_provenance`](../../../flagships/contract_redline_with_provenance)
+> Source: [`flagships/contract_redline_with_provenance`](../../../flagships/contract_redline_with_provenance)  
+> Tags: [`legal`](../flagships-by-tag.md#legal) · [`contracts`](../flagships-by-tag.md#contracts) · [`redline`](../flagships-by-tag.md#redline) · [`provenance`](../flagships-by-tag.md#provenance)
 
 ### Contract Redline With Provenance
 
@@ -261,7 +263,8 @@ flagships/contract_redline_with_provenance/
 
 ## legal_matter_intake
 
-> Source: [`flagships/legal_matter_intake`](../../../flagships/legal_matter_intake)
+> Source: [`flagships/legal_matter_intake`](../../../flagships/legal_matter_intake)  
+> Tags: [`legal`](../flagships-by-tag.md#legal) · [`matter-intake`](../flagships-by-tag.md#matter-intake) · [`triage`](../flagships-by-tag.md#triage) · [`ops`](../flagships-by-tag.md#ops)
 
 ### Legal Matter Intake
 
@@ -403,7 +406,8 @@ flagships/legal_matter_intake/
 
 ## msa_redline_vs_playbook
 
-> Source: [`flagships/msa_redline_vs_playbook`](../../../flagships/msa_redline_vs_playbook)
+> Source: [`flagships/msa_redline_vs_playbook`](../../../flagships/msa_redline_vs_playbook)  
+> Tags: [`legal`](../flagships-by-tag.md#legal) · [`contracts`](../flagships-by-tag.md#contracts) · [`redline`](../flagships-by-tag.md#redline) · [`negotiations`](../flagships-by-tag.md#negotiations)
 
 ### Msa Redline Vs Playbook
 
@@ -524,7 +528,8 @@ flagships/msa_redline_vs_playbook/
 
 ## privacy_impact_assessment
 
-> Source: [`flagships/privacy_impact_assessment`](../../../flagships/privacy_impact_assessment)
+> Source: [`flagships/privacy_impact_assessment`](../../../flagships/privacy_impact_assessment)  
+> Tags: [`legal`](../flagships-by-tag.md#legal) · [`privacy`](../flagships-by-tag.md#privacy) · [`gdpr`](../flagships-by-tag.md#gdpr) · [`security`](../flagships-by-tag.md#security)
 
 ### Privacy Impact Assessment
 

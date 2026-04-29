@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## adverse_event_narrative
 
-> Source: [`flagships/adverse_event_narrative`](../../../flagships/adverse_event_narrative)
+> Source: [`flagships/adverse_event_narrative`](../../../flagships/adverse_event_narrative)  
+> Tags: [`pharma`](../flagships-by-tag.md#pharma) · [`pharmacovigilance`](../flagships-by-tag.md#pharmacovigilance) · [`cioms`](../flagships-by-tag.md#cioms) · [`safety`](../flagships-by-tag.md#safety)
 
 ### Adverse Event Narrative
 
@@ -127,7 +128,8 @@ flagships/adverse_event_narrative/
 
 ## foia_response_drafter
 
-> Source: [`flagships/foia_response_drafter`](../../../flagships/foia_response_drafter)
+> Source: [`flagships/foia_response_drafter`](../../../flagships/foia_response_drafter)  
+> Tags: [`government`](../flagships-by-tag.md#government) · [`foia`](../flagships-by-tag.md#foia) · [`public-records`](../flagships-by-tag.md#public-records)
 
 ### Foia Response Drafter
 
@@ -246,7 +248,8 @@ flagships/foia_response_drafter/
 
 ## grant_compliance_checker
 
-> Source: [`flagships/grant_compliance_checker`](../../../flagships/grant_compliance_checker)
+> Source: [`flagships/grant_compliance_checker`](../../../flagships/grant_compliance_checker)  
+> Tags: [`government`](../flagships-by-tag.md#government) · [`grants`](../flagships-by-tag.md#grants) · [`compliance`](../flagships-by-tag.md#compliance) · [`cfr`](../flagships-by-tag.md#cfr)
 
 ### Grant Compliance Checker
 
@@ -376,7 +379,8 @@ flagships/grant_compliance_checker/
 
 ## nerc_compliance_evidence
 
-> Source: [`flagships/nerc_compliance_evidence`](../../../flagships/nerc_compliance_evidence)
+> Source: [`flagships/nerc_compliance_evidence`](../../../flagships/nerc_compliance_evidence)  
+> Tags: [`energy`](../flagships-by-tag.md#energy) · [`nerc-cip`](../flagships-by-tag.md#nerc-cip) · [`compliance`](../flagships-by-tag.md#compliance) · [`utilities`](../flagships-by-tag.md#utilities)
 
 ### Nerc Compliance Evidence
 

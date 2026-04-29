@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## compliance_questionnaire
 
-> Source: [`flagships/compliance_questionnaire`](../../../flagships/compliance_questionnaire)
+> Source: [`flagships/compliance_questionnaire`](../../../flagships/compliance_questionnaire)  
+> Tags: [`security`](../flagships-by-tag.md#security) · [`compliance`](../flagships-by-tag.md#compliance) · [`caiq`](../flagships-by-tag.md#caiq) · [`sig`](../flagships-by-tag.md#sig) · [`questionnaires`](../flagships-by-tag.md#questionnaires)
 
 ### Compliance Questionnaire
 
@@ -127,7 +128,8 @@ flagships/compliance_questionnaire/
 
 ## conversational_sdr_bot
 
-> Source: [`flagships/conversational_sdr_bot`](../../../flagships/conversational_sdr_bot)
+> Source: [`flagships/conversational_sdr_bot`](../../../flagships/conversational_sdr_bot)  
+> Tags: [`sales`](../flagships-by-tag.md#sales) · [`sdr`](../flagships-by-tag.md#sdr) · [`outbound`](../flagships-by-tag.md#outbound) · [`chat`](../flagships-by-tag.md#chat)
 
 ### Conversational Sdr Bot
 
@@ -268,7 +270,8 @@ flagships/conversational_sdr_bot/
 
 ## csv_enrichment
 
-> Source: [`flagships/csv_enrichment`](../../../flagships/csv_enrichment)
+> Source: [`flagships/csv_enrichment`](../../../flagships/csv_enrichment)  
+> Tags: [`sales`](../flagships-by-tag.md#sales) · [`data-enrichment`](../flagships-by-tag.md#data-enrichment) · [`batch`](../flagships-by-tag.md#batch) · [`operations`](../flagships-by-tag.md#operations)
 
 ### CSV enrichment demo
 
@@ -329,7 +332,8 @@ Swap Anthropic for OpenAI: edit `graph.py` and replace `ChatAnthropic(...)` with
 
 ## realtime_voice_sdr
 
-> Source: [`flagships/realtime_voice_sdr`](../../../flagships/realtime_voice_sdr)
+> Source: [`flagships/realtime_voice_sdr`](../../../flagships/realtime_voice_sdr)  
+> Tags: [`sales`](../flagships-by-tag.md#sales) · [`voice`](../flagships-by-tag.md#voice) · [`sdr`](../flagships-by-tag.md#sdr) · [`realtime`](../flagships-by-tag.md#realtime)
 
 ### Realtime Voice Sdr
 
@@ -475,7 +479,8 @@ flagships/realtime_voice_sdr/
 
 ## research_brief
 
-> Source: [`flagships/research_brief`](../../../flagships/research_brief)
+> Source: [`flagships/research_brief`](../../../flagships/research_brief)  
+> Tags: [`research`](../flagships-by-tag.md#research) · [`reports`](../flagships-by-tag.md#reports) · [`analyst`](../flagships-by-tag.md#analyst)
 
 ### Research Brief
 
@@ -601,7 +606,8 @@ flagships/research_brief/
 
 ## rfp_first_draft
 
-> Source: [`flagships/rfp_first_draft`](../../../flagships/rfp_first_draft)
+> Source: [`flagships/rfp_first_draft`](../../../flagships/rfp_first_draft)  
+> Tags: [`sales`](../flagships-by-tag.md#sales) · [`rfp`](../flagships-by-tag.md#rfp) · [`proposals`](../flagships-by-tag.md#proposals) · [`go-to-market`](../flagships-by-tag.md#go-to-market)
 
 ### Rfp First Draft
 
@@ -729,7 +735,8 @@ flagships/rfp_first_draft/
 
 ## sales_battlecard
 
-> Source: [`flagships/sales_battlecard`](../../../flagships/sales_battlecard)
+> Source: [`flagships/sales_battlecard`](../../../flagships/sales_battlecard)  
+> Tags: [`sales`](../flagships-by-tag.md#sales) · [`competitive`](../flagships-by-tag.md#competitive) · [`enablement`](../flagships-by-tag.md#enablement)
 
 ### Sales Battlecard
 
@@ -861,7 +868,8 @@ flagships/sales_battlecard/
 
 ## smb_invoice_followup_agent
 
-> Source: [`flagships/smb_invoice_followup_agent`](../../../flagships/smb_invoice_followup_agent)
+> Source: [`flagships/smb_invoice_followup_agent`](../../../flagships/smb_invoice_followup_agent)  
+> Tags: [`sales`](../flagships-by-tag.md#sales) · [`ar`](../flagships-by-tag.md#ar) · [`collections`](../flagships-by-tag.md#collections) · [`smb`](../flagships-by-tag.md#smb)
 
 ### Smb Invoice Followup Agent
 

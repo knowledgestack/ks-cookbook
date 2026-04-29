@@ -3,6 +3,7 @@ name = "ks-cookbook-compliance-questionnaire"
 version = "0.1.0"
 description = "Auto-fill security/compliance questionnaires (CAIQ, SIG-like) from your KS tenant."
 readme = "README.md"
+keywords = ["security", "compliance", "caiq", "sig", "questionnaires"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

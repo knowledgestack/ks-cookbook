@@ -3,6 +3,7 @@ name = "ks-cookbook-contract-redline"
 version = "0.1.0"
 description = "Legal flagship — produce a Word redline memo where every proposed edit is bound to both the offending clause chunk and the governing playbook rule chunk."
 readme = "README.md"
+keywords = ["legal", "contracts", "redline", "provenance"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

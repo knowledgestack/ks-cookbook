@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## api_doc_generator
 
-> Source: [`flagships/api_doc_generator`](../../../flagships/api_doc_generator)
+> Source: [`flagships/api_doc_generator`](../../../flagships/api_doc_generator)  
+> Tags: [`engineering`](../flagships-by-tag.md#engineering) · [`api`](../flagships-by-tag.md#api) · [`documentation`](../flagships-by-tag.md#documentation) · [`devex`](../flagships-by-tag.md#devex)
 
 ### Api Doc Generator
 
@@ -144,7 +145,8 @@ flagships/api_doc_generator/
 
 ## construction_rfi_agent
 
-> Source: [`flagships/construction_rfi_agent`](../../../flagships/construction_rfi_agent)
+> Source: [`flagships/construction_rfi_agent`](../../../flagships/construction_rfi_agent)  
+> Tags: [`engineering`](../flagships-by-tag.md#engineering) · [`construction`](../flagships-by-tag.md#construction) · [`rfi`](../flagships-by-tag.md#rfi) · [`field-ops`](../flagships-by-tag.md#field-ops)
 
 ### Construction Rfi Agent
 
@@ -290,7 +292,8 @@ flagships/construction_rfi_agent/
 
 ## incident_runbook_lookup
 
-> Source: [`flagships/incident_runbook_lookup`](../../../flagships/incident_runbook_lookup)
+> Source: [`flagships/incident_runbook_lookup`](../../../flagships/incident_runbook_lookup)  
+> Tags: [`engineering`](../flagships-by-tag.md#engineering) · [`sre`](../flagships-by-tag.md#sre) · [`runbooks`](../flagships-by-tag.md#runbooks) · [`incident-response`](../flagships-by-tag.md#incident-response)
 
 ### Incident Runbook Lookup
 
@@ -424,7 +427,8 @@ flagships/incident_runbook_lookup/
 
 ## release_notes_generator
 
-> Source: [`flagships/release_notes_generator`](../../../flagships/release_notes_generator)
+> Source: [`flagships/release_notes_generator`](../../../flagships/release_notes_generator)  
+> Tags: [`product`](../flagships-by-tag.md#product) · [`engineering`](../flagships-by-tag.md#engineering) · [`release-notes`](../flagships-by-tag.md#release-notes)
 
 ### Release Notes Generator
 
@@ -560,7 +564,8 @@ flagships/release_notes_generator/
 
 ## sow_scope_validator
 
-> Source: [`flagships/sow_scope_validator`](../../../flagships/sow_scope_validator)
+> Source: [`flagships/sow_scope_validator`](../../../flagships/sow_scope_validator)  
+> Tags: [`proserv`](../flagships-by-tag.md#proserv) · [`sow`](../flagships-by-tag.md#sow) · [`scope-management`](../flagships-by-tag.md#scope-management)
 
 ### Sow Scope Validator
 

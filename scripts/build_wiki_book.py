@@ -14,6 +14,11 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
+try:
+    import tomllib  # 3.11+
+except ImportError:  # pragma: no cover
+    import tomli as tomllib  # type: ignore[no-redef]
+
 ROOT = Path(__file__).resolve().parent.parent
 FLAGSHIPS = ROOT / "flagships"
 RECIPES = ROOT / "recipes"
@@ -98,19 +103,44 @@ def read_readme(pkg_dir: Path) -> str | None:
 
 
 def slug(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
+    """GitHub-style heading slug: lowercase, spaces → '-', keep [a-z0-9_-]."""
+    s = s.lower().replace(" ", "-")
+    return re.sub(r"[^a-z0-9_-]+", "", s)
 
 
-def render_chapter(title: str, source_path: Path, body: str | None) -> str:
-    rel = source_path.relative_to(ROOT)
-    if not body:
-        return f"## {title}\n\n_README missing: [`{rel}`](../../../{rel})._\n\n"
-    return (
-        f"## {title}\n\n"
-        f"> Source: [`{rel}`](../../../{rel})\n\n"
-        f"{shift_headings(body, by=2).strip()}\n\n"
-        f"---\n\n"
+def read_keywords(pkg_dir: Path) -> list[str]:
+    py = pkg_dir / "pyproject.toml"
+    if not py.exists():
+        return []
+    try:
+        data = tomllib.loads(py.read_text())
+    except Exception:
+        return []
+    return list(data.get("project", {}).get("keywords", []))
+
+
+def tag_chips(tags: list[str]) -> str:
+    if not tags:
+        return ""
+    return " · ".join(
+        f"[`{t}`](../flagships-by-tag.md#{slug(t)})" for t in tags
     )
+
+
+def render_chapter(
+    title: str,
+    source_path: Path,
+    body: str | None,
+    *,
+    tags: list[str] | None = None,
+) -> str:
+    rel = source_path.relative_to(ROOT)
+    header = f"## {title}\n\n> Source: [`{rel}`](../../../{rel})"
+    if tags:
+        header += f"  \n> Tags: {tag_chips(tags)}"
+    if not body:
+        return f"{header}\n\n_README missing._\n\n---\n\n"
+    return f"{header}\n\n{shift_headings(body, by=2).strip()}\n\n---\n\n"
 
 
 def build_flagships_book() -> None:
@@ -140,13 +170,52 @@ def build_flagships_book() -> None:
         chunks.append("[← Back to flagships book](../flagships.md)\n\n")
         for d in sorted(by_vertical[key]):
             body = read_readme(d)
-            chunks.append(render_chapter(d.name, d, body))
+            chunks.append(render_chapter(d.name, d, body, tags=read_keywords(d)))
         chapter_path.write_text("".join(chunks))
         toc_lines.append(
             f"- [{label}](flagships/{key}.md) — {len(by_vertical[key])} flagships"
         )
 
+    toc_lines.append("")
+    toc_lines.append("## Browse by tag")
+    toc_lines.append("")
+    toc_lines.append(
+        "Tags live in each flagship's `pyproject.toml` `[project] keywords`. "
+        "See **[flagships by tag](flagships-by-tag.md)** for the full index, or "
+        "**[How to tag a flagship](../writing-a-flagship.md#tagging)**."
+    )
     (BOOK / "flagships.md").write_text("\n".join(toc_lines) + "\n")
+    build_tag_index(by_vertical)
+
+
+def build_tag_index(by_vertical: dict[str, list[Path]]) -> None:
+    tag_to_flagships: dict[str, list[Path]] = defaultdict(list)
+    for dirs in by_vertical.values():
+        for d in dirs:
+            for t in read_keywords(d):
+                tag_to_flagships[t].append(d)
+
+    out = ["# Flagships by tag\n"]
+    out.append(
+        "_Generated. Source of truth: each flagship's `pyproject.toml` "
+        "`[project] keywords` field. To retag, edit the keywords list and "
+        "re-run `scripts/build_wiki_book.py`._\n"
+    )
+    out.append("## Tag cloud\n")
+    cloud = " · ".join(
+        f"[`{t}`](#{slug(t)}) ({len(tag_to_flagships[t])})"
+        for t in sorted(tag_to_flagships)
+    )
+    out.append(cloud + "\n")
+    out.append("---\n")
+    for t in sorted(tag_to_flagships):
+        out.append(f"## {t}\n")
+        for d in sorted(tag_to_flagships[t], key=lambda p: p.name):
+            rel = d.relative_to(ROOT)
+            out.append(f"- [`{d.name}`](../../../{rel}/) — "
+                       f"see [chapter](flagships/{FLAGSHIP_VERTICALS.get(d.name, 'other')}.md#{slug(d.name)})")
+        out.append("")
+    (BOOK / "flagships-by-tag.md").write_text("\n".join(out) + "\n")
 
 
 def build_recipes_book() -> None:

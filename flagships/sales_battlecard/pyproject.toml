@@ -3,6 +3,7 @@ name = "ks-cookbook-battlecard"
 version = "0.1.0"
 description = "Competitor name → battlecard with differentiators, objection handlers, win themes."
 readme = "README.md"
+keywords = ["sales", "competitive", "enablement"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

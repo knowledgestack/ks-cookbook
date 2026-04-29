@@ -3,6 +3,7 @@ name = "ks-cookbook-well-log"
 version = "0.1.0"
 description = "Energy flagship — summarize drilling reports + well logs with HSE / equipment / formation events, fully cited."
 readme = "README.md"
+keywords = ["energy", "oil-and-gas", "well-logs", "geology"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

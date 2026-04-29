@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## employee_handbook_qa
 
-> Source: [`flagships/employee_handbook_qa`](../../../flagships/employee_handbook_qa)
+> Source: [`flagships/employee_handbook_qa`](../../../flagships/employee_handbook_qa)  
+> Tags: [`hr`](../flagships-by-tag.md#hr) · [`handbook`](../flagships-by-tag.md#handbook) · [`q-and-a`](../flagships-by-tag.md#q-and-a)
 
 ### Employee Handbook Qa
 
@@ -136,7 +137,8 @@ flagships/employee_handbook_qa/
 
 ## job_description_generator
 
-> Source: [`flagships/job_description_generator`](../../../flagships/job_description_generator)
+> Source: [`flagships/job_description_generator`](../../../flagships/job_description_generator)  
+> Tags: [`hr`](../flagships-by-tag.md#hr) · [`recruiting`](../flagships-by-tag.md#recruiting) · [`job-descriptions`](../flagships-by-tag.md#job-descriptions)
 
 ### Job Description Generator
 

@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## chiro_visit_autopilot
 
-> Source: [`flagships/chiro_visit_autopilot`](../../../flagships/chiro_visit_autopilot)
+> Source: [`flagships/chiro_visit_autopilot`](../../../flagships/chiro_visit_autopilot)  
+> Tags: [`healthcare`](../flagships-by-tag.md#healthcare) · [`ehr`](../flagships-by-tag.md#ehr) · [`soap-notes`](../flagships-by-tag.md#soap-notes) · [`chiropractic`](../flagships-by-tag.md#chiropractic)
 
 ### Chiro Visit Autopilot
 
@@ -148,7 +149,8 @@ flagships/chiro_visit_autopilot/
 
 ## clinical_trial_eligibility
 
-> Source: [`flagships/clinical_trial_eligibility`](../../../flagships/clinical_trial_eligibility)
+> Source: [`flagships/clinical_trial_eligibility`](../../../flagships/clinical_trial_eligibility)  
+> Tags: [`healthcare`](../flagships-by-tag.md#healthcare) · [`clinical-trials`](../flagships-by-tag.md#clinical-trials) · [`eligibility`](../flagships-by-tag.md#eligibility) · [`ctms`](../flagships-by-tag.md#ctms)
 
 ### Clinical Trial Eligibility
 
@@ -282,7 +284,8 @@ flagships/clinical_trial_eligibility/
 
 ## prior_auth_letter
 
-> Source: [`flagships/prior_auth_letter`](../../../flagships/prior_auth_letter)
+> Source: [`flagships/prior_auth_letter`](../../../flagships/prior_auth_letter)  
+> Tags: [`healthcare`](../flagships-by-tag.md#healthcare) · [`prior-auth`](../flagships-by-tag.md#prior-auth) · [`payer`](../flagships-by-tag.md#payer) · [`clinical`](../flagships-by-tag.md#clinical)
 
 ### Prior Auth Letter
 

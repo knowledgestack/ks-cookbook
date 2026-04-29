@@ -3,6 +3,7 @@ name = "ks-cookbook-condo-board"
 version = "0.1.0"
 description = "CondoStack flagship — adjudicate a unit-owner architectural request with a board-ready decision memo citing CC&Rs, bylaws, ACC guidelines, reserve-fund impact, and historical minutes."
 readme = "README.md"
+keywords = ["real-estate", "condo", "hoa", "governance"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

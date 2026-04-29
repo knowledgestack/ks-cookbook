@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## well_log_summarizer
 
-> Source: [`flagships/well_log_summarizer`](../../../flagships/well_log_summarizer)
+> Source: [`flagships/well_log_summarizer`](../../../flagships/well_log_summarizer)  
+> Tags: [`energy`](../flagships-by-tag.md#energy) · [`oil-and-gas`](../flagships-by-tag.md#oil-and-gas) · [`well-logs`](../flagships-by-tag.md#well-logs) · [`geology`](../flagships-by-tag.md#geology)
 
 ### Well Log Summarizer
 

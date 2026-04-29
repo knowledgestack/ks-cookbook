@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## aml_sar_narrative
 
-> Source: [`flagships/aml_sar_narrative`](../../../flagships/aml_sar_narrative)
+> Source: [`flagships/aml_sar_narrative`](../../../flagships/aml_sar_narrative)  
+> Tags: [`banking`](../flagships-by-tag.md#banking) · [`aml`](../flagships-by-tag.md#aml) · [`sar`](../flagships-by-tag.md#sar) · [`compliance`](../flagships-by-tag.md#compliance)
 
 ### Aml Sar Narrative
 
@@ -154,7 +155,8 @@ flagships/aml_sar_narrative/
 
 ## credit_memo_drafter
 
-> Source: [`flagships/credit_memo_drafter`](../../../flagships/credit_memo_drafter)
+> Source: [`flagships/credit_memo_drafter`](../../../flagships/credit_memo_drafter)  
+> Tags: [`banking`](../flagships-by-tag.md#banking) · [`credit-risk`](../flagships-by-tag.md#credit-risk) · [`underwriting`](../flagships-by-tag.md#underwriting) · [`commercial-lending`](../flagships-by-tag.md#commercial-lending)
 
 ### Credit Memo Drafter
 
@@ -294,7 +296,8 @@ flagships/credit_memo_drafter/
 
 ## earnings_risk_analyzer
 
-> Source: [`flagships/earnings_risk_analyzer`](../../../flagships/earnings_risk_analyzer)
+> Source: [`flagships/earnings_risk_analyzer`](../../../flagships/earnings_risk_analyzer)  
+> Tags: [`finance`](../flagships-by-tag.md#finance) · [`sec-filings`](../flagships-by-tag.md#sec-filings) · [`10-k`](../flagships-by-tag.md#10-k) · [`investment-research`](../flagships-by-tag.md#investment-research)
 
 ### Earnings Risk Analyzer
 
@@ -428,7 +431,8 @@ flagships/earnings_risk_analyzer/
 
 ## kyc_onboarding_review
 
-> Source: [`flagships/kyc_onboarding_review`](../../../flagships/kyc_onboarding_review)
+> Source: [`flagships/kyc_onboarding_review`](../../../flagships/kyc_onboarding_review)  
+> Tags: [`banking`](../flagships-by-tag.md#banking) · [`kyc`](../flagships-by-tag.md#kyc) · [`aml`](../flagships-by-tag.md#aml) · [`compliance`](../flagships-by-tag.md#compliance)
 
 ### Kyc Onboarding Review
 
@@ -566,7 +570,8 @@ flagships/kyc_onboarding_review/
 
 ## loan_covenant_monitor
 
-> Source: [`flagships/loan_covenant_monitor`](../../../flagships/loan_covenant_monitor)
+> Source: [`flagships/loan_covenant_monitor`](../../../flagships/loan_covenant_monitor)  
+> Tags: [`banking`](../flagships-by-tag.md#banking) · [`covenant-monitoring`](../flagships-by-tag.md#covenant-monitoring) · [`credit-risk`](../flagships-by-tag.md#credit-risk)
 
 ### Loan Covenant Monitor
 

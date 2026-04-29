@@ -3,6 +3,7 @@ name = "ks-cookbook-claims-rebuttal"
 version = "0.1.0"
 description = "Healthcare flagship — draft a payer-ready claim denial rebuttal letter grounded in the patient chart + payer medical policy corpus."
 readme = "README.md"
+keywords = ["insurance", "claims", "appeals", "rebuttal"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

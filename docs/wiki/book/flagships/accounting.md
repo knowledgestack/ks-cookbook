@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## audit_defensible_hcc_coder
 
-> Source: [`flagships/audit_defensible_hcc_coder`](../../../flagships/audit_defensible_hcc_coder)
+> Source: [`flagships/audit_defensible_hcc_coder`](../../../flagships/audit_defensible_hcc_coder)  
+> Tags: [`healthcare`](../flagships-by-tag.md#healthcare) · [`hcc`](../flagships-by-tag.md#hcc) · [`risk-adjustment`](../flagships-by-tag.md#risk-adjustment) · [`coding`](../flagships-by-tag.md#coding)
 
 ### Audit Defensible Hcc Coder
 
@@ -136,7 +137,8 @@ flagships/audit_defensible_hcc_coder/
 
 ## audit_workpaper_drafter
 
-> Source: [`flagships/audit_workpaper_drafter`](../../../flagships/audit_workpaper_drafter)
+> Source: [`flagships/audit_workpaper_drafter`](../../../flagships/audit_workpaper_drafter)  
+> Tags: [`accounting`](../flagships-by-tag.md#accounting) · [`audit`](../flagships-by-tag.md#audit) · [`pcaob`](../flagships-by-tag.md#pcaob) · [`workpapers`](../flagships-by-tag.md#workpapers)
 
 ### Audit Workpaper Drafter
 
@@ -257,7 +259,8 @@ flagships/audit_workpaper_drafter/
 
 ## rev_rec_memo
 
-> Source: [`flagships/rev_rec_memo`](../../../flagships/rev_rec_memo)
+> Source: [`flagships/rev_rec_memo`](../../../flagships/rev_rec_memo)  
+> Tags: [`accounting`](../flagships-by-tag.md#accounting) · [`asc-606`](../flagships-by-tag.md#asc-606) · [`revenue-recognition`](../flagships-by-tag.md#revenue-recognition) · [`memos`](../flagships-by-tag.md#memos)
 
 ### Rev Rec Memo
 
@@ -391,7 +394,8 @@ flagships/rev_rec_memo/
 
 ## tax_position_memo
 
-> Source: [`flagships/tax_position_memo`](../../../flagships/tax_position_memo)
+> Source: [`flagships/tax_position_memo`](../../../flagships/tax_position_memo)  
+> Tags: [`tax`](../flagships-by-tag.md#tax) · [`irc`](../flagships-by-tag.md#irc) · [`research`](../flagships-by-tag.md#research) · [`memos`](../flagships-by-tag.md#memos)
 
 ### Tax Position Memo
 

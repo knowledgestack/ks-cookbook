@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## claim_adjudication_memo
 
-> Source: [`flagships/claim_adjudication_memo`](../../../flagships/claim_adjudication_memo)
+> Source: [`flagships/claim_adjudication_memo`](../../../flagships/claim_adjudication_memo)  
+> Tags: [`insurance`](../flagships-by-tag.md#insurance) · [`claims`](../flagships-by-tag.md#claims) · [`coverage-analysis`](../flagships-by-tag.md#coverage-analysis) · [`p-and-c`](../flagships-by-tag.md#p-and-c)
 
 ### Claim Adjudication Memo
 
@@ -125,7 +126,8 @@ flagships/claim_adjudication_memo/
 
 ## claims_denial_rebuttal_drafter
 
-> Source: [`flagships/claims_denial_rebuttal_drafter`](../../../flagships/claims_denial_rebuttal_drafter)
+> Source: [`flagships/claims_denial_rebuttal_drafter`](../../../flagships/claims_denial_rebuttal_drafter)  
+> Tags: [`insurance`](../flagships-by-tag.md#insurance) · [`claims`](../flagships-by-tag.md#claims) · [`appeals`](../flagships-by-tag.md#appeals) · [`rebuttal`](../flagships-by-tag.md#rebuttal)
 
 ### Claims Denial Rebuttal Drafter
 
@@ -271,7 +273,8 @@ flagships/claims_denial_rebuttal_drafter/
 
 ## insurance_policy_comparison
 
-> Source: [`flagships/insurance_policy_comparison`](../../../flagships/insurance_policy_comparison)
+> Source: [`flagships/insurance_policy_comparison`](../../../flagships/insurance_policy_comparison)  
+> Tags: [`insurance`](../flagships-by-tag.md#insurance) · [`policy-comparison`](../flagships-by-tag.md#policy-comparison) · [`coverage`](../flagships-by-tag.md#coverage)
 
 ### Insurance Policy Comparison
 
@@ -407,7 +410,8 @@ flagships/insurance_policy_comparison/
 
 ## subrogation_opportunity_review
 
-> Source: [`flagships/subrogation_opportunity_review`](../../../flagships/subrogation_opportunity_review)
+> Source: [`flagships/subrogation_opportunity_review`](../../../flagships/subrogation_opportunity_review)  
+> Tags: [`insurance`](../flagships-by-tag.md#insurance) · [`subrogation`](../flagships-by-tag.md#subrogation) · [`claims`](../flagships-by-tag.md#claims)
 
 ### Subrogation Opportunity Review
 

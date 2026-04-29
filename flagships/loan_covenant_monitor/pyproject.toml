@@ -3,6 +3,7 @@ name = "ks-cookbook-covenant-monitor"
 version = "0.1.0"
 description = "Banking flagship — compare quarterly financials against credit agreement covenants, flag breaches with citations."
 readme = "README.md"
+keywords = ["banking", "covenant-monitoring", "credit-risk"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

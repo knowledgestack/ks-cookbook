@@ -12,8 +12,35 @@ Then:
 
 1. Add the new path to the `[tool.uv.workspace].members` list in the root `pyproject.toml`.
 2. Rename the package directory under `src/` and update `[project.scripts]` in the new `pyproject.toml`.
-3. Add a `demo-<your-slug>` target to the root `Makefile`.
-4. `make setup` to re-sync.
+3. Add `keywords = [...]` to your new `[project]` table — see [Tagging](#tagging).
+4. Add a `demo-<your-slug>` target to the root `Makefile`.
+5. `make setup` to re-sync.
+
+## Tagging
+
+Tags are first-class metadata. Every flagship declares them in PEP 621 `[project] keywords` in its `pyproject.toml`. The wiki's [flagships-by-tag](book/flagships-by-tag.md) index, the README's tag chips, and the per-vertical book chapters are all generated from this field — there's no second source of truth.
+
+```toml
+[project]
+name = "ks-cookbook-credit-memo"
+description = "Banking flagship — draft a credit memo grounded in a borrower's financials + the bank's credit policy."
+keywords = ["banking", "credit-risk", "underwriting", "commercial-lending"]
+```
+
+Conventions:
+
+- **First tag is the primary vertical** (one of `banking`, `legal`, `accounting`, `tax`, `healthcare`, `insurance`, `real-estate`, `sales`, `hr`, `engineering`, `product`, `proserv`, `finance`, `pharma`, `energy`, `government`, `research`, `security`).
+- **2–5 tags total.** Keep them lowercase, hyphen-separated (`asc-606`, `prior-auth`, `nerc-cip`).
+- **Reuse existing tags** where possible — see [`docs/wiki/book/flagships-by-tag.md`](book/flagships-by-tag.md) for the current taxonomy.
+
+After adding or changing tags:
+
+```bash
+uv run python scripts/sync_flagship_tags.py        # validates + updates the manifest
+uv run python scripts/build_wiki_book.py           # regenerates the wiki book + tag index
+```
+
+CI runs `sync_flagship_tags.py --check`; an untagged flagship fails the check.
 
 ## File layout
 

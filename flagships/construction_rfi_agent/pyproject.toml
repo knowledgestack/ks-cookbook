@@ -3,6 +3,7 @@ name = "ks-cookbook-rfi-agent"
 version = "0.1.0"
 description = "Construction flagship — draft a cited RFI response cross-referencing CSI specs, drawings, and prior submittals."
 readme = "README.md"
+keywords = ["engineering", "construction", "rfi", "field-ops"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

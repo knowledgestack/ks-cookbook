@@ -3,6 +3,7 @@ name = "ks-cookbook-tax-memo"
 version = "0.1.0"
 description = "Tax flagship — tax position research memo citing IRC + Treasury Regs (LangGraph ReAct)."
 readme = "README.md"
+keywords = ["tax", "irc", "research", "memos"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

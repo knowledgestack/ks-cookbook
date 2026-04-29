@@ -3,6 +3,7 @@ name = "ks-cookbook-msa-redline"
 version = "0.1.0"
 description = "Legal flagship — compare an inbound MSA clause-by-clause against a company playbook and produce a cited redline memo."
 readme = "README.md"
+keywords = ["legal", "contracts", "redline", "negotiations"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

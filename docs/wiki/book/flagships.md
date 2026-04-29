@@ -15,3 +15,7 @@ Every flagship README, grouped by vertical, in one navigable book. Every chapter
 - [Engineering, product & SRE](flagships/engineering.md) — 5 flagships
 - [Government, pharma & energy](flagships/government.md) — 4 flagships
 - [Other](flagships/other.md) — 1 flagships
+
+## Browse by tag
+
+Tags live in each flagship's `pyproject.toml` `[project] keywords`. See **[flagships by tag](flagships-by-tag.md)** for the full index, or **[How to tag a flagship](../writing-a-flagship.md#tagging)**.

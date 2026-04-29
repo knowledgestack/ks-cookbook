@@ -3,6 +3,7 @@ name = "ks-cookbook-prior-auth"
 version = "0.1.0"
 description = "Prior-authorization letter drafter — clinical scenario → cited appeal letter grounded in a KS policy corpus."
 readme = "README.md"
+keywords = ["healthcare", "prior-auth", "payer", "clinical"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

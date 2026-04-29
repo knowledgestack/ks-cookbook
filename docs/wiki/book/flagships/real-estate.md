@@ -6,7 +6,8 @@ _Generated. Do not edit by hand._
 
 ## condo_board_decision_pack
 
-> Source: [`flagships/condo_board_decision_pack`](../../../flagships/condo_board_decision_pack)
+> Source: [`flagships/condo_board_decision_pack`](../../../flagships/condo_board_decision_pack)  
+> Tags: [`real-estate`](../flagships-by-tag.md#real-estate) · [`condo`](../flagships-by-tag.md#condo) · [`hoa`](../flagships-by-tag.md#hoa) · [`governance`](../flagships-by-tag.md#governance)
 
 ### Condo Board Decision Pack
 
@@ -150,7 +151,8 @@ flagships/condo_board_decision_pack/
 
 ## lease_abstract
 
-> Source: [`flagships/lease_abstract`](../../../flagships/lease_abstract)
+> Source: [`flagships/lease_abstract`](../../../flagships/lease_abstract)  
+> Tags: [`real-estate`](../flagships-by-tag.md#real-estate) · [`leases`](../flagships-by-tag.md#leases) · [`commercial`](../flagships-by-tag.md#commercial)
 
 ### Lease Abstract
 
@@ -271,7 +273,8 @@ flagships/lease_abstract/
 
 ## zoning_compliance_check
 
-> Source: [`flagships/zoning_compliance_check`](../../../flagships/zoning_compliance_check)
+> Source: [`flagships/zoning_compliance_check`](../../../flagships/zoning_compliance_check)  
+> Tags: [`real-estate`](../flagships-by-tag.md#real-estate) · [`zoning`](../flagships-by-tag.md#zoning) · [`compliance`](../flagships-by-tag.md#compliance) · [`municipal`](../flagships-by-tag.md#municipal)
 
 ### Zoning Compliance Check
 
