@@ -4,8 +4,8 @@ Output: e2e_recipes_merged.json (suitable for enrich_readmes.py).
 """
 
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 

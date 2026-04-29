@@ -3,7 +3,6 @@
 import os
 
 from pydantic_ai import Agent
-from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from conversational_sdr_bot.schema import SessionSummary
