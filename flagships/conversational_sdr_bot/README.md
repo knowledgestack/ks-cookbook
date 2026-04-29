@@ -1,52 +1,134 @@
-# Sales: Conversational SDR Bot
+# Conversational Sdr Bot
+
+> **Interactive SDR discovery bot CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+Launches a live chat in the terminal. Type ``/end`` to close the session;
+the bot then produces a cited MEDDIC-scored summary artifact.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--prospect` | yes | — | Prospect company name. |
+
+| `--prospect-context` | no | — | Freeform context you know about the prospect (title, source, etc.). |
+
+| `--corpus-folder` | no | — | Folder.id of the product/ICP/past-wins corpus in your KS tenant. |
+
+| `--model` | no | — |  |
+
+| `--out` | no | — |  |
 
 
-**Tags:** `sales` `sdr` `meddic` `discovery` `multi-turn`
+**Sample inputs** in `sample_inputs/`:
 
-A live, multi-turn SDR discovery bot. You type as the prospect; the bot
-asks qualifying questions grounded in your product corpus + ICP + past
-wins + objection library. At session end it produces a MEDDIC-scored
-summary artifact with citations for every claim it made.
+- `prospect.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to
-create that folder and upload the expected documents **before** running,
-otherwise retrieval returns nothing and the demo fails with empty output.
+`SessionSummary` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** product one-pager, ICP definition, past-wins library
-(≥3 logos with outcomes + metrics), objection-library FAQ, pricing page.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `prospect` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `SALES_CORPUS_FOLDER_ID=<your-folder-id> make demo-sdr-bot`
+| `turns` | `int` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `meddic` | `MeddicScore` |
+
+| `discovered_pains` | `list[str]` |
+
+| `discovered_metrics` | `list[str]` |
+
+| `next_step` | `str` |
+
+| `citations_referenced` | `list[Citation]` |
+
+| `open_objections` | `list[str]` |
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-sdr-bot   # defaults: PROSPECT="Paloma Networks"
+make demo-conversational-sdr-bot
 ```
 
-The bot opens the call. You reply in the terminal. Type `/end` when done.
-Output: `sample_output.md` — MEDDIC scorecard (each dimension covered /
-partial / missing), discovered pains, metrics, open objections, citations
-referenced, and a concrete next step with a time commitment.
+Or directly:
 
-## Framework
+```bash
+uv run --package ks-cookbook-conversational-sdr-bot ks-cookbook-conversational-sdr-bot --help
+```
 
-**pydantic-ai** with multi-turn `message_history`. A second pydantic-ai
-agent reruns over the transcript to produce a strict `SessionSummary` —
-scoring MEDDIC from the transcript text alone (no optimism bias) and
-extracting any `[chunk:<uuid>]` citations that surfaced in the conversation.
+## Verification status
 
-## Related
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
 
-- `flagships/realtime_voice_sdr/` — same pattern, over the OpenAI Realtime
-  API, with optional mic/speaker audio.
-- Recipes: `meddic_call_coach`, `outbound_call_prep`, `prospecting_email_personalizer`.
+## Files
+
+```text
+flagships/conversational_sdr_bot/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-conversational-sdr-bot`)
+└── src/conversational_sdr_bot/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

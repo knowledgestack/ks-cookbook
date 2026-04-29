@@ -1,60 +1,131 @@
-# Energy: Well-Log Summarizer
+# Well Log Summarizer
+
+> **Well-log summarizer CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+Well-log summarizer CLI.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--well-id` | yes | — | API well number or operator well name. |
+
+| `--corpus-folder` | no | — | Folder.id of the energy corpus in your KS tenant. |
+
+| `--model` | no | — |  |
+
+| `--out` | no | — |  |
 
 
-**Tags:** `energy` `oil-gas` `drilling` `hse`
+**Sample inputs** in `sample_inputs/`:
 
-Drilling engineers triage hundreds of daily reports and mud logs per pad.
-This flagship pulls HSE events, equipment issues, and formation notes from
-every relevant document in the corpus and produces a one-page, fully-cited
-well summary with an HSE risk rating.
+- `well.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+`WellSummary` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** operator daily drilling reports, mudlogs, state RRC
-completion filing, one or two SPE papers on the target formation.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `well_id` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `ENERGY_CORPUS_FOLDER_ID=<your-folder-id> make demo-well-log`
+| `operator` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `location` | `str` |
+
+| `depth_summary` | `str` |
+
+| `formation_notes` | `str` |
+
+| `events` | `list[WellEvent]` |
+
+| `recommended_actions` | `list[str]` |
+
+| `hse_risk_rating` | `str` |
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-well-log   # defaults: WELL_ID="42-255-31234"
+make demo-well-log-summarizer
 ```
 
-Output: `sample_output.md` — well metadata, depth + formation summary,
-classified event list (hse / equipment / formation / lost_time) with
-severities and per-event citations, an HSE risk rating, and recommended
-actions.
+Or directly:
 
-## Data sources
+```bash
+uv run --package ks-cookbook-well-log-summarizer ks-cookbook-well-log-summarizer --help
+```
 
-Seed with public data only:
+## Verification status
 
-- **US DOE OpenEnergy** — sample drilling reports
-  (https://openei.org/)
-- **Texas Railroad Commission** — completion filings W-2 / W-1
-  (https://rrc.texas.gov/oil-and-gas/)
-- **SPE OnePetro** — public-access formation papers
-  (https://onepetro.org/)
+🚧 **SCHEMA_ERROR** — flagship is currently a known-issue. Likely causes: stale `__CORPUS_FOLDER_ID__` references, raw OpenAI tool-calling not yet refactored to the search→read pattern, or a CLI default that requires manual setup. Tracked in the upcoming flagship sweep.
 
-## Framework
+## Files
 
-**pydantic-ai** with a strict `WellSummary` result type. Every `WellEvent`
-must carry ≥1 citation whose `chunk_id` was copied verbatim from a
-`[chunk:<uuid>]` marker in the `read` output.
-
-## Related recipe
-
-A ≤100-LOC recipe version lives at
-[`recipes/well_log_summarizer/`](../../recipes/well_log_summarizer/) for
-copy-paste reuse.
+```text
+flagships/well_log_summarizer/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-well-log-summarizer`)
+└── src/well_log_summarizer/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

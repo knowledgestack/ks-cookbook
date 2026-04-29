@@ -1,78 +1,139 @@
-# Sales: Realtime Voice SDR
+# Realtime Voice Sdr
 
+> **Realtime SDR agent CLI — text by default, voice with ``--voice`` (requires ``[voice]`` extras).**
 
-**Tags:** `sales` `sdr` `realtime-api` `voice` `mcp` `function-calling`
+## Table of contents
 
-A live SDR agent running on the OpenAI Realtime API with every KS MCP
-tool exposed as a function call. Defaults to a typed REPL over the
-Realtime websocket (useful for CI + smoke tests). Flip `--voice` and
-install the `[voice]` extras to use your mic + speakers instead.
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
 
-## Seed data required
+## What this flagship does
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to
-create that folder and upload the expected documents **before** running,
-otherwise retrieval returns nothing and the demo fails with empty output.
-
-**Expected corpus:** product one-pager, ICP, past-wins library, objection
-library, pricing. (Same corpus shape as
-[`conversational_sdr_bot`](../conversational_sdr_bot/).)
-
-Set-up steps:
-
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `SALES_CORPUS_FOLDER_ID=<your-folder-id> make demo-voice-sdr`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
-
-## Run
-
-Text mode (default — no audio hardware needed):
-
-```bash
-make demo-voice-sdr   # defaults: PROSPECT="Paloma Networks"
-```
-
-Voice mode (needs mic + speakers):
-
-```bash
-uv pip install 'ks-cookbook-voice-sdr[voice]'
-uv run --package ks-cookbook-voice-sdr ks-cookbook-voice-sdr \
-    --prospect "Paloma Networks" --voice
-```
-
-Output: `sample_output.md` — MEDDIC scorecard, discovered pains, open
-objections, tool-call count, and a concrete next step.
+Connects to the OpenAI Realtime API, enumerates KS MCP tools, and exposes
+them to the live session as function-call tools. Writes a MEDDIC-scored
+``SessionSummary`` to disk when the session ends.
 
 ## How it works
 
-1. At startup we open an MCP stdio session to `ks-mcp` and call
-   `session.list_tools()` to discover every tool in the KS surface.
-2. Each MCP tool is re-encoded as an OpenAI Realtime API function-tool
-   schema and sent in the `session.update` event. The Realtime model can
-   then call KS tools mid-conversation.
-3. Incoming `response.function_call_arguments.done` events are proxied to
-   the MCP client; the result is posted back as a
-   `conversation.item.create` of type `function_call_output`.
-4. On session end a separate pydantic-ai summarizer reruns over the
-   transcript to produce a strict `SessionSummary` (no optimism bias).
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
 
-**Text mode** round-trips text deltas (`response.text.delta`) and exercises
-the full tool-proxy path without needing any audio dependencies. **Voice
-mode** uses `sounddevice` for 24 kHz mono PCM16 capture + playback and
-relies on the server's VAD to commit turns.
+## Sign in to Knowledge Stack
 
-## Framework
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
 
-- **OpenAI Realtime API** (`gpt-4o-realtime-preview`) for the live session.
-- **mcp** stdio client for the KS tool proxy.
-- **pydantic-ai** for the MEDDIC-scored summary pass.
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
 
-## Related
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
 
-- `flagships/conversational_sdr_bot/` — the text-only, pydantic-ai-native
-  version (no Realtime dependency).
-- Recipes: `meddic_call_coach`, `outbound_call_prep`.
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--prospect` | yes | — |  |
+
+| `--prospect-context` | no | — |  |
+
+| `--corpus-folder` | no | — |  |
+
+| `--realtime-model` | no | — |  |
+
+| `--summary-model` | no | — |  |
+
+| `--voice` | no | — | Enable mic+speaker audio (needs [voice] extras). |
+
+| `--out` | no | — |  |
+
+
+**Sample inputs** in `sample_inputs/`:
+
+- `prospect.md`
+
+## Output schema
+
+`SessionSummary` (in `schema.py`) — emitted as a structured artifact.
+
+| Field | Type |
+|---|---|
+
+| `prospect` | `str` |
+
+| `mode` | `str` |
+
+| `turns` | `int` |
+
+| `tool_calls` | `int` |
+
+| `meddic` | `MeddicScore` |
+
+| `discovered_pains` | `list[str]` |
+
+| `open_objections` | `list[str]` |
+
+| `next_step` | `str` |
+
+## Run
+
+From the repo root:
+
+```bash
+make demo-realtime-voice-sdr
+```
+
+Or directly:
+
+```bash
+uv run --package ks-cookbook-realtime-voice-sdr ks-cookbook-realtime-voice-sdr --help
+```
+
+## Verification status
+
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
+
+## Files
+
+```text
+flagships/realtime_voice_sdr/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-realtime-voice-sdr`)
+└── src/realtime_voice_sdr/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

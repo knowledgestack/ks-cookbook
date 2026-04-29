@@ -1,71 +1,133 @@
-# Banking: Credit Memo Drafter
+# Credit Memo Drafter
+
+> **Credit memo drafter CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+Credit memo drafter CLI.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--borrower` | yes | — |  |
+
+| `--loan-amount` | yes | — |  |
+
+| `--corpus-folder` | no | — | Folder.id (not path_part_id) of the lending corpus in your KS tenant. |
+
+| `--model` | no | — |  |
+
+| `--out` | no | — |  |
 
 
-**Tags:** `banking` `credit-risk` `underwriting` `commercial-lending`
+**Sample inputs** in `sample_inputs/`:
 
-Every commercial loan officer writes a credit memo for every facility. Same
-structure, different borrower. This flagship drafts one automatically, grounded
-in the bank's credit policy + the borrower's financials + industry benchmarks,
-with every risk factor citing a real policy chunk.
+- `loan_request.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+`CreditMemo` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** Bank credit policy, borrower financials (3y), business plan, industry benchmarks.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `borrower` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-credit-memo`
+| `facility_summary` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `recommendation` | `str` |
+
+| `risk_rating` | `int` |
+
+| `key_financials` | `str` |
+
+| `risks` | `list[RiskFactor]` |
+
+| `covenants` | `list[CovenantRecommendation]` |
+
+| `policy_exceptions` | `list[str]` |
 
 ## Run
 
-```bash
-# One-time: seed the banking corpus into your KS tenant.
-cd ks-backend
-uv run --env-file .env.e2e python seed/seed_banking_corpus.py
-# (prints CORPUS_FOLDER_ID — default hardcoded below matches the seeded demo tenant)
+From the repo root:
 
-# Then, from the cookbook:
-cd knowledgestack-cookbook
-make demo-credit-memo   # defaults: BORROWER="Riverway Logistics LLC" LOAN_AMOUNT=750000
+```bash
+make demo-credit-memo-drafter
 ```
 
-Output: `credit-memo.md` with a structured credit memo — recommendation, 1-9
-risk rating, risk factors (each cited), recommended covenants, and any policy
-exceptions flagged.
+Or directly:
 
-## What's in the corpus
+```bash
+uv run --package ks-cookbook-credit-memo-drafter ks-cookbook-credit-memo-drafter --help
+```
 
-4 fake-but-realistic documents seeded under `/shared/cookbook-banking/Riverway`:
+## Verification status
 
-| Doc | Purpose |
-|---|---|
-| `credit_policy` | Bank's underwriting standards, collateral rules, covenant minimums, concentration limits, 1-9 risk rating scale. |
-| `borrower_riverway_logistics_financials` | 3 years of balance sheet, income statement, ratios for a regional trucking company. |
-| `borrower_riverway_business_plan` | Borrower's loan request + use-of-proceeds + repayment case. |
-| `industry_benchmarks_trucking` | ATA-style norms for leverage, DSCR, concentration in regional trucking. |
+🚧 **SCHEMA_ERROR** — flagship is currently a known-issue. Likely causes: stale `__CORPUS_FOLDER_ID__` references, raw OpenAI tool-calling not yet refactored to the search→read pattern, or a CLI default that requires manual setup. Tracked in the upcoming flagship sweep.
 
-## Framework
+## Files
 
-**pydantic-ai** with a strict `CreditMemo` result type. The agent cannot end
-with unstructured prose — it must produce the exact schema, including ≥1
-citation per risk factor. That's what makes the memo auditable by the bank's
-credit committee.
-
-## Bring your own data
-
-Swap the corpus with your bank's real credit policy + your CRM-exported
-financials:
-
-1. Point `seed/seed_banking_corpus.py` at your own docs (modify `CORPUS` dict
-   or write your own seeder that follows the same pattern).
-2. Pass `--corpus-folder <your-folder-id>`.
-
-The agent code doesn't change — the prompt is corpus-agnostic.
+```text
+flagships/credit_memo_drafter/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-credit-memo-drafter`)
+└── src/credit_memo_drafter/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

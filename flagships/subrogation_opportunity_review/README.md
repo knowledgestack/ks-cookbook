@@ -1,45 +1,112 @@
-# Subrogation Opportunity Review (Insurance)
+# Subrogation Opportunity Review
 
+> **CLI entry for the subrogation opportunity review demo.**
 
-**Tags:** `insurance` `subrogation` `claims`
+## Table of contents
 
-P&C claim file assessed for subrogation recovery potential, citing NAIC Model
-902 standards, Acme Insurance subrogation SOP, and policy endorsement language.
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
 
-**Framework:** raw OpenAI function calling + ksapi SDK
+## What this flagship does
 
-## Seed data required
+CLI entry for the subrogation opportunity review demo.
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+## How it works
 
-**Expected corpus:** Subrogation playbook, relevant state-statute excerpts, a sample claim file.
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
 
-Set-up steps:
+## Sign in to Knowledge Stack
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-subro-review`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
-
-## Data Sources
-- NAIC Model Regulation 902-1 (Unfair Property/Casualty Claims Settlement)
-- Standard ISO subrogation principles and anti-subrogation doctrine
-- Illinois Insurance Code 215 ILCS 5/143b
-
-## Quick Start
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
 
 ```bash
-# 1. Seed the corpus (from ks-backend/)
-uv run --env-file .env.e2e python seed/seed_insurance_subro_corpus.py
-
-# 2. Run the demo (from knowledgestack-cookbook/)
-make demo-subro-review CORPUS_FOLDER_ID=<id-from-step-1>
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
 ```
 
-## Output
-`subro-review.md` with recovery potential classification (HIGH/MEDIUM/LOW/NONE),
-liable party analysis, basis of liability, anti-subrogation check, and estimated
-recovery with deductible refund calculation.
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--in` | no | — | Claim narrative file (default: sample_inputs/claim.txt). |
+
+| `--out` | no | — | Output markdown file (default: subro-review.md). |
+
+| `--corpus-folder` | no | — | Folder id containing the subrogation corpus. |
+
+| `--model` | no | — | OpenAI model (default: gpt-4o). |
+
+
+**Sample inputs** in `sample_inputs/`:
+
+- `claim.txt`
+
+## Output schema
+
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
+
+## Run
+
+From the repo root:
+
+```bash
+make demo-subrogation-opportunity-review
+```
+
+Or directly:
+
+```bash
+uv run --package ks-cookbook-subrogation-opportunity-review ks-cookbook-subrogation-opportunity-review --help
+```
+
+## Verification status
+
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
+
+## Files
+
+```text
+flagships/subrogation_opportunity_review/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-subrogation-opportunity-review`)
+└── src/subrogation_opportunity_review/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

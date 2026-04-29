@@ -1,45 +1,119 @@
-# Research-brief demo
+# Research Brief
+
+> **CLI entry for the research-brief demo.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the research-brief demo.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--topic` | yes | — | Research topic to brief on. |
+
+| `--out` | no | 'brief.docx' | Output .docx path (default: brief.docx). |
+
+| `--model` | no | — | pydantic-ai model id. |
 
 
-**Tags:** `research` `reports` `analyst`
+**Sample inputs** in `sample_inputs/`:
 
-Generates a **cited `.docx` research brief** from your Knowledge Stack tenant, using [pydantic-ai](https://ai.pydantic.dev) + the `knowledgestack-mcp` server.
+- `topic.txt`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+`BriefOutput` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** Any folder with research-grade source material.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `title` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-research`
+| `sections` | `list[Section]` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `citations` | `list[Citation]` |
 
 ## Run
 
+From the repo root:
+
 ```bash
-export KS_API_KEY="sk-user-..."
-export ANTHROPIC_API_KEY="sk-ant-..."   # or OPENAI_API_KEY
-uv run ks-cookbook-research-brief --topic "CRISPR off-target effects" --out brief.docx
+make demo-research
 ```
 
-## What it does
+Or directly:
 
-1. Spawns `uvx knowledgestack-mcp` over stdio — the MCP server talks to KS with your API key.
-2. Constructs a pydantic-ai `Agent` with:
-   - System prompt: "research analyst; use tools; produce `BriefOutput`."
-   - Structured result type: `BriefOutput` (title + sections + citations).
-3. Agent iteratively calls `search_knowledge` + `read` / `read_around` until it has grounded content.
-4. pydantic validates the final output → renders to `.docx` via `python-docx`.
+```bash
+uv run --package ks-cookbook-research-brief ks-cookbook-research-brief --help
+```
 
-## Why this shape
+## Verification status
 
-- **All tools go through MCP** — no framework lock-in; swap pydantic-ai for LangGraph or the OpenAI Agents SDK and only `agent.py` changes.
-- **Output artifact, not chatbot** — the demo produces a file. Anyone can skim it and see it's real.
-- **Citations are structured** — the agent emits `chunk_id` per reference, so the doc is trivially verifiable.
+🚧 **SCHEMA_ERROR** — flagship is currently a known-issue. Likely causes: stale `__CORPUS_FOLDER_ID__` references, raw OpenAI tool-calling not yet refactored to the search→read pattern, or a CLI default that requires manual setup. Tracked in the upcoming flagship sweep.
+
+## Files
+
+```text
+flagships/research_brief/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-research`)
+└── src/research_brief/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

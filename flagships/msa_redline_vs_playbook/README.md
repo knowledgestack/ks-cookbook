@@ -1,42 +1,114 @@
-# MSA Redline vs Playbook
+# Msa Redline Vs Playbook
+
+> **CLI entry for the MSA redline-vs-playbook flagship.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the MSA redline-vs-playbook flagship.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--corpus-folder` | no | — | folder_id of the legal-redline corpus in your KS tenant. |
+
+| `--playbook-name` | no | 'bonterms_playbook' | Substring to match the playbook document name (default: bonterms_playbook). |
+
+| `--inbound-name` | no | 'commonpaper_inbound' | Substring to match the inbound MSA document name (default: commonpaper_inbound). |
+
+| `--out` | no | — | Output markdown path (default: msa-redline-memo.md). |
+
+| `--model` | no | — |  |
 
 
-**Tags:** `legal` `contracts` `redline` `negotiations`
+**Sample inputs** in `sample_inputs/`:
 
-Compare an inbound MSA clause-by-clause against your company's standard playbook. Produces a redline memo with deviation severity and recommended changes, citing both documents.
+- `inbound.md`
 
-Uses raw OpenAI function-calling with inline MCP client.
+## Output schema
 
-## Seed data required
-
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
-
-**Expected corpus:** Your company's MSA playbook + an inbound MSA to compare against.
-
-Set-up steps:
-
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `LEGAL_REDLINE_FOLDER_ID=<your-folder-id> make demo-msa-redline`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-msa-redline
-# override:
-PLAYBOOK_NAME=bonterms_playbook INBOUND_NAME=commonpaper_inbound \
-LEGAL_REDLINE_FOLDER_ID=<your-folder-id> make demo-msa-redline
+make demo-msa-redline-vs-playbook
 ```
 
-Output: `flagships/msa_redline_vs_playbook/sample_output.md` — per-clause
-diff vs the playbook with severity, a proposed redline, and the chunk
-citations on both sides.
+Or directly:
 
-## Data Sources
+```bash
+uv run --package ks-cookbook-msa-redline-vs-playbook ks-cookbook-msa-redline-vs-playbook --help
+```
 
-- **Playbook:** Bonterms Cloud Terms v1.0 (CC BY 4.0) - https://github.com/Bonterms/Cloud-Terms
-- **Inbound MSA:** Common Paper Cloud Service Agreement v2.1 (CC BY 4.0) - https://github.com/CommonPaper/CSA
+## Verification status
+
+🚧 **SCHEMA_ERROR** — flagship is currently a known-issue. Likely causes: stale `__CORPUS_FOLDER_ID__` references, raw OpenAI tool-calling not yet refactored to the search→read pattern, or a CLI default that requires manual setup. Tracked in the upcoming flagship sweep.
+
+## Files
+
+```text
+flagships/msa_redline_vs_playbook/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-msa-redline-vs-playbook`)
+└── src/msa_redline_vs_playbook/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

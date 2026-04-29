@@ -1,43 +1,114 @@
 # Audit Workpaper Drafter
 
+> **CLI entry for the audit-workpaper-drafter flagship.**
 
-**Tags:** `accounting` `audit` `pcaob` `workpapers`
+## Table of contents
 
-Given an account name and trial balance amount, drafts an audit workpaper tying the balance to source documents with citations to audit standards and company accounting policy.
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
 
-Uses LangGraph ReAct agent with MCP tools.
+## What this flagship does
 
-## Seed data required
+CLI entry for the audit-workpaper-drafter flagship.
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+## How it works
 
-**Expected corpus:** PCAOB AS 1215, company revenue-recognition policy, trial balance, sample invoices.
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
 
-Set-up steps:
+## Sign in to Knowledge Stack
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `AUDIT_CORPUS_FOLDER_ID=<your-folder-id> make demo-audit-workpaper`
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--account-request` | no | — | Natural-language description of the account and balance to audit. Defaults to an AR audit request. |
+
+| `--in` | no | — | File containing the account audit request. |
+
+| `--out` | no | — | Output markdown file (default: audit-workpaper.md). |
+
+| `--corpus-folder` | no | — | Folder id containing the accounting-audit corpus. |
+
+| `--model` | no | — | OpenAI model (default: gpt-4o). |
+
+
+**Sample inputs** in `sample_inputs/`:
+
+- `ar_audit_request.txt`
+
+## Output schema
+
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-audit-workpaper
-# override inputs:
-AUDIT_CORPUS_FOLDER_ID=<your-folder-id> make demo-audit-workpaper
+make demo-audit-workpaper-drafter
 ```
 
-Output: `flagships/audit_workpaper_drafter/sample_output.md` — a tie-out
-workpaper with each substantive procedure citing either the company's
-accounting policy or the applicable audit standard.
+Or directly:
 
-## Data Sources
+```bash
+uv run --package ks-cookbook-audit-workpaper-drafter ks-cookbook-audit-workpaper-drafter --help
+```
 
-- **PCAOB AS 1215:** Audit Documentation standard (pcaobus.org, public)
-- **AU-C Section 500:** Audit Evidence procedures (AICPA, public)
-- **Accounting Policy:** Synthetic Acme SaaS policy (realistic)
-- **Trial Balance:** Synthetic 5-line trial balance (realistic)
+## Verification status
+
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
+
+## Files
+
+```text
+flagships/audit_workpaper_drafter/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-audit-workpaper-drafter`)
+└── src/audit_workpaper_drafter/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

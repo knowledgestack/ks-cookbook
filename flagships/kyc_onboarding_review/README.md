@@ -1,80 +1,131 @@
-# Banking: KYC Onboarding Review
+# Kyc Onboarding Review
+
+> **KYC onboarding review CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+KYC onboarding review CLI.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--corpus-folder` | no | — | Folder.id of the KYC corpus in your KS tenant. |
+
+| `--model` | no | — | OpenAI model (default: gpt-4o). |
+
+| `--out` | no | — | Output markdown file (default: kyc-review.md). |
 
 
-**Tags:** `banking` `kyc` `aml` `compliance`
+**Sample inputs** in `sample_inputs/`:
 
-Given a new customer's submitted documents, checks them against the bank's
-KYC/CDD policy and federal regulations, produces a checklist of what's present
-vs missing, with risk tier assignment and citations.
+- `customer.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+`KYCReview` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** Bank CDD policy, sanctions guidance, sample customer onboarding file.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `customer_name` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `KYC_CORPUS_FOLDER_ID=<your-folder-id> make demo-kyc-review`
+| `entity_type` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `risk_tier` | `RiskTier` |
 
-## Data sources
+| `risk_tier_rationale` | `str` |
 
-All policy and regulatory content is sourced from real public data:
+| `checklist` | `list[ChecklistItem]` |
 
-- **FFIEC BSA/AML Examination Manual** — Customer Due Diligence section
-  (https://bsaaml.ffiec.gov/manual/AssessingComplianceWithBSARegulatoryRequirements/02)
-- **31 CFR 1010.230** — Beneficial ownership requirements for legal entity
-  customers (https://www.law.cornell.edu/cfr/text/31/1010.230)
-- **FinCEN CDD Final Rule** guidance
-  (https://www.fincen.gov/resources/statutes-and-regulations/cdd-final-rule)
+| `risk_factors` | `list[RiskFactor]` |
 
-The bank's internal KYC policy is modeled on FFIEC guidance. The sample
-customer application uses entirely fictitious names and details.
+| `edd_required` | `bool` |
+
+| `pending_items` | `list[str]` |
+
+| `recommendation` | `str` |
 
 ## Run
 
-```bash
-# One-time: seed the KYC corpus into your KS tenant.
-cd ks-backend
-uv run --env-file .env.e2e python seed/seed_kyc_corpus.py
-# (prints CORPUS_FOLDER_ID)
+From the repo root:
 
-# Then, from the cookbook:
-cd knowledgestack-cookbook
-make demo-kyc-review
+```bash
+make demo-kyc-onboarding-review
 ```
 
-Output: `kyc-review.md` with a structured checklist, risk tier, risk factors,
-pending items, and policy citations.
+Or directly:
 
-## What's in the corpus
+```bash
+uv run --package ks-cookbook-kyc-onboarding-review ks-cookbook-kyc-onboarding-review --help
+```
 
-4 documents seeded under `/shared/cookbook-banking-kyc/Verdant`:
+## Verification status
 
-| Doc | Purpose |
-|---|---|
-| `ffiec_cdd_examination_procedures` | FFIEC BSA/AML Manual CDD section — risk categories, EDD requirements, ongoing monitoring. |
-| `beneficial_ownership_31cfr1010_230` | Full text of 31 CFR 1010.230 — beneficial ownership definitions, identification, verification, exemptions. |
-| `acme_bank_kyc_policy` | Bank's internal KYC policy — onboarding checklist, risk tiers, EDD procedures, SAR filing. |
-| `sample_customer_application` | Verdant Sourcing Group LLC application — beneficial owners, submitted docs, pending items. |
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
 
-## Framework
+## Files
 
-**pydantic-ai** with a strict `KYCReview` output type. The agent must produce
-a structured checklist with each item citing the specific policy or regulatory
-chunk that mandates the requirement.
-
-## Bring your own data
-
-Replace the corpus with your bank's real KYC policy and a customer application:
-
-1. Modify `seed/seed_kyc_corpus.py` in ks-backend with your documents.
-2. Pass `--corpus-folder <your-folder-id>`.
-
-The agent code is corpus-agnostic.
+```text
+flagships/kyc_onboarding_review/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-kyc-onboarding-review`)
+└── src/kyc_onboarding_review/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

@@ -1,75 +1,127 @@
-# Rev-rec memo (Accounting flagship)
+# Rev Rec Memo
+
+> **CLI entry for the rev-rec-memo flagship.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the rev-rec-memo flagship.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--in` | no | — | Path to a JSON file with {customer, product, contract_summary, total_contract_value_usd}. |
+
+| `--corpus-folder` | no | — | folder_id of the accounting corpus in your KS tenant. |
+
+| `--out` | no | — | Output markdown path (default: rev-rec-memo.md). |
+
+| `--model` | no | — | pydantic-ai model id (default: openai:gpt-4o). |
 
 
-**Tags:** `accounting` `asc-606` `revenue-recognition` `memos`
+**Sample inputs** in `sample_inputs/`:
 
-Given a customer contract summary, drafts a **five-step ASC 606 revenue
-recognition memo** grounded in your company's own revenue-recognition policy
-and historical judgments (seeded into your Knowledge Stack tenant).
+- `globex_contract.json`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+`RevRecMemo` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** ASC 606 policy, sample MSA, historical judgments memo.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `customer` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `ACCOUNTING_CORPUS_FOLDER_ID=<your-folder-id> make demo-rev-rec-memo`
+| `product` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `total_contract_value_usd` | `float` |
+
+| `conclusion` | `str` |
+
+| `steps` | `list[Step]` |
+
+| `citations` | `list[Citation]` |
 
 ## Run
 
+From the repo root:
+
 ```bash
-# One-time: seed the sample accounting corpus (policy + sample MSA + judgments memo)
-PYTHONPATH=. uv run --env-file .env.e2e python seed/seed_accounting_corpus.py   # from ks-backend/
-
-# Then, from knowledgestack-cookbook/:
-export KS_API_KEY="sk-user-..."
-export OPENAI_API_KEY="sk-..."
 make demo-rev-rec-memo
-
-# Or point at a different contract JSON:
-uv run --package ks-cookbook-rev-rec-memo ks-cookbook-rev-rec-memo \
-    --in flagships/rev_rec_memo/sample_inputs/globex_contract.json --out my-memo.md
 ```
 
-## Input shape
+Or directly:
 
-A JSON file with:
-
-```json
-{
-  "customer": "Globex Industries, Inc.",
-  "product": "Acme Platform Enterprise",
-  "total_contract_value_usd": 220000,
-  "contract_summary": "12-month SaaS subscription at $12,500/month plus a $40,000 onboarding fee and 120 hours of optional advanced implementation at $250/hour..."
-}
+```bash
+uv run --package ks-cookbook-rev-rec-memo ks-cookbook-rev-rec-memo --help
 ```
 
-## What it does
+## Verification status
 
-1. Spawns `uvx knowledgestack-mcp` over stdio.
-2. A [pydantic-ai](https://ai.pydantic.dev) `Agent` with `output_type=RevRecMemo`
-   iteratively calls `list_contents` + `read` against the seeded policy corpus.
-3. Produces a strictly-validated five-step memo (Identify contract / Performance
-   obligations / Transaction price / Allocate / Recognize), with inline
-   `[chunk:<uuid>]` citations copied verbatim from the policy text.
-4. Writes the memo as a markdown file.
+🚧 **SCHEMA_ERROR** — flagship is currently a known-issue. Likely causes: stale `__CORPUS_FOLDER_ID__` references, raw OpenAI tool-calling not yet refactored to the search→read pattern, or a CLI default that requires manual setup. Tracked in the upcoming flagship sweep.
 
-## Framework
+## Files
 
-[pydantic-ai](https://ai.pydantic.dev) + MCP — the agent's `result_type` is the
-pydantic `RevRecMemo`, so the LLM is forced into the five-step structure.
-
-## Bring your own corpus
-
-Upload your company's actual ASC 606 policy and any historical-judgment memos
-into a KS folder, then pass that `folder_id` via `--corpus-folder <uuid>` or the
-`CORPUS_FOLDER_ID` env var. Drop any new customer contract into a JSON file
-matching the input shape above and run the demo.
+```text
+flagships/rev_rec_memo/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-rev-rec-memo`)
+└── src/rev_rec_memo/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

@@ -1,63 +1,141 @@
-# Banking: AML SAR Narrative Writer
+# Aml Sar Narrative
+
+> **SAR narrative drafter CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+SAR narrative drafter CLI.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--case-id` | yes | — |  |
+
+| `--subject` | no | — | Subject entity or individual, if known. |
+
+| `--corpus-folder` | no | — | Folder.id of the AML case corpus in your KS tenant. |
+
+| `--model` | no | — |  |
+
+| `--out` | no | — |  |
 
 
-**Tags:** `banking` `aml` `fincen` `sar` `bsa`
+**Sample inputs** in `sample_inputs/`:
 
-Every bank AML team writes Suspicious Activity Report narratives by hand in
-FinCEN's Who/What/When/Where/Why/How format — 200 words per case, hundreds
-per quarter. This flagship drafts one automatically from the case evidence,
-with a structured ≤200-word narrative, itemized red flags, and a citation
-per factual claim.
+- `case.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to
-create that folder and upload the expected documents **before** running,
-otherwise retrieval returns nothing and the demo fails with empty output.
+`SARNarrative` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** 90 days of transaction ledger exports, alert rationale
-memo, subject KYC file, prior SAR history (if any), FFIEC BSA/AML
-examination-manual excerpt.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `case_id` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `AML_CORPUS_FOLDER_ID=<your-folder-id> make demo-sar-narrative`
+| `subject_name` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `filing_institution` | `str` |
+
+| `who` | `str` |
+
+| `what` | `str` |
+
+| `when` | `str` |
+
+| `where` | `str` |
+
+| `why_suspicious` | `str` |
+
+| `how` | `str` |
+
+| `narrative` | `str` |
+
+| `red_flags` | `list[str]` |
+
+| `citations` | `list[Citation]` |
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-sar-narrative   # defaults: CASE_ID="SAR-2026-0417" SUBJECT="Paloma Holdings LLC"
+make demo-aml-sar-narrative
 ```
 
-Output: `sample_output.md` — subject, filing institution, FinCEN narrative
-paragraph, itemized W/W/W/W/W/H fields, red flags, and the evidence pack.
+Or directly:
 
-## Data sources
+```bash
+uv run --package ks-cookbook-aml-sar-narrative ks-cookbook-aml-sar-narrative --help
+```
 
-Seed with public guidance + fictitious case data only:
+## Verification status
 
-- **FinCEN SAR Narrative guidance** —
-  https://www.fincen.gov/sites/default/files/shared/sarnarrcompletguid_web.pdf
-- **FFIEC BSA/AML Examination Manual** —
-  https://bsaaml.ffiec.gov/manual
-- **FinCEN SAR Stats** for red-flag typologies —
-  https://www.fincen.gov/reports/sar-stats
+✅ **Verified PASS** end-to-end on **2026-04-28** (147.85239400000137s) against `api.knowledgestack.ai`. Output: `/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/flagships/aml_sar_narrative/sample_output.md` with 5 citations.
 
-Never seed with real customer or production transaction data.
+## Files
 
-## Framework
-
-**pydantic-ai** with a strict `SARNarrative` result type. Every citation
-`chunk_id` must be copied verbatim from a `[chunk:<uuid>]` marker in `read`
-output. The 2-citation minimum enforces at least two sources per filing.
-
-## Related recipe
-
-A ≤100-LOC recipe version lives at
-[`recipes/aml_sar_narrative/`](../../recipes/aml_sar_narrative/).
+```text
+flagships/aml_sar_narrative/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-aml-sar-narrative`)
+└── src/aml_sar_narrative/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

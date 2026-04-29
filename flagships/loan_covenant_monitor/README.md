@@ -1,74 +1,114 @@
-# Banking: Loan Covenant Monitor
+# Loan Covenant Monitor
+
+> **Covenant compliance monitor CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+Covenant compliance monitor CLI.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--borrower` | no | 'Nimbus Networks, Inc.' | Borrower name (default: Nimbus Networks, Inc.). |
+
+| `--period` | no | 'Q4 2025 / FY 2025' | Reporting period (default: Q4 2025 / FY 2025). |
+
+| `--corpus-folder` | no | — | Folder.id of the covenant corpus in your KS tenant. |
+
+| `--model` | no | — | OpenAI model (default: gpt-4o). |
+
+| `--out` | no | — | Output markdown file (default: covenant-report.md). |
 
 
-**Tags:** `banking` `covenant-monitoring` `credit-risk`
+**Sample inputs** in `sample_inputs/`:
 
-Reads a borrower's quarterly financial report, compares against loan covenants
-in the credit agreement, and flags breaches or near-breaches with citations.
+- `borrower.txt`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
-
-**Expected corpus:** Credit agreement, quarterly financial statements, compliance-certificate template.
-
-Set-up steps:
-
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `COVENANT_CORPUS_FOLDER_ID=<your-folder-id> make demo-covenant-monitor`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
-
-## Data sources
-
-All corpus content is sourced from real public data:
-
-- **Credit agreement covenants** adapted from SEC EDGAR public filings:
-  CKX Inc. / UBS Revolving Credit Agreement (SEC File 000119312506107949,
-  Exhibit 10.1); Tenneco Inc. Second Amendment (SEC File 000119312520041262,
-  Exhibit 10.2); LSTA MCAPs (May 2023 public edition).
-- **Quarterly financials** adapted from Cloudflare, Inc. FY2025 10-K
-  (SEC CIK 0001477333), scaled to a hypothetical mid-market borrower.
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
 
 ## Run
 
-```bash
-# One-time: seed the covenant corpus into your KS tenant.
-cd ks-backend
-uv run --env-file .env.e2e python seed/seed_covenant_corpus.py
-# (prints CORPUS_FOLDER_ID)
+From the repo root:
 
-# Then, from the cookbook:
-cd knowledgestack-cookbook
-make demo-covenant-monitor  # defaults: BORROWER="Nimbus Networks, Inc."
+```bash
+make demo-loan-covenant-monitor
 ```
 
-Output: `covenant-report.md` with per-covenant analysis, compliance status
-(COMPLIANT/WARNING/BREACH), cure rights, and chunk-level citations.
+Or directly:
 
-## What's in the corpus
+```bash
+uv run --package ks-cookbook-loan-covenant-monitor ks-cookbook-loan-covenant-monitor --help
+```
 
-2 documents seeded under `/shared/cookbook-banking-covenants/Nimbus`:
+## Verification status
 
-| Doc | Purpose |
-|---|---|
-| `credit_agreement_covenants` | Full credit agreement with defined terms (EBITDA, leverage ratio, etc.), financial covenants with step-down schedules, cure rights, events of default. |
-| `nimbus_q4_2025_financials` | Quarterly financial report with balance sheet, income statement, EBITDA reconciliation, covenant compliance summary, and debt schedule. |
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
 
-## Framework
+## Files
 
-**LangGraph** ReAct agent with KS MCP tools. The agent reads both documents,
-extracts each covenant's required threshold, compares to the actual reported
-value, and produces a structured compliance report in Markdown.
-
-## Bring your own data
-
-Replace the corpus with your borrower's real credit agreement and financials:
-
-1. Modify `seed/seed_covenant_corpus.py` in ks-backend with your documents.
-2. Pass `--corpus-folder <your-folder-id>`.
-
-The agent code is corpus-agnostic.
+```text
+flagships/loan_covenant_monitor/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-loan-covenant-monitor`)
+└── src/loan_covenant_monitor/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

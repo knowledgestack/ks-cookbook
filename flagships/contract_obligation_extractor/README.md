@@ -1,67 +1,112 @@
-# Contract obligation extractor (Legal flagship)
+# Contract Obligation Extractor
+
+> **CLI entry for the contract-obligation-extractor flagship.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the contract-obligation-extractor flagship.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--corpus-folder` | no | — | folder_id of the contract corpus in your KS tenant. |
+
+| `--contract-name` | no | — | Substring to pick which document to analyze (e.g. 'msa', 'dpa'). Defaults to the first document in the folder. |
+
+| `--out` | no | — | Output markdown path (default: contract-obligations.md). |
+
+| `--model` | no | — |  |
 
 
-**Tags:** `legal` `contracts` `msa` `obligations`
+**Sample inputs** in `sample_inputs/`:
 
-Reads a contract already seeded into your Knowledge Stack tenant and extracts
-**every `shall` / `must` / `will` obligation**, categorized by obligation-holder
-(Provider, Customer, Mutual), with inline `[chunk:<uuid>]` citations an auditor
-can click through.
+- `README.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
-
-**Expected corpus:** Sample MSA, DPA, NDA.
-
-Set-up steps:
-
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `LEGAL_CORPUS_FOLDER_ID=<your-folder-id> make demo-contract-obligations`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
 
 ## Run
 
+From the repo root:
+
 ```bash
-# One-time: seed the sample legal corpus (MSA + DPA + NDA)
-PYTHONPATH=. uv run --env-file .env.e2e python seed/seed_legal_corpus.py   # from ks-backend/
-
-# Then, from knowledgestack-cookbook/:
-export KS_API_KEY="sk-user-..."
-export OPENAI_API_KEY="sk-..."
-make demo-contract-obligations
-
-# Or pick a different seeded contract:
-uv run --package ks-cookbook-contract-obligations ks-cookbook-contract-obligations \
-    --contract-name dpa --out dpa-obligations.md
+make demo-contract-obligation-extractor
 ```
 
-## What it does
+Or directly:
 
-1. Spawns `uvx knowledgestack-mcp` over stdio.
-2. `list_contents(corpus_folder_id)` → picks the contract whose name matches
-   `--contract-name` (default: first document in the folder).
-3. `read(path_part_id=<doc>, max_chars=15000)` → returns the full markdown
-   with inline `[chunk:<uuid>]` markers.
-4. Sends to `gpt-4o-mini` (OpenAI Responses) with a strict system prompt
-   demanding verbatim chunk-id citations.
-5. Filters out any obligations whose `chunk_id` is not present in the retrieved
-   text (no fabrication), validates through pydantic, and renders a markdown
-   report grouped by obligation-holder.
+```bash
+uv run --package ks-cookbook-contract-obligation-extractor ks-cookbook-contract-obligation-extractor --help
+```
 
-## Framework
+## Verification status
 
-Raw OpenAI + MCP (no agent framework). This keeps the code <300 LOC and shows
-the shortest possible path from MCP retrieval → grounded extraction → file
-artifact.
+🚧 **SCHEMA_ERROR** — flagship is currently a known-issue. Likely causes: stale `__CORPUS_FOLDER_ID__` references, raw OpenAI tool-calling not yet refactored to the search→read pattern, or a CLI default that requires manual setup. Tracked in the upcoming flagship sweep.
 
-## Bring your own corpus
+## Files
 
-Upload contracts into any folder in your KS tenant and pass that folder_id via
-`--corpus-folder <uuid>` or the `CORPUS_FOLDER_ID` env var. The flagship does
-not care whether the contract is an MSA, DPA, NDA, SOW, or anything else — as
-long as it contains shall/must/will clauses.
+```text
+flagships/contract_obligation_extractor/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-contract-obligation-extractor`)
+└── src/contract_obligation_extractor/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

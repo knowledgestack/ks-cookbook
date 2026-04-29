@@ -1,54 +1,114 @@
-# Lease abstract generator
+# Lease Abstract
+
+> **CLI entry for the lease-abstract demo.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the lease-abstract demo.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--lease` | no | 'retail_lease_pinetree_crossing' | Name of the lease document inside the corpus folder. |
+
+| `--lease-file` | no | — | File whose first line overrides --lease. |
+
+| `--out` | no | — |  |
+
+| `--corpus-folder` | no | — |  |
+
+| `--model` | no | — |  |
 
 
-**Tags:** `real-estate` `leases` `commercial`
+**Sample inputs** in `sample_inputs/`:
 
-Read a commercial lease out of your KS tenant and emit a **one-page lease
-abstract** (tenant, term, rent schedule, renewals, CAM, exclusives, radius
-restriction) with citations to the clauses that ground each field.
+- `lease.txt`
 
-This is the **VTS / Prophia / Lease Probe** asset-management use case —
-instead of an analyst manually copying fields from a PDF, the agent reads the
-lease and fills in the abstract template.
+## Output schema
 
-## Seed data required
-
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
-
-**Expected corpus:** Retail and/or office lease samples.
-
-Set-up steps:
-
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-lease-abstract`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-lease-abstract-setup   # seeds the sample retail + office leases
-export CORPUS_FOLDER_ID="<printed by setup>"
-make demo-lease-abstract         # LEASE=retail_lease_pinetree_crossing by default
+make demo-lease-abstract
 ```
 
-Output: `lease-abstract.md` — a one-page markdown abstract with inline
-`[chunk:<uuid>]` citations next to each field.
+Or directly:
 
-## Framework
+```bash
+uv run --package ks-cookbook-lease-abstract ks-cookbook-lease-abstract --help
+```
 
-**Raw OpenAI function calling** — no LangChain, no pydantic-ai. Shows the
-minimum possible plumbing to wire an agent to the KS HTTP API through two
-thin tool wrappers (`list_contents`, `read`). Everything else is a hand-rolled
-`while tool_calls:` loop over `client.chat.completions.create`.
+## Verification status
 
-## What the agent does
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
 
-1. Calls `list_contents(corpus_folder)` to see the leases and the template.
-2. Calls `read(<template>)` to internalize the required abstract fields.
-3. Calls `read(<target lease>)` and iterates via `read_around` if needed.
-4. Emits plain markdown following the abstract template, citing each field
-   with the chunk IDs it pulled from the `read` output.
+## Files
+
+```text
+flagships/lease_abstract/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-lease-abstract`)
+└── src/lease_abstract/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

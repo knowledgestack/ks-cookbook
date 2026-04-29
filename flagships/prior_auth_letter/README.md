@@ -1,49 +1,135 @@
-# Prior-authorization letter drafter
+# Prior Auth Letter
+
+> **CLI entry for the prior-authorization-letter demo.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the prior-authorization-letter demo.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--in` | no | — | Scenario text file (default: sample_inputs/scenario.txt). |
+
+| `--out` | no | — | Output .docx (default: prior-auth-letter.docx). |
+
+| `--corpus-folder` | no | — | Folder id for the health-plan policy corpus. |
+
+| `--model` | no | — | pydantic-ai model id (default: openai:gpt-4o). |
 
 
-**Tags:** `healthcare` `prior-auth` `payer` `clinical`
+**Sample inputs** in `sample_inputs/`:
 
-Turn a patient's clinical scenario + requested service into a **cited prior-auth
-or appeal letter** grounded in the health plan's medical-policy bulletins and
-the provider-appeal style guide.
+- `scenario.txt`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+`PriorAuthLetter` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** Payer medical policy, clinical guidelines, prior-auth letter template.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `member_name` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-prior-auth`
+| `member_dob` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `member_id` | `str` |
+
+| `requested_service` | `str` |
+
+| `ordering_provider` | `str` |
+
+| `clinical_scenario` | `str` |
+
+| `medical_necessity` | `str` |
+
+| `prior_therapies` | `str` |
+
+| `supporting_evidence` | `str` |
+
+| `citations` | `list[Citation]` |
 
 ## Run
 
-```bash
-# Seed the sample Acme Health Plan corpus once:
-uv run --env-file ../../ks-backend/.env.e2e python ../../ks-backend/seed/seed_healthcare_corpus.py
-export CORPUS_FOLDER_ID="<printed by the seed script>"
+From the repo root:
 
-make demo-prior-auth
+```bash
+make demo-prior-auth-letter
 ```
 
-Output: `prior-auth-letter.docx` containing the full letter with inline
-`[chunk:<uuid>]` citations copied verbatim from the plan's MPBs.
+Or directly:
 
-## Framework
+```bash
+uv run --package ks-cookbook-prior-auth-letter ks-cookbook-prior-auth-letter --help
+```
 
-Uses **pydantic-ai** with `output_type=PriorAuthLetter` — the agent MUST
-return a validated pydantic model or the run fails.
+## Verification status
 
-## Guardrails
+✅ **Verified PASS** end-to-end on **2026-04-28** (46.14776279200305s) against `api.knowledgestack.ai`. Output: `/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/flagships/prior_auth_letter/sample_output.docx` with 2 citations.
 
-- Every citation is copied verbatim from a `[chunk:<uuid>]` marker in the tool
-  output. The agent never fabricates UUIDs.
-- If retrieved policies do not support medical necessity, the letter
-  explicitly states which criterion is not yet met.
+## Files
+
+```text
+flagships/prior_auth_letter/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-prior-auth-letter`)
+└── src/prior_auth_letter/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

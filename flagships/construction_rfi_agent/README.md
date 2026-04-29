@@ -1,64 +1,139 @@
-# Construction: RFI / Submittal Agent
+# Construction Rfi Agent
+
+> **Construction RFI agent CLI.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+Construction RFI agent CLI.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--rfi-number` | yes | — |  |
+
+| `--question` | yes | — | The RFI question body. |
+
+| `--corpus-folder` | no | — | Folder.id of the construction project corpus in your KS tenant. |
+
+| `--model` | no | — |  |
+
+| `--out` | no | — |  |
 
 
-**Tags:** `construction` `rfi` `submittal` `csi-masterformat` `ashrae`
+**Sample inputs** in `sample_inputs/`:
 
-RFIs pile up on every jobsite — the PM ends the day cross-referencing CSI
-spec sections, drawings, and prior submittals to draft one response. This
-flagship drafts a first-pass response, identifies the applicable CSI
-division, flags whether the architect-of-record needs to weigh in, and
-estimates schedule + cost impact — all with citations.
+- `rfi.md`
 
-## Seed data required
+## Output schema
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to
-create that folder and upload the expected documents **before** running,
-otherwise retrieval returns nothing and the demo fails with empty output.
+`RFIDraft` (in `schema.py`) — emitted as a structured artifact.
 
-**Expected corpus:** project specifications (CSI MasterFormat), issued
-drawing set, addenda, prior approved submittals, relevant ASHRAE / FHWA
-reference standard excerpts.
+| Field | Type |
+|---|---|
 
-Set-up steps:
+| `rfi_number` | `str` |
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CONSTRUCTION_CORPUS_FOLDER_ID=<your-folder-id> make demo-rfi-agent`
+| `subject` | `str` |
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+| `question_restatement` | `str` |
+
+| `draft_response` | `str` |
+
+| `spec_references` | `list[SpecReference]` |
+
+| `drawing_references` | `list[str]` |
+
+| `schedule_impact_days` | `int` |
+
+| `cost_impact` | `str` |
+
+| `needs_architect_response` | `bool` |
+
+| `confidence` | `str` |
+
+| `citations` | `list[Citation]` |
 
 ## Run
 
+From the repo root:
+
 ```bash
-make demo-rfi-agent   # defaults: see sample_inputs/rfi.md
+make demo-construction-rfi-agent
 ```
 
-Output: `sample_output.md` — restated question, draft response, applicable
-CSI spec references (each cited), drawing references, schedule + cost
-impact, architect-of-record flag, and the evidence pack.
+Or directly:
 
-## Data sources
+```bash
+uv run --package ks-cookbook-construction-rfi-agent ks-cookbook-construction-rfi-agent --help
+```
 
-Seed with project docs (real or fictitious) plus public reference standards:
+## Verification status
 
-- **CSI MasterFormat** structure —
-  https://www.csiresources.org/standards/masterformat
-- **ASHRAE 62.1** ventilation —
-  https://www.ashrae.org/technical-resources/standards-and-guidelines
-- **FHWA** for civil/transpo projects —
-  https://www.fhwa.dot.gov/
+✅ **Verified PASS** end-to-end on **2026-04-28** (31.737293792000855s) against `api.knowledgestack.ai`. Output: `/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/flagships/construction_rfi_agent/sample_output.md` with 1 citations.
 
-Never seed with a client's production drawing set without their permission.
+## Files
 
-## Framework
-
-**pydantic-ai** with a strict `RFIDraft` result type. Every `SpecReference`
-must carry a real citation and the overall `citations` list has a minimum
-of 1 entry copied verbatim from a `[chunk:<uuid>]` marker in `read` output.
-
-## Related recipe
-
-A ≤100-LOC recipe version lives at
-[`recipes/construction_rfi_agent/`](../../recipes/construction_rfi_agent/).
+```text
+flagships/construction_rfi_agent/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-construction-rfi-agent`)
+└── src/construction_rfi_agent/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

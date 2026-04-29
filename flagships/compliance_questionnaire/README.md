@@ -1,75 +1,114 @@
-# Compliance questionnaire demo
+# Compliance Questionnaire
+
+> **CLI entry for the compliance-questionnaire demo.**
+
+## Table of contents
+
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
+
+## What this flagship does
+
+CLI entry for the compliance-questionnaire demo.
+
+## How it works
+
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
+
+## Sign in to Knowledge Stack
+
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
+
+```bash
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--in` | yes | — | Input XLSX (CAIQv4-format). |
+
+| `--out` | yes | — | Filled XLSX to write. |
+
+| `--policies-folder` | no | — | path_part_id of the folder containing policy docs in your KS tenant. |
+
+| `--limit` | no | 5 | How many rows to answer (default 5). |
+
+| `--concurrency` | no | 3 | Max concurrent questions. |
 
 
-**Tags:** `security` `compliance` `caiq` `sig` `questionnaires`
+**Sample inputs** in `sample_inputs/`:
 
-Fill a [CAIQ v4](https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4) / SIG-style security questionnaire directly from your KS tenant's policy docs, with citations every auditor can verify.
+- `caiq_v4.xlsx`
 
-This is the **HyperComply / SafeBase / Conveyor** use case — an auditor sends an XLSX with 260 control questions, you return the same XLSX filled in with evidence.
+## Output schema
 
-## Seed data required
-
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
-
-**Expected corpus:** A set of security policy documents (e.g. the open-source JupiterOne policy templates).
-
-Set-up steps:
-
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `POLICIES_FOLDER_ID=<your-folder-id> make demo-compliance`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+Output is a Markdown / DOCX / XLSX artifact written to this folder.
 
 ## Run
 
-```bash
-# One-time: seed the sample corpus (10 JupiterOne policies as "Acme Corp") into your KS tenant
-# and print the folder id.
-make demo-compliance-setup
+From the repo root:
 
-# Then fill the first 5 rows of the sample CAIQ:
-export POLICIES_FOLDER_ID="<printed by setup>"
+```bash
 make demo-compliance
 ```
 
-Output: `filled.xlsx` with columns **C (Answer)** and **E (Implementation Description)** populated for each of the 5 (configurable) questions, plus inline `[chunk:<uuid>]` citations an auditor can click through.
+Or directly:
 
-## What the agent does per row
+```bash
+uv run --package ks-cookbook-compliance-questionnaire ks-cookbook-compliance-questionnaire --help
+```
 
-1. `list_contents(policies_folder)` — enumerates the 10 policies in your KS tenant.
-2. Picks the 1–3 policies whose names match the question (e.g. "access" for authentication questions).
-3. `read(path_part_id=<policy>, max_chars=4000)` — pulls the actual policy text with `[chunk:<uuid>]` markers.
-4. Emits structured JSON:
+## Verification status
 
-   ```json
-   {
-     "answer": "Yes",
-     "description": "Acme Corp restricts logical access via SSO + MFA per the Access Control Policy §3.2.",
-     "confidence": "HIGH",
-     "citations": [
-       {"chunk_id": "5bc91bb6-...", "document_name": "access", "snippet": "Access to all computing resources must be protected by strong authentication..."}
-     ]
-   }
-   ```
+⚠️ **EMPTY_OUTPUT** — last run produced an artifact but the verifier didn't find `[chunk:<uuid>]` citation markers in the stdout. The flagship may be writing markers into a binary artifact (.docx/.xlsx) where the verifier doesn't currently scan, or the agent skipped grounding. See [`docs/RFC_KS_MCP_HANDHOLDING.md`](../../docs/RFC_KS_MCP_HANDHOLDING.md).
 
-5. Writes back into the XLSX preserving the original workbook's formatting.
+## Files
 
-## Guardrails
-
-- Every HIGH/MEDIUM answer must cite at least one real `chunk_id`.
-- If retrieved policies don't ground the question, the agent returns `INSUFFICIENT EVIDENCE` with `LOW` confidence.
-- Chunk IDs are copied verbatim from the `read` output — never fabricated.
-
-## Scaling up
-
-- `--limit 260` fills the entire CAIQ (costs ≈ $0.15 on gpt-4o-mini at current rates).
-- Swap to Anthropic by setting `COMPLIANCE_PROVIDER=anthropic` + `ANTHROPIC_API_KEY`.
-- Bring your own policy corpus: upload docs to any folder in your KS tenant, then set `POLICIES_FOLDER_ID` to that folder's path_part_id.
-
-## Data sources
-
-- Questionnaire: [Texas DPS CAIQ v4.0.2 XLSX](https://www.dps.texas.gov/docs/vendorforms/star-security-questionnaire.xlsx) (state-gov public mirror of the CSA template).
-- Policies: [JupiterOne/security-policy-templates](https://github.com/JupiterOne/security-policy-templates) (CC-BY-SA-4.0), rendered for "Acme Corp".
+```text
+flagships/compliance_questionnaire/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-compliance`)
+└── src/compliance_questionnaire/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```

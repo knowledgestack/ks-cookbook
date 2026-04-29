@@ -1,45 +1,127 @@
-# Clinical Trial Eligibility (Healthcare)
+# Clinical Trial Eligibility
 
+> **Clinical trial eligibility assessment CLI.**
 
-**Tags:** `healthcare` `clinical-trials` `eligibility` `ctms`
+## Table of contents
 
-Patient profile matched against real clinical trial inclusion/exclusion criteria
-from ClinicalTrials.gov (NCT03855137 PROGRESS trial, atogepant for chronic migraine),
-AHS CGRP clinical guidance, and CMS NCD coverage criteria.
+1. [What this flagship does](#what-this-flagship-does)
+2. [How it works](#how-it-works)
+3. [Sign in to Knowledge Stack](#sign-in-to-knowledge-stack)
+4. [Ingest the unified corpus](#ingest-the-unified-corpus)
+5. [Inputs](#inputs)
+6. [Output schema](#output-schema)
+7. [Run](#run)
+8. [Verification status](#verification-status)
+9. [Files](#files)
 
-**Framework:** pydantic-ai with MCP
+## What this flagship does
 
-## Seed data required
+Clinical trial eligibility assessment CLI.
 
-This demo reads from a folder in your Knowledge Stack tenant. You need to create that folder and upload the expected documents **before** running, otherwise retrieval returns nothing and the demo fails with empty output.
+## How it works
 
-**Expected corpus:** Trial protocol with inclusion/exclusion criteria, clinical guidance, coverage criteria.
+1. The flagship spawns the `knowledgestack-mcp` stdio server (auth via `KS_API_KEY`).
+2. A pydantic-ai `Agent` (or raw OpenAI tool-calling loop in some flagships) is built with a strict pydantic output schema.
+3. The agent asks Knowledge Stack natural-language questions via `search_knowledge` — no folder UUIDs are needed; KS finds the right document by content.
+4. For every search hit the agent calls `read(path_part_id=<hit>)` to fetch the chunk text and the `[chunk:<uuid>]` citation marker.
+5. The validated output is rendered to a file artifact (`.md` / `.docx` / `.xlsx`) under this folder as `sample_output.<ext>`.
 
-Set-up steps:
+## Sign in to Knowledge Stack
 
-1. Sign up at [app.knowledgestack.ai](https://app.knowledgestack.ai).
-2. Create a folder in the dashboard and copy its folder ID.
-3. Upload the documents described above into that folder.
-4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
-5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-trial-eligibility`
-
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
-
-## Data Sources
-- ClinicalTrials.gov API: NCT03855137 (PROGRESS trial protocol)
-- American Headache Society consensus statement (2024)
-- CMS National Coverage Determination framework for CGRP inhibitors
-
-## Quick Start
+**Path A — `ingestion: true` (shared cookbook tenant, fastest)**
 
 ```bash
-# 1. Seed the corpus (from ks-backend/)
-uv run --env-file .env.e2e python seed/seed_healthcare_trials_corpus.py
-
-# 2. Run the demo (from knowledgestack-cookbook/)
-make demo-trial-eligibility CORPUS_FOLDER_ID=<id-from-step-1>
+export KS_API_KEY=sk-user-...
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
 ```
 
-## Output
-`trial-eligibility.md` with per-criterion ELIGIBLE/INELIGIBLE/UNCERTAIN
-determinations, each backed by chunk citations from the trial protocol.
+**Path B — `ingestion: false` (clone repo, ingest your own data)**
+
+```bash
+git clone https://github.com/knowledgestack/ks-cookbook
+cd ks-cookbook
+make install
+export KS_API_KEY=sk-user-...   # your own KS key
+export KS_BASE_URL=https://api.knowledgestack.ai
+export OPENAI_API_KEY=sk-...
+export MODEL=gpt-4o-mini
+```
+
+## Ingest the unified corpus
+
+Path B only — one-time. The bundled `seed/` folder has 34 real public-domain documents across 13 verticals.
+
+```bash
+make seed-unified-corpus PARENT_FOLDER_ID=<your-folder-uuid>
+```
+
+## Inputs
+
+| Flag | Required | Default | Help |
+|---|---|---|---|
+
+| `--in` | no | — | Patient profile file (default: sample_inputs/patient.txt). |
+
+| `--corpus-folder` | no | — |  |
+
+| `--model` | no | — |  |
+
+| `--out` | no | — |  |
+
+
+**Sample inputs** in `sample_inputs/`:
+
+- `patient.txt`
+
+## Output schema
+
+`EligibilityAssessment` (in `schema.py`) — emitted as a structured artifact.
+
+| Field | Type |
+|---|---|
+
+| `trial_id` | `str` |
+
+| `trial_title` | `str` |
+
+| `patient_summary` | `str` |
+
+| `overall_eligibility` | `MatchStatus` |
+
+| `criteria` | `list[CriterionMatch]` |
+
+| `recommended_next_steps` | `str` |
+
+## Run
+
+From the repo root:
+
+```bash
+make demo-clinical-trial-eligibility
+```
+
+Or directly:
+
+```bash
+uv run --package ks-cookbook-clinical-trial-eligibility ks-cookbook-clinical-trial-eligibility --help
+```
+
+## Verification status
+
+✅ **Verified PASS** end-to-end on **2026-04-28** (60.473929916995985s) against `api.knowledgestack.ai`. Output: `/Users/arnavgoel/Code/knowledge-stack/ks-cookbook/flagships/clinical_trial_eligibility/sample_output.md` with 1 citations.
+
+## Files
+
+```text
+flagships/clinical_trial_eligibility/
+├── README.md          ← you are here
+├── pyproject.toml
+├── sample_inputs/     (where applicable)
+├── sample_output.<ext> (generated by `make demo-clinical-trial-eligibility`)
+└── src/clinical_trial_eligibility/
+    ├── __main__.py    ← CLI entry
+    ├── agent.py       ← pydantic-ai Agent + system prompt
+    └── schema.py      ← pydantic output schema
+```
