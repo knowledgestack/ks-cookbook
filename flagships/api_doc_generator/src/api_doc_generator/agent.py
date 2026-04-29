@@ -34,6 +34,8 @@ async def run_agent(*, input_text: str, corpus_folder_id: str, model: str) -> AP
         mcp_servers=[mcp],
         system_prompt=SYSTEM.replace("__FOLDER_ID__", corpus_folder_id),
         output_type=APIDoc,
+        retries=4,
+        output_retries=4,
     )
     memo = None
     try:

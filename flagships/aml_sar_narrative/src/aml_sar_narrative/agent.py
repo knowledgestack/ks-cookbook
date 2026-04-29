@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from aml_sar_narrative.schema import SARNarrative
@@ -60,11 +61,13 @@ async def draft_sar(
         mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE,
         output_type=SARNarrative,
+        retries=4,
+        output_retries=4,
     )
     prompt = (
         f"Case ID: {case_id}. Subject (if known): {subject_hint or 'unknown'}. "
         "Read the case file and draft the SAR narrative."
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt)
+        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=200))
     return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

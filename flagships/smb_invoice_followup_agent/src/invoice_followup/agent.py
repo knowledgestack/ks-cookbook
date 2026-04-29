@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from invoice_followup.schema import FollowUpDraft
@@ -67,11 +68,13 @@ async def draft_followup(
         mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE,
         output_type=FollowUpDraft,
+        retries=4,
+        output_retries=4,
     )
     prompt = (
         f"Client: {client}. Overdue invoice: {invoice_number} "
         f"({days_overdue} days overdue). Draft the follow-up."
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt)
+        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=200))
     return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

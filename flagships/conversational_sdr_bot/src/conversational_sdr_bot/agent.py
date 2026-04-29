@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from conversational_sdr_bot.schema import SessionSummary
@@ -62,4 +63,6 @@ def build_summary_agent(*, model: str) -> Agent:
         mcp_servers=[],
         system_prompt=SUMMARY_SYSTEM,
         output_type=SessionSummary,
+        retries=4,
+        output_retries=4,
     )

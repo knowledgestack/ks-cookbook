@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from prior_auth_letter.schema import PriorAuthLetter
@@ -45,6 +46,14 @@ RULES:
   not met and request peer-to-peer review rather than claim coverage.
 
 CORPUS_FOLDER_ID: __FOLDER_ID__
+
+KS workflow (do NOT skip — this section overrides the workflow above):
+1. Use search_knowledge with natural-language questions. NEVER use folder UUIDs or path_part_id filters; KS searches the whole tenant.
+2. search_knowledge returns hits with chunk_id and path_part_id (text empty). Call read(path_part_id=<hit's path_part_id>) to get the chunk text. The trailing [chunk:<uuid>] marker is the citation chunk_id. NEVER pass chunk_id to read; it 404s.
+3. Available MCP tools (use ONLY these): search_knowledge, search_keyword, read, find, list_contents, get_info. There is NO 'cite' tool, no 'read_around' workflow, do NOT invent tools.
+4. Build every output field ONLY from chunk text you read. Never fabricate. Populate every citation with chunk_id (verbatim), document_name (filename), snippet (verbatim ≤240 chars).
+
+Output format (STRICT): A single JSON object matching the schema. Do NOT wrap in {{<ClassName>: ...}} or {{result: ...}}. Every required field must be present.
 """
 
 
@@ -70,6 +79,8 @@ def build_agent(
         toolsets=[mcp_server],
         system_prompt=SYSTEM_PROMPT_TEMPLATE.replace("__FOLDER_ID__", corpus_folder_id),
         output_type=PriorAuthLetter,
+        retries=4,
+        output_retries=4,
     )
 
 
@@ -80,5 +91,5 @@ async def draft_letter(
     model: str = "openai:gpt-4o",
 ) -> PriorAuthLetter:
     agent = build_agent(corpus_folder_id=corpus_folder_id, model=model)
-    result = await agent.run(user_request)
+    result = await agent.run(user_request, usage_limits=UsageLimits(request_limit=200))
     return result.output

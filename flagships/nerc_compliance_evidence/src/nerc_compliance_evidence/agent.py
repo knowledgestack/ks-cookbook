@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from nerc_compliance_evidence.schema import NERCEvidencePack
@@ -60,14 +61,15 @@ async def build_evidence_pack(
         mcp_servers=[mcp],
         system_prompt=SYSTEM,
         output_type=NERCEvidencePack,
+        retries=4,
+        output_retries=4,
     )
     pack: NERCEvidencePack | None = None
     try:
         async with agent.run_mcp_servers():
-            result = await agent.run(
-                f"Build a compliance evidence pack for NERC {standard} "
+            result = await agent.run(f"Build a compliance evidence pack for NERC {standard} "
                 f"requirement {requirement}."
-            )
+            , usage_limits=UsageLimits(request_limit=200))
             pack = (
                 getattr(result, "output", None)
                 or getattr(result, "data", None)

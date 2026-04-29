@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from hcc_coder.schema import CoderReport
@@ -62,11 +63,13 @@ async def code_chart(
         mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE,
         output_type=CoderReport,
+        retries=4,
+        output_retries=4,
     )
     prompt = (
         f"Patient ID: {patient_id}. Read every chart document in the corpus and "
         "produce the full audit-defensible coder report."
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt)
+        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=200))
     return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

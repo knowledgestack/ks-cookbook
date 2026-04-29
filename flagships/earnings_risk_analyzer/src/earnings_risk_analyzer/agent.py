@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from earnings_risk_analyzer.schema import EarningsRiskMemo
@@ -59,13 +60,14 @@ async def analyze_10k(
         mcp_servers=[mcp],
         system_prompt=SYSTEM,
         output_type=EarningsRiskMemo,
+        retries=4,
+        output_retries=4,
     )
     memo: EarningsRiskMemo | None = None
     try:
         async with agent.run_mcp_servers():
-            result = await agent.run(
-                "Analyze the Cloudflare FY2025 10-K filing. Produce the full risk-flag memo."
-            )
+            result = await agent.run("Analyze the Cloudflare FY2025 10-K filing. Produce the full risk-flag memo."
+            , usage_limits=UsageLimits(request_limit=200))
             memo = getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[assignment]
     except BaseExceptionGroup:
         # pydantic-ai's MCPServerStdio raises BrokenResourceError during

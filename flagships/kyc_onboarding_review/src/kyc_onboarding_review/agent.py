@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 from pydantic_ai.settings import ModelSettings
 
@@ -96,16 +97,17 @@ async def review_kyc(
         mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE.replace("__DISCOVERY_STEP__", discovery_step),
         output_type=KYCReview,
+        retries=4,
+        output_retries=4,
         model_settings=ModelSettings(max_tokens=4096),
     )
     review: KYCReview | None = None
     try:
         async with agent.run_mcp_servers():
-            result = await agent.run(
-                "Review the Verdant Sourcing Group LLC onboarding application. "
+            result = await agent.run("Review the Verdant Sourcing Group LLC onboarding application. "
                 "Check every CDD requirement against the submitted documents, "
                 "assign the risk tier, and produce the full KYC review."
-            )
+            , usage_limits=UsageLimits(request_limit=200))
             review = getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[assignment]
     except BaseExceptionGroup as eg:
         # pydantic-ai's MCPServerStdio raises BrokenResourceError during

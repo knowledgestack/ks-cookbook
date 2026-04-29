@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from rfp_first_draft.schema import RFPDraft
@@ -59,13 +60,14 @@ async def draft_rfp(
         mcp_servers=[mcp],
         system_prompt=SYSTEM,
         output_type=RFPDraft,
+        retries=4,
+        output_retries=4,
     )
     draft: RFPDraft | None = None
     try:
         async with agent.run_mcp_servers():
-            result = await agent.run(
-                f"Draft responses to this RFP question:\n\n{question}"
-            )
+            result = await agent.run(f"Draft responses to this RFP question:\n\n{question}"
+            , usage_limits=UsageLimits(request_limit=200))
             draft = (
                 getattr(result, "output", None)
                 or getattr(result, "data", None)

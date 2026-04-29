@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from clinical_trial_eligibility.schema import EligibilityAssessment
@@ -73,13 +74,14 @@ async def assess_eligibility(
         mcp_servers=[mcp],
         system_prompt=SYSTEM.replace("__DISCOVERY_STEP__", discovery_step),
         output_type=EligibilityAssessment,
+        retries=4,
+        output_retries=4,
     )
     assessment: EligibilityAssessment | None = None
     try:
         async with agent.run_mcp_servers():
-            result = await agent.run(
-                f"Evaluate this patient for trial eligibility:\n\n{patient_profile}"
-            )
+            result = await agent.run(f"Evaluate this patient for trial eligibility:\n\n{patient_profile}"
+            , usage_limits=UsageLimits(request_limit=200))
             assessment = (
                 getattr(result, "output", None)
                 or getattr(result, "data", None)

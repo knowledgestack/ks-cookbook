@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from credit_memo_drafter.schema import CreditMemo
@@ -64,11 +65,13 @@ async def draft_memo(
         mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE,
         output_type=CreditMemo,
+        retries=4,
+        output_retries=4,
     )
     prompt = (
         f"Loan request: ${loan_amount:,} senior secured term facility for "
         f"{borrower}. Draft the credit memo."
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt)
+        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=200))
     return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

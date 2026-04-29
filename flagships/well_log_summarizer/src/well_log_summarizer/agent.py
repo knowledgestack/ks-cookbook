@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from well_log_summarizer.schema import WellSummary
@@ -61,11 +62,13 @@ async def summarize_well(
         mcp_servers=[mcp],
         system_prompt=SYSTEM_TEMPLATE,
         output_type=WellSummary,
+        retries=4,
+        output_retries=4,
     )
     prompt = (
         f"Well ID: {well_id}. Read every relevant document in the corpus and "
         "produce the full structured summary."
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt)
+        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=200))
     return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

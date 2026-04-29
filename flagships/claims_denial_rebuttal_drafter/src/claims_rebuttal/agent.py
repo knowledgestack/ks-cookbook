@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from claims_rebuttal.schema import RebuttalLetter
@@ -73,11 +74,13 @@ async def draft_rebuttal(
         mcp_servers=[mcp],
         system_prompt=system,
         output_type=RebuttalLetter,
+        retries=4,
+        output_retries=4,
     )
     prompt = (
         f"Patient: {patient_id}. Denial code: {denial_code}. Payer: {payer}. "
         f"Service in question: {service}. Draft the full appeal letter."
     )
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt)
+        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=200))
     return getattr(result, "output", None) or getattr(result, "data", None) or result  # type: ignore[return-value]

@@ -3,6 +3,7 @@
 import os
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from employee_handbook_qa.schema import HandbookAnswer
@@ -33,11 +34,13 @@ async def run_agent(*, input_text: str, corpus_folder_id: str, model: str) -> Ha
         mcp_servers=[mcp],
         system_prompt=SYSTEM.replace("__FOLDER_ID__", corpus_folder_id),
         output_type=HandbookAnswer,
+        retries=4,
+        output_retries=4,
     )
     memo = None
     try:
         async with agent.run_mcp_servers():
-            result = await agent.run(input_text)
+            result = await agent.run(input_text, usage_limits=UsageLimits(request_limit=200))
             memo = getattr(result, "output", None) or getattr(result, "data", None) or result
     except (BaseExceptionGroup, Exception):
         pass

@@ -8,6 +8,7 @@ from typing import Any
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 
 from realtime_voice_sdr.schema import SessionSummary
 
@@ -90,6 +91,8 @@ def build_summary_agent(*, model: str) -> Agent:
         model=f"openai:{model}",
         system_prompt=SUMMARY_SYSTEM,
         output_type=SessionSummary,
+        retries=4,
+        output_retries=4,
     )
 
 

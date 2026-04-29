@@ -224,8 +224,23 @@ def _run_flagship(dir_name: str, target: str, timeout: int, verify: bool) -> Res
             try:
                 blob = p.read_text()
             except UnicodeDecodeError:
-                # .docx / .xlsx: we can only rely on stdout
-                pass
+                # .docx / .xlsx: unzip and concat the text-bearing parts so
+                # the citation regex can find [chunk:<uuid>] markers buried
+                # in OOXML content.
+                import zipfile
+                try:
+                    with zipfile.ZipFile(p) as z:
+                        parts: list[str] = [out]
+                        for name in z.namelist():
+                            low = name.lower()
+                            if low.endswith(".xml") or low.endswith(".rels") or "shared" in low:
+                                try:
+                                    parts.append(z.read(name).decode("utf-8", errors="ignore"))
+                                except Exception:
+                                    pass
+                        blob = "\n".join(parts)
+                except (zipfile.BadZipFile, OSError):
+                    pass
 
     chunks = _extract_chunks(blob)
     res.citations_found = len(chunks)

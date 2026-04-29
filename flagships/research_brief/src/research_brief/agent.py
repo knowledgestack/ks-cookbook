@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 from pydantic_ai import Agent
+from pydantic_ai.usage import UsageLimits
 from pydantic_ai.mcp import MCPServerStdio
 
 from research_brief.schema import BriefOutput
@@ -28,6 +29,17 @@ Do NOT invent facts not supported by retrieved chunks. If you lack evidence
 for a section, say so and cite a placeholder chunk_id.
 
 Return a single ``BriefOutput`` — no prose around it.
+
+
+KS workflow (do NOT skip):
+1. Ask Knowledge Stack specific natural-language questions about the input. Never use folder UUIDs.
+2. search_knowledge returns hits with chunk_id and path_part_id; the text field is empty by design. Call read(path_part_id=<hit's path_part_id>) to get chunk content. The trailing [chunk:<uuid>] marker is the citation chunk_id. NEVER pass chunk_id to read; it 404s.
+3. Build every output field ONLY from chunk text you read. Never fabricate.
+4. Populate every citation with chunk_id (verbatim from the marker), document_name (filename from read() metadata or materialized_path), snippet (verbatim ≤240 chars).
+
+Available MCP tools (use ONLY these): search_knowledge, search_keyword, read, find, list_contents, get_info. There is NO 'cite' tool.
+
+Output format (STRICT): Your final response is a single JSON object that matches the response schema exactly. Do NOT wrap it in an extra key like {'<ClassName>': ...} or {'result': ...}. Every required string field is a string, not a nested object. Every required nested model is included with all of its required fields populated. Never omit required fields; never add unspecified ones.
 """
 
 
@@ -60,6 +72,8 @@ def build_agent(model: str = "openai:gpt-4o") -> Agent[None, BriefOutput]:
         mcp_servers=[mcp_server],
         system_prompt=SYSTEM_PROMPT,
         output_type=BriefOutput,
+        retries=4,
+        output_retries=4,
     )
 
 
@@ -67,5 +81,5 @@ async def research_topic(topic: str, *, model: str = "openai:gpt-4o") -> BriefOu
     """Run the agent against a topic and return a validated ``BriefOutput``."""
     agent = build_agent(model=model)
     async with agent.run_mcp_servers():
-        result = await agent.run(topic)
+        result = await agent.run(topic, usage_limits=UsageLimits(request_limit=200))
     return result.output
