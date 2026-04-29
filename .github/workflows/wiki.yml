@@ -1,0 +1,47 @@
+name: Publish wiki
+
+# Mirror docs/wiki/ → the GitHub Wiki repo (`<repo>.wiki.git`) every time
+# the source changes on main. The Wiki repo is separate from this repo, so
+# checking files into docs/wiki/ never reaches the rendered Wiki tab on
+# its own — this workflow does the bridging.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/wiki/**"
+      - "scripts/publish_wiki.sh"
+      - "scripts/build_wiki_sidebar.py"
+      - ".github/workflows/wiki.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-wiki
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Configure git
+        run: |
+          git config --global user.name "ks-cookbook bot"
+          git config --global user.email "bot@knowledgestack.ai"
+
+      - name: Publish to wiki
+        env:
+          # Use the built-in GITHUB_TOKEN to push to <repo>.wiki.git over HTTPS.
+          WIKI_REMOTE: "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git"
+        run: |
+          chmod +x scripts/publish_wiki.sh
+          ./scripts/publish_wiki.sh
