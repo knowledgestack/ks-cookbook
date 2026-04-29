@@ -181,7 +181,7 @@ def run_one(recipe: Path, timeout_s: int = 360) -> dict:
                 "stderr_tail": err_tail}
     # Validate output is JSON.
     try:
-        parsed = json.loads(out)
+        json.loads(out)
     except json.JSONDecodeError:
         return {"recipe": rec, "status": "fail",
                 "reason": "stdout not JSON",
