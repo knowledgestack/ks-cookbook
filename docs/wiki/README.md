@@ -44,6 +44,8 @@ These pages cover **how to use** Knowledge Stack from the client side — the MC
 
 GitHub Wikis live in a **separate git repo** — `https://github.com/knowledgestack/ks-cookbook.wiki.git` — not in `main`. Checking pages into `docs/wiki/` here doesn't reach the rendered Wiki tab on its own.
 
+> **One-time setup before the workflow can run:** Wikis must be enabled (Settings → Features → Wikis) **and** initialized once. Initialization happens when someone visits the [Wiki tab](https://github.com/knowledgestack/ks-cookbook/wiki) and clicks **"Create the first page"** — until that happens, `<repo>.wiki.git` returns `404`. The first sync overwrites whatever placeholder you create.
+
 A workflow at [`.github/workflows/wiki.yml`](../../.github/workflows/wiki.yml) mirrors `docs/wiki/` into the Wiki repo on every push to `main` that touches these files. It:
 
 1. Clones `<repo>.wiki.git`

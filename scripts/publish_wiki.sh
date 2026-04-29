@@ -27,11 +27,29 @@ WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR"' EXIT
 
 echo "→ cloning $WIKI_REMOTE"
-if ! git clone --depth=1 "$WIKI_REMOTE" "$WORK_DIR/wiki" 2>/dev/null; then
-    # Wiki repo doesn't exist yet — initialize it locally.
-    echo "  (wiki empty / not yet initialized — creating fresh)"
-    mkdir -p "$WORK_DIR/wiki"
-    (cd "$WORK_DIR/wiki" && git init -q -b master && git remote add origin "$WIKI_REMOTE")
+clone_err="$WORK_DIR/clone.err"
+if ! git clone --depth=1 "$WIKI_REMOTE" "$WORK_DIR/wiki" 2>"$clone_err"; then
+    if grep -qi "repository not found\|404" "$clone_err"; then
+        cat >&2 <<'EOF'
+✗ The Wiki for this repo does not exist yet.
+
+GitHub Wikis live in a separate <repo>.wiki.git, which only comes into
+existence after Wikis are enabled AND someone creates the first page
+through the web UI.
+
+To unblock this workflow:
+
+  1. Settings → Features → tick "Wikis" (if not already on).
+  2. Visit  https://github.com/<owner>/<repo>/wiki
+     and click "Create the first page" (any content — this script will
+     overwrite it on the next run).
+  3. Re-run this workflow.
+EOF
+        exit 2
+    fi
+    # Some other clone failure (auth, transient network) — surface it.
+    cat >&2 "$clone_err"
+    exit 1
 fi
 
 echo "→ syncing files from $WIKI_SRC"
