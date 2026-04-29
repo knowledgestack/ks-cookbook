@@ -34,6 +34,7 @@ You focus on agent logic. KS manages the knowledge layer.
 ## Index
 
 - 🚀 [Quickstart](docs/wiki/quickstart.md) — `git clone` → first recipe in ~5 min
+- 📖 [Cookbook book](docs/wiki/book/README.md) — every flagship + recipe README assembled into one navigable book ([flagships](docs/wiki/book/flagships.md) · [recipes](docs/wiki/book/recipes.md))
 - 🧠 [Overview & mental model](docs/wiki/overview.md) — what KS manages, pipeline diagram, repo map
 - 🔌 [Framework integrations](docs/wiki/frameworks.md) — every flagship runs under every framework. Worked ports:<br/>&nbsp;&nbsp;&nbsp;&nbsp;[pydantic-ai](docs/wiki/frameworks/pydantic-ai.md) · [LangChain](docs/wiki/frameworks/langchain.md) · [LangGraph](docs/wiki/frameworks/langgraph.md) · [CrewAI](docs/wiki/frameworks/crewai.md) · [OpenAI Agents SDK](docs/wiki/frameworks/openai-agents.md) · [Temporal](docs/wiki/frameworks/temporal.md) · [Claude Desktop & Cursor](docs/wiki/frameworks/claude-desktop.md) · [Custom MCP](docs/wiki/frameworks/custom-mcp.md)
 - 🛠 [MCP tool reference](docs/wiki/mcp-tools.md) — the 10 read-only tools your agent is allowed to call

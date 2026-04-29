@@ -14,6 +14,14 @@ These pages cover **how to use** Knowledge Stack from the client side — the MC
 | [Quickstart](quickstart.md) | `git clone` → first recipe in ~5 min. Path A (shared tenant) and Path B (your own tenant). |
 | [Connecting to Knowledge Stack](connecting.md) | API keys, base URLs, wiring the MCP server into your agent. |
 
+### The cookbook, as a book
+
+| Page | What's in it |
+|---|---|
+| [Cookbook book](book/README.md) | Every flagship and recipe README assembled into one navigable book — read every example without leaving the wiki. |
+| ↳ [Flagships book](book/flagships.md) | 44 flagships, grouped by vertical, full READMEs inline. |
+| ↳ [Recipes book](book/recipes.md) | 100+ recipes, alphabetized, full READMEs inline. |
+
 ### Building on top
 
 | Page | What's in it |
