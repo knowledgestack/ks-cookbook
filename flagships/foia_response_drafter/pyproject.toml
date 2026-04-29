@@ -3,6 +3,7 @@ name = "ks-cookbook-foia-response"
 version = "0.1.0"
 description = "Government flagship — FOIA response letter with exemption analysis (raw OpenAI + MCP)."
 readme = "README.md"
+keywords = ["government", "foia", "public-records"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

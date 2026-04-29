@@ -3,6 +3,7 @@ name = "ks-cookbook-legal-intake"
 version = "0.1.0"
 description = "Sertain flagship — produce a new-matter intake dossier citing the firm's conflicts database, practice playbook, jurisdiction rules, and fee schedule."
 readme = "README.md"
+keywords = ["legal", "matter-intake", "triage", "ops"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

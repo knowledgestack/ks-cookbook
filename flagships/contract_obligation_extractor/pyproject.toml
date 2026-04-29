@@ -3,6 +3,7 @@ name = "ks-cookbook-contract-obligations"
 version = "0.1.0"
 description = "Legal flagship — extract every shall/must/will obligation from a contract, grouped by obligation-holder, with [chunk:<uuid>] citations."
 readme = "README.md"
+keywords = ["legal", "contracts", "msa", "obligations"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

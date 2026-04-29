@@ -36,7 +36,7 @@ npx @modelcontextprotocol/inspector uvx knowledgestack-mcp
 ```
 
 **`401 Unauthorized` from an MCP tool**
-Your `KS_API_KEY` is rejected. Check it's the current key for your tenant and that `KS_BASE_URL` points at the same environment the key was issued for (prod key against a staging URL won't work).
+Your `KS_API_KEY` is rejected. Check it's the current key for your tenant and that `KS_BASE_URL` points at the deployment the key was issued for (a SaaS key won't authenticate against a self-hosted URL, and vice versa).
 
 **Empty results from `list_contents` or `search_*`**
 The API key's user doesn't have permission to see that folder. This is expected — permission-aware retrieval means a key with no access returns no results, not an error. Re-run with a key whose user can see the corpus, or point the demo at a folder your user does have access to:

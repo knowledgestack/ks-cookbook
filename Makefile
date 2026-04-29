@@ -50,7 +50,7 @@ TOPIC ?= KYC requirements for Verdant Sourcing Group LLC onboarding
 IN    ?= flagships/csv_enrichment/sample_inputs/customers.csv
 OUT   ?= flagships/csv_enrichment/sample_output.csv
 
-.PHONY: help setup check-env install install-dev lint fix format test demo demo-csv demo-research clean
+.PHONY: help setup check-env install install-dev lint fix format tags tags-check test demo demo-csv demo-research clean
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage: make \033[36m<target>\033[0m\n\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
@@ -86,6 +86,13 @@ fix: ## Auto-fix lint issues across the workspace
 
 format: ## Format code with ruff
 	@uv run ruff format .
+
+tags: ## Sync flagship tags into pyproject keywords + regenerate the wiki book.
+	@uv run python scripts/sync_flagship_tags.py
+	@uv run python scripts/build_wiki_book.py
+
+tags-check: ## Fail if any flagship is missing or stale on tags (CI).
+	@uv run python scripts/sync_flagship_tags.py --check
 
 test: ## MCP server tests live in the ks-mcp repo — this target is a reminder.
 	@echo "This repo no longer ships the MCP server."

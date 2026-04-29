@@ -3,6 +3,7 @@ name = "ks-cookbook-hcc-coder"
 version = "0.1.0"
 description = "Healthcare flagship — assign HCC / ICD-10 codes with line-level rationales and chunk-level source citations for CMS audit defense."
 readme = "README.md"
+keywords = ["healthcare", "hcc", "risk-adjustment", "coding"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

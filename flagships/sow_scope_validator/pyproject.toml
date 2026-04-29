@@ -3,6 +3,7 @@ name = "ks-cookbook-sow-validator"
 version = "0.1.0"
 description = "Proposed SOW → completeness check against template + methodology."
 readme = "README.md"
+keywords = ["proserv", "sow", "scope-management"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

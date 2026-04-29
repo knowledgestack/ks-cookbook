@@ -3,6 +3,7 @@ name = "ks-cookbook-rev-rec-memo"
 version = "0.1.0"
 description = "Accounting flagship — ASC 606 revenue recognition memo grounded in your company's rev-rec policy."
 readme = "README.md"
+keywords = ["accounting", "asc-606", "revenue-recognition", "memos"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

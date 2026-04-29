@@ -3,6 +3,7 @@ name = "ks-cookbook-earnings-risk"
 version = "0.1.0"
 description = "Finance flagship — 10-K risk-flag analyst memo from real SEC EDGAR filings."
 readme = "README.md"
+keywords = ["finance", "sec-filings", "10-k", "investment-research"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

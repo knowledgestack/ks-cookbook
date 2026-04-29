@@ -3,6 +3,7 @@ name = "ks-cookbook-audit-workpaper"
 version = "0.1.0"
 description = "Accounting flagship — draft cited audit workpapers tying GL balances to source documents (LangGraph ReAct)."
 readme = "README.md"
+keywords = ["accounting", "audit", "pcaob", "workpapers"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [

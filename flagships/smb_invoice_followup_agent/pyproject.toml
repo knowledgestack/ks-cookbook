@@ -3,6 +3,7 @@ name = "ks-cookbook-invoice-followup"
 version = "0.1.0"
 description = "SMB flagship — draft a tone-matched follow-up email for an overdue invoice, grounded in the client's past invoices + email threads stored in KS."
 readme = "README.md"
+keywords = ["sales", "ar", "collections", "smb"]
 license = { text = "MIT" }
 requires-python = ">=3.11"
 dependencies = [
