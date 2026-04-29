@@ -19,7 +19,7 @@ Set-up steps:
 4. Issue an API key from the dashboard and put it in `.env` as `KS_API_KEY`.
 5. Run: `CORPUS_FOLDER_ID=<your-folder-id> make demo-csv`
 
-Full corpus matrix for every flagship: [`docs/wiki/seed-data.md`](../../docs/wiki/seed-data.md).
+Full corpus matrix for every flagship: [`https://github.com/knowledgestack/ks-cookbook/wiki/seed-data`](https://github.com/knowledgestack/ks-cookbook/wiki/seed-data).
 
 ## Run
 
