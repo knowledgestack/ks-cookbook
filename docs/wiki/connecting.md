@@ -22,7 +22,7 @@ Set these in `.env` at the repo root:
 
 ```env
 KS_API_KEY=sk-user-...
-KS_BASE_URL=https://api.knowledgestack.ai   # prod SaaS; override for staging or self-hosted
+KS_BASE_URL=https://api.knowledgestack.ai   # prod SaaS; override for self-hosted
 ```
 
 `KS_BASE_URL` defaults to the production SaaS and can be omitted for normal use.

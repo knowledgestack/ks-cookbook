@@ -15,7 +15,7 @@ The cookbook auto-loads `.env` from the repo root. Nothing else needs to be expo
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `KS_BASE_URL` | `https://api.knowledgestack.ai` | Override for staging or self-hosted Knowledge Stack. |
+| `KS_BASE_URL` | `https://api.knowledgestack.ai` | Override for a self-hosted Knowledge Stack deployment. |
 | `KS_MCP_COMMAND` | `.venv/bin/ks-mcp` | Binary the agents spawn for the MCP server. Set to `uvx` to use the published release instead of the workspace build. |
 | `KS_MCP_ARGS` | _(empty)_ | Extra args passed to the MCP server (e.g. `--http --port 8765`). |
 | `CSV_ENRICH_PROVIDER` | `openai` if `OPENAI_API_KEY` set, else `anthropic` | Which LLM provider the CSV-enrichment demo uses. |

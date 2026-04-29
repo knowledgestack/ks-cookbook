@@ -75,19 +75,17 @@ The `KS_API_KEY` in the config is the assistant's identity. If you put your own 
 
 For shared machines, prefer per-user keys over a service-account key — otherwise everyone using that workstation gets your access.
 
-## Multiple environments
+## Multiple tenants
 
-Need staging + prod? Add two entries:
+Need to switch between tenants (e.g. a personal cookbook tenant and your company tenant)? Add one entry per `KS_API_KEY`:
 
 ```json
 {
   "mcpServers": {
-    "ks-prod":    { "command": "uvx", "args": ["knowledgestack-mcp"],
-                    "env": { "KS_API_KEY": "sk-user-prod-...",
-                             "KS_BASE_URL": "https://api.knowledgestack.ai" } },
-    "ks-staging": { "command": "uvx", "args": ["knowledgestack-mcp"],
-                    "env": { "KS_API_KEY": "sk-user-staging-...",
-                             "KS_BASE_URL": "https://staging.api.knowledgestack.ai" } }
+    "ks-personal": { "command": "uvx", "args": ["knowledgestack-mcp"],
+                     "env": { "KS_API_KEY": "sk-user-personal-..." } },
+    "ks-company":  { "command": "uvx", "args": ["knowledgestack-mcp"],
+                     "env": { "KS_API_KEY": "sk-user-company-..." } }
   }
 }
 ```
